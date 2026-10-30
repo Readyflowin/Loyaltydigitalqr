@@ -893,6 +893,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 LIVE CUSTOMER PASS PREVIEW
               </span>
               <LoyaltyCardPreview
+                businessType={formData.businessType}
                 businessName={formData.businessName}
                 programName={formData.programName}
                 stampsRequired={formData.stampsRequired}

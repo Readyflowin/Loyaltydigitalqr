@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Check, AlertCircle } from 'lucide-react';
 import type { LoyaltyProgramConfig, LoyaltyProgramType } from '../../../types/loyalty';
 import type { ThemeMode } from '../../../types';
+import type { BusinessType } from '../../../types/onboarding';
 import { LoyaltyCardPreview } from '../../onboarding/LoyaltyCardPreview';
 import { CARD_COLORS, syncRewardWithStamps } from '../../../data/onboardingData';
 
@@ -10,6 +11,7 @@ interface LoyaltyProgramEditModalProps {
   onClose: () => void;
   program: LoyaltyProgramConfig;
   businessName: string;
+  businessType?: BusinessType;
   onSaveProgram: (updated: Partial<LoyaltyProgramConfig>) => void;
   theme: ThemeMode;
 }
@@ -18,6 +20,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
   onClose,
   program,
   businessName,
+  businessType,
   onSaveProgram,
   theme,
 }) => {
@@ -289,6 +292,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
               LIVE DIGITAL PASS PREVIEW
             </span>
             <LoyaltyCardPreview
+              businessType={businessType}
               businessName={businessName}
               programName={name || 'Loyalty Card'}
               stampsRequired={stampsRequired}

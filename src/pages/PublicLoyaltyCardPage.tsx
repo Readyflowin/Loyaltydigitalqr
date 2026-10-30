@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { Check, Gift, Loader2, Moon, Sun, Award, Info } from 'lucide-react';
+import { Gift, Loader2, Moon, Sun, Info } from 'lucide-react';
 import { useRouter } from '../router';
 import { db } from '../lib/firebase';
 import { businessService } from '../services/businessService';
 import { loyaltyService } from '../services/loyaltyService';
 import type { ThemeMode } from '../types';
+import type { Business } from '../types/business';
+import { LoyaltyCard } from '../components/ui';
 
 interface PublicLoyaltyCardPageProps {
   theme: ThemeMode;
@@ -103,7 +105,7 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
         </header>
 
         {memberId ? (
-          <MemberCardView businessId={business.id} slug={business.slug} memberId={memberId} accent={accent} />
+          <MemberCardView business={business} slug={business.slug} memberId={memberId} accent={accent} />
         ) : program.status !== 'active' ? (
           <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-white/10 text-sm text-center">
             This loyalty program is paused right now. Please ask at the counter.
@@ -225,12 +227,13 @@ const JoinForm: React.FC<{
   );
 };
 
-const MemberCardView: React.FC<{ businessId: string; slug: string; memberId: string; accent: string }> = ({
-  businessId,
+const MemberCardView: React.FC<{ business: Business; slug: string; memberId: string; accent: string }> = ({
+  business,
   slug,
   memberId,
   accent,
 }) => {
+  const businessId = business.id;
   const { navigate } = useRouter();
   const program = loyaltyService.getProgram(businessId);
   const [card, setCard] = useState<MemberCard | null>(null);
@@ -283,41 +286,37 @@ const MemberCardView: React.FC<{ businessId: string; slug: string; memberId: str
   }
 
   const required = program.stampsRequired;
+  const remaining = Math.max(0, required - card.currentStamps);
   const unredeemed = card.rewards.filter((r) => !r.isRedeemed);
+  const memberNo = `No. ${memberId.slice(-6).toUpperCase()}`;
 
   return (
     <div className="space-y-4">
-      <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 shadow-xl">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-xs uppercase font-bold text-subtle-foreground">Hi {card.firstName}</div>
-            <div className="font-heading font-black text-2xl">
-              {card.currentStamps} / {required} stamps
-            </div>
-          </div>
-          <Award className="w-8 h-8" style={{ color: accent }} />
-        </div>
+      <div className="text-caption font-semibold text-muted-foreground px-1">Hi {card.firstName} 👋</div>
 
-        <div className="grid grid-cols-5 gap-2.5 mt-5" aria-label={`${card.currentStamps} of ${required} stamps collected`}>
-          {Array.from({ length: required }).map((_, i) => {
-            const filled = i < card.currentStamps;
-            return (
-              <div
-                key={i}
-                className="aspect-square rounded-full border-2 flex items-center justify-center"
-                style={{ borderColor: accent, backgroundColor: filled ? accent : 'transparent' }}
-              >
-                {filled && <Check className="w-4 h-4 text-white stroke-[3]" />}
-              </div>
-            );
-          })}
-        </div>
+      <LoyaltyCard
+        size="full"
+        businessType={business.businessType}
+        businessName={business.name}
+        programName={program.name}
+        rewardDescription={program.rewardDescription}
+        stampsRequired={required}
+        currentStamps={card.currentStamps}
+        accentColor={accent}
+        memberCode={memberNo}
+        logoUrl={(business as Business & { logoUrl?: string | null }).logoUrl}
+      />
 
-        <p className="mt-5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
-          {required - card.currentStamps} more {required - card.currentStamps === 1 ? 'visit' : 'visits'} to unlock:{' '}
-          <strong className="text-[#111318] dark:text-[#F7F3EB]">{program.rewardDescription}</strong>
-        </p>
-      </div>
+      <p className="text-sm text-muted-foreground px-1">
+        {remaining === 0 ? (
+          <strong className="text-foreground">Reward unlocked — show the code below at the counter.</strong>
+        ) : (
+          <>
+            {remaining} more {remaining === 1 ? 'visit' : 'visits'} to unlock:{' '}
+            <strong className="text-foreground">{program.rewardDescription}</strong>
+          </>
+        )}
+      </p>
 
       {unredeemed.length > 0 && (
         <div className="rounded-3xl p-5 text-white shadow-lg" style={{ backgroundColor: accent }}>

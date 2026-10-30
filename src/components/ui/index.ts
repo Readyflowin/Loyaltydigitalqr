@@ -11,3 +11,5 @@ export { StatCard } from './StatCard';
 export type { StatTone } from './StatCard';
 export { Modal } from './Modal';
 export { EmptyState } from './EmptyState';
+export { LoyaltyCard } from './LoyaltyCard';
+export type { LoyaltyCardProps } from './LoyaltyCard';

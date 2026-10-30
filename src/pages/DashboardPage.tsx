@@ -585,6 +585,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
               </button>
             </div>
             <LoyaltyCardPreview
+              businessType={activeBusiness.businessType}
               businessName={activeBusiness.name}
               programName={activeBusiness.programName}
               stampsRequired={activeBusiness.stampsRequired}
