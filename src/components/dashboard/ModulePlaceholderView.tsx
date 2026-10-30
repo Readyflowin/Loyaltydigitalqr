@@ -174,7 +174,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
           <Clock className="w-7 h-7 stroke-[2.2]" />
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-[11px] font-mono font-bold uppercase mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-[11px] font-bold uppercase mb-3">
           <span>PLANNED MODULE · STAGED PRODUCT ROADMAP</span>
         </div>
 
@@ -188,7 +188,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
 
         {/* Milestone Indicator */}
         <div className="mt-6 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] max-w-md mx-auto text-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
+          <span className="text-[10px] uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
             IMPLEMENTATION MILESTONE:
           </span>
           <strong className="text-[#3027F5] dark:text-[#E4C174] font-heading font-bold text-sm mt-0.5 block">
@@ -198,7 +198,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
 
         {/* Planned Capabilities List */}
         <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 text-left max-w-lg mx-auto">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-3">
+          <span className="text-[11px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-3">
             PLANNED CAPABILITIES:
           </span>
           <div className="space-y-2.5">

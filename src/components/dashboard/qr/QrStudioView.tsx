@@ -130,7 +130,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       {/* 1. Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             QR STUDIO & PRINT ASSETS
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -155,7 +155,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL QR DEFINITIONS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -167,7 +167,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE COUNTER CODES
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -179,7 +179,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             SUPPORTED DESTINATIONS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -388,7 +388,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
         {/* Card Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
-            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] mb-1">
+            <span className="inline-block px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] mb-1">
               {getTypeLabel(qr.destinationType)}
             </span>
             <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-tight">

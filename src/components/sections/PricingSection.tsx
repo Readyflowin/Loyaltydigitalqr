@@ -31,7 +31,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
-            <span className="text-[11px] font-mono font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               TRANSPARENT & HONEST PRICING
             </span>
           </div>
@@ -50,7 +50,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             {/* Top Badge */}
             <div className="flex items-center justify-between pb-6 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+                <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                   STARTER PLAN
                 </span>
                 <h3 className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -83,7 +83,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
             {/* Features Checklist */}
             <div className="mt-8 space-y-3">
-              <div className="text-xs font-mono font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-4">
+              <div className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-4">
                 EVERYTHING INCLUDED:
               </div>
 

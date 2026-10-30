@@ -38,7 +38,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ECEAE3] dark:bg-[#1A1916] dark:border dark:border-[rgba(228,193,116,0.3)] shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
-              <span className="text-[10px] xl:text-[11px] font-mono font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+              <span className="text-[10px] xl:text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
                 LOYALTY, WITHOUT THE FRICTION
               </span>
             </div>

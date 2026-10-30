@@ -169,7 +169,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         
         {/* Group 1: Core Workspace */}
         <div>
-          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             CORE WORKSPACE
           </span>
           <nav className="space-y-1">
@@ -202,7 +202,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Group 2: Industry-Specific Modules */}
         <div>
           <div className="px-3 flex items-center justify-between mb-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block">
+            <span className="text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block">
               {activeBusiness.businessType.toUpperCase()} MODULES
             </span>
           </div>
@@ -231,7 +231,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
                   {item.badge && (
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[9px] font-mono uppercase font-bold flex-shrink-0 ${
+                      className={`px-1.5 py-0.5 rounded text-[11px] font-mono uppercase font-bold flex-shrink-0 ${
                         item.isPlanned
                           ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
                           : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
@@ -248,7 +248,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
         {/* Group 3: Administration */}
         <div>
-          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             ADMINISTRATION
           </span>
           <nav className="space-y-1">

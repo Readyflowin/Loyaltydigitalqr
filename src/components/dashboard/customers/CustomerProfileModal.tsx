@@ -158,7 +158,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
           <div className="p-5 rounded-2xl border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#161614] shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+                <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                   ACTIVE LOYALTY CARD
                 </span>
                 <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -187,100 +187,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                       isStamped
                         ? 'text-white shadow-xs'
                         : 'border border-dashed border-[#DDD9CE] dark:border-white/10 text-subtle-foreground'
-                    }`}
-                    style={{
-                      backgroundColor: isStamped ? program.accentColor : 'transparent',
-                    }}
-                  >
-                    {isStamped ? <CheckCircle2 className="w-4 h-4 stroke-[2.5]" /> : idx + 1}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
-              <span className="text-[#60646C] dark:text-[#AAA499]">
-                Milestone: <strong>{program.rewardDescription}</strong>
-              </span>
-
-              <button
-                type="button"
-                data-testid="profile-stamp-btn"
-                onClick={() => setStampModalOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs shadow-xs cursor-pointer inline-flex items-center gap-1.5"
-              >
-                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>Issue Stamp (+1)</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Unlocked Reward Banner */}
-          {unlockedRewards.length > 0 && (
-            <div className="p-4 rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Gift className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-                <div>
-                  <span className="text-[10px] font-mono font-bold uppercase text-amber-800 dark:text-amber-300 block">
-                    REWARD UNLOCKED · READY AT COUNTER
-                  </span>
-                  <div className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB]">
-                    {unlockedRewards[0].rewardDescription}
-                  </div>
-                  <div className="text-[11px] font-mono text-subtle-foreground">
-                    Voucher Code: #{unlockedRewards[0].voucherCode}
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                data-testid="profile-redeem-btn"
-                onClick={() => setRedemptionModalOpen(true)}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md cursor-pointer transition-colors"
-              >
-                Redeem Reward
-              </button>
-            </div>
-          )}
-
-          {/* Internal Staff Notes */}
-          {customer.notes && (
-            <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] text-xs space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-subtle-foreground block">
-                STAFF NOTES
-              </span>
-              <p className="text-[#111318] dark:text-[#F7F3EB] italic leading-relaxed">
-                "{customer.notes}"
-              </p>
-            </div>
-          )}
-
-          {/* Timeline & Audit Events */}
-          <div>
-            <div className="flex items-center justify-between pb-2 mb-3 border-b border-black/10 dark:border-white/10">
-              <span className="text-xs font-mono font-bold uppercase text-subtle-foreground">
-                Visit & Redemption History
-              </span>
-              <span className="text-[11px] text-subtle-foreground">
-                {customerEvents.length} recorded events
-              </span>
-            </div>
-
-            {customerEvents.length === 0 ? (
-              <p className="text-xs text-subtle-foreground py-3 text-center">
-                No recent events recorded for this customer.
-              </p>
-            ) : (
-              <div className="space-y-2.5">
-                {customerEvents.map((evt) => (
-                  <div
-                    key={evt.id}
-                    className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816] text-xs flex items-center justify-between gap-3 border border-black/5 dark:border-white/5"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div
-                        className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                    }`} style={{ backgroundColor: isStamped ? program.accentColor : 'transparent', }} > {isStamped ? <CheckCircle2 className="w-4 h-4 stroke-[2.5]" /> : idx + 1} </div> ); })} </div> <div className="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs"> <span className="text-[#60646C] dark:text-[#AAA499]"> Milestone: <strong>{program.rewardDescription}</strong> </span> <button type="button" data-testid="profile-stamp-btn" onClick={() => setStampModalOpen(true)} className="px-3.5 py-1.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs shadow-xs cursor-pointer inline-flex items-center gap-1.5" > <Plus className="w-3.5 h-3.5 stroke-[2.5]" /> <span>Issue Stamp (+1)</span> </button> </div> </div> {/* Unlocked Reward Banner */} {unlockedRewards.length > 0 && ( <div className="p-4 rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-between gap-3"> <div className="flex items-center gap-3"> <Gift className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" /> <div> <span className="text-[10px] font-bold uppercase text-amber-800 dark:text-amber-300 block"> REWARD UNLOCKED · READY AT COUNTER </span> <div className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB]"> {unlockedRewards[0].rewardDescription} </div> <div className="text-[11px] text-subtle-foreground"> Voucher Code: #{unlockedRewards[0].voucherCode} </div> </div> </div> <button type="button" data-testid="profile-redeem-btn" onClick={() => setRedemptionModalOpen(true)} className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md cursor-pointer transition-colors" > Redeem Reward </button> </div> )} {/* Internal Staff Notes */} {customer.notes && ( <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] text-xs space-y-1"> <span className="text-[10px] font-bold uppercase text-subtle-foreground block"> STAFF NOTES </span> <p className="text-[#111318] dark:text-[#F7F3EB] italic leading-relaxed"> "{customer.notes}" </p> </div> )} {/* Timeline & Audit Events */} <div> <div className="flex items-center justify-between pb-2 mb-3 border-b border-black/10 dark:border-white/10"> <span className="text-xs font-bold uppercase text-subtle-foreground"> Visit & Redemption History </span> <span className="text-[11px] text-subtle-foreground"> {customerEvents.length} recorded events </span> </div> {customerEvents.length === 0 ? ( <p className="text-xs text-subtle-foreground py-3 text-center"> No recent events recorded for this customer. </p> ) : ( <div className="space-y-2.5"> {customerEvents.map((evt) => ( <div key={evt.id} className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816] text-xs flex items-center justify-between gap-3 border border-black/5 dark:border-white/5" > <div className="flex items-center gap-2.5"> <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 ${
                           evt.type === 'reward_redeemed'
                             ? 'bg-emerald-500/15 text-emerald-600'
                             : evt.type === 'reward_unlocked'
@@ -306,7 +213,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-mono text-subtle-foreground uppercase flex-shrink-0">
+                    <span className="text-[10px] text-subtle-foreground uppercase flex-shrink-0">
                       {evt.type.replace('_', ' ')}
                     </span>
                   </div>

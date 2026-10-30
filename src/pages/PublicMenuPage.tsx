@@ -181,7 +181,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               {/* Table Switcher Dropdown */}
               {tablePickerOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-2 z-40 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
+                  <div className="text-[10px] uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
                     Choose Your Seat
                   </div>
                   {allTables.map((t) => (
@@ -221,7 +221,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
       <div className="max-w-4xl mx-auto px-4 pt-6 pb-4">
         <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               DIGITAL MENU & INSTANT ORDERING
             </span>
           </div>
@@ -290,7 +290,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
           {/* Dietary Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto pt-1 scrollbar-none">
-            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold mr-1">
+            <span className="text-[10px] uppercase text-subtle-foreground font-bold mr-1">
               Diet:
             </span>
             {(['all', 'veg', 'vegan', 'gluten_free'] as const).map((diet) => {

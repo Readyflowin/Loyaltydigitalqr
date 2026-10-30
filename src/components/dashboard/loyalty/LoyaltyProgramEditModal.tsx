@@ -78,7 +78,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               PROGRAM EDITOR
             </span>
             <h3 className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -103,7 +103,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
             
             {/* Program Name */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Program Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -130,7 +130,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Program Type */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Loyalty Model
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -158,7 +158,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
             {/* Milestone Threshold */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Reward Milestone <span className="text-red-500">*</span>
                 </label>
                 <span className="text-[11px] font-mono text-[#3027F5] dark:text-[#E4C174] font-bold">
@@ -188,7 +188,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Reward Description */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Unlocked Customer Reward <span className="text-red-500">*</span>
               </label>
               <input
@@ -215,7 +215,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Color Swatches */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
                 Brand Accent Color
               </label>
               <div className="flex flex-wrap gap-2.5">
@@ -238,7 +238,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Program Status (Active / Paused) */}
             <div className="pt-2">
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Operational Status
               </label>
               <div className="flex items-center gap-3">
@@ -269,7 +269,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Terms & Conditions */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Terms & Restrictions (Optional)
               </label>
               <textarea
@@ -285,7 +285,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
           {/* Right Live Preview Column (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center p-4 rounded-3xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-            <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-[#3027F5] dark:text-[#E4C174] mb-3">
+            <span className="text-[10px] uppercase tracking-wider font-bold text-[#3027F5] dark:text-[#E4C174] mb-3">
               LIVE DIGITAL PASS PREVIEW
             </span>
             <LoyaltyCardPreview

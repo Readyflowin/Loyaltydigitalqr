@@ -157,7 +157,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
         {/* Modal Header */}
         <div className="p-6 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between print:hidden flex-shrink-0">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               TABLE STANDEE & PRINT ASSET
             </span>
             <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -210,85 +210,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
                     mode === 'development'
                       ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] shadow-xs'
                       : 'text-[#60646C] dark:text-[#D0CBC1]'
-                  }`}
-                >
-                  <Laptop className="w-3.5 h-3.5" />
-                  <span>Dev Preview</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Safety Indicator Banner */}
-            {isSafeForPrint ? (
-              <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-xs text-emerald-800 dark:text-emerald-300 flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 mt-0.5 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
-                <div>
-                  <strong className="font-bold">Ready for Commercial Printing:</strong> Destination URL uses verified public HTTPS domain{' '}
-                  <code className="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/60 font-mono text-[11px]">
-                    {domain}
-                  </code>
-                  . Scanners in customer venues will open cleanly on any cellular network.
-                </div>
-              </div>
-            ) : (
-              <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-600 dark:text-amber-400" />
-                <div>
-                  <strong className="font-bold">Development Mode Active:</strong> Destination URL points to local host{' '}
-                  <code className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/60 font-mono text-[11px]">
-                    {domain}
-                  </code>
-                  . Switch to Production mode before printing physical standees for customer tables.
-                </div>
-              </div>
-            )}
-
-            <div className="text-[11px] font-mono text-subtle-foreground break-all">
-              Target URL: {tableUrl}
-            </div>
-          </div>
-
-          {/* Printable Acrylic Standee Card Preview */}
-          <div className="flex justify-center">
-            <div
-              id="standee-printable-card"
-              data-testid="standee-card-preview"
-              className="w-full max-w-[340px] p-6 rounded-3xl bg-white text-[#111318] border-2 border-[#111318] shadow-xl text-center space-y-4"
-            >
-              {/* Business Header */}
-              <div className="flex items-center justify-center gap-2">
-                <div
-                  className="w-8 h-8 rounded-xl text-white font-black text-sm flex items-center justify-center shadow-xs"
-                  style={{ backgroundColor: business.accentColor || '#3027F5' }}
-                >
-                  {business.logoInitial || business.name.charAt(0)}
-                </div>
-                <div className="text-left">
-                  <h4 className="font-heading font-black text-sm text-[#111318] leading-tight">
-                    {business.name}
-                  </h4>
-                  <p className="text-[10px] text-[#60646C] font-semibold">
-                    {location?.name || 'Tabletop Order'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Table Name Badge */}
-              <div className="py-2 px-4 rounded-2xl bg-[#F8F7F2] border border-[#E5E3DB]">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-subtle-foreground uppercase block">
-                  ORDER FROM YOUR TABLE
-                </span>
-                <span className="text-2xl font-heading font-black text-[#111318] tracking-tight block">
-                  {table.displayName}
-                </span>
-              </div>
-
-              {/* Crisp QR Matrix Canvas */}
-              <div className="p-3 rounded-2xl bg-white border border-[#E5E3DB] inline-block shadow-inner">
-                {qrDataUrl ? (
-                  <img
-                    src={qrDataUrl}
-                    alt={`${table.displayName} QR Code`}
+                  }`} > <Laptop className="w-3.5 h-3.5" /> <span>Dev Preview</span> </button> </div> </div> {/* Safety Indicator Banner */} {isSafeForPrint ? ( <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-xs text-emerald-800 dark:text-emerald-300 flex items-start gap-2.5"> <ShieldCheck className="w-4 h-4 mt-0.5 flex-shrink-0 text-emerald-600 dark:text-emerald-400" /> <div> <strong className="font-bold">Ready for Commercial Printing:</strong> Destination URL uses verified public HTTPS domain{' '} <code className="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/60 text-[11px]"> {domain} </code> . Scanners in customer venues will open cleanly on any cellular network. </div> </div> ) : ( <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2.5"> <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-600 dark:text-amber-400" /> <div> <strong className="font-bold">Development Mode Active:</strong> Destination URL points to local host{' '} <code className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/60 text-[11px]"> {domain} </code> . Switch to Production mode before printing physical standees for customer tables. </div> </div> )} <div className="text-[11px] text-subtle-foreground break-all"> Target URL: {tableUrl} </div> </div> {/* Printable Acrylic Standee Card Preview */} <div className="flex justify-center"> <div id="standee-printable-card" data-testid="standee-card-preview" className="w-full max-w-[340px] p-6 rounded-3xl bg-white text-[#111318] border-2 border-[#111318] shadow-xl text-center space-y-4" > {/* Business Header */} <div className="flex items-center justify-center gap-2"> <div className="w-8 h-8 rounded-xl text-white font-black text-sm flex items-center justify-center shadow-xs" style={{ backgroundColor: business.accentColor || '#3027F5' }} > {business.logoInitial || business.name.charAt(0)} </div> <div className="text-left"> <h4 className="font-heading font-black text-sm text-[#111318] leading-tight"> {business.name} </h4> <p className="text-[10px] text-[#60646C] font-semibold"> {location?.name || 'Tabletop Order'} </p> </div> </div> {/* Table Name Badge */} <div className="py-2 px-4 rounded-2xl bg-[#F8F7F2] border border-[#E5E3DB]"> <span className="text-[10px] font-bold tracking-widest text-subtle-foreground uppercase block"> ORDER FROM YOUR TABLE </span> <span className="text-2xl font-heading font-black text-[#111318] tracking-tight block"> {table.displayName} </span> </div> {/* Crisp QR Matrix Canvas */} <div className="p-3 rounded-2xl bg-white border border-[#E5E3DB] inline-block shadow-inner"> {qrDataUrl ? ( <img src={qrDataUrl} alt={`${table.displayName} QR Code`}
                     className="w-48 h-48 mx-auto object-contain"
                   />
                 ) : (
@@ -309,7 +231,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
               </div>
 
               {/* Watermark / Brand Attribution */}
-              <div className="pt-2 border-t border-[#E5E3DB] flex items-center justify-center gap-1.5 text-[9px] font-mono text-subtle-foreground uppercase tracking-wider">
+              <div className="pt-2 border-t border-[#E5E3DB] flex items-center justify-center gap-1.5 text-[11px] text-subtle-foreground uppercase tracking-wider">
                 <span>POWERED BY LOYALTYDIGITALQR</span>
               </div>
             </div>

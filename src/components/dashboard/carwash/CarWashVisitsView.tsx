@@ -193,52 +193,7 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
                               : p.status === 'exhausted'
                               ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
                               : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
-                          }`}
-                        >
-                          {p.status}
-                        </span>
-                        {p.remainingVisits !== undefined && (
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            {p.remainingVisits} washes left
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  ))
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Selected Pass Details & Action */}
-          {selectedPass ? (
-            <div
-              className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-5"
-              data-testid="selected-pass-card"
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-                    Wash Pass Selected
-                  </span>
-                  <h3 className="text-xl font-bold text-foreground mt-1">
-                    {selectedPass.customerName}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    {selectedPass.vehiclePlate && (
-                      <span className="px-2 py-0.5 rounded bg-muted text-foreground font-mono text-xs font-bold border border-border/60">
-                        {selectedPass.vehiclePlate}
-                      </span>
-                    )}
-                    {selectedPass.vehicleMakeModel && (
-                      <span className="text-xs text-muted-foreground">
-                        {selectedPass.vehicleMakeModel}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <span
-                  className={`px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
+                          }`} > {p.status} </span> {p.remainingVisits !== undefined && ( <div className="text-xs text-muted-foreground mt-0.5"> {p.remainingVisits} washes left </div> )} </div> </button> )) )} </div> )} </div> {/* Selected Pass Details & Action */} {selectedPass ? ( <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-5" data-testid="selected-pass-card" > <div className="flex items-start justify-between"> <div> <span className="text-xs font-semibold text-primary uppercase tracking-wider"> Wash Pass Selected </span> <h3 className="text-xl font-bold text-foreground mt-1"> {selectedPass.customerName} </h3> <div className="flex items-center gap-2 mt-1"> {selectedPass.vehiclePlate && ( <span className="px-2 py-0.5 rounded bg-muted text-foreground text-xs font-bold border border-border/60"> {selectedPass.vehiclePlate} </span> )} {selectedPass.vehicleMakeModel && ( <span className="text-xs text-muted-foreground"> {selectedPass.vehicleMakeModel} </span> )} </div> </div> <span className={`px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide ${
                     selectedPass.status === 'active'
                       ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                       : selectedPass.status === 'exhausted'

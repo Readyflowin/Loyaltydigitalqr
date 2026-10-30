@@ -109,7 +109,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
       {/* 1. Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             CUSTOMER RELATIONSHIP MANAGEMENT
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -134,7 +134,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ENROLLED MEMBERS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -146,7 +146,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             REWARDS UNLOCKED
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -158,7 +158,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             RECORDED VISITS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -170,7 +170,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE STAMPS HELD
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -247,7 +247,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         ) : (
           <div>
             {/* Desktop Table Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3.5 border-b border-black/5 dark:border-white/5 text-[10px] font-mono font-bold uppercase text-subtle-foreground">
+            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3.5 border-b border-black/5 dark:border-white/5 text-[10px] font-bold uppercase text-subtle-foreground">
               <span className="col-span-4">MEMBER & CONTACT</span>
               <span className="col-span-3">LOYALTY PROGRESS</span>
               <span className="col-span-2">TOTAL VISITS</span>
@@ -298,7 +298,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                             {c.currentStamps} / {program.stampsRequired} visits
                           </span>
                           {hasUnlocked ? (
-                            <span className="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                            <span className="px-1.5 py-0.5 rounded text-[11px] uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
                               Reward Ready
                             </span>
                           ) : (
@@ -376,7 +376,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                           {c.name}
                         </button>
                         {hasUnlocked ? (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                          <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
                             Reward Ready
                           </span>
                         ) : (

@@ -159,7 +159,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+              <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 QR STUDIO CREATOR
               </span>
               <span className="text-xs text-subtle-foreground">· Step {step} of 4</span>
@@ -245,7 +245,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             {/* Location selector if multi-location */}
             {business.locations.length > 1 && (
               <div className="pt-2">
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Assign Location
                 </label>
                 <select
@@ -268,7 +268,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
         {step === 2 && (
           <div className="py-6 space-y-4">
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Display Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -281,7 +281,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Instructional Label (Printed Under QR)
               </label>
               <input
@@ -294,7 +294,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Target Route Path
               </label>
               <input
@@ -318,7 +318,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               
               {/* Genuine QR Code Card (Left) */}
               <div className="sm:col-span-6 flex flex-col items-center p-6 rounded-3xl bg-white dark:bg-[#181816] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-md text-center">
-                <span className="text-[10px] font-mono uppercase font-bold text-subtle-foreground mb-2">
+                <span className="text-[10px] uppercase font-bold text-subtle-foreground mb-2">
                   {business.name}
                 </span>
 
@@ -340,7 +340,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 <div className="mt-3 font-heading font-bold text-xs text-[#111318] dark:text-[#F7F3EB]">
                   {displayLabel || 'Scan to Open'}
                 </div>
-                <span className="text-[9px] font-mono text-subtle-foreground uppercase mt-0.5">
+                <span className="text-[11px] text-subtle-foreground uppercase mt-0.5">
                   High Contrast · Margin 2 · EC-M
                 </span>
               </div>
@@ -359,7 +359,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
 
                 <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-xs space-y-2">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-subtle-foreground block">
+                    <span className="text-[10px] uppercase text-subtle-foreground block">
                       DECODED DESTINATION URL:
                     </span>
                     <a

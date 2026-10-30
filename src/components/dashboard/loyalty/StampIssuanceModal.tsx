@@ -118,7 +118,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               COUNTER STAMP TERMINAL
             </span>
             <h3 className="text-lg sm:text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -153,7 +153,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-subtle-foreground block">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-subtle-foreground block">
                 {resultState.rewardUnlocked ? 'MILESTONE REACHED' : 'VISIT RECORDED'}
               </span>
               <h4 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -197,7 +197,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             
             {/* Customer Selector */}
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Select Enrolled Member
               </label>
               {customers.length === 0 ? (
@@ -244,7 +244,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             {/* Staff PIN input */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Staff Validation PIN
                 </label>
                 <span className="text-[10px] font-mono text-subtle-foreground">

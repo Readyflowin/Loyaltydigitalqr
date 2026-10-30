@@ -240,7 +240,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               CAFÉ & RESTAURANT MENU
             </span>
             <span
@@ -297,7 +297,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             CATEGORIES
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -305,7 +305,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL ITEMS
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -313,7 +313,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             AVAILABLE
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -321,7 +321,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             SOLD OUT
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -517,7 +517,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                 <div>
                   {/* Category Pill & Status Badge */}
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#3027F5] dark:text-[#E4C174]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#3027F5] dark:text-[#E4C174]">
                       {categoryName}
                     </span>
                     <button

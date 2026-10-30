@@ -332,7 +332,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             GROWTH & CAMPAIGNS ENGINE
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -377,7 +377,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* Metric Counters Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PROMOTIONS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -389,7 +389,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL REDEMPTIONS
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -401,7 +401,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             AUDIENCE SEGMENTS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -413,7 +413,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             CUSTOMER REPUTATION
           </span>
           <div className="text-2xl font-heading font-black text-amber-500 flex items-center gap-1">
@@ -570,288 +570,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                         offer.status === 'active'
                           ? 'text-amber-700 bg-amber-50 dark:bg-amber-950/30 hover:bg-amber-100 dark:hover:bg-amber-900/40'
                           : 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/40'
-                      }`}
-                    >
-                      {offer.status === 'active' ? 'Pause Offer' : 'Activate Offer'}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedOfferForRedeem(offer);
-                        setRedeemError(null);
-                        setRedeemSuccess(null);
-                        setRedeemModalOpen(true);
-                      }}
-                      disabled={offer.status !== 'active'}
-                      className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] hover:bg-[#3027F5]/20 disabled:opacity-40 cursor-pointer"
-                    >
-                      Test Redeem
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* TAB 2: Customer Segments */}
-      {activeTab === 'segments' && (
-        <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-[#111318] dark:text-[#F7F3EB] flex items-start gap-3">
-            <Sliders className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <div className="font-bold">Only customers who opted in</div>
-              <p className="text-[#60646C] dark:text-[#AAA499] mt-0.5">
-                Segments update automatically from real customer visits. Customers who did not opt in to marketing are never included in exported lists.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {segments.map((seg) => {
-              const matchedList = growthService.evaluateAudience(business.id, {
-                criteriaType: seg.criteriaType,
-                inactivityDays: seg.inactivityDays,
-              });
-              const emailConsentCount = matchedList.filter((c) => c.marketingConsent?.email).length;
-              const smsConsentCount = matchedList.filter((c) => c.marketingConsent?.sms).length;
-
-              return (
-                <div
-                  key={seg.id}
-                  className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
-                      {seg.name}
-                    </h3>
-                    <span className="px-2.5 py-1 rounded-full font-mono font-bold text-xs bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
-                      {matchedList.length} customers
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
-                    {seg.description}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-black/5 dark:border-white/5">
-                    <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]">
-                      <div className="flex items-center gap-1.5 text-xs text-subtle-foreground">
-                        <Mail className="w-3.5 h-3.5" />
-                        <span>Email Consent</span>
-                      </div>
-                      <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1">
-                        {emailConsentCount} / {matchedList.length}
-                      </div>
-                    </div>
-
-                    <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]">
-                      <div className="flex items-center gap-1.5 text-xs text-subtle-foreground">
-                        <MessageSquare className="w-3.5 h-3.5" />
-                        <span>SMS Consent</span>
-                      </div>
-                      <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1">
-                        {smsConsentCount} / {matchedList.length}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (seg.inactivityDays) {
-                          setInactivityDays(seg.inactivityDays);
-                        }
-                        setActiveTab('winback');
-                      }}
-                      className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer inline-flex items-center gap-1"
-                    >
-                      <span>Launch Targeted Campaign</span>
-                      <Share2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* TAB 3: Win-Back Campaigns */}
-      {activeTab === 'winback' && (
-        <div className="space-y-6">
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
-              <div>
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
-                  WIN-BACK AUDIENCE
-                </span>
-                <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
-                  Re-Engage Dormant Counter Patrons
-                </h3>
-                <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                  Find customers who haven't visited in 30–60 days and opted in to marketing, then download the list to message them.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                data-testid="launch-winback-btn"
-                onClick={() => setWinbackWizardOpen(true)}
-                className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span>Build win-back list</span>
-              </button>
-            </div>
-
-            {/* Campaign Execution Notice */}
-            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-              <span>
-                Messages are not sent from this dashboard. Download the list (CSV) and send it with your own SMS or email tool. Only customers who opted in are included.
-              </span>
-            </div>
-
-            {/* Past Campaign Run Records */}
-            <div>
-              <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] mb-3">
-                Exported Lists ({campaignRuns.length})
-              </h4>
-              {campaignRuns.length === 0 ? (
-                <div className="p-6 text-center text-xs text-subtle-foreground border border-dashed rounded-2xl">
-                  No lists exported yet. Click "Build win-back list" above.
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {campaignRuns.map((run) => (
-                    <div
-                      key={run.id}
-                      className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
-                    >
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
-                            {run.name}
-                          </span>
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
-                            {run.channel}
-                          </span>
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
-                            CSV exported
-                          </span>
-                        </div>
-                        <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 flex items-center gap-4">
-                          <span>Exported: {new Date(run.simulatedAt).toLocaleString()}</span>
-                          {run.offerName && (
-                            <span>
-                              Offer: <strong>{run.offerName}</strong>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-4 text-[11px] font-mono">
-                        <div>
-                          <span className="text-subtle-foreground">Contacts exported:</span>{' '}
-                          <strong className="text-emerald-600 dark:text-emerald-400">
-                            {run.simulatedSentCount}
-                          </strong>
-                        </div>
-                        <div>
-                          <span className="text-subtle-foreground">Target Audience:</span>{' '}
-                          <strong className="text-zinc-600 dark:text-zinc-400">
-                            {run.targetAudienceCount}
-                          </strong>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 4: Customer Feedback & Reviews */}
-      {activeTab === 'feedback' && (
-        <div className="space-y-6">
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
-              <div>
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
-                  CUSTOMER SENTIMENT & REVIEWS
-                </span>
-                <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
-                  Post-Visit Feedback & Review Request Policy
-                </h3>
-                <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                  Collect authentic ratings. Public review links are unconditional without rating gating.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setPublicReviewLinkModalOpen(true)}
-                  className="px-3.5 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Configure Public Link</span>
-                </button>
-
-                <button
-                  type="button"
-                  data-testid="submit-test-feedback-btn"
-                  onClick={() => setFeedbackModalOpen(true)}
-                  className="px-3.5 py-2 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] text-xs font-bold cursor-pointer inline-flex items-center gap-1.5"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add Customer Feedback</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Non-Gating Notice */}
-            <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-                <span>
-                  <strong>Ethical Review Policy:</strong> Google Business review URL ({customReviewUrl || 'Configured'}) is surfaced transparently to all customers regardless of star rating.
-                </span>
-              </div>
-              <a
-                href={customReviewUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-bold underline flex items-center gap-1 flex-shrink-0"
-              >
-                <span>Preview Link</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-
-            {/* Feedback List */}
-            <div className="space-y-3">
-              {feedbackList.map((fb) => (
-                <div
-                  key={fb.id}
-                  className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs"
-                >
-                  <div className="space-y-1.5 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
-                        {fb.customerName}
-                      </span>
-                      <div className="flex items-center text-amber-500">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3.5 h-3.5 ${
+                      }`} > {offer.status === 'active' ? 'Pause Offer' : 'Activate Offer'} </button> <button type="button" onClick={() => { setSelectedOfferForRedeem(offer); setRedeemError(null); setRedeemSuccess(null); setRedeemModalOpen(true); }} disabled={offer.status !== 'active'} className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] hover:bg-[#3027F5]/20 disabled:opacity-40 cursor-pointer" > Test Redeem </button> </div> </div> ); })} </div> </div> )} {/* TAB 2: Customer Segments */} {activeTab === 'segments' && ( <div className="space-y-4"> <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-[#111318] dark:text-[#F7F3EB] flex items-start gap-3"> <Sliders className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" /> <div> <div className="font-bold">Only customers who opted in</div> <p className="text-[#60646C] dark:text-[#AAA499] mt-0.5"> Segments update automatically from real customer visits. Customers who did not opt in to marketing are never included in exported lists. </p> </div> </div> <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {segments.map((seg) => { const matchedList = growthService.evaluateAudience(business.id, { criteriaType: seg.criteriaType, inactivityDays: seg.inactivityDays, }); const emailConsentCount = matchedList.filter((c) => c.marketingConsent?.email).length; const smsConsentCount = matchedList.filter((c) => c.marketingConsent?.sms).length; return ( <div key={seg.id} className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4" > <div className="flex items-center justify-between"> <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"> {seg.name} </h3> <span className="px-2.5 py-1 rounded-full font-bold text-xs bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]"> {matchedList.length} customers </span> </div> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]"> {seg.description} </p> <div className="grid grid-cols-2 gap-3 pt-2 border-t border-black/5 dark:border-white/5"> <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <Mail className="w-3.5 h-3.5" /> <span>Email Consent</span> </div> <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1"> {emailConsentCount} / {matchedList.length} </div> </div> <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <MessageSquare className="w-3.5 h-3.5" /> <span>SMS Consent</span> </div> <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1"> {smsConsentCount} / {matchedList.length} </div> </div> </div> <div className="flex justify-end"> <button type="button" onClick={() => { if (seg.inactivityDays) { setInactivityDays(seg.inactivityDays); } setActiveTab('winback'); }} className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer inline-flex items-center gap-1" > <span>Launch Targeted Campaign</span> <Share2 className="w-3.5 h-3.5" /> </button> </div> </div> ); })} </div> </div> )} {/* TAB 3: Win-Back Campaigns */} {activeTab === 'winback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> WIN-BACK AUDIENCE </span> <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5"> Re-Engage Dormant Counter Patrons </h3> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5"> Find customers who haven't visited in 30–60 days and opted in to marketing, then download the list to message them. </p> </div> <button type="button" data-testid="launch-winback-btn" onClick={() => setWinbackWizardOpen(true)} className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2" > <RotateCcw className="w-4 h-4" /> <span>Build win-back list</span> </button> </div> {/* Campaign Execution Notice */} <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2"> <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" /> <span> Messages are not sent from this dashboard. Download the list (CSV) and send it with your own SMS or email tool. Only customers who opted in are included. </span> </div> {/* Past Campaign Run Records */} <div> <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] mb-3"> Exported Lists ({campaignRuns.length}) </h4> {campaignRuns.length === 0 ? ( <div className="p-6 text-center text-xs text-subtle-foreground border border-dashed rounded-2xl"> No lists exported yet. Click "Build win-back list" above. </div> ) : ( <div className="space-y-3"> {campaignRuns.map((run) => ( <div key={run.id} className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs" > <div> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]"> {run.name} </span> <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300"> {run.channel} </span> <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"> CSV exported </span> </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 flex items-center gap-4"> <span>Exported: {new Date(run.simulatedAt).toLocaleString()}</span> {run.offerName && ( <span> Offer: <strong>{run.offerName}</strong> </span> )} </div> </div> <div className="flex items-center gap-4 text-[11px] font-mono"> <div> <span className="text-subtle-foreground">Contacts exported:</span>{' '} <strong className="text-emerald-600 dark:text-emerald-400"> {run.simulatedSentCount} </strong> </div> <div> <span className="text-subtle-foreground">Target Audience:</span>{' '} <strong className="text-zinc-600 dark:text-zinc-400"> {run.targetAudienceCount} </strong> </div> </div> </div> ))} </div> )} </div> </div> </div> )} {/* TAB 4: Customer Feedback & Reviews */} {activeTab === 'feedback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> CUSTOMER SENTIMENT & REVIEWS </span> <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5"> Post-Visit Feedback & Review Request Policy </h3> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5"> Collect authentic ratings. Public review links are unconditional without rating gating. </p> </div> <div className="flex items-center gap-2"> <button type="button" onClick={() => setPublicReviewLinkModalOpen(true)} className="px-3.5 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5" > <ExternalLink className="w-3.5 h-3.5" /> <span>Configure Public Link</span> </button> <button type="button" data-testid="submit-test-feedback-btn" onClick={() => setFeedbackModalOpen(true)} className="px-3.5 py-2 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] text-xs font-bold cursor-pointer inline-flex items-center gap-1.5" > <Plus className="w-3.5 h-3.5" /> <span>Add Customer Feedback</span> </button> </div> </div> {/* Non-Gating Notice */} <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between gap-3"> <div className="flex items-center gap-2"> <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" /> <span> <strong>Ethical Review Policy:</strong> Google Business review URL ({customReviewUrl || 'Configured'}) is surfaced transparently to all customers regardless of star rating. </span> </div> <a href={customReviewUrl} target="_blank" rel="noreferrer" className="text-xs font-bold underline flex items-center gap-1 flex-shrink-0" > <span>Preview Link</span> <ExternalLink className="w-3 h-3" /> </a> </div> {/* Feedback List */} <div className="space-y-3"> {feedbackList.map((fb) => ( <div key={fb.id} className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs" > <div className="space-y-1.5 flex-1"> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]"> {fb.customerName} </span> <div className="flex items-center text-amber-500"> {Array.from({ length: 5 }).map((_, i) => ( <Star key={i} className={`w-3.5 h-3.5 ${
                               i < fb.rating
                                 ? 'fill-amber-400 text-amber-400'
                                 : 'text-zinc-300 dark:text-zinc-700'
@@ -909,7 +628,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   PROMOTION CONFIGURATOR
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -934,7 +653,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleCreateOffer} className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Offer Title
                 </label>
                 <input
@@ -949,7 +668,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Redemption Promo Code
                   </label>
                   <input
@@ -958,12 +677,12 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     placeholder="e.g. SUMMER15"
                     value={newCode}
                     onChange={(e) => setNewCode(e.target.value.toUpperCase())}
-                    className="w-full font-mono uppercase px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full uppercase px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Offer Type
                   </label>
                   <select
@@ -981,7 +700,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     {newType === 'percentage' || newType === 'winback'
                       ? 'Discount Percentage (%)'
                       : newType === 'fixed_amount'
@@ -999,7 +718,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Min Spend ({currencySymbol})
                   </label>
                   <input
@@ -1014,7 +733,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Start Date
                   </label>
                   <input
@@ -1027,7 +746,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     End Date
                   </label>
                   <input
@@ -1041,7 +760,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Description / Terms
                 </label>
                 <textarea
@@ -1084,7 +803,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   COUNTER REDEMPTION TERMINAL
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -1122,7 +841,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleRedeem} className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Active Offer
                 </label>
                 <select
@@ -1144,7 +863,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Customer ID, Name, or Phone
                 </label>
                 <input
@@ -1198,7 +917,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   CAMPAIGN RUNNER
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -1222,7 +941,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <div className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Inactivity Threshold
                 </label>
                 <div className="flex gap-2">
@@ -1244,7 +963,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Outreach Channel
                 </label>
                 <div className="flex gap-2">
@@ -1266,7 +985,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Attach Special Offer (Optional)
                 </label>
                 <select
@@ -1287,7 +1006,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               {/* Audience Preview */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] space-y-2">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
+                <span className="text-[10px] uppercase text-subtle-foreground font-bold block">
                   AUDIENCE EVALUATION PREVIEW
                 </span>
                 <div className="grid grid-cols-3 gap-2 text-center">
@@ -1344,7 +1063,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   LOG FEEDBACK
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -1362,7 +1081,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleCreateTestFeedback} className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Customer Name
                 </label>
                 <input
@@ -1376,7 +1095,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Star Rating (1 to 5)
                 </label>
                 <div className="flex items-center gap-2">
@@ -1398,7 +1117,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Customer Feedback Comments
                 </label>
                 <textarea
@@ -1438,7 +1157,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   REPUTATION POLICY
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -1456,7 +1175,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleSaveReviewUrl} className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                   Public Review URL (Google, Yelp, Tripadvisor)
                 </label>
                 <input

@@ -115,17 +115,17 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
                     <div className="font-heading font-black tracking-wider text-[13px] leading-tight">
                       GOODDAY
                     </div>
-                    <div className="text-[9px] tracking-widest text-[#A0A2A8] font-bold">
+                    <div className="text-[11px] tracking-widest text-[#A0A2A8] font-bold">
                       COFFEE
                     </div>
                   </div>
                 </div>
 
                 <div className="text-right leading-none">
-                  <div className="text-[8.5px] font-mono text-[#8E9199] tracking-wider">
+                  <div className="text-[11px] font-mono text-[#8E9199] tracking-wider">
                     EST
                   </div>
-                  <div className="text-[8.5px] font-mono text-[#8E9199] tracking-wider mt-0.5">
+                  <div className="text-[11px] font-mono text-[#8E9199] tracking-wider mt-0.5">
                     2021
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
                 <span>Save to Phone</span>
               </button>
 
-              <div className="mt-2.5 pt-2 border-t border-[#F0EEE6] flex items-center justify-center gap-1.5 text-[8.5px] text-[#8E9199] font-medium">
+              <div className="mt-2.5 pt-2 border-t border-[#F0EEE6] flex items-center justify-center gap-1.5 text-[11px] text-[#8E9199] font-medium">
                 {/* 4-Square Logo icon */}
                 <div className="grid grid-cols-2 gap-[1.5px] w-2.5 h-2.5">
                   <div className="w-1 h-1 rounded-[0.5px] bg-[#3027F5]" />
@@ -277,10 +277,10 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
 
             {/* Text underneath QR */}
             <div className="mt-1">
-              <div className="font-heading font-black text-[9px] tracking-wider text-[#111318]">
+              <div className="font-heading font-black text-[11px] tracking-wider text-[#111318]">
                 SCAN. JOIN.
               </div>
-              <div className="font-heading font-black text-[9px] tracking-wider text-[#111318]">
+              <div className="font-heading font-black text-[11px] tracking-wider text-[#111318]">
                 EARN REWARDS.
               </div>
             </div>
@@ -323,7 +323,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
           
           {/* 01 / JOIN Annotation */}
           <div className="absolute top-[8px] left-[-60px] z-30 pointer-events-none">
-            <div className="font-mono text-[9px] font-bold tracking-widest text-[#111318]">
+            <div className="font-mono text-[11px] font-bold tracking-widest text-[#111318]">
               01 / JOIN
             </div>
             <div className="relative">
@@ -357,7 +357,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
 
           {/* 02 / SHARE Annotation */}
           <div className="absolute top-[10px] right-[-14px] z-30 pointer-events-none text-right">
-            <div className="font-mono text-[9px] font-bold tracking-widest text-[#111318]">
+            <div className="font-mono text-[11px] font-bold tracking-widest text-[#111318]">
               02 / SHARE
             </div>
             <div className="font-handwriting text-[14px] font-bold text-[#111318] leading-[1.15] max-w-[120px] ml-auto mt-0.5">
@@ -409,7 +409,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="font-mono text-[9px] font-bold tracking-widest text-[#111318]">
+            <div className="font-mono text-[11px] font-bold tracking-widest text-[#111318]">
               03 / REWARD
             </div>
             <div className="font-handwriting text-[14px] font-bold text-[#111318] leading-[1.15] max-w-[130px] ml-auto mt-0.5">

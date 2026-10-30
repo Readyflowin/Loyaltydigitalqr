@@ -232,7 +232,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
       {/* 1. Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             SALON & BARBERSHOP SCHEDULER
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -257,7 +257,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TODAY'S BOOKINGS
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -266,7 +266,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             AWAITING CONFIRMATION
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -275,7 +275,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             UPCOMING THIS WEEK
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -284,7 +284,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             COMPLETED TODAY
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -293,7 +293,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             CANCELLED / NO-SHOW
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-subtle-foreground">
@@ -364,7 +364,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
         {/* Filter Controls */}
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#E5E3DB] dark:border-white/10 text-xs">
-          <div className="flex items-center gap-1.5 mr-2 text-subtle-foreground font-mono text-[10px] uppercase font-bold">
+          <div className="flex items-center gap-1.5 mr-2 text-subtle-foreground text-[10px] uppercase font-bold">
             <Filter className="w-3 h-3" /> Filters:
           </div>
 
@@ -558,108 +558,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
                   {VALID_APPOINTMENT_TRANSITIONS[apt.status]?.includes('cancelled') && (
                     <button
                       type="button"
-                      data-testid={`cancel-appointment-${apt.id}`}
-                      onClick={() => setCancellingAppointment(apt)}
-                      className="p-1.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 cursor-pointer"
-                      title="Cancel appointment"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* 5. Appointment Detail Drawer */}
-      {selectedAppointment && (
-        <div className="fixed inset-0 z-50 flex justify-end">
-          <div
-            className="fixed inset-0 bg-black/75 backdrop-blur-xs"
-            onClick={() => setSelectedAppointment(null)}
-          />
-
-          <div
-            data-testid="appointment-detail-drawer"
-            className="relative w-full max-w-lg bg-white dark:bg-[#141412] h-full shadow-2xl z-10 flex flex-col border-l border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] animate-in slide-in-from-right duration-200"
-          >
-            {/* Drawer Header */}
-            <div className="p-6 border-b border-[#E5E3DB] dark:border-white/10 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
-                  APPOINTMENT DETAILS
-                </span>
-                <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
-                  {selectedAppointment.appointmentNumber}
-                </h3>
-              </div>
-              <button
-                type="button"
-                data-testid="close-appointment-drawer-btn"
-                onClick={() => setSelectedAppointment(null)}
-                className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Drawer Content */}
-            <div className="p-6 space-y-6 overflow-y-auto flex-1 text-xs">
-              {/* Customer Info */}
-              <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
-                  CLIENT DETAILS
-                </span>
-                <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
-                  {selectedAppointment.customerName}
-                </div>
-                <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-0.5">
-                  <p>Email: {selectedAppointment.customerEmail}</p>
-                  <p>Phone: {selectedAppointment.customerPhone}</p>
-                  {selectedAppointment.customerId && (
-                    <span className="inline-block mt-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-                      CRM MEMBER LINKED
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Service & Staff Details */}
-              <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-3">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
-                  SERVICE & STYLIST
-                </span>
-                <div className="flex items-center justify-between">
-                  <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]">
-                    {selectedAppointment.serviceSnapshot.name}
-                  </span>
-                  <span className="font-bold font-mono">
-                    {formatMinorUnits(selectedAppointment.price, selectedAppointment.currency)}
-                  </span>
-                </div>
-                <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-1">
-                  <p>Duration: {selectedAppointment.serviceSnapshot.durationMinutes} minutes</p>
-                  <p>Stylist: <strong>{selectedAppointment.staffName}</strong></p>
-                  <p>Location: {selectedAppointment.locationName}</p>
-                  <p>
-                    Scheduled: {new Date(selectedAppointment.startIso).toLocaleDateString()} at{' '}
-                    {formatTimeLabel(selectedAppointment.startIso.split('T')[1].substring(0, 5))}
-                  </p>
-                </div>
-              </div>
-
-              {/* Public Tracking Link Sharing */}
-              <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
-                  CUSTOMER TRACKING & MANAGEMENT LINK
-                </span>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    readOnly
-                    value={`/appointment/${selectedAppointment.bookingToken}`}
+                      data-testid={`cancel-appointment-${apt.id}`} onClick={() => setCancellingAppointment(apt)} className="p-1.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 cursor-pointer" title="Cancel appointment" > <X className="w-4 h-4" /> </button> )} </div> </div> ); })} </div> )} {/* 5. Appointment Detail Drawer */} {selectedAppointment && ( <div className="fixed inset-0 z-50 flex justify-end"> <div className="fixed inset-0 bg-black/75 backdrop-blur-xs" onClick={() => setSelectedAppointment(null)} /> <div data-testid="appointment-detail-drawer" className="relative w-full max-w-lg bg-white dark:bg-[#141412] h-full shadow-2xl z-10 flex flex-col border-l border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] animate-in slide-in-from-right duration-200" > {/* Drawer Header */} <div className="p-6 border-b border-[#E5E3DB] dark:border-white/10 flex items-center justify-between"> <div> <span className="text-[10px] uppercase text-subtle-foreground font-bold block"> APPOINTMENT DETAILS </span> <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]"> {selectedAppointment.appointmentNumber} </h3> </div> <button type="button" data-testid="close-appointment-drawer-btn" onClick={() => setSelectedAppointment(null)} className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer" > <X className="w-5 h-5" /> </button> </div> {/* Drawer Content */} <div className="p-6 space-y-6 overflow-y-auto flex-1 text-xs"> {/* Customer Info */} <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2"> <span className="text-[10px] uppercase text-subtle-foreground font-bold block"> CLIENT DETAILS </span> <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"> {selectedAppointment.customerName} </div> <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-0.5"> <p>Email: {selectedAppointment.customerEmail}</p> <p>Phone: {selectedAppointment.customerPhone}</p> {selectedAppointment.customerId && ( <span className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300"> CRM MEMBER LINKED </span> )} </div> </div> {/* Service & Staff Details */} <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-3"> <span className="text-[10px] uppercase text-subtle-foreground font-bold block"> SERVICE & STYLIST </span> <div className="flex items-center justify-between"> <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]"> {selectedAppointment.serviceSnapshot.name} </span> <span className="font-bold font-mono"> {formatMinorUnits(selectedAppointment.price, selectedAppointment.currency)} </span> </div> <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-1"> <p>Duration: {selectedAppointment.serviceSnapshot.durationMinutes} minutes</p> <p>Stylist: <strong>{selectedAppointment.staffName}</strong></p> <p>Location: {selectedAppointment.locationName}</p> <p> Scheduled: {new Date(selectedAppointment.startIso).toLocaleDateString()} at{' '} {formatTimeLabel(selectedAppointment.startIso.split('T')[1].substring(0, 5))} </p> </div> </div> {/* Public Tracking Link Sharing */} <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2"> <span className="text-[10px] uppercase text-subtle-foreground font-bold block"> CUSTOMER TRACKING & MANAGEMENT LINK </span> <div className="flex items-center gap-2"> <input type="text" readOnly value={`/appointment/${selectedAppointment.bookingToken}`}
                     className="flex-1 px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] font-mono text-[11px] text-[#3027F5] dark:text-[#E4C174]"
                   />
                   <button
@@ -686,7 +585,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
               {/* Customer Notes */}
               {selectedAppointment.customerNotes && (
                 <div className="p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 space-y-1">
-                  <span className="text-[10px] font-mono uppercase text-amber-800 dark:text-amber-400 font-bold block">
+                  <span className="text-[10px] uppercase text-amber-800 dark:text-amber-400 font-bold block">
                     CUSTOMER NOTE
                   </span>
                   <p className="text-xs text-amber-950 dark:text-amber-200">
@@ -697,7 +596,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
               {/* Internal Staff Notes (STAFF ONLY) */}
               <div className="p-4 rounded-2xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/30 space-y-1">
-                <span className="text-[10px] font-mono uppercase text-purple-800 dark:text-purple-400 font-bold block">
+                <span className="text-[10px] uppercase text-purple-800 dark:text-purple-400 font-bold block">
                   INTERNAL STAFF NOTE (AUTHORIZED DASHBOARD ONLY)
                 </span>
                 <p className="text-xs text-purple-950 dark:text-purple-200">
@@ -707,7 +606,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
               {/* Status Timeline */}
               <div className="space-y-2">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
+                <span className="text-[10px] uppercase text-subtle-foreground font-bold block">
                   AUDIT TIMELINE
                 </span>
                 <div className="space-y-2 pl-2 border-l-2 border-[#E5E3DB] dark:border-white/10">

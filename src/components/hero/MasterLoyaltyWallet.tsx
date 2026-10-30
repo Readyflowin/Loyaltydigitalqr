@@ -121,120 +121,7 @@ export const MasterLoyaltyWallet: React.FC<MasterLoyaltyWalletProps> = ({
   );
 
   return (
-    <div className={`relative w-full max-w-[560px] mx-auto select-none ${className}`}>
-      {/* Editorial Step Annotations around the widget */}
-      {!isStandaloneSection && (
-        <>
-          <div className="hidden xl:flex items-center gap-2 absolute -top-8 left-4 text-[11px] font-mono font-bold tracking-widest text-[#E4C174] pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" />
-            <span>01 — SELECT A STORE</span>
-          </div>
-
-          <div className="hidden xl:flex items-center gap-2 absolute top-[44%] -right-16 text-[11px] font-mono font-bold tracking-widest text-[#E4C174] pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" />
-            <span>02 — CHECK YOUR STAMPS</span>
-          </div>
-
-          <div className="hidden xl:flex items-center gap-2 absolute -bottom-8 left-4 text-[11px] font-mono font-bold tracking-widest text-[#E4C174] pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" />
-            <span>03 — REDEEM YOUR REWARD</span>
-          </div>
-        </>
-      )}
-
-      {/* Luxury Device / Interface Shell */}
-      <div className="relative rounded-[32px] bg-gradient-to-b from-[#141412] to-[#0D0D0C] p-4 sm:p-6 border border-[rgba(228,193,116,0.30)] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_35px_rgba(228,193,116,0.06)] transition-all duration-300">
-        
-        {/* Top Header Bar: "MY LOYALTY WALLET" */}
-        <div className="flex items-center justify-between pb-4 border-b border-[rgba(228,193,116,0.18)]">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1916] border border-[rgba(228,193,116,0.30)]">
-            <div className="w-2 h-2 rounded-full bg-[#E4C174] animate-pulse" />
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#E4C174] uppercase">
-              MY LOYALTY WALLET
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1.5 text-[11px] text-[#D0CBC1] font-mono">
-            <CreditCard className="w-3.5 h-3.5 text-[#E4C174]" />
-            <span>1 PASS · 7 STORES</span>
-          </div>
-        </div>
-
-        {/* 1. MASTER LOYALTY CARD (Large Black Luxury Card with Champagne Gold Detailing) */}
-        <div className="relative mt-4 rounded-2xl bg-gradient-to-br from-[#1A1916] via-[#121211] to-[#0A0A09] p-5 sm:p-6 border border-[rgba(228,193,116,0.40)] shadow-lg overflow-hidden group">
-          {/* Subtle gold line pattern texture */}
-          <div
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{
-              backgroundImage:
-                'radial-gradient(#E4C174 0.75px, transparent 0.75px)',
-              backgroundSize: '12px 12px',
-            }}
-          />
-
-          {/* Gold atmospheric accent glow */}
-          <div className="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-[#E4C174]/10 blur-2xl pointer-events-none" />
-
-          {/* Top Row: Gold "L" Brand Mark & loyaltydigitalqr.com */}
-          <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#E4C174] text-[#11100D] font-heading font-black text-base flex items-center justify-center shadow-sm">
-                L
-              </div>
-              <span className="text-xs font-mono font-semibold tracking-wider text-[#E4C174]">
-                loyaltydigitalqr.com
-              </span>
-            </div>
-
-            {/* Fictional Member Identifier */}
-            <div className="text-[11px] font-mono tracking-widest text-[#D0CBC1] bg-[#0E0E0D] px-2.5 py-1 rounded-md border border-[rgba(228,193,116,0.25)]">
-              MEMBER · 001
-            </div>
-          </div>
-
-          {/* Card Middle: Contactless smart chip & Card Headings */}
-          <div className="relative z-10 mt-6 flex items-end justify-between">
-            <div>
-              <div className="text-[10px] font-mono tracking-widest text-[#E4C174] uppercase font-bold">
-                ONE CARD · ALL YOUR STORES
-              </div>
-              <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#F7F3EB] tracking-tight mt-0.5">
-                MASTER LOYALTY CARD
-              </h3>
-            </div>
-
-            {/* Smart EMV Chip Graphic */}
-            <div className="w-9 h-7 rounded-md bg-gradient-to-tr from-[#C4A35A] to-[#F3DFA6] border border-[#E4C174] p-1 flex flex-col justify-between opacity-90 shadow-sm">
-              <div className="h-0.5 bg-[#8C6D2B] w-full" />
-              <div className="h-0.5 bg-[#8C6D2B] w-3/4" />
-              <div className="h-0.5 bg-[#8C6D2B] w-full" />
-            </div>
-          </div>
-        </div>
-
-        {/* 2. "SELECT A STORE" SECTION */}
-        <div className="mt-5">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[11px] font-mono font-bold tracking-widest text-[#D0CBC1] uppercase">
-              SELECT A STORE ({stores.length})
-            </span>
-            <span className="text-[11px] font-mono font-semibold text-[#E4C174]">
-              Active: {selectedStore.category}
-            </span>
-          </div>
-
-          {/* The Seven Store Selectors arranged in a tidy responsive grid */}
-          <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
-            {stores.map((store) => {
-              const isSelected = store.id === selectedStoreId;
-              const hasRewardReady = store.currentStamps >= store.maxStamps;
-
-              return (
-                <button
-                  key={store.id}
-                  type="button"
-                  onClick={() => setSelectedStoreId(store.id)}
-                  aria-label={`${store.name}, ${store.currentStamps} of ${store.maxStamps} stamps collected`}
+    <div className={`relative w-full max-w-[560px] mx-auto select-none ${className}`}> {/* Editorial Step Annotations around the widget */} {!isStandaloneSection && ( <> <div className="hidden xl:flex items-center gap-2 absolute -top-8 left-4 text-[11px] font-bold tracking-widest text-[#E4C174] pointer-events-none"> <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" /> <span>01 — SELECT A STORE</span> </div> <div className="hidden xl:flex items-center gap-2 absolute top-[44%] -right-16 text-[11px] font-bold tracking-widest text-[#E4C174] pointer-events-none"> <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" /> <span>02 — CHECK YOUR STAMPS</span> </div> <div className="hidden xl:flex items-center gap-2 absolute -bottom-8 left-4 text-[11px] font-bold tracking-widest text-[#E4C174] pointer-events-none"> <span className="w-1.5 h-1.5 rounded-full bg-[#E4C174]" /> <span>03 — REDEEM YOUR REWARD</span> </div> </> )} {/* Luxury Device / Interface Shell */} <div className="relative rounded-[32px] bg-gradient-to-b from-[#141412] to-[#0D0D0C] p-4 sm:p-6 border border-[rgba(228,193,116,0.30)] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_35px_rgba(228,193,116,0.06)] transition-all duration-300"> {/* Top Header Bar: "MY LOYALTY WALLET" */} <div className="flex items-center justify-between pb-4 border-b border-[rgba(228,193,116,0.18)]"> <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1916] border border-[rgba(228,193,116,0.30)]"> <div className="w-2 h-2 rounded-full bg-[#E4C174] animate-pulse" /> <span className="text-[10px] font-bold tracking-widest text-[#E4C174] uppercase"> MY LOYALTY WALLET </span> </div> <div className="flex items-center gap-1.5 text-[11px] text-[#D0CBC1] font-mono"> <CreditCard className="w-3.5 h-3.5 text-[#E4C174]" /> <span>1 PASS · 7 STORES</span> </div> </div> {/* 1. MASTER LOYALTY CARD (Large Black Luxury Card with Champagne Gold Detailing) */} <div className="relative mt-4 rounded-2xl bg-gradient-to-br from-[#1A1916] via-[#121211] to-[#0A0A09] p-5 sm:p-6 border border-[rgba(228,193,116,0.40)] shadow-lg overflow-hidden group"> {/* Subtle gold line pattern texture */} <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#E4C174 0.75px, transparent 0.75px)', backgroundSize: '12px 12px', }} /> {/* Gold atmospheric accent glow */} <div className="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-[#E4C174]/10 blur-2xl pointer-events-none" /> {/* Top Row: Gold "L" Brand Mark & loyaltydigitalqr.com */} <div className="relative z-10 flex items-center justify-between"> <div className="flex items-center gap-2"> <div className="w-8 h-8 rounded-xl bg-[#E4C174] text-[#11100D] font-heading font-black text-base flex items-center justify-center shadow-sm"> L </div> <span className="text-xs font-semibold tracking-wider text-[#E4C174]"> loyaltydigitalqr.com </span> </div> {/* Fictional Member Identifier */} <div className="text-[11px] tracking-widest text-[#D0CBC1] bg-[#0E0E0D] px-2.5 py-1 rounded-md border border-[rgba(228,193,116,0.25)]"> MEMBER · 001 </div> </div> {/* Card Middle: Contactless smart chip & Card Headings */} <div className="relative z-10 mt-6 flex items-end justify-between"> <div> <div className="text-[10px] tracking-widest text-[#E4C174] uppercase font-bold"> ONE CARD · ALL YOUR STORES </div> <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#F7F3EB] tracking-tight mt-0.5"> MASTER LOYALTY CARD </h3> </div> {/* Smart EMV Chip Graphic */} <div className="w-9 h-7 rounded-md bg-gradient-to-tr from-[#C4A35A] to-[#F3DFA6] border border-[#E4C174] p-1 flex flex-col justify-between opacity-90 shadow-sm"> <div className="h-0.5 bg-[#8C6D2B] w-full" /> <div className="h-0.5 bg-[#8C6D2B] w-3/4" /> <div className="h-0.5 bg-[#8C6D2B] w-full" /> </div> </div> </div> {/* 2. "SELECT A STORE" SECTION */} <div className="mt-5"> <div className="flex items-center justify-between mb-2.5"> <span className="text-[11px] font-bold tracking-widest text-[#D0CBC1] uppercase"> SELECT A STORE ({stores.length}) </span> <span className="text-[11px] font-semibold text-[#E4C174]"> Active: {selectedStore.category} </span> </div> {/* The Seven Store Selectors arranged in a tidy responsive grid */} <div className="grid grid-cols-7 gap-1.5 sm:gap-2"> {stores.map((store) => { const isSelected = store.id === selectedStoreId; const hasRewardReady = store.currentStamps >= store.maxStamps; return ( <button key={store.id} type="button" onClick={() => setSelectedStoreId(store.id)} aria-label={`${store.name}, ${store.currentStamps} of ${store.maxStamps} stamps collected`}
                   aria-pressed={isSelected}
                   className={`relative flex flex-col items-center justify-center py-2.5 px-1 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#E4C174] min-h-[64px] sm:min-h-[72px] cursor-pointer ${
                     isSelected
@@ -266,63 +153,9 @@ export const MasterLoyaltyWallet: React.FC<MasterLoyaltyWalletProps> = ({
                   </span>
 
                   {/* Stamp Count Pill */}
-                  <span className={`text-[9px] font-mono mt-0.5 ${
+                  <span className={`text-[11px] font-mono mt-0.5 ${
                     isSelected ? 'text-[#E4C174]/90' : 'text-[#AAA499]'
-                  }`}>
-                    {store.currentStamps}/{store.maxStamps}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 3. INDEPENDENT STAMP PROGRESS PANEL */}
-        <div className="mt-4 rounded-2xl bg-[#171614] border border-[rgba(228,193,116,0.30)] p-4 sm:p-5 transition-all duration-300">
-          {/* Header of selected store */}
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-[#22211C] border border-[rgba(228,193,116,0.35)] flex items-center justify-center text-[#E4C174] shadow-sm">
-                {renderStoreIcon(selectedStore.iconName, 'w-5 h-5')}
-              </div>
-              <div>
-                <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#F7F3EB] leading-tight">
-                  {selectedStore.name}
-                </h4>
-                <div className="text-[11px] font-mono text-[#E4C174] mt-0.5 font-semibold">
-                  {selectedStore.rewardRule}
-                </div>
-              </div>
-            </div>
-
-            {/* Stamp count indicator */}
-            <div className="text-right">
-              <div className="font-heading font-black text-xl sm:text-2xl text-[#E4C174] tracking-tight">
-                {selectedStore.currentStamps}/{selectedStore.maxStamps}
-              </div>
-              <div className="text-[10px] font-mono text-[#AAA499] uppercase font-semibold">
-                STAMPS
-              </div>
-            </div>
-          </div>
-
-          {/* Ten Stamp Positions in a Two-Row Layout of Five Positions Each */}
-          <div className="mt-4 pt-3 border-t border-[rgba(228,193,116,0.15)]">
-            <div className="grid grid-cols-5 gap-2 sm:gap-2.5">
-              {Array.from({ length: selectedStore.maxStamps }).map((_, index) => {
-                const isFilled = index < selectedStore.currentStamps;
-                return (
-                  <button
-                    key={index}
-                    type="button"
-                    onClick={() => {
-                      if (!isFilled && index === selectedStore.currentStamps) {
-                        handleAddStamp();
-                      }
-                    }}
-                    title={
-                      isFilled
-                        ? `Visit ${index + 1} stamped`
+                  }`}> {store.currentStamps}/{store.maxStamps} </span> </button> ); })} </div> </div> {/* 3. INDEPENDENT STAMP PROGRESS PANEL */} <div className="mt-4 rounded-2xl bg-[#171614] border border-[rgba(228,193,116,0.30)] p-4 sm:p-5 transition-all duration-300"> {/* Header of selected store */} <div className="flex items-start justify-between gap-3"> <div className="flex items-center gap-2.5"> <div className="w-10 h-10 rounded-xl bg-[#22211C] border border-[rgba(228,193,116,0.35)] flex items-center justify-center text-[#E4C174] shadow-sm"> {renderStoreIcon(selectedStore.iconName, 'w-5 h-5')} </div> <div> <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#F7F3EB] leading-tight"> {selectedStore.name} </h4> <div className="text-[11px] text-[#E4C174] mt-0.5 font-semibold"> {selectedStore.rewardRule} </div> </div> </div> {/* Stamp count indicator */} <div className="text-right"> <div className="font-heading font-black text-xl sm:text-2xl text-[#E4C174] tracking-tight"> {selectedStore.currentStamps}/{selectedStore.maxStamps} </div> <div className="text-[10px] text-[#AAA499] uppercase font-semibold"> STAMPS </div> </div> </div> {/* Ten Stamp Positions in a Two-Row Layout of Five Positions Each */} <div className="mt-4 pt-3 border-t border-[rgba(228,193,116,0.15)]"> <div className="grid grid-cols-5 gap-2 sm:gap-2.5"> {Array.from({ length: selectedStore.maxStamps }).map((_, index) => { const isFilled = index < selectedStore.currentStamps; return ( <button key={index} type="button" onClick={() => { if (!isFilled && index === selectedStore.currentStamps) { handleAddStamp(); } }} title={ isFilled ? `Visit ${index + 1} stamped`
                         : index === selectedStore.currentStamps
                         ? `Click to stamp visit ${index + 1}`
                         : `Visit ${index + 1} (locked)`
@@ -368,7 +201,7 @@ export const MasterLoyaltyWallet: React.FC<MasterLoyaltyWalletProps> = ({
                   <Gift className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-mono font-bold tracking-wider text-[#E4C174] uppercase flex items-center gap-1.5">
+                  <div className="text-xs font-bold tracking-wider text-[#E4C174] uppercase flex items-center gap-1.5">
                     <span>REWARD UNLOCKED</span>
                     <span className="w-2 h-2 rounded-full bg-[#E4C174] animate-ping" />
                   </div>

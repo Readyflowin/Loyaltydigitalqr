@@ -53,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Navigation Column 1: Product */}
           <div>
-            <h4 className="font-mono text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
+            <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Product
             </h4>
             <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
@@ -97,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Navigation Column 2: For Businesses */}
           <div>
-            <h4 className="font-mono text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
+            <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Businesses
             </h4>
             <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
@@ -139,7 +139,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Navigation Column 3: Account & Support */}
           <div>
-            <h4 className="font-mono text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
+            <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Account
             </h4>
             <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">

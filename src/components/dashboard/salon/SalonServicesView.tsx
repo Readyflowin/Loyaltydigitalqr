@@ -194,7 +194,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 1. Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             SALON & BARBERSHOP CATALOGUE
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -231,7 +231,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL SERVICES
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -240,7 +240,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE BOOKABLE
           </span>
           <div className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -249,7 +249,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             AVG DURATION
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -258,7 +258,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE STYLISTS
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -343,7 +343,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                 <div className="space-y-3">
                   {/* Top Bar with Category & Active Toggle */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground">
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground">
                       {service.category || 'General'}
                     </span>
 
@@ -387,7 +387,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
                   {/* Assigned Staff */}
                   <div className="pt-2 border-t border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
                       ASSIGNED STYLISTS ({assignedStaff.length})
                     </span>
                     <div className="flex items-center gap-1.5 flex-wrap">

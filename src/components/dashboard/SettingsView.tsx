@@ -201,7 +201,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
     <div data-testid="settings-view" className="space-y-6 animate-in fade-in duration-150">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             WORKSPACE CONFIGURATION
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -359,7 +359,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                   className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase text-[#3027F5] dark:text-[#E4C174]">
+                    <span className="text-[10px] font-bold uppercase text-[#3027F5] dark:text-[#E4C174]">
                       {idx === 0 ? 'Primary location' : `Location ${idx + 1}`}
                     </span>
                     {idx > 0 && canManage && (
@@ -554,14 +554,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                             onChange={(e) =>
                               void run('Role', () => businessService.updateMemberRole(business.id, member.uid, e.target.value as TeamRole))
                             }
-                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-[11px] font-mono uppercase"
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-[11px] uppercase"
                           >
                             <option value="manager">Manager</option>
                             <option value="staff">Staff</option>
                             <option value="receptionist">Receptionist</option>
                           </select>
                         ) : (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
                             {member.role}
                           </span>
                         )}
@@ -622,7 +622,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">What each role can do</h4>
               <div className="overflow-x-auto rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
                 <table className="w-full text-xs text-left">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] font-mono uppercase text-[10px] text-subtle-foreground">
+                  <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] uppercase text-[10px] text-subtle-foreground">
                     <tr>
                       <th className="p-3.5">Permission</th>
                       {rolesList.map((r) => (
@@ -666,7 +666,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
             <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">CURRENT PLAN</span>
+                  <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">CURRENT PLAN</span>
                   <div className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB]">
                     {business.planName || 'Starter'} · {regionalPrice}
                   </div>
@@ -727,7 +727,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">TEAM INVITATION</span>
+                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">TEAM INVITATION</span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">Invite a team member</h3>
               </div>
               <button

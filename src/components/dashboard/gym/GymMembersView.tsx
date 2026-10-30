@@ -143,7 +143,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#D97706]/10 text-[#D97706] text-[10px] font-mono font-bold uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#D97706]/10 text-[#D97706] text-[10px] font-bold uppercase tracking-wider">
               FITNESS & WELLNESS
             </span>
           </div>
@@ -226,7 +226,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             </div>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-subtle-foreground text-[10px] uppercase font-mono font-bold mr-1">Status:</span>
+              <span className="text-subtle-foreground text-[10px] uppercase font-bold mr-1">Status:</span>
               {(['all', 'active', 'expired', 'suspended'] as const).map((st) => (
                 <button
                   key={st}
@@ -260,7 +260,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table data-testid="gym-members-table" className="w-full text-left text-xs">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#1A1916] border-b border-[#E5E3DB] dark:border-white/10 text-subtle-foreground font-mono uppercase text-[10px]">
+                  <thead className="bg-[#F8F7F2] dark:bg-[#1A1916] border-b border-[#E5E3DB] dark:border-white/10 text-subtle-foreground uppercase text-[10px]">
                     <tr>
                       <th className="py-3 px-4">Member</th>
                       <th className="py-3 px-4">Plan Name</th>
@@ -332,7 +332,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded-md bg-[#D97706]/10 text-[#D97706] text-[10px] font-mono font-bold uppercase">
+                  <span className="px-2 py-0.5 rounded-md bg-[#D97706]/10 text-[#D97706] text-[10px] font-bold uppercase">
                     {p.planType.replace('_', ' ')}
                   </span>
                   <span className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">

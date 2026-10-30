@@ -322,7 +322,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase block">
+              <span className="text-[10px] font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase block">
                 ORDER RECEIVED · {createdOrder.orderNumber}
               </span>
               <h4 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB] mt-0.5">

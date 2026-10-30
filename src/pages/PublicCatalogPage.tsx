@@ -100,7 +100,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#059669] uppercase hidden sm:inline">
+            <span className="text-[10px] font-bold tracking-widest text-[#059669] uppercase hidden sm:inline">
               DIGITAL LOOKBOOK
             </span>
 
@@ -123,7 +123,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
         <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#059669] uppercase block mb-1">
+              <span className="text-[10px] font-bold tracking-widest text-[#059669] uppercase block mb-1">
                 IN-STORE CURATION
               </span>
               <h2 className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">

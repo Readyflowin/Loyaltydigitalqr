@@ -98,7 +98,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
           /* Card Builder Interactive Form */
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 INTERACTIVE CARD BUILDER
               </span>
             </div>
@@ -115,7 +115,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Business Name */}
                 <div>
-                  <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Business Name
                   </label>
                   <input
@@ -130,7 +130,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Industry Category */}
                 <div>
-                  <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Industry Type
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -158,7 +158,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Stamps Milestone */}
                 <div>
-                  <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Stamps Required for Reward
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -181,7 +181,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Reward Description */}
                 <div>
-                  <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Reward Unlocked
                   </label>
                   <input
@@ -196,7 +196,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Email Input */}
                 <div>
-                  <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                     Your Work Email (For Free 30-Day Trial)
                   </label>
                   <input
@@ -215,44 +215,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                     theme === 'light'
                       ? 'bg-[#3027F5] text-white hover:bg-[#2319D8]'
                       : 'bg-[#E4C174] text-[#11100D] hover:bg-[#EBD294]'
-                  }`}
-                >
-                  <span>Claim 30-Day Free Trial</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-
-                <div className="text-[11px] text-center text-[#60646C] dark:text-[#AAA499]">
-                  No credit card required · Instant setup in under 3 minutes
-                </div>
-              </form>
-
-              {/* Live Card Preview Column */}
-              <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#0E0E0D] border border-black/10 dark:border-white/10 flex flex-col items-center">
-                <div className="text-[10px] font-mono font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-3">
-                  LIVE CUSTOMER PREVIEW
-                </div>
-
-                {/* Preview Card */}
-                <div className="w-full max-w-[260px] rounded-2xl bg-white dark:bg-[#1C1A16] border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg overflow-hidden">
-                  <div className="bg-[#111318] text-white p-3 flex items-center justify-between text-xs font-bold">
-                    <span className="truncate">{businessName || 'Business Name'}</span>
-                    <span className="text-[9px] font-mono text-white/50">MEMBER</span>
-                  </div>
-
-                  <div className="p-4 text-center">
-                    <div className="text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]">
-                      Collect {stampsGoal} visits, get:
-                    </div>
-                    <div className="text-sm font-extrabold text-[#3027F5] dark:text-[#E4C174] mt-0.5">
-                      {rewardTitle || 'Free Reward'}
-                    </div>
-
-                    {/* Stamps preview */}
-                    <div className="grid grid-cols-4 gap-1.5 my-3">
-                      {Array.from({ length: stampsGoal }).map((_, i) => (
-                        <div
-                          key={i}
-                          className={`h-7 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  }`} > <span>Claim 30-Day Free Trial</span> <ArrowRight className="w-4 h-4" /> </button> <div className="text-[11px] text-center text-[#60646C] dark:text-[#AAA499]"> No credit card required · Instant setup in under 3 minutes </div> </form> {/* Live Card Preview Column */} <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#0E0E0D] border border-black/10 dark:border-white/10 flex flex-col items-center"> <div className="text-[10px] font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-3"> LIVE CUSTOMER PREVIEW </div> {/* Preview Card */} <div className="w-full max-w-[260px] rounded-2xl bg-white dark:bg-[#1C1A16] border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg overflow-hidden"> <div className="bg-[#111318] text-white p-3 flex items-center justify-between text-xs font-bold"> <span className="truncate">{businessName || 'Business Name'}</span> <span className="text-[11px] text-white/50">MEMBER</span> </div> <div className="p-4 text-center"> <div className="text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]"> Collect {stampsGoal} visits, get: </div> <div className="text-sm font-extrabold text-[#3027F5] dark:text-[#E4C174] mt-0.5"> {rewardTitle || 'Free Reward'} </div> {/* Stamps preview */} <div className="grid grid-cols-4 gap-1.5 my-3"> {Array.from({ length: stampsGoal }).map((_, i) => ( <div key={i} className={`h-7 rounded-full flex items-center justify-center text-[10px] font-bold ${
                             i < 3
                               ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D]'
                               : 'border border-dashed border-black/20 dark:border-white/20 text-black/30 dark:text-white/30'

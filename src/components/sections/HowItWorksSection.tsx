@@ -47,7 +47,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         {/* Section Header */}
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
-            <span className="text-[11px] font-mono font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SEAMLESS 3-STEP SETUP
             </span>
           </div>
@@ -189,7 +189,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               {/* Step 02 Preview: Counter QR Standee Printout */}
               {activeStep === 1 && (
                 <div className="w-full max-w-sm bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-2xl text-center animate-in zoom-in-95 duration-200">
-                  <div className="text-[10px] font-mono font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
+                  <div className="text-[10px] font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
                     PRINTABLE COUNTER STANDEE
                   </div>
                   <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-2">

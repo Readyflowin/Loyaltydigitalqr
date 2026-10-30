@@ -56,7 +56,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               WORKSPACE SWITCHER
             </span>
             <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -127,7 +127,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                 {/* Sub-locations list if multiple */}
                 {biz.locations.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
-                    <span className="text-[10px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
+                    <span className="text-[10px] uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
                       Counters / Locations:
                     </span>
                     {biz.locations.map((loc) => {

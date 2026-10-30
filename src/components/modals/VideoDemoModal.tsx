@@ -44,7 +44,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
                   i === 1 ? 'bg-[#3027F5] text-white' : 'border border-dashed border-white/30 text-white/40'
                 }`}
               >
@@ -130,7 +130,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
         <div className="p-5 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               1-MINUTE PRODUCT WALKTHROUGH
             </span>
           </div>
@@ -152,7 +152,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
 
         {/* Step Explanation & Navigation */}
         <div className="p-6">
-          <div className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+          <div className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
             {steps[currentStep].subtitle}
           </div>
           <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">

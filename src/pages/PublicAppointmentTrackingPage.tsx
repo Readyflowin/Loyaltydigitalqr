@@ -137,7 +137,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               APPOINTMENT TRACKER
             </span>
             <span

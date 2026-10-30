@@ -82,7 +82,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               {isEditing ? 'UPDATE RECORD' : 'NEW ENROLLMENT'}
             </span>
             <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -103,7 +103,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
-            <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
               Customer Full Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -117,7 +117,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
           </div>
 
           <div>
-            <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
               Email Address (Optional)
             </label>
             <input
@@ -130,7 +130,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
           </div>
 
           <div>
-            <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
               Mobile Phone Number (Optional)
             </label>
             <input
@@ -144,7 +144,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
 
           {isEditing && (
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Account Status
               </label>
               <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
           )}
 
           <div>
-            <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
               Internal Staff Notes (Optional)
             </label>
             <textarea

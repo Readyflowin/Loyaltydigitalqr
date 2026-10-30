@@ -272,7 +272,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                       <span className="text-sm font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                         {ticket.tableName || ticket.pickupLabel || 'Table Order'}
                       </span>
-                      <span className="text-[10px] font-mono font-bold uppercase text-subtle-foreground">
+                      <span className="text-[10px] font-bold uppercase text-subtle-foreground">
                         {ticket.items.reduce((acc, i) => acc + i.quantity, 0)} {ticket.items.reduce((acc, i) => acc + i.quantity, 0) === 1 ? 'ITEM' : 'ITEMS'}
                       </span>
                     </div>

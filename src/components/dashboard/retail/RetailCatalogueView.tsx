@@ -250,7 +250,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#059669]/10 text-[#059669] text-[10px] font-mono font-bold uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#059669]/10 text-[#059669] text-[10px] font-bold uppercase tracking-wider">
               RETAIL & MERCHANDISE
             </span>
           </div>
@@ -298,7 +298,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       {/* 2. Key Metrics Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PRODUCTS
           </span>
           <div data-testid="metric-active-products" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -308,7 +308,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             IN-STOCK AVAILABLE
           </span>
           <div data-testid="metric-available-products" className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -318,7 +318,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             QUALIFYING PURCHASES
           </span>
           <div data-testid="metric-recorded-sales" className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -328,7 +328,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL STORE REVENUE
           </span>
           <div data-testid="metric-store-revenue" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -696,7 +696,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-4 my-8">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#059669] uppercase block">
+                <span className="text-[10px] font-bold tracking-widest text-[#059669] uppercase block">
                   IN-STORE SALE
                 </span>
                 <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">

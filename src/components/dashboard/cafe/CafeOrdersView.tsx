@@ -132,7 +132,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
       {/* 1. Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             CAFÉ & RESTAURANT ORDER MANAGEMENT
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -157,7 +157,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             NEW AWAITING
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -166,7 +166,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             IN PREPARATION
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -175,7 +175,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             READY TO SERVE
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -184,7 +184,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             COMPLETED TODAY
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -193,7 +193,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] col-span-2 sm:col-span-1">
-          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
             FULFILLED SALES
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -497,7 +497,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
             <div className="p-6 space-y-6 overflow-y-auto flex-1 text-xs">
               {/* Customer Tracking Link Sharing */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] space-y-2">
-                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
+                <span className="text-[10px] uppercase text-subtle-foreground font-bold block">
                   CUSTOMER LIVE TRACKING LINK
                 </span>
                 <div className="flex items-center gap-2">

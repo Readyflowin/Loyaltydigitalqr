@@ -27,7 +27,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb / Back Navigation */}
-        <div className="mb-8 flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#60646C] dark:text-[#AAA499]">
+        <div className="mb-8 flex items-center gap-2 text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499]">
           <Link href="/" className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors">
             Home
           </Link>
@@ -39,7 +39,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
             <Globe className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
-            <span className="text-[11px] font-mono font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SELECT YOUR REGION
             </span>
           </div>
@@ -71,7 +71,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     US
                   </div>
                   <div>
-                    <span className="text-[11px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+                    <span className="text-[11px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                       REGION
                     </span>
                     <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -104,7 +104,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
 
               {/* Highlights */}
               <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
+                <div className="text-[11px] font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
                 {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (
@@ -138,7 +138,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     IN
                   </div>
                   <div>
-                    <span className="text-[11px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+                    <span className="text-[11px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                       REGION
                     </span>
                     <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -171,7 +171,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
 
               {/* Highlights */}
               <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5 space-y-2.5">
-                <div className="text-[11px] font-mono font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
+                <div className="text-[11px] font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
                 {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (
@@ -201,7 +201,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
         <div className="mt-16 sm:mt-24 max-w-4xl mx-auto rounded-3xl bg-[#F0EEE6] dark:bg-[#121211] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] p-8 sm:p-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div>
-              <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 COMPLETE INCLUSION
               </span>
               <h3 className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1">

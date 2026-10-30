@@ -66,7 +66,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb / Region Switcher */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 text-xs font-mono uppercase tracking-wider text-[#60646C] dark:text-[#AAA499]">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499]">
           <div className="flex items-center gap-2">
             <Link href="/" className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors">
               Home
@@ -91,7 +91,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
-            <span className="text-[11px] font-mono font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-[11px] font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
               INDIA · INR
             </span>
           </div>
@@ -112,7 +112,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
             {/* Header: Starter Plan */}
             <div className="flex items-start justify-between pb-6 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+                <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                   STARTER PLAN
                 </span>
                 <h2 className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -148,7 +148,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
 
             {/* Features Checklist */}
             <div className="mt-8 space-y-3.5">
-              <div className="text-xs font-mono font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-4">
+              <div className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-4">
                 PLATFORM CAPABILITIES INCLUDED:
               </div>
 
@@ -188,7 +188,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
         {/* Trial Breakdown Steps */}
         <div className="mt-16 sm:mt-24 max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               TRIAL DETAILS
             </span>
             <h3 className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1">
@@ -238,7 +238,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
         {/* Concise FAQ Accordion */}
         <div className="mt-16 sm:mt-24 max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               COMMON QUESTIONS
             </span>
             <h3 className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1">

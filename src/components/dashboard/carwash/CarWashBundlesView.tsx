@@ -536,7 +536,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
                     value={vehiclePlate}
                     onChange={(e) => setVehiclePlate(e.target.value)}
                     placeholder="E.g., CA-7X9821"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-border/80 bg-background text-foreground uppercase font-mono focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-border/80 bg-background text-foreground uppercase focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     data-testid="pass-vehicle-plate-input"
                   />
                 </div>

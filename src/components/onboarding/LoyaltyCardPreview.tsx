@@ -38,7 +38,7 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
             <div className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] truncate max-w-[150px]">
               {displayBiz}
             </div>
-            <div className="text-[10px] font-mono text-[#60646C] dark:text-[#AAA499] uppercase">
+            <div className="text-[10px] text-[#60646C] dark:text-[#AAA499] uppercase">
               {displayProg}
             </div>
           </div>
@@ -57,7 +57,7 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
         }}
       >
         <span
-          className="text-[10px] font-mono uppercase font-bold tracking-wider block"
+          className="text-[10px] uppercase font-bold tracking-wider block"
           style={{ color: accentColor }}
         >
           EARN REWARD AT {stampsRequired} STAMPS

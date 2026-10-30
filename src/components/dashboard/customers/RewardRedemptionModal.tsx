@@ -93,7 +93,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               REWARD REDEMPTION WORKFLOW
             </span>
             <h3 className="text-lg sm:text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -118,7 +118,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400 block">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400 block">
                 REDEMPTION CONFIRMED
               </span>
               <h4 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -167,7 +167,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
               <Gift className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-700 dark:text-amber-300 block">
+                <span className="text-[10px] uppercase tracking-wider font-bold text-amber-700 dark:text-amber-300 block">
                   VOUCHER #{targetReward.voucherCode}
                 </span>
                 <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
@@ -187,7 +187,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             {/* Staff PIN input */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Staff Confirmation PIN
                 </label>
                 <span className="text-[10px] font-mono text-subtle-foreground">

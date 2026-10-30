@@ -43,7 +43,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </button>
 
         <div>
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-subtle-foreground dark:text-[#AAA499] uppercase tracking-wider">
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-subtle-foreground dark:text-[#AAA499] uppercase tracking-wider">
             <span>{breadcrumb}</span>
             <span>/</span>
             <span className="text-[#3027F5] dark:text-[#E4C174] font-bold">{activeBusiness.name}</span>
@@ -88,7 +88,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {notificationsOpen && (
             <div className="absolute right-0 top-full mt-2 w-80 p-3 bg-white dark:bg-[#1A1916] rounded-2xl shadow-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-black/5 dark:border-white/5">
-                <span className="text-xs font-mono font-bold uppercase text-[#111318] dark:text-[#F7F3EB]">
+                <span className="text-xs font-bold uppercase text-[#111318] dark:text-[#F7F3EB]">
                   Activity Notifications
                 </span>
                 <span className="text-[10px] font-mono text-subtle-foreground">

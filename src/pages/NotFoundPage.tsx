@@ -15,7 +15,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
       <div className="max-w-xl w-full text-center space-y-6">
         
         {/* Status Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider">
           <FileQuestion className="w-4 h-4" />
           <span>404 — PAGE NOT FOUND</span>
         </div>
@@ -62,7 +62,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
 
         {/* Quick Industry Navigation Links */}
         <div className="pt-8 border-t border-black/10 dark:border-white/10">
-          <p className="text-[11px] font-mono text-subtle-foreground uppercase tracking-wider mb-3">
+          <p className="text-[11px] text-subtle-foreground uppercase tracking-wider mb-3">
             Explore Industry Loyalty Programs
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">

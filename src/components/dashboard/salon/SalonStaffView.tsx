@@ -254,7 +254,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
       {/* 1. Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             STYLISTS & STAFF ROSTER
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -328,7 +328,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                 {/* Location & Upcoming Bookings */}
                 <div className="grid grid-cols-2 gap-2 text-xs pt-1">
                   <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
+                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <MapPin className="w-3 h-3" /> Location
                     </span>
                     <span className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate block">
@@ -337,7 +337,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
+                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <Calendar className="w-3 h-3" /> Upcoming
                     </span>
                     <span className="font-bold text-[#3027F5] dark:text-[#E4C174]">
@@ -348,7 +348,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
                 {/* Assigned Services */}
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
+                  <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
                     SERVICES PROVIDED ({assignedServices.length})
                   </span>
                   <div className="flex items-center gap-1 flex-wrap">

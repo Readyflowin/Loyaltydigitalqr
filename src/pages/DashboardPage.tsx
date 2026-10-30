@@ -448,7 +448,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
         return (
           <div className="space-y-6 max-w-3xl mx-auto">
             <div>
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+              <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                 SUPPORT & GUIDES
               </span>
               <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -573,7 +573,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
           />
           <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] p-6 shadow-2xl z-10 border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-black/10 dark:border-white/10">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
+              <span className="text-[10px] uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
                 LIVE PASS PREVIEW
               </span>
               <button

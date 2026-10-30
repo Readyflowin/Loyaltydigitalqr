@@ -96,7 +96,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               LIVE TRACKER
             </span>
             <span
@@ -203,34 +203,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                             : isDone
                             ? 'text-[#111318] dark:text-[#F7F3EB]'
                             : 'text-subtle-foreground'
-                        }`}
-                      >
-                        {stg.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 3. Items & Receipt Breakdown */}
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
-            <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider">
-              Ordered Items ({order.items.length})
-            </h3>
-            <span className="text-xs font-mono text-subtle-foreground">
-              {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {order.items.map((item, idx) => (
-              <div
-                key={idx}
-                data-testid={`tracking-item-${idx}`}
+                        }`} > {stg.label} </span> </div> ); })} </div> </div> )} </div> {/* 3. Items & Receipt Breakdown */} <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4"> <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10"> <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider"> Ordered Items ({order.items.length}) </h3> <span className="text-xs text-subtle-foreground"> {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </span> </div> <div className="space-y-3"> {order.items.map((item, idx) => ( <div key={idx} data-testid={`tracking-item-${idx}`}
                 className="flex items-start justify-between gap-3 text-xs"
               >
                 <div className="space-y-0.5">
