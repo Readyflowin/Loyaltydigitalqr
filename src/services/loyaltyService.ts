@@ -273,7 +273,7 @@ class LoyaltyService {
     const phone = input.phoneNumber.trim();
     const phoneKey = normalizePhone(phone);
     if (name.length < 2) return { success: false, error: 'Please enter your name.' };
-    if (phoneKey.length < 7) return { success: false, error: 'Please enter a valid phone number.' };
+    if (phoneKey.length < 7 || phoneKey.length > 15) return { success: false, error: 'Please enter a valid phone number.' };
     const email = input.email?.trim().toLowerCase() || undefined;
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return { success: false, error: 'Please enter a valid email address or leave it blank.' };

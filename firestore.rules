@@ -1,0 +1,323 @@
+rules_version = '2';
+
+// =============================================================================
+// Loyaltydigitalqr - Firestore Security Rules
+//
+// Paste this whole file into: Firebase console > Firestore Database > Rules > Publish
+//
+// Model
+//   businesses/{bizId}                 private workspace; readable only by its members
+//   businesses/{bizId}/<collections>   module data; members only, except the narrow
+//                                      public access customer pages need (below)
+//   publicProfiles/{bizId}             public name/colours/locations (no PINs, emails)
+//   slugs/{slug}                       public slug -> businessId
+//   users/{uid}                        each user's own profile
+//
+// Roles (businesses/{bizId}.members[uid].role)
+//   owner, manager  -> settings, team, catalogue/menu/services, offers
+//   staff, receptionist -> day-to-day operations (stamps, customers, orders, bookings)
+//
+// Customers (signed out) can only:
+//   - read published catalogue data (menus, services, products, free time slots)
+//   - read ONE order / appointment / loyalty card by its unguessable id
+//   - create an order, a booking, or join the loyalty program (validated below)
+//   - cancel their own booking while it is still requested/confirmed
+// Nobody can ever list another business's customers, orders or bookings.
+// =============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------- helpers
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function bizPath(bizId) {
+      return /databases/$(database)/documents/businesses/$(bizId);
+    }
+
+    function bizData(bizId) {
+      return get(bizPath(bizId)).data;
+    }
+
+    function isMember(bizId) {
+      return signedIn()
+        && exists(bizPath(bizId))
+        && request.auth.uid in bizData(bizId).memberUids;
+    }
+
+    function myRole(bizId) {
+      return bizData(bizId).members[request.auth.uid].role;
+    }
+
+    function isManager(bizId) {
+      return isMember(bizId) && myRole(bizId) in ['owner', 'manager'];
+    }
+
+    function isOwner(bizId) {
+      return signedIn() && bizData(bizId).ownerUid == request.auth.uid;
+    }
+
+    function unchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    function docPath(bizId, coll, id) {
+      return /databases/$(database)/documents/businesses/$(bizId)/$(coll)/$(id);
+    }
+
+    function isShortString(v, max) {
+      return v is string && v.size() > 0 && v.size() <= max;
+    }
+
+    // ------------------------------------------------------------------ users
+
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // ------------------------------------------------------- public lookups
+
+    match /slugs/{slug} {
+      allow get: if true;
+      allow list: if false;
+      // Reserved once, by a member of the business it points to.
+      allow create: if signedIn()
+        && slug.matches('^[a-z0-9-]{1,64}$')
+        && request.resource.data.keys().hasOnly(['businessId'])
+        && isMember(request.resource.data.businessId);
+      allow update: if false;
+      allow delete: if signedIn() && isOwner(resource.data.businessId);
+    }
+
+    match /publicProfiles/{bizId} {
+      allow get: if true;
+      allow list: if false;
+      allow create, update: if isManager(bizId)
+        && request.resource.data.id == bizId
+        && !request.resource.data.keys().hasAny(['memberUids', 'members', 'ownerUid', 'contactEmail'])
+        && request.resource.data.locations is list;
+      allow delete: if isOwner(bizId);
+    }
+
+    // ------------------------------------------------------------- businesses
+
+    match /businesses/{bizId} {
+      // Members only. The dashboard query is `where memberUids array-contains uid`.
+      allow read: if signedIn() && request.auth.uid in resource.data.memberUids;
+
+      // Creating a workspace: the creator is the sole owner.
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.memberUids == [request.auth.uid]
+        && request.resource.data.members.keys().hasOnly([request.auth.uid])
+        && request.resource.data.members[request.auth.uid].role == 'owner'
+        && request.resource.data.id == bizId
+        && isShortString(request.resource.data.name, 120);
+
+      // Owners/managers edit the workspace. Ownership, creation and trial
+      // fields can never be changed from the client; the slug is set once.
+      allow update: if isManager(bizId)
+        && unchanged(['ownerUid', 'createdAt', 'trialEndsAt', 'planName', 'planPrice', 'id'])
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['slug']) || resource.data.slug == '')
+        && request.resource.data.ownerUid in request.resource.data.memberUids
+        && request.resource.data.members[resource.data.ownerUid].role == 'owner';
+
+      // Accepting an invite: a verified user adds only themselves, with exactly
+      // the invited role, while the invite exists (it is deleted in the same batch).
+      allow update: if signedIn()
+        && request.auth.token.email_verified == true
+        && !(request.auth.uid in resource.data.memberUids)
+        && exists(/databases/$(database)/documents/businesses/$(bizId)/invites/$(request.auth.token.email.lower()))
+        && onlyChanges(['memberUids', 'members'])
+        && request.resource.data.memberUids.hasAll(resource.data.memberUids)
+        && request.resource.data.memberUids.size() == resource.data.memberUids.size() + 1
+        && request.auth.uid in request.resource.data.memberUids
+        && request.resource.data.members.diff(resource.data.members).affectedKeys().hasOnly([request.auth.uid])
+        && request.resource.data.members[request.auth.uid].role
+             == get(/databases/$(database)/documents/businesses/$(bizId)/invites/$(request.auth.token.email.lower())).data.role
+        && request.resource.data.members[request.auth.uid].email == request.auth.token.email.lower();
+
+      allow delete: if isOwner(bizId);
+
+      // ---------------------------------------------------- team invites
+      match /invites/{email} {
+        allow read, write: if isManager(bizId);
+        // The invited person can see and decline their own invite.
+        allow get, delete: if signedIn() && request.auth.token.email.lower() == email;
+      }
+
+      // ------------------------------------------- single config documents
+      match /config/{docId} {
+        // The loyalty program is shown on the public loyalty card page.
+        allow get: if docId == 'loyaltyProgram' || isMember(bizId);
+        allow list: if isMember(bizId);
+        allow write: if isManager(bizId);
+      }
+
+      // ------------------------- public catalogue data (read by everyone)
+      match /menus/{id}            { allow read: if true; allow write: if isManager(bizId); }
+      match /menuCategories/{id}   { allow read: if true; allow write: if isManager(bizId); }
+      match /menuItems/{id}        { allow read: if true; allow write: if isMember(bizId); }
+      match /tables/{id}           { allow read: if true; allow write: if isManager(bizId); }
+      match /salonServices/{id}    { allow read: if true; allow write: if isManager(bizId); }
+      match /salonStaff/{id}       { allow read: if true; allow write: if isManager(bizId); }
+      match /retailCategories/{id} { allow read: if true; allow write: if isManager(bizId); }
+      match /retailProducts/{id}   { allow read: if true; allow write: if isManager(bizId); }
+
+      // ----------------------------------- manager-maintained private data
+      match /qrCodes/{id}          { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /gymPlans/{id}         { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /carwashServices/{id}  { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /carwashBundles/{id}   { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /serviceItems/{id}     { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /offers/{id}           { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /segments/{id}         { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      match /campaignRuns/{id}     { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+
+      // -------------------------------- day-to-day operations (any member)
+      match /gymMembers/{id}       { allow read, write: if isMember(bizId); }
+      match /gymCheckIns/{id}      { allow read, write: if isMember(bizId); }
+      match /gymClasses/{id}       { allow read, write: if isMember(bizId); }
+      match /carwashPasses/{id}    { allow read, write: if isMember(bizId); }
+      match /carwashVisits/{id}    { allow read, write: if isMember(bizId); }
+      match /serviceJobs/{id}      { allow read, write: if isMember(bizId); }
+      match /retailPurchases/{id}  { allow read, write: if isMember(bizId); }
+      match /offerRedemptions/{id} { allow read, write: if isMember(bizId); }
+      match /feedback/{id}         { allow read, write: if isMember(bizId); }
+
+      // ------------------------------------------------- loyalty customers
+      // Full customer records: members only. Visitors may only create a brand
+      // new, zero-balance record while reserving its phone number in the same batch.
+      match /customers/{id} {
+        allow read, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          request.resource.data.id == id
+          && request.resource.data.businessId == bizId
+          && request.resource.data.currentStamps == 0
+          && request.resource.data.lifetimeStamps == 0
+          && request.resource.data.totalVisits == 0
+          && request.resource.data.rewards.size() == 0
+          && request.resource.data.status == 'active'
+          && isShortString(request.resource.data.name, 80)
+          && !request.resource.data.keys().hasAny(['notes'])
+          && request.resource.data.phoneNumber is string
+          && getAfter(docPath(bizId, 'customerPhones',
+               request.resource.data.phoneNumber.replace('[^0-9]', ''))).data.customerId == id
+        );
+      }
+
+      // Phone-number uniqueness index. Visitors can only create (never read or
+      // overwrite), so a second sign-up with the same number fails.
+      match /customerPhones/{phoneKey} {
+        allow read, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          phoneKey.matches('^[0-9]{7,15}$')
+          && request.resource.data.keys().hasOnly(['customerId'])
+          && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+        );
+      }
+
+      // What a customer sees on their own card (no notes, contact details or history).
+      match /memberCards/{id} {
+        allow get: if true;
+        allow list, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          request.resource.data.id == id
+          && request.resource.data.currentStamps == 0
+          && request.resource.data.rewards.size() == 0
+          && existsAfter(docPath(bizId, 'customers', id))
+        );
+      }
+
+      match /loyaltyEvents/{id} {
+        allow read, update, delete: if isMember(bizId);
+        // Visitors may only log their own self sign-up.
+        allow create: if isMember(bizId) || (
+          request.resource.data.type == 'customer_enrolled'
+          && request.resource.data.businessId == bizId
+          && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+        );
+      }
+
+      // ------------------------------------------------------------ orders
+      // Document id is the unguessable part of the tracking link.
+      match /orders/{orderId} {
+        allow get: if true;
+        allow list, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          orderId.matches('^[a-z0-9]{32}$')
+          && request.resource.data.id == orderId
+          && request.resource.data.businessId == bizId
+          && request.resource.data.trackingToken == bizId + '.' + orderId
+          && request.resource.data.status == 'new'
+          && request.resource.data.statusHistory.size() == 1
+          && request.resource.data.items is list
+          && request.resource.data.items.size() > 0
+          && request.resource.data.items.size() <= 50
+          && request.resource.data.total is number
+          && request.resource.data.total >= 0
+          && request.resource.data.total == request.resource.data.subtotal
+          && request.resource.data.paymentStatus == 'paid_at_counter'
+        );
+      }
+
+      // ------------------------------------------------------ appointments
+      match /appointments/{aptId} {
+        allow get: if true;
+        allow list, delete: if isMember(bizId);
+        allow update: if isMember(bizId) || (
+          // Customer cancelling their own booking from the tracking link.
+          resource.data.status in ['requested', 'confirmed']
+          && request.resource.data.status == 'cancelled'
+          && onlyChanges(['status', 'statusHistory', 'cancellationReason', 'updatedAt'])
+          && request.resource.data.statusHistory.size() == resource.data.statusHistory.size() + 1
+        );
+        allow create: if isMember(bizId) || (
+          aptId.matches('^[a-z0-9]{32}$')
+          && request.resource.data.id == aptId
+          && request.resource.data.businessId == bizId
+          && request.resource.data.bookingToken == bizId + '.' + aptId
+          && request.resource.data.status in ['requested', 'confirmed']
+          && request.resource.data.bookingSource == 'public_web'
+          && request.resource.data.loyaltyIssued == false
+          && !request.resource.data.keys().hasAny(['internalNotes'])
+          && isShortString(request.resource.data.customerName, 80)
+          && exists(docPath(bizId, 'salonServices', request.resource.data.serviceId))
+          && exists(docPath(bizId, 'salonStaff', request.resource.data.staffId))
+        );
+      }
+
+      // Public projection of bookings (times only) used to show free slots.
+      match /appointmentSlots/{aptId} {
+        allow read: if true;
+        allow delete: if isMember(bizId);
+        allow create, update: if isMember(bizId) || (
+          request.resource.data.id == aptId
+          && request.resource.data.keys().hasOnly(['id', 'staffId', 'locationId', 'status', 'startIso', 'endIso', 'serviceSnapshot'])
+          && request.resource.data.staffId == getAfter(docPath(bizId, 'appointments', aptId)).data.staffId
+          && request.resource.data.startIso == getAfter(docPath(bizId, 'appointments', aptId)).data.startIso
+          && request.resource.data.endIso == getAfter(docPath(bizId, 'appointments', aptId)).data.endIso
+          && request.resource.data.status == getAfter(docPath(bizId, 'appointments', aptId)).data.status
+        );
+      }
+
+      // Anything not listed above: members read, managers write.
+      match /{other}/{id} {
+        allow read: if isMember(bizId);
+        allow write: if isManager(bizId);
+      }
+    }
+
+    // Collection-group query used to show "You have a team invite" after sign-in.
+    match /{path=**}/invites/{email} {
+      allow get, list: if signedIn() && resource.data.email == request.auth.token.email.lower();
+    }
+  }
+}

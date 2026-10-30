@@ -481,7 +481,7 @@ class SalonBookingService {
           customerNotes: apt.customerNotes,
           cancellationReason: apt.cancellationReason,
           cancellationPolicyNotice: 'To cancel, use the button below or contact the business before your appointment time.',
-          canCancelOrReschedule: !isTerminal,
+          canCancelOrReschedule: !isTerminal && (apt.status === 'requested' || apt.status === 'confirmed'),
           createdAt: apt.createdAt,
           updatedAt: apt.updatedAt,
         };
