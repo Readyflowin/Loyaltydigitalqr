@@ -7,12 +7,13 @@
  */
 
 import { initializeApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
+import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
 import {
   initializeFirestore,
   persistentLocalCache,
   persistentMultipleTabManager,
   memoryLocalCache,
+  connectFirestoreEmulator,
   type Firestore,
 } from 'firebase/firestore';
 
@@ -57,6 +58,12 @@ function createFirestore(): Firestore {
 }
 
 export const db: Firestore = createFirestore();
+
+// Local testing only: `VITE_USE_EMULATORS=true npm run dev` with `firebase emulators:start`.
+if (import.meta.env.DEV && import.meta.env.VITE_USE_EMULATORS === 'true') {
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+  connectFirestoreEmulator(db, '127.0.0.1', 8085);
+}
 
 /**
  * Public HTTPS origin that is printed into QR codes and shareable links.

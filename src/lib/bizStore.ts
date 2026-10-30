@@ -245,11 +245,35 @@ class BizStore {
     return coll;
   }
 
+  /**
+   * A permission error right after a workspace is created (or a member joins)
+   * usually means the membership write has not reached the server yet. Retry
+   * a few times before reporting, keeping the business in "loading" meanwhile.
+   */
+  private retryOrReport(
+    businessId: string,
+    state: AttachedBusiness,
+    key: string,
+    err: { code?: string; message: string },
+    attempt: number,
+    relisten: (nextAttempt: number) => void
+  ): void {
+    if (err.code === 'permission-denied' && attempt < 5 && this.attached.get(businessId) === state) {
+      setTimeout(() => {
+        if (this.attached.get(businessId) === state) relisten(attempt + 1);
+      }, 800 * (attempt + 1));
+      return;
+    }
+    state.pendingLoads.delete(key);
+    this.reportError(businessId, state, `${key}: ${err.message}`);
+  }
+
   private listenCollection(
     businessId: string,
     state: AttachedBusiness,
     collectionName: string,
-    recent: ArraySpec['recent']
+    recent: ArraySpec['recent'],
+    attempt = 0
   ): void {
     const ref = collection(db, 'businesses', businessId, collectionName);
     const q = recent ? query(ref, orderBy(recent.orderBy, 'desc'), limit(recent.max)) : ref;
@@ -271,15 +295,15 @@ class BizStore {
         this.invalidate(businessId);
         this.scheduleNotify();
       },
-      (err) => {
-        state.pendingLoads.delete(collectionName);
-        this.reportError(businessId, state, `${collectionName}: ${err.message}`);
-      }
+      (err) =>
+        this.retryOrReport(businessId, state, collectionName, err, attempt, (next) =>
+          this.listenCollection(businessId, state, collectionName, recent, next)
+        )
     );
     state.unsubs.push(unsub);
   }
 
-  private listenSingle(businessId: string, state: AttachedBusiness, docId: string): void {
+  private listenSingle(businessId: string, state: AttachedBusiness, docId: string, attempt = 0): void {
     const key = SINGLE_KEY(docId);
     state.pendingLoads.add(key);
     const unsub = onSnapshot(
@@ -290,10 +314,10 @@ class BizStore {
         this.invalidate(businessId);
         this.scheduleNotify();
       },
-      (err) => {
-        state.pendingLoads.delete(key);
-        this.reportError(businessId, state, `config/${docId}: ${err.message}`);
-      }
+      (err) =>
+        this.retryOrReport(businessId, state, key, err, attempt, (next) =>
+          this.listenSingle(businessId, state, docId, next)
+        )
     );
     state.unsubs.push(unsub);
   }

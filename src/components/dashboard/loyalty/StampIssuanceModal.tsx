@@ -168,9 +168,9 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
 
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
               {resultState.rewardUnlocked ? (
-                <span>A new reward voucher code has been added to their wallet pass and customer CRM profile.</span>
+                <span>A reward voucher code is now on their loyalty card and customer profile.</span>
               ) : (
-                <span>Customer wallet pass has been credited. Event logged with staff PIN.</span>
+                <span>Their loyalty card has been updated and the stamp is in the activity log.</span>
               )}
             </div>
 

@@ -69,7 +69,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
           'Reward repeat shoppers and increase average customer basket size',
           'QR touchpoint right at the cash register or on receipt slips',
           'Customers earn stamps on qualifying purchases without complex POS integration',
-          'Turn neighborhood walk-ins into brand champions with digital wallet passes',
+          'Turn neighborhood walk-ins into brand champions with digital loyalty cards',
         ];
       case 'gyms':
         return [
