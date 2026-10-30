@@ -17,8 +17,8 @@ import {
   minutesToTime,
   timeToMinutes,
 } from '../utils/salonScheduling';
-import { mockBusinessService } from './mockBusinessService';
-import { mockLoyaltyService } from './mockLoyaltyService';
+import { businessService } from './businessService';
+import { loyaltyService } from './loyaltyService';
 import { generateBusinessSlug } from '../utils/qrUrlBuilder';
 
 const STORAGE_KEY = 'loyalty_mock_salon_v1';
@@ -33,7 +33,7 @@ type SalonStorageSchema = {
   [businessId: string]: BusinessSalonBundle;
 };
 
-class MockSalonService {
+class SalonBookingService {
   private listeners: (() => void)[] = [];
 
   constructor() {
@@ -786,7 +786,7 @@ class MockSalonService {
    */
   getAppointmentByToken(bookingToken: string): PublicAppointmentView | null {
     const data = this.loadData();
-    const businesses = mockBusinessService.getAllBusinesses();
+    const businesses = businessService.getAllBusinesses();
 
     for (const bizId of Object.keys(data)) {
       const apt = data[bizId].appointments.find((a) => a.bookingToken === bookingToken);
@@ -841,7 +841,7 @@ class MockSalonService {
       return { success: false, error: 'The requested service is currently disabled or unavailable.' };
     }
 
-    const business = mockBusinessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
     const locationId =
       input.locationId ||
       service.locationId ||
@@ -912,7 +912,7 @@ class MockSalonService {
 
     // Check if customer exists in customer CRM
     let matchedCustomerId: string | undefined;
-    const customers = mockLoyaltyService.getCustomers(businessId);
+    const customers = loyaltyService.getCustomers(businessId);
     const existing = customers.find(
       (c) =>
         (input.customerEmail && c.email && c.email.toLowerCase() === input.customerEmail.toLowerCase()) ||
@@ -1016,14 +1016,14 @@ class MockSalonService {
           apt.loyaltyIssued = true;
           try {
             // Find or link customer in loyalty service
-            const customers = mockLoyaltyService.getCustomers(bizId);
+            const customers = loyaltyService.getCustomers(bizId);
             let customer = customers.find(
               (c) =>
                 (apt.customerEmail && c.email && c.email.toLowerCase() === apt.customerEmail.toLowerCase()) ||
                 (apt.customerPhone && c.phoneNumber && c.phoneNumber === apt.customerPhone)
             );
             if (!customer) {
-              const res = mockLoyaltyService.addCustomer(bizId, {
+              const res = loyaltyService.addCustomer(bizId, {
                 name: apt.customerName,
                 email: apt.customerEmail || 'client@example.com',
                 phoneNumber: apt.customerPhone || '+1 (555) 000-0000',
@@ -1033,7 +1033,7 @@ class MockSalonService {
               }
             }
             if (customer) {
-              mockLoyaltyService.issueStamp({
+              loyaltyService.issueStamp({
                 businessId: bizId,
                 customerId: customer.id,
                 staffPin: '7392',
@@ -1170,7 +1170,7 @@ class MockSalonService {
     services: SalonService[];
     staff: StaffProfile[];
   } | null {
-    const businesses = mockBusinessService.getAllBusinesses();
+    const businesses = businessService.getAllBusinesses();
     const target = slugOrId.toLowerCase().trim();
 
     const business = businesses.find((b) => {
@@ -1230,4 +1230,4 @@ class MockSalonService {
   }
 }
 
-export const mockSalonService = new MockSalonService();
+export const salonService = new SalonBookingService();

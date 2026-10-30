@@ -12,7 +12,7 @@ import {
   Layers,
   SlidersHorizontal,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type {
   MenuCategory,
@@ -20,13 +20,13 @@ import type {
   DietaryTag,
 } from '../../../types/cafe';
 import { formatMinorUnits } from '../../../types/cafe';
-import { mockCafeService } from '../../../services/mockCafeService';
+import { cafeService } from '../../../services/cafeService';
 import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 import { MenuItemEditModal } from './MenuItemEditModal';
 import { MenuEditModal } from './MenuEditModal';
 
 interface CafeMenuViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -37,22 +37,22 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
   // Force re-render on service updates
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockCafeService.subscribe(() => {
+    const unsub = cafeService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
   }, []);
 
-  const menus = mockCafeService.getMenus(business.id);
+  const menus = cafeService.getMenus(business.id);
   const [selectedMenuId, setSelectedMenuId] = useState<string>(() => {
-    const list = mockCafeService.getMenus(business.id);
+    const list = cafeService.getMenus(business.id);
     const published = list.find((m) => m.status === 'published');
     return published ? published.id : list[0]?.id || '';
   });
 
   const activeMenu = menus.find((m) => m.id === selectedMenuId) || menus[0] || null;
-  const categories = activeMenu ? mockCafeService.getCategories(business.id, activeMenu.id) : [];
-  const items = activeMenu ? mockCafeService.getItems(business.id, activeMenu.id) : [];
+  const categories = activeMenu ? cafeService.getCategories(business.id, activeMenu.id) : [];
+  const items = activeMenu ? cafeService.getItems(business.id, activeMenu.id) : [];
 
   // Filter states
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('all');
@@ -77,13 +77,13 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
     if (!newCategoryName.trim() || !activeMenu) return;
 
     if (editingCategory) {
-      mockCafeService.updateCategory(business.id, editingCategory.id, {
+      cafeService.updateCategory(business.id, editingCategory.id, {
         name: newCategoryName.trim(),
         description: newCategoryDesc.trim() || undefined,
       });
       setEditingCategory(null);
     } else {
-      mockCafeService.createCategory(business.id, activeMenu.id, {
+      cafeService.createCategory(business.id, activeMenu.id, {
         name: newCategoryName.trim(),
         description: newCategoryDesc.trim() || undefined,
       });
@@ -104,7 +104,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
   const handleDeleteCategory = (categoryId: string) => {
     if (!activeMenu) return;
     if (window.confirm('Delete this category? Items in this category will also be removed.')) {
-      mockCafeService.deleteCategory(business.id, activeMenu.id, categoryId);
+      cafeService.deleteCategory(business.id, activeMenu.id, categoryId);
       if (selectedCategoryId === categoryId) {
         setSelectedCategoryId('all');
       }
@@ -121,7 +121,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
     reordered.splice(targetIndex, 0, moved);
 
     const reorderedIds = reordered.map((c) => c.id);
-    mockCafeService.reorderCategories(business.id, activeMenu.id, reorderedIds);
+    cafeService.reorderCategories(business.id, activeMenu.id, reorderedIds);
   };
 
   // Item handlers
@@ -140,23 +140,23 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
   ) => {
     if (!activeMenu) return;
     if (editingItem) {
-      mockCafeService.updateItem(business.id, editingItem.id, itemData);
+      cafeService.updateItem(business.id, editingItem.id, itemData);
     } else {
-      mockCafeService.createItem(business.id, activeMenu.id, itemData);
+      cafeService.createItem(business.id, activeMenu.id, itemData);
     }
   };
 
   const handleDuplicateItem = (itemId: string) => {
-    mockCafeService.duplicateItem(business.id, itemId);
+    cafeService.duplicateItem(business.id, itemId);
   };
 
   const handleToggleItemStatus = (itemId: string) => {
-    mockCafeService.toggleItemAvailability(business.id, itemId);
+    cafeService.toggleItemAvailability(business.id, itemId);
   };
 
   const handleDeleteItem = (itemId: string) => {
     if (window.confirm('Are you sure you want to delete this menu item?')) {
-      mockCafeService.deleteItem(business.id, itemId);
+      cafeService.deleteItem(business.id, itemId);
     }
   };
 
@@ -200,7 +200,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           <button
             type="button"
             onClick={() => {
-              const newM = mockCafeService.createMenu(business.id, {
+              const newM = cafeService.createMenu(business.id, {
                 name: 'All-Day Café Menu',
                 description: 'Fresh coffee, bakery, and seasonal specials.',
               });
@@ -631,7 +631,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
         onClose={() => setMenuModalOpen(false)}
         menu={activeMenu}
         onSave={(updates) => {
-          mockCafeService.updateMenu(business.id, activeMenu.id, updates);
+          cafeService.updateMenu(business.id, activeMenu.id, updates);
         }}
       />
 
@@ -645,7 +645,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
         currency={activeMenu.currency}
         currencySymbol={activeMenu.currencySymbol}
         onQuickCreateCategory={(catName) => {
-          return mockCafeService.createCategory(business.id, activeMenu.id, {
+          return cafeService.createCategory(business.id, activeMenu.id, {
             name: catName,
           });
         }}

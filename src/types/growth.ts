@@ -149,7 +149,7 @@ export interface TeamMember {
   email: string;
   role: TeamRole;
   assignedLocationId?: string;
-  status: 'active' | 'invited_simulated';
+  status: 'active' | 'invited';
   lastActiveAt?: string;
   createdAt: string;
 }

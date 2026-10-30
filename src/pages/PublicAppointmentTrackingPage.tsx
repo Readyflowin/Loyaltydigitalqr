@@ -13,7 +13,7 @@ import {
   Scissors,
 } from 'lucide-react';
 import { useRouter } from '../router';
-import { mockSalonService } from '../services/mockSalonService';
+import { salonService } from '../services/salonService';
 import { formatMinorUnits } from '../types/cafe';
 import type { ThemeMode } from '../types';
 import type { AppointmentStatus } from '../types/salon';
@@ -44,7 +44,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
   // Reactive subscription to live appointment updates
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockSalonService.subscribe(() => {
+    const unsub = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -55,7 +55,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
   const [cancelReason, setCancelReason] = useState('');
   const [cancelError, setCancelError] = useState<string | null>(null);
 
-  const appointment = mockSalonService.getAppointmentByToken(token);
+  const appointment = salonService.getAppointmentByToken(token);
 
   if (!appointment) {
     return (
@@ -106,7 +106,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
       setCancelError('Please provide a reason for cancellation.');
       return;
     }
-    const result = mockSalonService.updateAppointmentStatus(
+    const result = salonService.updateAppointmentStatus(
       appointment.id,
       'cancelled',
       'Customer',

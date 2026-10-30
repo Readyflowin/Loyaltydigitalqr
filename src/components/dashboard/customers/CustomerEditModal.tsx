@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import type { CustomerRecord } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 
 interface CustomerEditModalProps {
   isOpen: boolean;
@@ -36,7 +36,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
     }
 
     if (isEditing && customer) {
-      const res = mockLoyaltyService.updateCustomer(businessId, customer.id, {
+      const res = loyaltyService.updateCustomer(businessId, customer.id, {
         name: name.trim(),
         email: email.trim() || undefined,
         phoneNumber: phoneNumber.trim() || undefined,
@@ -51,7 +51,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
         setErrorMsg(res.error || 'Failed to update customer record.');
       }
     } else {
-      const res = mockLoyaltyService.addCustomer(businessId, {
+      const res = loyaltyService.addCustomer(businessId, {
         name: name.trim(),
         email: email.trim() || undefined,
         phoneNumber: phoneNumber.trim() || undefined,

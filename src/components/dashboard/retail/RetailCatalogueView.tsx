@@ -13,17 +13,17 @@ import {
   AlertCircle,
   Tag,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { RetailProduct, RetailProductCategory } from '../../../types/retail';
-import { mockRetailService } from '../../../services/mockRetailService';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { retailService } from '../../../services/retailService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 import { useRouter } from '../../../router';
 
 interface RetailCatalogueViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -33,7 +33,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
   // Reactive subscription
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockRetailService.subscribe(() => {
+    const unsub = retailService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -62,14 +62,14 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
   const [saleError, setSaleError] = useState<string | null>(null);
   const [saleSuccessNotice, setSaleSuccessNotice] = useState<string | null>(null);
 
-  const categories: RetailProductCategory[] = mockRetailService.getCategories(business.id);
-  const products: RetailProduct[] = mockRetailService.getProducts(business.id, {
+  const categories: RetailProductCategory[] = retailService.getCategories(business.id);
+  const products: RetailProduct[] = retailService.getProducts(business.id, {
     categoryId: selectedCategory,
     search: searchQuery,
     includeArchived,
   });
-  const metrics = mockRetailService.getRetailMetrics(business.id);
-  const customers = mockLoyaltyService.getCustomers(business.id);
+  const metrics = retailService.getRetailMetrics(business.id);
+  const customers = loyaltyService.getCustomers(business.id);
 
   const businessSlug = generateBusinessSlug(business.name);
 
@@ -130,7 +130,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       : [];
 
     if (editingProduct) {
-      const res = mockRetailService.updateProduct(business.id, editingProduct.id, {
+      const res = retailService.updateProduct(business.id, editingProduct.id, {
         name: formName.trim(),
         price: priceMinor,
         categoryId: formCategory,
@@ -144,7 +144,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         return;
       }
     } else {
-      const res = mockRetailService.createProduct({
+      const res = retailService.createProduct({
         businessId: business.id,
         name: formName.trim(),
         price: priceMinor,
@@ -165,15 +165,15 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
   };
 
   const handleDuplicate = (prodId: string) => {
-    mockRetailService.duplicateProduct(business.id, prodId);
+    retailService.duplicateProduct(business.id, prodId);
   };
 
   const handleArchive = (prodId: string) => {
-    mockRetailService.archiveProduct(business.id, prodId);
+    retailService.archiveProduct(business.id, prodId);
   };
 
   const handleToggleAvailable = (prodId: string) => {
-    mockRetailService.toggleAvailability(business.id, prodId);
+    retailService.toggleAvailability(business.id, prodId);
   };
 
   // Open Record Sale Modal
@@ -199,7 +199,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
   // Calculate sale subtotal
   const saleSubtotal = saleItems.reduce((acc, it) => {
-    const p = mockRetailService.getProduct(business.id, it.productId);
+    const p = retailService.getProduct(business.id, it.productId);
     return acc + (p?.price || 0) * it.quantity;
   }, 0);
 
@@ -215,7 +215,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
     const matchedCustomer = customers.find((c) => c.id === selectedCustomerId);
 
-    const res = mockRetailService.recordPurchase({
+    const res = retailService.recordPurchase({
       businessId: business.id,
       customerId: matchedCustomer?.id,
       customerName: matchedCustomer?.name,
@@ -377,7 +377,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                 : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            All Products ({mockRetailService.getProducts(business.id, { includeArchived }).length})
+            All Products ({retailService.getProducts(business.id, { includeArchived }).length})
           </button>
           {categories.map((cat) => (
             <button

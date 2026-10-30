@@ -15,14 +15,14 @@ import type {
   GrowthAnalyticsSummary,
 } from '../types/growth';
 import type { CustomerRecord } from '../types/loyalty';
-import { mockLoyaltyService } from './mockLoyaltyService';
-import { mockOrderService } from './mockOrderService';
-import { mockSalonService } from './mockSalonService';
-import { mockRetailService } from './mockRetailService';
-import { mockGymService } from './mockGymService';
-import { mockCarWashService } from './mockCarWashService';
-import { mockGenericService } from './mockGenericService';
-import { mockBusinessService } from './mockBusinessService';
+import { loyaltyService } from './loyaltyService';
+import { orderService } from './orderService';
+import { salonService } from './salonService';
+import { retailService } from './retailService';
+import { gymService } from './gymService';
+import { carWashService } from './carWashService';
+import { genericService } from './genericService';
+import { businessService } from './businessService';
 
 const STORAGE_KEY = 'loyalty_mock_growth_v1';
 
@@ -106,7 +106,7 @@ export interface InviteTeamMemberInput {
   assignedLocationId?: string;
 }
 
-class MockGrowthService {
+class GrowthService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
@@ -672,7 +672,7 @@ class MockGrowthService {
     },
     channelFilter?: 'email' | 'sms'
   ): CustomerRecord[] {
-    const allCustomers = mockLoyaltyService.getCustomers(businessId);
+    const allCustomers = loyaltyService.getCustomers(businessId);
     const now = Date.now();
 
     return allCustomers.filter((customer) => {
@@ -934,8 +934,8 @@ class MockGrowthService {
     const cutoffDays = dateRange === '7d' ? 7 : dateRange === '30d' ? 30 : dateRange === '90d' ? 90 : 3650;
     const cutoffMs = now - cutoffDays * 86400000;
 
-    const customers = mockLoyaltyService.getCustomers(businessId);
-    const events = mockLoyaltyService.getEvents(businessId).filter((e) => new Date(e.timestamp).getTime() >= cutoffMs);
+    const customers = loyaltyService.getCustomers(businessId);
+    const events = loyaltyService.getEvents(businessId).filter((e) => new Date(e.timestamp).getTime() >= cutoffMs);
     const store = this.getStore(businessId);
 
     const filteredRedemptions = store.redemptions.filter((r) => new Date(r.redeemedAt).getTime() >= cutoffMs);
@@ -962,34 +962,34 @@ class MockGrowthService {
     // Derived Gross Value from existing vertical transactions
     let grossValue = 0;
     try {
-      const orders = mockOrderService.getOrders(businessId).filter((o) => new Date(o.createdAt).getTime() >= cutoffMs);
+      const orders = orderService.getOrders(businessId).filter((o) => new Date(o.createdAt).getTime() >= cutoffMs);
       grossValue += orders.reduce((acc, o) => acc + (o.subtotal || o.total), 0);
     } catch { /* ignored */ }
 
     try {
-      const purchases = mockRetailService.getPurchases(businessId).filter((p) => new Date(p.timestamp).getTime() >= cutoffMs);
+      const purchases = retailService.getPurchases(businessId).filter((p) => new Date(p.timestamp).getTime() >= cutoffMs);
       grossValue += purchases.reduce((acc, p) => acc + p.total, 0);
     } catch { /* ignored */ }
 
     try {
-      const apts = mockSalonService.getAppointments(businessId).filter((a) => new Date(a.createdAt || a.startIso).getTime() >= cutoffMs);
+      const apts = salonService.getAppointments(businessId).filter((a) => new Date(a.createdAt || a.startIso).getTime() >= cutoffMs);
       grossValue += apts.reduce((acc, a) => acc + a.price, 0);
     } catch { /* ignored */ }
 
     try {
-      const passes = mockCarWashService.getPasses(businessId).filter((p) => new Date(p.createdAt).getTime() >= cutoffMs);
+      const passes = carWashService.getPasses(businessId).filter((p) => new Date(p.createdAt).getTime() >= cutoffMs);
       // Strictly sum actual recorded purchase transactions; unpriced passes contribute 0 without invented estimates
       grossValue += passes.reduce((acc, p) => acc + (p.pricePaidMinor || 0), 0);
     } catch { /* ignored */ }
 
     try {
-      const members = mockGymService.getMembers(businessId).filter((m) => new Date(m.createdAt).getTime() >= cutoffMs);
+      const members = gymService.getMembers(businessId).filter((m) => new Date(m.createdAt).getTime() >= cutoffMs);
       // Strictly sum actual recorded purchase transactions; unpriced memberships contribute 0 without invented estimates
       grossValue += members.reduce((acc, m) => acc + (m.pricePaidMinor || 0), 0);
     } catch { /* ignored */ }
 
     try {
-      const jobs = mockGenericService.getJobs(businessId).filter((j) => new Date(j.timestamp).getTime() >= cutoffMs);
+      const jobs = genericService.getJobs(businessId).filter((j) => new Date(j.timestamp).getTime() >= cutoffMs);
       grossValue += jobs.reduce((acc, j) => acc + j.amountCharged, 0);
     } catch { /* ignored */ }
 
@@ -1018,7 +1018,7 @@ class MockGrowthService {
    */
   exportAnalyticsCsv(businessId: string, dateRange: '7d' | '30d' | '90d' | 'all' = 'all'): string {
     const summary = this.getGrowthAnalytics(businessId, dateRange);
-    const business = mockBusinessService.getBusinessById(businessId);
+    const business = businessService.getBusinessById(businessId);
     const store = this.getStore(businessId);
 
     const escapeCsv = (val: string | number | undefined): string => {
@@ -1094,4 +1094,4 @@ class MockGrowthService {
   }
 }
 
-export const mockGrowthService = new MockGrowthService();
+export const growthService = new GrowthService();

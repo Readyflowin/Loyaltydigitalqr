@@ -7,8 +7,8 @@ import type {
   RecordPurchaseInput,
   PublicCatalogProfile,
 } from '../types/retail';
-import { mockBusinessService } from './mockBusinessService';
-import { mockLoyaltyService } from './mockLoyaltyService';
+import { businessService } from './businessService';
+import { loyaltyService } from './loyaltyService';
 import { generateBusinessSlug } from '../utils/qrUrlBuilder';
 
 const STORAGE_KEY = 'loyalty_mock_retail_v1';
@@ -19,7 +19,7 @@ interface RetailBundle {
   purchases: RetailPurchase[];
 }
 
-class MockRetailService {
+class RetailService {
   private listeners: (() => void)[] = [];
   private inFlightOperations = new Set<string>();
 
@@ -444,7 +444,7 @@ class MockRetailService {
         return { success: false, error: 'Duplicate transaction detected. Purchase was already recorded.' };
       }
 
-      const business = mockBusinessService.getAllBusinesses().find((b) => b.id === input.businessId);
+      const business = businessService.getAllBusinesses().find((b) => b.id === input.businessId);
       const currency = business?.currency || 'USD';
       const locationId = input.locationId || business?.activeLocationId || 'loc_retail_main';
       const locationName = business?.locations.find((l) => l.id === locationId)?.name || 'Main Storefront';
@@ -475,7 +475,7 @@ class MockRetailService {
 
       if (qualifiesForLoyalty && input.customerId) {
         try {
-          const res = mockLoyaltyService.issueStamp({
+          const res = loyaltyService.issueStamp({
             businessId: input.businessId,
             customerId: input.customerId,
             locationId,
@@ -544,7 +544,7 @@ class MockRetailService {
   // =========================================================================
 
   getPublicCatalogProfile(slugOrId: string): PublicCatalogProfile | null {
-    const businesses = mockBusinessService.getAllBusinesses();
+    const businesses = businessService.getAllBusinesses();
     const target = slugOrId.toLowerCase().trim();
 
     const business = businesses.find((b) => {
@@ -601,10 +601,10 @@ class MockRetailService {
       try {
         listener();
       } catch (e) {
-        console.error('Error in mockRetailService listener:', e);
+        console.error('Error in retailService listener:', e);
       }
     }
   }
 }
 
-export const mockRetailService = new MockRetailService();
+export const retailService = new RetailService();

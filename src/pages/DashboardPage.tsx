@@ -29,68 +29,59 @@ import { GenericVisitView } from '../components/dashboard/service/GenericVisitVi
 import { CampaignsAndOffersView } from '../components/dashboard/growth/CampaignsAndOffersView';
 import { AnalyticsView } from '../components/dashboard/growth/AnalyticsView';
 import { LoyaltyCardPreview } from '../components/onboarding/LoyaltyCardPreview';
-import { mockAuthService } from '../services/mockAuthService';
-import { mockBusinessService } from '../services/mockBusinessService';
+import { authService } from '../services/authService';
+import { businessService } from '../services/businessService';
 import { useRouter } from '../router';
 import type { ThemeMode } from '../types';
-import type { MockBusiness, MockMetrics, MockActivity, MockChecklistItem, MockNotification } from '../types/business';
-import type { MockUser } from '../types/auth';
-import { X, QrCode, Flame } from 'lucide-react';
+import type { Business, BusinessMetrics, BusinessActivity, ChecklistItem, BusinessNotification, BusinessInvite } from '../types/business';
+import { bizStore } from '../lib/bizStore';
+import type { AppUser } from '../types/auth';
+import { X, Flame, Loader2 } from 'lucide-react';
 
 interface DashboardPageProps {
   theme: ThemeMode;
   onThemeToggle: (theme: ThemeMode) => void;
 }
 
-export const DashboardPage: React.FC<DashboardPageProps> = ({ theme, onThemeToggle }) => {
+const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }> = ({ theme, onThemeToggle, currentUser }) => {
   const { searchParams, navigate } = useRouter();
 
-  // 1. Auth Guard: Check if mock session exists
-  const [currentUser] = useState<MockUser | null>(() => {
-    return mockAuthService.getCurrentUser();
+  // Active business state and reactive subscription (the gate guarantees it exists and is loaded)
+  const [activeBusiness, setActiveBusiness] = useState<Business>(() => {
+    return businessService.getActiveBusiness()!;
   });
 
-  useEffect(() => {
-    const user = mockAuthService.getCurrentUser();
-    if (!user) {
-      navigate('/login?redirect=/dashboard');
-    }
-  }, [navigate]);
-
-  // 2. Active business state and reactive subscription
-  const [activeBusiness, setActiveBusiness] = useState<MockBusiness>(() => {
-    return mockBusinessService.getActiveBusiness();
+  const [businesses, setBusinesses] = useState<Business[]>(() => {
+    return businessService.getAllBusinesses();
   });
 
-  const [businesses, setBusinesses] = useState<MockBusiness[]>(() => {
-    return mockBusinessService.getAllBusinesses();
+  const [metrics, setMetrics] = useState<BusinessMetrics>(() => {
+    return businessService.getMetrics(businessService.getActiveBusiness()!.id);
   });
 
-  const [metrics, setMetrics] = useState<MockMetrics>(() => {
-    return mockBusinessService.getMetrics(mockBusinessService.getActiveBusiness().id);
+  const [activities, setActivities] = useState<BusinessActivity[]>(() => {
+    return businessService.getActivities(businessService.getActiveBusiness()!.id);
   });
 
-  const [activities, setActivities] = useState<MockActivity[]>(() => {
-    return mockBusinessService.getActivities(mockBusinessService.getActiveBusiness().id);
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(() => {
+    return businessService.getChecklist(businessService.getActiveBusiness()!.id);
   });
 
-  const [checklist, setChecklist] = useState<MockChecklistItem[]>(() => {
-    return mockBusinessService.getChecklist(mockBusinessService.getActiveBusiness().id);
-  });
-
-  const [notifications] = useState<MockNotification[]>(() => {
-    return mockBusinessService.getNotifications();
+  const [notifications, setNotifications] = useState<BusinessNotification[]>(() => {
+    return businessService.getNotifications(businessService.getActiveBusiness()!.id);
   });
 
   // Subscribe to business switcher updates
   useEffect(() => {
-    const unsubscribe = mockBusinessService.subscribe(() => {
-      const active = mockBusinessService.getActiveBusiness();
+    const unsubscribe = businessService.subscribe(() => {
+      const active = businessService.getActiveBusiness();
+      if (!active) return;
       setActiveBusiness(active);
-      setBusinesses(mockBusinessService.getAllBusinesses());
-      setMetrics(mockBusinessService.getMetrics(active.id));
-      setActivities(mockBusinessService.getActivities(active.id));
-      setChecklist(mockBusinessService.getChecklist(active.id));
+      setBusinesses(businessService.getAllBusinesses());
+      setMetrics(businessService.getMetrics(active.id));
+      setActivities(businessService.getActivities(active.id));
+      setNotifications(businessService.getNotifications(active.id));
+      setChecklist(businessService.getChecklist(active.id));
     });
     return unsubscribe;
   }, []);
@@ -147,32 +138,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ theme, onThemeTogg
   const [businessSwitcherOpen, setBusinessSwitcherOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [passPreviewModalOpen, setPassPreviewModalOpen] = useState(false);
-  const [qrKitModalOpen, setQrKitModalOpen] = useState(false);
 
   // Sign out handler
-  const handleSignOut = () => {
-    mockAuthService.signOut();
+  const handleSignOut = async () => {
+    await authService.signOut();
     navigate('/login');
   };
-
-  // If unauthenticated, render redirect notice while hook executes
-  if (!currentUser) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] p-4">
-        <div className="text-center max-w-sm">
-          <div className="text-sm font-mono font-bold text-[#3027F5] dark:text-[#E4C174] uppercase mb-2">
-            AUTHENTICATION REQUIRED
-          </div>
-          <h2 className="text-xl font-heading font-black">
-            Redirecting to Merchant Login...
-          </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#AAA499] mt-2">
-            A valid mock merchant session is required to access this workspace.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   // Determine current page title
   const getPageTitle = () => {
@@ -566,7 +537,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ theme, onThemeTogg
           onThemeToggle={onThemeToggle}
           onOpenMobileMenu={() => setMobileMenuOpen(true)}
           activeBusiness={activeBusiness}
-          onQuickAction={() => setQrKitModalOpen(true)}
+          onQuickAction={() => handleSelectView('qr-studio')}
           notifications={notifications}
         />
 
@@ -584,10 +555,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ theme, onThemeTogg
         businesses={businesses}
         activeBusiness={activeBusiness}
         onSelectBusiness={(bizId) => {
-          mockBusinessService.setActiveBusiness(bizId);
+          businessService.setActiveBusiness(bizId);
         }}
         onSelectLocation={(bizId, locId) => {
-          mockBusinessService.setActiveLocation(bizId, locId);
+          businessService.setActiveLocation(bizId, locId);
         }}
       />
 
@@ -624,52 +595,164 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ theme, onThemeTogg
         </div>
       )}
 
-      {/* QR Kit Preview Modal */}
-      {qrKitModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-xs"
-            onClick={() => setQrKitModalOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] p-6 sm:p-8 shadow-2xl z-10 border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] animate-in fade-in zoom-in-95 duration-150 text-center">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10 text-left">
-              <div>
-                <span className="text-[10px] font-mono uppercase font-bold text-[#3027F5] dark:text-[#E4C174] block">
-                  COUNTER KIT
-                </span>
-                <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
-                  {activeBusiness.name}
-                </h4>
-              </div>
-              <button
-                type="button"
-                onClick={() => setQrKitModalOpen(false)}
-                className="p-1 text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="w-36 h-36 mx-auto rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] flex items-center justify-center border border-black/10 dark:border-white/10 mb-4">
-              <QrCode className="w-24 h-24 text-[#111318] dark:text-[#F7F3EB]" />
-            </div>
-
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mb-6">
-              Place this QR standee at your counter or checkout terminal. When customers point their smartphone camera at the code, their loyalty card opens instantly.
-            </p>
-
-            <button
-              type="button"
-              onClick={() => setQrKitModalOpen(false)}
-              className="w-full py-3 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-md"
-            >
-              Close Kit Preview
-            </button>
-          </div>
-        </div>
-      )}
-
     </div>
   );
+};
+
+// -----------------------------------------------------------------------------
+// Gate: auth -> businesses loaded -> active business data loaded -> workspace
+// -----------------------------------------------------------------------------
+
+const GateScreen: React.FC<{ title: string; message?: string; spinner?: boolean; children?: React.ReactNode }> = ({
+  title,
+  message,
+  spinner = true,
+  children,
+}) => (
+  <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] p-4">
+    <div className="text-center max-w-md w-full">
+      {spinner && <Loader2 className="w-8 h-8 mx-auto mb-4 animate-spin text-[#3027F5] dark:text-[#E4C174]" />}
+      <h2 className="text-xl font-heading font-black">{title}</h2>
+      {message && <p className="text-sm text-[#60646C] dark:text-[#AAA499] mt-2">{message}</p>}
+      {children}
+    </div>
+  </div>
+);
+
+const PendingInvitesPanel: React.FC<{ invites: BusinessInvite[]; user: AppUser }> = ({ invites, user }) => {
+  const { navigate } = useRouter();
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const run = async (key: string, fn: () => Promise<void>) => {
+    setBusy(key);
+    setError(null);
+    try {
+      await fn();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong.');
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <GateScreen title="You have a team invite" spinner={false}>
+      <div className="mt-6 space-y-3 text-left">
+        {invites.map((inv) => (
+          <div
+            key={inv.businessId}
+            className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)]"
+          >
+            <div className="font-heading font-bold">{inv.businessName}</div>
+            <div className="text-xs text-[#60646C] dark:text-[#AAA499] mt-0.5">
+              {inv.invitedByName} invited you to join as <strong>{inv.role}</strong>.
+            </div>
+            <div className="mt-3 flex gap-2">
+              <button
+                type="button"
+                disabled={!!busy}
+                onClick={() => run(`a_${inv.businessId}`, () => businessService.acceptInvite(inv))}
+                className="flex-1 py-2 rounded-xl bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] font-bold text-xs cursor-pointer disabled:opacity-60"
+              >
+                {busy === `a_${inv.businessId}` ? 'Joining…' : 'Accept invite'}
+              </button>
+              <button
+                type="button"
+                disabled={!!busy}
+                onClick={() => run(`d_${inv.businessId}`, () => businessService.declineInvite(inv))}
+                className="px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/15 font-bold text-xs cursor-pointer disabled:opacity-60"
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        ))}
+        {!user.emailVerified && (
+          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-300">
+            Verify your email ({user.email}) before accepting an invite.
+            <div className="mt-2 flex gap-3">
+              <button
+                type="button"
+                className="underline font-bold cursor-pointer"
+                onClick={() =>
+                  run('resend', async () => {
+                    await authService.resendVerificationEmail();
+                    setNotice('Verification email sent. Check your inbox.');
+                  })
+                }
+              >
+                Resend email
+              </button>
+              <button
+                type="button"
+                className="underline font-bold cursor-pointer"
+                onClick={() => run('reload', async () => void (await authService.reloadUser()))}
+              >
+                I've verified
+              </button>
+            </div>
+          </div>
+        )}
+        {notice && <div className="text-xs text-emerald-700 dark:text-emerald-400">{notice}</div>}
+        {error && <div className="text-xs text-red-600 dark:text-red-400">{error}</div>}
+        <button
+          type="button"
+          onClick={() => navigate('/onboarding')}
+          className="w-full text-xs text-[#60646C] dark:text-[#AAA499] underline cursor-pointer pt-2"
+        >
+          Set up my own business instead
+        </button>
+      </div>
+    </GateScreen>
+  );
+};
+
+export const DashboardPage: React.FC<DashboardPageProps> = (props) => {
+  const { navigate } = useRouter();
+  const [, setVersion] = useState(0);
+
+  useEffect(() => {
+    const bump = () => setVersion((v) => v + 1);
+    const unsubBiz = businessService.subscribe(bump);
+    const unsubAuth = authService.subscribe(bump);
+    return () => {
+      unsubBiz();
+      unsubAuth();
+    };
+  }, []);
+
+  const user = authService.getCurrentUser();
+  const loadState = businessService.getLoadState();
+  const active = businessService.getActiveBusiness();
+  const invites = businessService.getPendingInvites();
+  const ready = active ? bizStore.isReady(active.id) : false;
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login?redirect=/dashboard', { replace: true });
+    } else if (loadState === 'ready' && !active && invites.length === 0) {
+      navigate('/onboarding', { replace: true });
+    }
+  }, [user, loadState, active, invites.length, navigate]);
+
+  if (!user) return <GateScreen title="Redirecting to sign in…" />;
+  if (loadState === 'error') {
+    return (
+      <GateScreen
+        title="We couldn't load your workspace"
+        message={businessService.getLoadError() || 'Please check your connection and refresh the page.'}
+        spinner={false}
+      />
+    );
+  }
+  if (loadState !== 'ready') return <GateScreen title="Loading your workspace…" />;
+  if (!active) {
+    if (invites.length > 0) return <PendingInvitesPanel invites={invites} user={user} />;
+    return <GateScreen title="Let's set up your business…" />;
+  }
+  if (!ready) return <GateScreen title={`Loading ${active.name}…`} />;
+
+  return <DashboardWorkspace key={active.id} {...props} currentUser={user} />;
 };

@@ -10,7 +10,7 @@ import {
   XCircle,
   Lock,
 } from 'lucide-react';
-import { mockCarWashService } from '../../../services/mockCarWashService';
+import { carWashService } from '../../../services/carWashService';
 import type {
   CarWashCustomerPass,
   CarWashVisitEvent,
@@ -34,8 +34,8 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
   } | null>(null);
 
   const loadData = () => {
-    const p = mockCarWashService.getPasses(businessId);
-    const v = mockCarWashService.getVisits(businessId);
+    const p = carWashService.getPasses(businessId);
+    const v = carWashService.getVisits(businessId);
     setPasses(p);
     setVisits(v);
 
@@ -47,7 +47,7 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
 
   useEffect(() => {
     loadData();
-    const unsub = mockCarWashService.subscribe(() => {
+    const unsub = carWashService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -76,7 +76,7 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
     setSubmitting(true);
     setMessage(null);
 
-    const result = mockCarWashService.recordWashVisit(businessId, {
+    const result = carWashService.recordWashVisit(businessId, {
       passId: selectedPass.id,
       staffPin: staffPin.trim() || undefined,
       vehiclePlate: selectedPass.vehiclePlate,

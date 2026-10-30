@@ -10,14 +10,14 @@ import {
   Layers,
   Search,
 } from 'lucide-react';
-import { mockCarWashService } from '../../../services/mockCarWashService';
+import { carWashService } from '../../../services/carWashService';
 import type {
   CarWashBundle,
   CarWashCustomerPass,
   CarWashBundleType,
 } from '../../../types/carwash';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
-import { mockBusinessService } from '../../../services/mockBusinessService';
+import { loyaltyService } from '../../../services/loyaltyService';
+import { businessService } from '../../../services/businessService';
 
 interface CarWashBundlesViewProps {
   businessId: string;
@@ -46,18 +46,18 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
   const [selectedBundleId, setSelectedBundleId] = useState('');
   const [assignError, setAssignError] = useState<string | null>(null);
 
-  const business = mockBusinessService.getBusinessById(businessId);
+  const business = businessService.getBusinessById(businessId);
   const currencySymbol = business?.currency === 'INR' ? '₹' : '$';
-  const customers = mockLoyaltyService.getCustomers(businessId);
+  const customers = loyaltyService.getCustomers(businessId);
 
   const loadData = () => {
-    setBundles(mockCarWashService.getBundles(businessId));
-    setPasses(mockCarWashService.getPasses(businessId));
+    setBundles(carWashService.getBundles(businessId));
+    setPasses(carWashService.getPasses(businessId));
   };
 
   useEffect(() => {
     loadData();
-    const unsub = mockCarWashService.subscribe(() => {
+    const unsub = carWashService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -73,7 +73,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
       return;
     }
 
-    const res = mockCarWashService.createBundle({
+    const res = carWashService.createBundle({
       businessId,
       name: bundleName,
       description: bundleDescription,
@@ -105,7 +105,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
       return;
     }
 
-    const res = mockCarWashService.assignPass({
+    const res = carWashService.assignPass({
       businessId,
       customerId: cust.id,
       customerName: cust.name,

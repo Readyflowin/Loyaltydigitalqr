@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import type { CartItem, PublicBusinessProfile, PublicTableProfile } from '../../types/cafe';
 import { formatMinorUnits } from '../../types/cafe';
-import { mockOrderService } from '../../services/mockOrderService';
+import { orderService } from '../../services/orderService';
 import type { Order } from '../../types/order';
 import { useRouter } from '../../router';
 
@@ -57,7 +57,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
     const idempotencyKey = `idem_${business.id}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
 
-    const res = mockOrderService.createOrder({
+    const res = orderService.createOrder({
       businessId: business.id,
       orderType: table ? 'dine_in' : 'pickup',
       tableId: table?.id,

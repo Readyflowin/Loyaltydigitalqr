@@ -20,22 +20,22 @@ import {
   Tag,
   Star,
 } from 'lucide-react';
-import type { MockBusiness, MockMetrics, MockActivity, MockChecklistItem } from '../../types/business';
+import type { Business, BusinessMetrics, BusinessActivity, ChecklistItem } from '../../types/business';
 import type { ThemeMode } from '../../types';
 import { generateBusinessSlug } from '../../utils/qrUrlBuilder';
-import { mockOrderService } from '../../services/mockOrderService';
-import { mockSalonService } from '../../services/mockSalonService';
-import { mockRetailService } from '../../services/mockRetailService';
-import { mockGymService } from '../../services/mockGymService';
-import { mockCarWashService } from '../../services/mockCarWashService';
-import { mockGenericService } from '../../services/mockGenericService';
-import { mockGrowthService } from '../../services/mockGrowthService';
+import { orderService } from '../../services/orderService';
+import { salonService } from '../../services/salonService';
+import { retailService } from '../../services/retailService';
+import { gymService } from '../../services/gymService';
+import { carWashService } from '../../services/carWashService';
+import { genericService } from '../../services/genericService';
+import { growthService } from '../../services/growthService';
 
 interface OverviewViewProps {
-  business: MockBusiness;
-  metrics: MockMetrics;
-  activities: MockActivity[];
-  checklist: MockChecklistItem[];
+  business: Business;
+  metrics: BusinessMetrics;
+  activities: BusinessActivity[];
+  checklist: ChecklistItem[];
   onNavigate: (viewId: string) => void;
   onOpenCardPreview: () => void;
   theme: ThemeMode;
@@ -61,25 +61,25 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsubOrders = mockOrderService.subscribe(() => {
+    const unsubOrders = orderService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubSalon = mockSalonService.subscribe(() => {
+    const unsubSalon = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubRetail = mockRetailService.subscribe(() => {
+    const unsubRetail = retailService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubGym = mockGymService.subscribe(() => {
+    const unsubGym = gymService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubCarWash = mockCarWashService.subscribe(() => {
+    const unsubCarWash = carWashService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubGeneric = mockGenericService.subscribe(() => {
+    const unsubGeneric = genericService.subscribe(() => {
       setVersion((v) => v + 1);
     });
-    const unsubGrowth = mockGrowthService.subscribe(() => {
+    const unsubGrowth = growthService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return () => {
@@ -93,21 +93,21 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
     };
   }, []);
 
-  const orderMetrics = mockOrderService.getOrderMetrics(business.id);
-  const salonMetrics = mockSalonService.getSalonMetrics(business.id);
-  const retailMetrics = mockRetailService.getRetailMetrics(business.id);
-  const gymMetrics = mockGymService.getGymMetrics(business.id);
-  const carwashMetrics = mockCarWashService.getCarWashMetrics(business.id);
-  const genericMetrics = mockGenericService.getMetrics(business.id);
+  const orderMetrics = orderService.getOrderMetrics(business.id);
+  const salonMetrics = salonService.getSalonMetrics(business.id);
+  const retailMetrics = retailService.getRetailMetrics(business.id);
+  const gymMetrics = gymService.getGymMetrics(business.id);
+  const carwashMetrics = carWashService.getCarWashMetrics(business.id);
+  const genericMetrics = genericService.getMetrics(business.id);
 
-  const growthOffers = mockGrowthService.getOffers(business.id);
+  const growthOffers = growthService.getOffers(business.id);
   const activeOffersCount = growthOffers.filter((o) => o.status === 'active').length;
-  const growthFeedback = mockGrowthService.getCustomerFeedback(business.id);
+  const growthFeedback = growthService.getCustomerFeedback(business.id);
   const avgGrowthRating =
     growthFeedback.length > 0
       ? (growthFeedback.reduce((acc, f) => acc + f.rating, 0) / growthFeedback.length).toFixed(1)
       : '5.0';
-  const growthSummary = mockGrowthService.getAnalyticsSummary(business.id, 'all');
+  const growthSummary = growthService.getAnalyticsSummary(business.id, 'all');
 
   const activeLocation =
     business.locations.find((l) => l.id === business.activeLocationId) || business.locations[0];

@@ -10,20 +10,20 @@ import {
   Trash2,
 } from 'lucide-react';
 import QRCode from 'qrcode';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { QrCodeDefinition, QrDestinationType } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { QrCreateModal } from './QrCreateModal';
 
 interface QrStudioViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
 export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
   const [qrCodes, setQrCodes] = useState<QrCodeDefinition[]>(() => {
-    return mockLoyaltyService.getQrCodes(business.id);
+    return loyaltyService.getQrCodes(business.id);
   });
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,8 +37,8 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
 
   // Refresh reactive data when service updates
   useEffect(() => {
-    const unsub = mockLoyaltyService.subscribe(() => {
-      setQrCodes(mockLoyaltyService.getQrCodes(business.id));
+    const unsub = loyaltyService.subscribe(() => {
+      setQrCodes(loyaltyService.getQrCodes(business.id));
     });
     return unsub;
   }, [business.id]);
@@ -59,12 +59,12 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
   });
 
   const handleToggleStatus = (qrId: string) => {
-    mockLoyaltyService.toggleQrCodeStatus(business.id, qrId);
+    loyaltyService.toggleQrCodeStatus(business.id, qrId);
   };
 
   const handleDelete = (qrId: string) => {
     if (window.confirm('Are you sure you want to delete this QR code definition?')) {
-      mockLoyaltyService.deleteQrCode(business.id, qrId);
+      loyaltyService.deleteQrCode(business.id, qrId);
     }
   };
 
@@ -117,7 +117,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
   const handleSaveRename = (e: React.FormEvent) => {
     e.preventDefault();
     if (!renamingQr || !newName.trim()) return;
-    mockLoyaltyService.updateQrCode(business.id, renamingQr.id, { name: newName.trim() });
+    loyaltyService.updateQrCode(business.id, renamingQr.id, { name: newName.trim() });
     setRenamingQr(null);
   };
 

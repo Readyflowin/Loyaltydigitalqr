@@ -27,15 +27,15 @@ import {
   CheckSquare,
 } from 'lucide-react';
 import { Logo } from '../common/Logo';
-import type { MockBusiness } from '../../types/business';
-import type { MockUser } from '../../types/auth';
+import type { Business } from '../../types/business';
+import type { AppUser } from '../../types/auth';
 
 interface DashboardSidebarProps {
   activeView: string;
   onSelectView: (viewId: string) => void;
-  activeBusiness: MockBusiness;
+  activeBusiness: Business;
   onOpenBusinessSwitcher: () => void;
-  currentUser: MockUser | null;
+  currentUser: AppUser | null;
   onSignOut: () => void;
   onCloseMobile?: () => void;
 }

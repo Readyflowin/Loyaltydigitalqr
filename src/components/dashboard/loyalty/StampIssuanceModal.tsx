@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Award, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import type { CustomerRecord, LoyaltyProgramConfig } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 
 interface StampIssuanceModalProps {
   isOpen: boolean;
@@ -68,7 +68,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
 
     try {
       // Simulate atomic processing
-      const res = mockLoyaltyService.issueStamp({
+      const res = loyaltyService.issueStamp({
         businessId,
         locationId,
         customerId: selectedCustomerId,
@@ -84,7 +84,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
           rewardUnlocked: !!res.rewardUnlocked,
         });
 
-        const refreshed = mockLoyaltyService.getCustomer(businessId, selectedCustomerId);
+        const refreshed = loyaltyService.getCustomer(businessId, selectedCustomerId);
         if (refreshed && onStampSuccess) {
           onStampSuccess(refreshed);
         }

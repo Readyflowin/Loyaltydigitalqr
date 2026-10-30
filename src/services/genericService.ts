@@ -3,7 +3,7 @@ import type {
   GenericServiceJobEvent,
   GenericServiceMetrics,
 } from '../types/serviceBusiness';
-import { mockLoyaltyService } from './mockLoyaltyService';
+import { loyaltyService } from './loyaltyService';
 
 const STORAGE_KEY = 'loyalty_mock_generic_service_v1';
 
@@ -34,7 +34,7 @@ export interface RecordJobInput {
   idempotencyKey?: string;
 }
 
-class MockGenericService {
+class GenericService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
@@ -274,7 +274,7 @@ class MockGenericService {
 
       let loyaltyIssued = false;
       try {
-        const res = mockLoyaltyService.issueStamp({
+        const res = loyaltyService.issueStamp({
           businessId: input.businessId,
           customerId: input.customerId,
           locationId: 'loc_service_main',
@@ -337,4 +337,4 @@ class MockGenericService {
   }
 }
 
-export const mockGenericService = new MockGenericService();
+export const genericService = new GenericService();

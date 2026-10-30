@@ -15,7 +15,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { useRouter } from '../router';
-import { mockSalonService } from '../services/mockSalonService';
+import { salonService } from '../services/salonService';
 import { formatMinorUnits } from '../types/cafe';
 import { formatTimeLabel } from '../utils/salonScheduling';
 import type { ThemeMode } from '../types';
@@ -49,7 +49,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
   const slug = currentPath.replace(/^\/book\/?/, '').split('/')[0] || '';
   const initialServiceId = searchParams.get('service') || undefined;
 
-  const data = mockSalonService.getPublicBookingProfile(slug);
+  const data = salonService.getPublicBookingProfile(slug);
 
   // Booking Form State
   const [selectedService, setSelectedService] = useState<SalonService | null>(() => {
@@ -124,7 +124,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
 
   // Calculate available slots for current selection
   const availableSlots = selectedService
-    ? mockSalonService.getAvailableSlots(
+    ? salonService.getAvailableSlots(
         business.id,
         selectedService.id,
         selectedDate,
@@ -182,7 +182,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
 
     const startTimeHhmm = selectedSlot.timeHhmm || selectedSlot.startTime.split('T')[1].substring(0, 5);
 
-    const res = mockSalonService.createAppointment({
+    const res = salonService.createAppointment({
       businessId: business.id,
       serviceId: selectedService.id,
       staffId: selectedStaffId,

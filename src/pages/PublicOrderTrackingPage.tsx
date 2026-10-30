@@ -10,7 +10,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { useRouter } from '../router';
-import { mockOrderService } from '../services/mockOrderService';
+import { orderService } from '../services/orderService';
 import { formatMinorUnits } from '../types/cafe';
 import type { ThemeMode } from '../types';
 import type { OrderStatus } from '../types/order';
@@ -40,13 +40,13 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
   // Reactive subscription to live order updates
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockOrderService.subscribe(() => {
+    const unsub = orderService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
   }, []);
 
-  const order = mockOrderService.getOrderByTrackingToken(token);
+  const order = orderService.getOrderByTrackingToken(token);
 
   if (!order) {
     return (

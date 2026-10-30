@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Bell, QrCode } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import type { ThemeMode } from '../../types';
-import type { MockBusiness, MockNotification } from '../../types/business';
+import type { Business, BusinessNotification } from '../../types/business';
 
 interface DashboardHeaderProps {
   title: string;
@@ -10,9 +10,9 @@ interface DashboardHeaderProps {
   theme: ThemeMode;
   onThemeToggle: (theme: ThemeMode) => void;
   onOpenMobileMenu: () => void;
-  activeBusiness: MockBusiness;
+  activeBusiness: Business;
   onQuickAction?: () => void;
-  notifications: MockNotification[];
+  notifications: BusinessNotification[];
 }
 
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({

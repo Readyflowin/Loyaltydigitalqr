@@ -12,14 +12,14 @@ import {
   AlertCircle,
   MapPin,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { StaffProfile, StaffWorkingHours, BreakPeriod } from '../../../types/salon';
-import { mockSalonService } from '../../../services/mockSalonService';
+import { salonService } from '../../../services/salonService';
 import { formatTimeLabel, timeToMinutes } from '../../../utils/salonScheduling';
 
 interface SalonStaffViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -38,15 +38,15 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockSalonService.subscribe(() => {
+    const unsub = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
   }, []);
 
-  const staffList = mockSalonService.getStaff(business.id);
-  const services = mockSalonService.getServices(business.id);
-  const appointments = mockSalonService.getAppointments(business.id);
+  const staffList = salonService.getStaff(business.id);
+  const services = salonService.getServices(business.id);
+  const appointments = salonService.getAppointments(business.id);
 
   // Modal states
   const [editorModalOpen, setEditorModalOpen] = useState(false);
@@ -123,7 +123,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
     }
 
     if (selectedStaff) {
-      mockSalonService.updateStaff(business.id, selectedStaff.id, {
+      salonService.updateStaff(business.id, selectedStaff.id, {
         displayName: formName.trim(),
         role: formRole.trim(),
         locationId: formLocationId,
@@ -140,7 +140,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
         breaks: [{ id: `brk_${idx}`, name: 'Lunch', startTime: '13:00', endTime: '14:00' }],
       }));
 
-      mockSalonService.createStaff(business.id, {
+      salonService.createStaff(business.id, {
         displayName: formName.trim(),
         role: formRole.trim(),
         locationId: formLocationId,
@@ -189,7 +189,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
       return;
     }
 
-    mockSalonService.updateStaff(business.id, selectedStaff.id, {
+    salonService.updateStaff(business.id, selectedStaff.id, {
       schedule: editingSchedule,
     });
 
@@ -245,7 +245,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
   const handleDeleteStaff = (staffId: string) => {
     if (confirm('Are you sure you want to remove this staff profile?')) {
-      mockSalonService.deleteStaff(business.id, staffId);
+      salonService.deleteStaff(business.id, staffId);
     }
   };
 

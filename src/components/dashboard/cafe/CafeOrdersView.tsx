@@ -11,16 +11,16 @@ import {
   Flame,
   ChefHat,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { Order, OrderStatus } from '../../../types/order';
 import { ORDER_STATUS_LABELS } from '../../../types/order';
-import { mockOrderService } from '../../../services/mockOrderService';
+import { orderService } from '../../../services/orderService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { useRouter } from '../../../router';
 
 interface CafeOrdersViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -30,7 +30,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockOrderService.subscribe(() => {
+    const unsub = orderService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -72,8 +72,8 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
     );
   }
 
-  const allOrders = mockOrderService.getOrders(business.id);
-  const metrics = mockOrderService.getOrderMetrics(business.id);
+  const allOrders = orderService.getOrders(business.id);
+  const metrics = orderService.getOrderMetrics(business.id);
 
   // Filtered orders
   const filteredOrders = allOrders.filter((order) => {
@@ -93,7 +93,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
   });
 
   const handleUpdateStatus = (orderId: string, nextStatus: OrderStatus) => {
-    const res = mockOrderService.updateOrderStatus(orderId, nextStatus, 'Staff');
+    const res = orderService.updateOrderStatus(orderId, nextStatus, 'Staff');
     if (res.success && selectedOrder?.id === orderId) {
       setSelectedOrder(res.order);
     }
@@ -101,10 +101,10 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
   const handleConfirmCancel = () => {
     if (!cancellingOrder) return;
-    mockOrderService.updateOrderStatus(cancellingOrder.id, 'cancelled', 'Staff', cancelReason);
+    orderService.updateOrderStatus(cancellingOrder.id, 'cancelled', 'Staff', cancelReason);
     setCancellingOrder(null);
     if (selectedOrder?.id === cancellingOrder.id) {
-      const updated = mockOrderService.getOrder(cancellingOrder.id);
+      const updated = orderService.getOrder(cancellingOrder.id);
       setSelectedOrder(updated);
     }
   };

@@ -13,19 +13,19 @@ import {
   Car,
   Wrench,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { DateRangeOption, GrowthAnalyticsSummary } from '../../../types/growth';
-import { mockGrowthService } from '../../../services/mockGrowthService';
-import { mockOrderService } from '../../../services/mockOrderService';
-import { mockSalonService } from '../../../services/mockSalonService';
-import { mockRetailService } from '../../../services/mockRetailService';
-import { mockGymService } from '../../../services/mockGymService';
-import { mockCarWashService } from '../../../services/mockCarWashService';
-import { mockGenericService } from '../../../services/mockGenericService';
+import { growthService } from '../../../services/growthService';
+import { orderService } from '../../../services/orderService';
+import { salonService } from '../../../services/salonService';
+import { retailService } from '../../../services/retailService';
+import { gymService } from '../../../services/gymService';
+import { carWashService } from '../../../services/carWashService';
+import { genericService } from '../../../services/genericService';
 
 interface AnalyticsViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -40,13 +40,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   const currencySymbol = business.currency === 'INR' ? '₹' : '$';
 
   const refreshSummary = () => {
-    const data = mockGrowthService.getGrowthAnalytics(business.id, dateRange);
+    const data = growthService.getGrowthAnalytics(business.id, dateRange);
     setSummary(data);
   };
 
   useEffect(() => {
     refreshSummary();
-    const unsub = mockGrowthService.subscribe(() => {
+    const unsub = growthService.subscribe(() => {
       refreshSummary();
     });
     return unsub;
@@ -54,7 +54,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
   const handleExportCsv = () => {
     try {
-      const csvContent = mockGrowthService.exportAnalyticsCsv(business.id, dateRange);
+      const csvContent = growthService.exportAnalyticsCsv(business.id, dateRange);
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -92,22 +92,22 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   const isService = business.businessType === 'service';
 
   // Derived vertical operational data
-  const orders = isCafe ? mockOrderService.getOrders(business.id) : [];
+  const orders = isCafe ? orderService.getOrders(business.id) : [];
   const ordersVolume = orders.reduce((sum, o) => sum + (o.total || 0), 0);
 
-  const appointments = isSalon ? mockSalonService.getAppointments(business.id) : [];
+  const appointments = isSalon ? salonService.getAppointments(business.id) : [];
   const appointmentsVolume = appointments.reduce((sum, a) => sum + (a.price || 0), 0);
 
-  const purchases = isRetail ? mockRetailService.getPurchases(business.id) : [];
+  const purchases = isRetail ? retailService.getPurchases(business.id) : [];
   const retailVolume = purchases.reduce((sum, p) => sum + (p.total || 0), 0);
 
-  const checkIns = isGym ? mockGymService.getCheckIns(business.id) : [];
-  const memberships = isGym ? mockGymService.getMembers(business.id) : [];
+  const checkIns = isGym ? gymService.getCheckIns(business.id) : [];
+  const memberships = isGym ? gymService.getMembers(business.id) : [];
 
-  const carWashes = isCarWash ? mockCarWashService.getVisits(business.id) : [];
-  const passes = isCarWash ? mockCarWashService.getPasses(business.id) : [];
+  const carWashes = isCarWash ? carWashService.getVisits(business.id) : [];
+  const passes = isCarWash ? carWashService.getPasses(business.id) : [];
 
-  const jobs = isService ? mockGenericService.getJobs(business.id) : [];
+  const jobs = isService ? genericService.getJobs(business.id) : [];
   const jobsVolume = jobs.reduce((sum, j) => sum + (j.amountCharged || 0), 0);
 
   return (

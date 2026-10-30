@@ -11,7 +11,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useRouter } from '../router';
-import { mockCafeService } from '../services/mockCafeService';
+import { cafeService } from '../services/cafeService';
 import type { ThemeMode } from '../types';
 import type {
   MenuItem,
@@ -39,13 +39,13 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
   // Force re-render on subscriber update
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockCafeService.subscribe(() => {
+    const unsub = cafeService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
   }, []);
 
-  const data = mockCafeService.getPublicMenuBySlug(slug, selectedTableId);
+  const data = cafeService.getPublicMenuBySlug(slug, selectedTableId);
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');

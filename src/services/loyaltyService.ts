@@ -15,7 +15,7 @@ import type {
   LoyaltyEvent,
   QrCodeDefinition,
 } from '../types/loyalty';
-import { mockAuthService } from './mockAuthService';
+import { authService } from './authService';
 
 const STORAGE_KEY = 'loyalty_mock_loyalty_data_v1';
 
@@ -28,7 +28,7 @@ interface BusinessLoyaltyBundle {
 
 type StorageSchema = Record<string, BusinessLoyaltyBundle>;
 
-class MockLoyaltyService {
+class LoyaltyService {
   private listeners: (() => void)[] = [];
   private inFlightOperations = new Set<string>();
 
@@ -36,8 +36,8 @@ class MockLoyaltyService {
    * Generates initial seed data for demonstration workspaces
    */
   private getSeedData(): StorageSchema {
-    const completed = mockAuthService.getCompletedOnboarding();
-    const draft = mockAuthService.getOnboardingDraft();
+    const completed = authService.getCompletedOnboarding();
+    const draft = authService.getOnboardingDraft();
     const activeData = completed || (draft && draft.businessName ? draft : null);
 
     const isIndia = activeData?.region === 'india';
@@ -1009,4 +1009,4 @@ class MockLoyaltyService {
   }
 }
 
-export const mockLoyaltyService = new MockLoyaltyService();
+export const loyaltyService = new LoyaltyService();

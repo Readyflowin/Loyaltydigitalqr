@@ -11,24 +11,24 @@ import {
   Utensils,
 } from 'lucide-react';
 import QRCode from 'qrcode';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { CafeTable, Menu } from '../../../types/cafe';
-import { mockCafeService } from '../../../services/mockCafeService';
+import { cafeService } from '../../../services/cafeService';
 import { generateBusinessSlug, buildTableMenuUrl } from '../../../utils/qrUrlBuilder';
 import { TableEditModal } from './TableEditModal';
 import { TablePrintModal } from './TablePrintModal';
 
 interface CafeTablesViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
 export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
   const isFoodService = business.businessType === 'cafe' || business.businessType === 'restaurant';
 
-  const [tables, setTables] = useState<CafeTable[]>(() => mockCafeService.getTables(business.id));
-  const [menus, setMenus] = useState<Menu[]>(() => mockCafeService.getMenus(business.id));
+  const [tables, setTables] = useState<CafeTable[]>(() => cafeService.getTables(business.id));
+  const [menus, setMenus] = useState<Menu[]>(() => cafeService.getMenus(business.id));
 
   const [searchQuery, setSearchQuery] = useState('');
   const [locationFilter, setLocationFilter] = useState<string>('all');
@@ -42,9 +42,9 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
 
   // Subscribe to updates
   useEffect(() => {
-    const unsub = mockCafeService.subscribe(() => {
-      setTables(mockCafeService.getTables(business.id));
-      setMenus(mockCafeService.getMenus(business.id));
+    const unsub = cafeService.subscribe(() => {
+      setTables(cafeService.getTables(business.id));
+      setMenus(cafeService.getMenus(business.id));
     });
     return unsub;
   }, [business.id]);
@@ -86,15 +86,15 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
     instruction?: string;
   }) => {
     if (editingTable) {
-      mockCafeService.updateTable(business.id, editingTable.id, data);
+      cafeService.updateTable(business.id, editingTable.id, data);
     } else {
-      mockCafeService.createTable(business.id, data);
+      cafeService.createTable(business.id, data);
     }
   };
 
   const handleDeleteTable = (tblId: string) => {
     if (window.confirm('Delete this table and deactivate its assigned QR standee?')) {
-      mockCafeService.deleteTable(business.id, tblId);
+      cafeService.deleteTable(business.id, tblId);
     }
   };
 

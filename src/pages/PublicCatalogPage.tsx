@@ -8,7 +8,7 @@ import {
   Store,
 } from 'lucide-react';
 import { useRouter } from '../router';
-import { mockRetailService } from '../services/mockRetailService';
+import { retailService } from '../services/retailService';
 import { formatMinorUnits } from '../types/cafe';
 import type { ThemeMode } from '../types';
 
@@ -22,7 +22,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
 
   // Extract slug from /catalog/:slug
   const slug = currentPath.replace(/^\/catalog\/?/, '').split('/')[0] || '';
-  const data = mockRetailService.getPublicCatalogProfile(slug);
+  const data = retailService.getPublicCatalogProfile(slug);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategoryId, setSelectedCategoryId] = useState('all');

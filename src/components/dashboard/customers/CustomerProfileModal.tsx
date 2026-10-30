@@ -12,7 +12,7 @@ import {
   Archive,
 } from 'lucide-react';
 import type { CustomerRecord, LoyaltyProgramConfig } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { RewardRedemptionModal } from './RewardRedemptionModal';
 import { StampIssuanceModal } from '../loyalty/StampIssuanceModal';
 
@@ -37,7 +37,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
   onEditCustomer,
 }) => {
   const [customer, setCustomer] = useState<CustomerRecord | null>(() => {
-    return mockLoyaltyService.getCustomer(businessId, customerId);
+    return loyaltyService.getCustomer(businessId, customerId);
   });
 
   const [stampModalOpen, setStampModalOpen] = useState(false);
@@ -45,8 +45,8 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
 
   // Subscribe to updates so stamps/redemptions update profile in real-time
   React.useEffect(() => {
-    const unsub = mockLoyaltyService.subscribe(() => {
-      setCustomer(mockLoyaltyService.getCustomer(businessId, customerId));
+    const unsub = loyaltyService.subscribe(() => {
+      setCustomer(loyaltyService.getCustomer(businessId, customerId));
     });
     return unsub;
   }, [businessId, customerId]);
@@ -56,13 +56,13 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
   const unlockedRewards = customer.rewards.filter((r) => !r.isRedeemed);
 
   // Get customer specific events
-  const customerEvents = mockLoyaltyService
+  const customerEvents = loyaltyService
     .getEvents(businessId, 30)
     .filter((e) => e.customerId === customer.id);
 
   const handleArchive = () => {
     if (window.confirm(`Are you sure you want to archive ${customer.name}?`)) {
-      mockLoyaltyService.archiveCustomer(businessId, customer.id);
+      loyaltyService.archiveCustomer(businessId, customer.id);
       onClose();
     }
   };

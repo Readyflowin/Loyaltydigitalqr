@@ -1,13 +1,13 @@
 import React from 'react';
 import { X, Check, MapPin, Building2, Coffee, Scissors, ShoppingBag, Dumbbell, Car, Briefcase } from 'lucide-react';
-import type { MockBusiness } from '../../types/business';
+import type { Business } from '../../types/business';
 import type { BusinessType } from '../../types/onboarding';
 
 interface BusinessSwitcherModalProps {
   isOpen: boolean;
   onClose: () => void;
-  businesses: MockBusiness[];
-  activeBusiness: MockBusiness;
+  businesses: Business[];
+  activeBusiness: Business;
   onSelectBusiness: (businessId: string) => void;
   onSelectLocation: (businessId: string, locationId: string) => void;
 }
@@ -110,11 +110,6 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                         <h4 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
                           {biz.name}
                         </h4>
-                        {biz.isDemoSample && (
-                          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/5 dark:bg-white/5 text-[#868A94]">
-                            Demo
-                          </span>
-                        )}
                       </div>
                       <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
                         {biz.businessType.toUpperCase()} · {biz.planPrice} · {biz.locations.length} {biz.locations.length === 1 ? 'Location' : 'Locations'}

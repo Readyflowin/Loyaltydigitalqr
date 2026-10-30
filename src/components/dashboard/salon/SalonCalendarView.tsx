@@ -4,15 +4,15 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { SalonAppointment } from '../../../types/salon';
-import { mockSalonService } from '../../../services/mockSalonService';
+import { salonService } from '../../../services/salonService';
 import { formatTimeLabel, timeToMinutes } from '../../../utils/salonScheduling';
 import { formatMinorUnits } from '../../../types/cafe';
 
 interface SalonCalendarViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -34,7 +34,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockSalonService.subscribe(() => {
+    const unsub = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -44,8 +44,8 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
   const [selectedLocationId, setSelectedLocationId] = useState('all');
   const [selectedAppointment, setSelectedAppointment] = useState<SalonAppointment | null>(null);
 
-  const staffList = mockSalonService.getStaff(business.id, selectedLocationId);
-  const appointments = mockSalonService.getAppointments(business.id, {
+  const staffList = salonService.getStaff(business.id, selectedLocationId);
+  const appointments = salonService.getAppointments(business.id, {
     date: selectedDate,
     locationId: selectedLocationId,
   });

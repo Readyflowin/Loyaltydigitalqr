@@ -11,7 +11,7 @@ import {
   Ban,
   UserPlus,
 } from 'lucide-react';
-import { mockGymService } from '../../../services/mockGymService';
+import { gymService } from '../../../services/gymService';
 import type {
   GymClass,
   GymMemberRecord,
@@ -44,13 +44,13 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
   const [formError, setFormError] = useState<string | null>(null);
 
   const loadData = () => {
-    setClasses(mockGymService.getClasses(businessId));
-    setMembers(mockGymService.getMembers(businessId));
+    setClasses(gymService.getClasses(businessId));
+    setMembers(gymService.getMembers(businessId));
   };
 
   useEffect(() => {
     loadData();
-    const unsub = mockGymService.subscribe(() => {
+    const unsub = gymService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -60,7 +60,7 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
     e.preventDefault();
     setFormError(null);
 
-    const result = mockGymService.createClass({
+    const result = gymService.createClass({
       businessId,
       name: formName,
       description: formDescription,
@@ -85,7 +85,7 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
 
   const handleCancelClass = (classId: string) => {
     if (window.confirm('Are you sure you want to cancel this class session?')) {
-      mockGymService.cancelClass(businessId, classId);
+      gymService.cancelClass(businessId, classId);
       loadData();
     }
   };
@@ -97,7 +97,7 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
     setEnrollError(null);
     setEnrollSuccess(null);
 
-    const result = mockGymService.enrollInClass(
+    const result = gymService.enrollInClass(
       businessId,
       enrollingClass.id,
       selectedMemberId

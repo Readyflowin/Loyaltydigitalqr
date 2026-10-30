@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import type { CafeTable, Menu } from '../../../types/cafe';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 
 interface TableEditModalProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ interface TableEditModalProps {
     instruction?: string;
   }) => void;
   initialTable?: CafeTable | null;
-  business: MockBusiness;
+  business: Business;
   menus: Menu[];
 }
 
@@ -50,7 +50,7 @@ interface InnerFormProps {
     instruction?: string;
   }) => void;
   initialTable?: CafeTable | null;
-  business: MockBusiness;
+  business: Business;
   menus: Menu[];
 }
 

@@ -9,9 +9,9 @@ import {
   AlertCircle,
   Wrench,
 } from 'lucide-react';
-import { mockGenericService } from '../../../services/mockGenericService';
+import { genericService } from '../../../services/genericService';
 import type { GenericServiceItem } from '../../../types/serviceBusiness';
-import { mockBusinessService } from '../../../services/mockBusinessService';
+import { businessService } from '../../../services/businessService';
 
 interface GenericServicesViewProps {
   businessId: string;
@@ -30,16 +30,16 @@ export const GenericServicesView: React.FC<GenericServicesViewProps> = ({ busine
   const [estimatedMinutes, setEstimatedMinutes] = useState(30);
   const [error, setError] = useState<string | null>(null);
 
-  const business = mockBusinessService.getBusinessById(businessId);
+  const business = businessService.getBusinessById(businessId);
   const currencySymbol = business?.currency === 'INR' ? '₹' : '$';
 
   const loadData = () => {
-    setServices(mockGenericService.getServices(businessId));
+    setServices(genericService.getServices(businessId));
   };
 
   useEffect(() => {
     loadData();
-    const unsub = mockGenericService.subscribe(() => {
+    const unsub = genericService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -78,7 +78,7 @@ export const GenericServicesView: React.FC<GenericServicesViewProps> = ({ busine
     }
 
     if (editingItem) {
-      const res = mockGenericService.updateService(businessId, editingItem.id, {
+      const res = genericService.updateService(businessId, editingItem.id, {
         name,
         description,
         price: priceCents,
@@ -92,7 +92,7 @@ export const GenericServicesView: React.FC<GenericServicesViewProps> = ({ busine
         setError(res.error || 'Failed to update service.');
       }
     } else {
-      const res = mockGenericService.createService({
+      const res = genericService.createService({
         businessId,
         name,
         description,
@@ -110,7 +110,7 @@ export const GenericServicesView: React.FC<GenericServicesViewProps> = ({ busine
   };
 
   const handleToggleActive = (item: GenericServiceItem) => {
-    mockGenericService.updateService(businessId, item.id, {
+    genericService.updateService(businessId, item.id, {
       isActive: !item.isActive,
     });
     loadData();

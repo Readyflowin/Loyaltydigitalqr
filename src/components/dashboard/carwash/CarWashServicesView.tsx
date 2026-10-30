@@ -9,12 +9,12 @@ import {
   AlertCircle,
   Layers,
 } from 'lucide-react';
-import { mockCarWashService } from '../../../services/mockCarWashService';
+import { carWashService } from '../../../services/carWashService';
 import type {
   CarWashService,
   CarWashTier,
 } from '../../../types/carwash';
-import { mockBusinessService } from '../../../services/mockBusinessService';
+import { businessService } from '../../../services/businessService';
 
 interface CarWashServicesViewProps {
   businessId: string;
@@ -33,16 +33,16 @@ export const CarWashServicesView: React.FC<CarWashServicesViewProps> = ({ busine
   const [tier, setTier] = useState<CarWashTier>('express');
   const [error, setError] = useState<string | null>(null);
 
-  const business = mockBusinessService.getBusinessById(businessId);
+  const business = businessService.getBusinessById(businessId);
   const currencySymbol = business?.currency === 'INR' ? '₹' : '$';
 
   const loadData = () => {
-    setServices(mockCarWashService.getServices(businessId));
+    setServices(carWashService.getServices(businessId));
   };
 
   useEffect(() => {
     loadData();
-    const unsub = mockCarWashService.subscribe(() => {
+    const unsub = carWashService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -81,7 +81,7 @@ export const CarWashServicesView: React.FC<CarWashServicesViewProps> = ({ busine
     }
 
     if (editingService) {
-      const res = mockCarWashService.updateService(businessId, editingService.id, {
+      const res = carWashService.updateService(businessId, editingService.id, {
         name,
         description,
         price: priceCents,
@@ -95,7 +95,7 @@ export const CarWashServicesView: React.FC<CarWashServicesViewProps> = ({ busine
         setError(res.error || 'Failed to update service.');
       }
     } else {
-      const res = mockCarWashService.createService({
+      const res = carWashService.createService({
         businessId,
         name,
         description,
@@ -113,7 +113,7 @@ export const CarWashServicesView: React.FC<CarWashServicesViewProps> = ({ busine
   };
 
   const handleToggleActive = (s: CarWashService) => {
-    mockCarWashService.updateService(businessId, s.id, {
+    carWashService.updateService(businessId, s.id, {
       isActive: !s.isActive,
     });
     loadData();

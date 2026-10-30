@@ -5,15 +5,15 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { GymMemberRecord, GymMembershipPlan, GymPlanType } from '../../../types/gym';
-import { mockGymService } from '../../../services/mockGymService';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { gymService } from '../../../services/gymService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { formatMinorUnits } from '../../../types/cafe';
 
 interface GymMembersViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -21,7 +21,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
   // Reactive pubsub
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockGymService.subscribe(() => {
+    const unsub = gymService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -48,9 +48,9 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
   const [planClassAccess, setPlanClassAccess] = useState(true);
   const [planError, setPlanError] = useState<string | null>(null);
 
-  const members: GymMemberRecord[] = mockGymService.getMembers(business.id, searchQuery, statusFilter);
-  const plans: GymMembershipPlan[] = mockGymService.getAllPlans(business.id);
-  const customers = mockLoyaltyService.getCustomers(business.id);
+  const members: GymMemberRecord[] = gymService.getMembers(business.id, searchQuery, statusFilter);
+  const plans: GymMembershipPlan[] = gymService.getAllPlans(business.id);
+  const customers = loyaltyService.getCustomers(business.id);
 
   const handleOpenAssignModal = () => {
     setAssignCustomerId(customers[0]?.id || '');
@@ -74,7 +74,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
       return;
     }
 
-    const res = mockGymService.assignMembership(business.id, {
+    const res = gymService.assignMembership(business.id, {
       businessId: business.id,
       customerId: customer.id,
       customerName: customer.name,
@@ -106,7 +106,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
       return;
     }
 
-    const res = mockGymService.createPlan({
+    const res = gymService.createPlan({
       businessId: business.id,
       name: planName.trim(),
       description: planDesc.trim(),

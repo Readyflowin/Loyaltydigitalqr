@@ -6,13 +6,13 @@ import {
   X,
   Search,
 } from 'lucide-react';
-import { mockGenericService } from '../../../services/mockGenericService';
+import { genericService } from '../../../services/genericService';
 import type {
   GenericServiceJobEvent,
   GenericServiceItem,
 } from '../../../types/serviceBusiness';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
-import { mockBusinessService } from '../../../services/mockBusinessService';
+import { loyaltyService } from '../../../services/loyaltyService';
+import { businessService } from '../../../services/businessService';
 
 interface GenericVisitViewProps {
   businessId: string;
@@ -33,18 +33,18 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
   const [staffPin] = useState('8831');
   const [error, setError] = useState<string | null>(null);
 
-  const business = mockBusinessService.getBusinessById(businessId);
+  const business = businessService.getBusinessById(businessId);
   const currencySymbol = business?.currency === 'INR' ? '₹' : '$';
-  const customers = mockLoyaltyService.getCustomers(businessId);
+  const customers = loyaltyService.getCustomers(businessId);
 
   const loadData = () => {
-    setJobs(mockGenericService.getJobs(businessId));
-    setServices(mockGenericService.getServices(businessId));
+    setJobs(genericService.getJobs(businessId));
+    setServices(genericService.getServices(businessId));
   };
 
   useEffect(() => {
     loadData();
-    const unsub = mockGenericService.subscribe(() => {
+    const unsub = genericService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -74,7 +74,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
       return;
     }
 
-    const res = mockGenericService.recordJob({
+    const res = genericService.recordJob({
       businessId,
       serviceId: selectedServiceId,
       customerId: cust.id,

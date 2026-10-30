@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowRight, Mail, Lock, ShieldCheck, Info } from 'lucide-react';
+import { ArrowRight, Mail, Lock, ShieldCheck } from 'lucide-react';
 import { Logo } from '../components/common/Logo';
 import { Link, useRouter } from '../router';
-import { mockAuthService } from '../services/mockAuthService';
+import { authService, describeAuthError } from '../services/authService';
 import type { ThemeMode } from '../types';
 
 interface LoginPageProps {
@@ -14,49 +14,68 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [demoNotice, setDemoNotice] = useState<string | null>(null);
-  const existingUser = mockAuthService.getCurrentUser();
+  const existingUser = authService.getCurrentUser();
 
-  const handleGoogleMockLogin = async () => {
+  const goAfterSignIn = () => {
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('redirect');
+    if (redirect && redirect.startsWith('/') && !redirect.startsWith('//')) {
+      navigate(redirect);
+    } else {
+      // The dashboard sends people without a business to onboarding.
+      navigate('/dashboard');
+    }
+  };
+
+  const handleGoogleLogin = async () => {
     setIsLoading(true);
+    setErrorMsg(null);
     setDemoNotice(null);
     try {
-      const { isNewUser } = await mockAuthService.signInWithMockGoogle();
-      setIsLoading(false);
-      setDemoNotice('Demo merchant session initialized.');
-      setTimeout(() => {
-        const params = new URLSearchParams(window.location.search);
-        const redirect = params.get('redirect');
-        if (redirect && redirect.startsWith('/') && !redirect.startsWith('//')) {
-          navigate(redirect);
-        } else if (isNewUser && !mockAuthService.getCompletedOnboarding()) {
-          navigate('/onboarding');
-        } else {
-          navigate('/dashboard');
-        }
-      }, 400);
-    } catch {
+      await authService.signInWithGoogle();
+      goAfterSignIn();
+    } catch (err) {
+      setErrorMsg(describeAuthError(err));
+    } finally {
       setIsLoading(false);
     }
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !password) {
+      setErrorMsg('Please enter your email and password.');
+      return;
+    }
 
     setIsLoading(true);
-    await mockAuthService.signInWithMockEmail(email);
-    setIsLoading(false);
-    setDemoNotice(`Signed in with demo email: ${email}`);
-    setTimeout(() => {
-      const params = new URLSearchParams(window.location.search);
-      const redirect = params.get('redirect');
-      if (redirect && redirect.startsWith('/') && !redirect.startsWith('//')) {
-        navigate(redirect);
-      } else {
-        navigate('/dashboard');
-      }
-    }, 400);
+    setErrorMsg(null);
+    setDemoNotice(null);
+    try {
+      await authService.signInWithEmail(email, password);
+      goAfterSignIn();
+    } catch (err) {
+      setErrorMsg(describeAuthError(err));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setErrorMsg(null);
+    setDemoNotice(null);
+    if (!email) {
+      setErrorMsg('Enter your email above, then click "Forgot password?" again.');
+      return;
+    }
+    try {
+      await authService.sendPasswordReset(email);
+      setDemoNotice(`If an account exists for ${email}, a password reset link has been sent.`);
+    } catch (err) {
+      setErrorMsg(describeAuthError(err));
+    }
   };
 
   return (
@@ -94,7 +113,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
             <div className="mt-6 p-3.5 rounded-2xl bg-[#3027F5]/5 dark:bg-[#E4C174]/10 border border-[#3027F5]/20 dark:border-[#E4C174]/25 flex items-center justify-between gap-3 text-xs">
               <div className="truncate">
                 <span className="font-mono text-[10px] uppercase font-bold text-[#3027F5] dark:text-[#E4C174] block">
-                  Active Demo Session
+                  Already signed in
                 </span>
                 <span className="font-medium text-[#111318] dark:text-[#F7F3EB] truncate block">
                   {existingUser.email}
@@ -110,13 +129,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
             </div>
           )}
 
-          {/* Explicit Mock / Demo Banner */}
-          <div className="mt-6 p-3.5 rounded-2xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
-            <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
-            <div>
-              <strong className="text-[#111318] dark:text-[#F7F3EB]">Demo Environment:</strong> Real Google Authentication & Firebase persistence will be connected in Task 10. Click below to continue with an explicitly labelled demo session.
+          {errorMsg && (
+            <div role="alert" className="mt-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
+              {errorMsg}
             </div>
-          </div>
+          )}
 
           {demoNotice && (
             <div className="mt-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 font-medium">
@@ -128,7 +145,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
           <div className="mt-6">
             <button
               type="button"
-              onClick={handleGoogleMockLogin}
+              onClick={handleGoogleLogin}
               disabled={isLoading}
               className="w-full py-3.5 px-4 rounded-2xl border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] hover:border-[#3027F5] dark:hover:border-[#E4C174] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] font-bold text-sm flex items-center justify-center gap-3 shadow-xs hover:shadow-md transition-all cursor-pointer group"
             >
@@ -151,7 +168,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>Continue with Google (Demo)</span>
+              <span>{isLoading ? 'Signing in…' : 'Continue with Google'}</span>
             </button>
           </div>
 
@@ -162,7 +179,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-white dark:bg-[#141412] px-3 font-mono text-[#868A94] dark:text-[#AAA499]">
-                or demo email
+                or sign in with email
               </span>
             </div>
           </div>
@@ -190,9 +207,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
                 <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Password
                 </label>
-                <span className="text-[11px] text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer">
-                  Demo password
-                </span>
+                <button type="button" onClick={handleForgotPassword} className="text-[11px] text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer">
+                  Forgot password?
+                </button>
               </div>
               <div className="relative">
                 <Lock className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
@@ -215,7 +232,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
                   : 'bg-[#E4C174] hover:bg-[#EBD294] text-[#11100D] shadow-md'
               }`}
             >
-              <span>Sign In with Demo Session</span>
+              <span>{isLoading ? 'Signing in…' : 'Sign in'}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
           </form>

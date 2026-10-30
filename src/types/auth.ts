@@ -1,10 +1,8 @@
-export interface MockUser {
+export interface AppUser {
   id: string;
   email: string;
   displayName: string;
   avatarUrl?: string;
-  isMock: true;
+  emailVerified: boolean;
   createdAt: string;
 }
-
-export type AuthMode = 'demo-google' | 'demo-email';

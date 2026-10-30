@@ -5,17 +5,17 @@ import {
   Plus,
   ChevronRight,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { CustomerRecord, LoyaltyProgramConfig } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { CustomerProfileModal } from './CustomerProfileModal';
 import { CustomerEditModal } from './CustomerEditModal';
 import { StampIssuanceModal } from '../loyalty/StampIssuanceModal';
 import { RewardRedemptionModal } from './RewardRedemptionModal';
 
 interface CustomerCrmViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
   onNavigateToLoyalty?: () => void;
   onNavigateToQR?: () => void;
@@ -26,11 +26,11 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
   theme: _theme,
 }) => {
   const [customers, setCustomers] = useState<CustomerRecord[]>(() => {
-    return mockLoyaltyService.getCustomers(business.id);
+    return loyaltyService.getCustomers(business.id);
   });
 
   const [program, setProgram] = useState<LoyaltyProgramConfig>(() => {
-    return mockLoyaltyService.getProgram(business.id);
+    return loyaltyService.getProgram(business.id);
   });
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,9 +49,9 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
     business.locations[0];
 
   useEffect(() => {
-    const unsub = mockLoyaltyService.subscribe(() => {
-      setCustomers(mockLoyaltyService.getCustomers(business.id));
-      setProgram(mockLoyaltyService.getProgram(business.id));
+    const unsub = loyaltyService.subscribe(() => {
+      setCustomers(loyaltyService.getCustomers(business.id));
+      setProgram(loyaltyService.getProgram(business.id));
     });
     return unsub;
   }, [business.id]);
@@ -453,7 +453,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         businessId={business.id}
         customer={editingCustomer}
         onSuccess={(c) => {
-          setCustomers(mockLoyaltyService.getCustomers(business.id));
+          setCustomers(loyaltyService.getCustomers(business.id));
           if (!editingCustomer) {
             setProfileCustomerId(c.id);
           }
@@ -472,7 +472,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
           customers={[stampingCustomer]}
           initialCustomerId={stampingCustomer.id}
           onStampSuccess={() => {
-            setCustomers(mockLoyaltyService.getCustomers(business.id));
+            setCustomers(loyaltyService.getCustomers(business.id));
           }}
         />
       )}
@@ -487,7 +487,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
           defaultStaffPin={activeLocation.staffPin}
           customer={redeemingCustomer}
           onRedemptionSuccess={() => {
-            setCustomers(mockLoyaltyService.getCustomers(business.id));
+            setCustomers(loyaltyService.getCustomers(business.id));
           }}
         />
       )}

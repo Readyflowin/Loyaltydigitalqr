@@ -14,8 +14,8 @@ import type {
   OrderStatusHistoryEntry,
 } from '../types/order';
 import { VALID_STATUS_TRANSITIONS } from '../types/order';
-import { mockBusinessService } from './mockBusinessService';
-import { mockCafeService } from './mockCafeService';
+import { businessService } from './businessService';
+import { cafeService } from './cafeService';
 import { generateBusinessSlug } from '../utils/qrUrlBuilder';
 
 const STORAGE_KEY = 'loyalty_mock_orders_v1';
@@ -25,7 +25,7 @@ type OrderStorageSchema = {
   [businessId: string]: Order[];
 };
 
-class MockOrderService {
+class OrderService {
   private listeners: (() => void)[] = [];
 
   constructor() {
@@ -420,7 +420,7 @@ class MockOrderService {
     }
 
     // 2. Validate Business
-    const business = mockBusinessService.getAllBusinesses().find((b) => b.id === input.businessId);
+    const business = businessService.getAllBusinesses().find((b) => b.id === input.businessId);
     if (!business) {
       return { success: false, error: 'Business establishment not found.' };
     }
@@ -429,7 +429,7 @@ class MockOrderService {
     }
 
     // 3. Validate Published Menu
-    const publishedMenu = mockCafeService.getActiveMenu(input.businessId);
+    const publishedMenu = cafeService.getActiveMenu(input.businessId);
     if (!publishedMenu || publishedMenu.status !== 'published') {
       return { success: false, error: 'The digital menu is currently in private draft mode or unavailable.' };
     }
@@ -440,7 +440,7 @@ class MockOrderService {
       if (!input.tableId) {
         return { success: false, error: 'Please select a dining table for dine-in orders.' };
       }
-      table = mockCafeService.getTable(input.businessId, input.tableId);
+      table = cafeService.getTable(input.businessId, input.tableId);
       if (!table) {
         return { success: false, error: 'The selected table is invalid or does not belong to this venue.' };
       }
@@ -455,7 +455,7 @@ class MockOrderService {
     let subtotal = 0;
 
     for (const itemInput of input.items) {
-      const liveItem = mockCafeService.getItem(input.businessId, itemInput.menuItemId);
+      const liveItem = cafeService.getItem(input.businessId, itemInput.menuItemId);
       if (!liveItem) {
         return { success: false, error: 'An item in your cart is no longer available on the menu.' };
       }
@@ -680,10 +680,10 @@ class MockOrderService {
       try {
         listener();
       } catch (err) {
-        console.error('Error in mockOrderService subscriber:', err);
+        console.error('Error in orderService subscriber:', err);
       }
     });
   }
 }
 
-export const mockOrderService = new MockOrderService();
+export const orderService = new OrderService();

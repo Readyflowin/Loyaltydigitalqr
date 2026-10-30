@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import type { CafeTable } from '../../../types/cafe';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import {
   buildTableMenuUrl,
   generateBusinessSlug,
@@ -24,7 +24,7 @@ interface TablePrintModalProps {
   isOpen: boolean;
   onClose: () => void;
   table: CafeTable;
-  business: MockBusiness;
+  business: Business;
 }
 
 export const TablePrintModal: React.FC<TablePrintModalProps> = ({

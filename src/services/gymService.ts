@@ -9,8 +9,8 @@ import type {
   RecordCheckInInput,
   CreateClassInput,
 } from '../types/gym';
-import { mockBusinessService } from './mockBusinessService';
-import { mockLoyaltyService } from './mockLoyaltyService';
+import { businessService } from './businessService';
+import { loyaltyService } from './loyaltyService';
 
 const STORAGE_KEY = 'loyalty_mock_gym_v1';
 
@@ -21,7 +21,7 @@ interface GymBundle {
   classes: GymClass[];
 }
 
-class MockGymService {
+class GymService {
   private listeners: (() => void)[] = [];
   private inFlightOperations = new Set<string>();
 
@@ -366,7 +366,7 @@ class MockGymService {
       return { success: false, error: 'Membership plan not found.' };
     }
 
-    const business = mockBusinessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
     const locationId = input.locationId || business?.activeLocationId || 'loc_gym_main';
 
     const startDate = input.startDate || new Date().toISOString().split('T')[0];
@@ -502,7 +502,7 @@ class MockGymService {
       // Check loyalty stamp issuance
       let loyaltyIssued = false;
       try {
-        const res = mockLoyaltyService.issueStamp({
+        const res = loyaltyService.issueStamp({
           businessId,
           customerId: member.customerId,
           locationId: member.locationId,
@@ -701,10 +701,10 @@ class MockGymService {
       try {
         listener();
       } catch (e) {
-        console.error('Error in mockGymService listener:', e);
+        console.error('Error in gymService listener:', e);
       }
     }
   }
 }
 
-export const mockGymService = new MockGymService();
+export const gymService = new GymService();

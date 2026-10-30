@@ -12,16 +12,16 @@ import {
   X,
   UserPlus,
 } from 'lucide-react';
-import type { MockBusiness } from '../../types/business';
+import type { Business } from '../../types/business';
 import type { ThemeMode } from '../../types';
 import type { TeamMember, TeamRole, TeamPermission } from '../../types/growth';
 import { CARD_COLORS } from '../../data/onboardingData';
-import { mockGrowthService } from '../../services/mockGrowthService';
+import { growthService } from '../../services/growthService';
 
 interface SettingsViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
-  onUpdateBusiness: (updated: Partial<MockBusiness>) => void;
+  onUpdateBusiness: (updated: Partial<Business>) => void;
 }
 
 type SettingsTab =
@@ -58,12 +58,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [inviteRole, setInviteRole] = useState<TeamRole>('staff');
 
   const refreshTeam = () => {
-    setTeamMembers(mockGrowthService.getTeamMembers(business.id));
+    setTeamMembers(growthService.getTeamMembers(business.id));
   };
 
   useEffect(() => {
     refreshTeam();
-    const unsub = mockGrowthService.subscribe(() => {
+    const unsub = growthService.subscribe(() => {
       refreshTeam();
     });
     return unsub;
@@ -87,7 +87,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     e.preventDefault();
     if (!inviteName.trim() || !inviteEmail.trim()) return;
 
-    mockGrowthService.inviteTeamMember({
+    growthService.inviteTeamMember({
       businessId: business.id,
       name: inviteName.trim(),
       email: inviteEmail.trim(),
@@ -480,7 +480,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           {perm.label}
                         </td>
                         {rolesList.map((r) => {
-                          const hasIt = mockGrowthService.hasPermission(r, perm.key);
+                          const hasIt = growthService.hasPermission(r, perm.key);
                           return (
                             <td key={r} className="p-3.5 text-center">
                               {hasIt ? (
@@ -532,7 +532,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         <button
                           type="button"
                           onClick={() => {
-                            mockGrowthService.removeTeamMember(business.id, member.id);
+                            growthService.removeTeamMember(business.id, member.id);
                             refreshTeam();
                           }}
                           className="text-[11px] text-rose-600 hover:underline cursor-pointer"

@@ -15,7 +15,7 @@ import {
   Sliders,
   RotateCcw,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type {
   Offer,
@@ -25,11 +25,11 @@ import type {
   CampaignRunRecord,
   FeedbackRating,
 } from '../../../types/growth';
-import { mockGrowthService } from '../../../services/mockGrowthService';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { growthService } from '../../../services/growthService';
+import { loyaltyService } from '../../../services/loyaltyService';
 
 interface CampaignsAndOffersViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -93,23 +93,23 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
   // Load and subscribe
   const refreshData = () => {
-    setOffers(mockGrowthService.getOffers(business.id));
-    setSegments(mockGrowthService.getSegments(business.id));
-    setFeedbackList(mockGrowthService.getFeedbacks(business.id));
-    setCampaignRuns(mockGrowthService.getCampaignRuns(business.id));
-    const cfg = mockGrowthService.getFeedbackConfig(business.id);
+    setOffers(growthService.getOffers(business.id));
+    setSegments(growthService.getSegments(business.id));
+    setFeedbackList(growthService.getFeedbacks(business.id));
+    setCampaignRuns(growthService.getCampaignRuns(business.id));
+    const cfg = growthService.getFeedbackConfig(business.id);
     setCustomReviewUrl(cfg.publicReviewUrl || 'https://maps.google.com/?cid=10842918');
   };
 
   useEffect(() => {
     refreshData();
-    const unsub = mockGrowthService.subscribe(() => {
+    const unsub = growthService.subscribe(() => {
       refreshData();
     });
     return unsub;
   }, [business.id]);
 
-  const allCustomers = mockLoyaltyService.getCustomers(business.id);
+  const allCustomers = loyaltyService.getCustomers(business.id);
 
   // Handle Offer Creation
   const handleCreateOffer = (e: React.FormEvent) => {
@@ -132,7 +132,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
     const discountValMinor = newType === 'fixed_amount' ? Math.round(discountVal * 100) : discountVal;
     const maxRedemptions = newMaxRedemptions ? parseInt(newMaxRedemptions, 10) : undefined;
 
-    const result = mockGrowthService.createOffer({
+    const result = growthService.createOffer({
       businessId: business.id,
       name: newTitle.trim(),
       description: newDescription.trim(),
@@ -171,7 +171,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   // Handle Offer Toggle Status
   const handleToggleStatus = (offer: Offer) => {
     const nextStatus = offer.status === 'active' ? 'paused' : 'active';
-    mockGrowthService.updateOffer(business.id, offer.id, { status: nextStatus });
+    growthService.updateOffer(business.id, offer.id, { status: nextStatus });
     setBannerFeedback(`Offer ${offer.code} status changed to ${nextStatus}.`);
     setTimeout(() => setBannerFeedback(null), 3000);
   };
@@ -199,7 +199,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       return;
     }
 
-    const result = mockGrowthService.redeemOffer(business.id, {
+    const result = growthService.redeemOffer(business.id, {
       businessId: business.id,
       offerCodeOrId: selectedOfferForRedeem.code,
       customerId: matchedCustomer.id,
@@ -227,7 +227,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   // Handle Winback Simulation
   const handleLaunchWinback = () => {
     setWinbackSuccess(null);
-    const result = mockGrowthService.simulateWinBackCampaign(business.id, {
+    const result = growthService.simulateWinBackCampaign(business.id, {
       businessId: business.id,
       name: `Win-Back Campaign (${inactivityDays}d Dormant)`,
       inactivityDays,
@@ -253,7 +253,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   // Handle Feedback Submission
   const handleCreateTestFeedback = (e: React.FormEvent) => {
     e.preventDefault();
-    mockGrowthService.submitFeedback({
+    growthService.submitFeedback({
       businessId: business.id,
       customerName: testCustomerName.trim() || 'Anonymous Customer',
       rating: testRating as FeedbackRating,
@@ -268,7 +268,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   // Handle Public Review Link Save
   const handleSaveReviewUrl = (e: React.FormEvent) => {
     e.preventDefault();
-    mockGrowthService.updateFeedbackConfig(business.id, {
+    growthService.updateFeedbackConfig(business.id, {
       publicReviewUrl: customReviewUrl.trim(),
     });
     setBannerFeedback('Public review destination updated (unconditional public link).');
@@ -588,7 +588,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {segments.map((seg) => {
-              const matchedList = mockGrowthService.evaluateAudience(business.id, {
+              const matchedList = growthService.evaluateAudience(business.id, {
                 criteriaType: seg.criteriaType,
                 inactivityDays: seg.inactivityDays,
               });
@@ -864,7 +864,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                       <button
                         type="button"
                         onClick={() => {
-                          mockGrowthService.updateFeedbackStatus(business.id, fb.id, 'reviewed');
+                          growthService.updateFeedbackStatus(business.id, fb.id, 'reviewed');
                           refreshData();
                         }}
                         className="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-[11px] font-bold text-[#111318] dark:text-[#F7F3EB] cursor-pointer"

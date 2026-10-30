@@ -8,36 +8,29 @@ import {
   Sun,
   Moon,
   MapPin,
+  Loader2,
 } from 'lucide-react';
 import type { ThemeMode } from '../types';
 import type { OrderStatus } from '../types/order';
-import { mockBusinessService } from '../services/mockBusinessService';
-import { mockOrderService } from '../services/mockOrderService';
-import { mockAuthService } from '../services/mockAuthService';
+import { businessService } from '../services/businessService';
+import { orderService } from '../services/orderService';
+import { authService } from '../services/authService';
 import { useRouter } from '../router';
+import { bizStore } from '../lib/bizStore';
+import type { Business } from '../types/business';
 
 interface KitchenDisplayPageProps {
   theme: ThemeMode;
   onThemeToggle: (theme: ThemeMode) => void;
 }
 
-export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = ({
+const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: Business }> = ({
+  activeBusiness,
   theme,
   onThemeToggle,
 }) => {
   const { navigate } = useRouter();
 
-  // 1. Auth Guard: Check if mock session exists
-  const [currentUser] = useState(() => mockAuthService.getCurrentUser());
-
-  useEffect(() => {
-    const user = mockAuthService.getCurrentUser();
-    if (!user) {
-      navigate('/login?redirect=/dashboard/kitchen');
-    }
-  }, [navigate]);
-
-  const [activeBusiness] = useState(() => mockBusinessService.getActiveBusiness());
   const [activeLocationId, setActiveLocationId] = useState(
     activeBusiness.activeLocationId || activeBusiness.locations[0]?.id || 'loc_main'
   );
@@ -52,7 +45,7 @@ export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = ({
   // Reactive subscription to orders
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockOrderService.subscribe(() => {
+    const unsub = orderService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -60,26 +53,8 @@ export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = ({
 
   const [kdsFilter, setKdsFilter] = useState<'active' | 'preparing' | 'ready' | 'all'>('active');
 
-  // Prevent rendering unauthorized kitchen tickets behind redirect
-  if (!currentUser && typeof window !== 'undefined') {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] p-4">
-        <div className="text-center max-w-sm">
-          <div className="text-sm font-mono font-bold text-[#3027F5] dark:text-[#E4C174] uppercase mb-2">
-            AUTHENTICATION REQUIRED
-          </div>
-          <h2 className="text-xl font-heading font-black">
-            Redirecting to Merchant Login...
-          </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#AAA499] mt-2">
-            A valid mock merchant session is required to access the Kitchen Display System.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
-  const allOrders = mockOrderService.getOrders(activeBusiness.id, activeLocationId);
+  const allOrders = orderService.getOrders(activeBusiness.id, activeLocationId);
 
   // Filter orders according to KDS logic
   const filteredTickets = allOrders.filter((order) => {
@@ -102,7 +77,7 @@ export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = ({
   const readyCount = allOrders.filter((o) => o.status === 'ready').length;
 
   const handleUpdateStatus = (orderId: string, nextStatus: OrderStatus) => {
-    mockOrderService.updateOrderStatus(orderId, nextStatus, 'Kitchen Station');
+    orderService.updateOrderStatus(orderId, nextStatus, 'Kitchen Station');
   };
 
   const getMinutesAgo = (isoString: string) => {
@@ -399,4 +374,50 @@ export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = ({
       </main>
     </div>
   );
+};
+
+/** Auth + business gate for the fullscreen KDS (same rules as the dashboard). */
+export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = (props) => {
+  const { navigate } = useRouter();
+  const [, setVersion] = useState(0);
+
+  useEffect(() => {
+    const bump = () => setVersion((v) => v + 1);
+    const unsubBiz = businessService.subscribe(bump);
+    const unsubAuth = authService.subscribe(bump);
+    return () => {
+      unsubBiz();
+      unsubAuth();
+    };
+  }, []);
+
+  const user = authService.getCurrentUser();
+  const loadState = businessService.getLoadState();
+  const active = businessService.getActiveBusiness();
+
+  useEffect(() => {
+    if (!user) navigate('/login?redirect=/dashboard/kitchen', { replace: true });
+    else if (loadState === 'ready' && !active) navigate('/dashboard', { replace: true });
+  }, [user, loadState, active, navigate]);
+
+  const message = !user
+    ? 'Redirecting to sign in…'
+    : loadState === 'error'
+      ? businessService.getLoadError() || 'Could not load your workspace.'
+      : !active || !bizStore.isReady(active.id)
+        ? 'Loading kitchen orders…'
+        : null;
+
+  if (message || !active) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center max-w-sm">
+          <Loader2 className="w-8 h-8 mx-auto mb-4 animate-spin text-[#3027F5] dark:text-[#E4C174]" />
+          <h2 className="text-xl font-heading font-black">{message}</h2>
+        </div>
+      </div>
+    );
+  }
+
+  return <KitchenDisplayBoard key={active.id} {...props} activeBusiness={active} />;
 };

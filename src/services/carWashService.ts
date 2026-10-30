@@ -7,7 +7,7 @@ import type {
   CarWashTier,
   CarWashBundleType,
 } from '../types/carwash';
-import { mockLoyaltyService } from './mockLoyaltyService';
+import { loyaltyService } from './loyaltyService';
 
 const STORAGE_KEY = 'loyalty_mock_carwash_v1';
 
@@ -59,7 +59,7 @@ export interface RecordWashVisitInput {
   idempotencyKey?: string;
 }
 
-class MockCarWashService {
+class CarWashOperationsService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
@@ -560,7 +560,7 @@ class MockCarWashService {
       let loyaltyIssued = false;
       if (customerId && customerId !== 'cust_walkin') {
         try {
-          const res = mockLoyaltyService.issueStamp({
+          const res = loyaltyService.issueStamp({
             businessId,
             customerId,
             locationId: 'loc_wash_main',
@@ -639,4 +639,4 @@ class MockCarWashService {
   }
 }
 
-export const mockCarWashService = new MockCarWashService();
+export const carWashService = new CarWashOperationsService();

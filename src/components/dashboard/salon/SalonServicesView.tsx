@@ -12,16 +12,16 @@ import {
   X,
   Check,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { SalonService } from '../../../types/salon';
-import { mockSalonService } from '../../../services/mockSalonService';
+import { salonService } from '../../../services/salonService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { useRouter } from '../../../router';
 import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 
 interface SalonServicesViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -31,7 +31,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockSalonService.subscribe(() => {
+    const unsub = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -55,8 +55,8 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
   const [formAssignedStaffIds, setFormAssignedStaffIds] = useState<string[]>([]);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const services = mockSalonService.getServices(business.id);
-  const staffList = mockSalonService.getStaff(business.id);
+  const services = salonService.getServices(business.id);
+  const staffList = salonService.getStaff(business.id);
 
   if (!isSalon) {
     return (
@@ -144,7 +144,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
     }
 
     if (editingService) {
-      mockSalonService.updateService(business.id, editingService.id, {
+      salonService.updateService(business.id, editingService.id, {
         name: formName.trim(),
         description: formDescription.trim(),
         durationMinutes: formDuration,
@@ -155,7 +155,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         assignedStaffIds: formAssignedStaffIds,
       });
     } else {
-      mockSalonService.createService(business.id, {
+      salonService.createService(business.id, {
         name: formName.trim(),
         description: formDescription.trim(),
         durationMinutes: formDuration,
@@ -173,18 +173,18 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
   };
 
   const handleToggleActive = (service: SalonService) => {
-    mockSalonService.updateService(business.id, service.id, {
+    salonService.updateService(business.id, service.id, {
       isEnabled: !service.isEnabled,
     });
   };
 
   const handleDuplicate = (serviceId: string) => {
-    mockSalonService.duplicateService(business.id, serviceId);
+    salonService.duplicateService(business.id, serviceId);
   };
 
   const handleDelete = (serviceId: string) => {
     if (confirm('Are you sure you want to remove this service?')) {
-      mockSalonService.deleteService(business.id, serviceId);
+      salonService.deleteService(business.id, serviceId);
     }
   };
 

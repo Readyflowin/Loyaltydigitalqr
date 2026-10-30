@@ -6,7 +6,7 @@ import type {
   PublicBusinessProfile,
   PublicTableProfile,
 } from '../types/cafe';
-import { mockBusinessService } from './mockBusinessService';
+import { businessService } from './businessService';
 import { generateBusinessSlug } from '../utils/qrUrlBuilder';
 
 const STORAGE_KEY = 'loyalty_mock_cafe_data_v1';
@@ -22,7 +22,7 @@ type CafeStorageSchema = {
   [businessId: string]: BusinessCafeBundle;
 };
 
-class MockCafeService {
+class CafeService {
   private listeners: (() => void)[] = [];
 
   constructor() {
@@ -486,7 +486,7 @@ class MockCafeService {
     const storageData = this.loadData();
     const bundle = storageData[businessId] || this.getBundle(businessId);
 
-    const business = mockBusinessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
     const currency = data.currency || (business?.currency as 'USD' | 'INR') || 'USD';
     const currencySymbol = currency === 'INR' ? '₹' : '$';
 
@@ -867,7 +867,7 @@ class MockCafeService {
     table?: PublicTableProfile;
     allTables: PublicTableProfile[];
   } | null {
-    const businesses = mockBusinessService.getAllBusinesses();
+    const businesses = businessService.getAllBusinesses();
     const targetSlug = slugOrId.toLowerCase().trim();
 
     // Match by slug or business ID
@@ -955,10 +955,10 @@ class MockCafeService {
       try {
         listener();
       } catch (err) {
-        console.error('Error in mockCafeService subscriber:', err);
+        console.error('Error in cafeService subscriber:', err);
       }
     });
   }
 }
 
-export const mockCafeService = new MockCafeService();
+export const cafeService = new CafeService();

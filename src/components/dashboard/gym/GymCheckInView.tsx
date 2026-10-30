@@ -10,7 +10,7 @@ import {
   XCircle,
   Lock,
 } from 'lucide-react';
-import { mockGymService } from '../../../services/mockGymService';
+import { gymService } from '../../../services/gymService';
 import type {
   GymMemberRecord,
   GymCheckInEvent,
@@ -30,8 +30,8 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string; stamps?: boolean } | null>(null);
 
   const loadData = () => {
-    const mems = mockGymService.getMembers(businessId);
-    const logs = mockGymService.getCheckIns(businessId);
+    const mems = gymService.getMembers(businessId);
+    const logs = gymService.getCheckIns(businessId);
     setMembers(mems);
     setCheckIns(logs);
 
@@ -43,7 +43,7 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
 
   useEffect(() => {
     loadData();
-    const unsub = mockGymService.subscribe(() => {
+    const unsub = gymService.subscribe(() => {
       loadData();
     });
     return unsub;
@@ -75,7 +75,7 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
     setSubmitting(true);
     setMessage(null);
 
-    const result = mockGymService.recordCheckIn(businessId, {
+    const result = gymService.recordCheckIn(businessId, {
       businessId,
       memberId: selectedMember.id,
       staffPin: staffPin.trim() || undefined,

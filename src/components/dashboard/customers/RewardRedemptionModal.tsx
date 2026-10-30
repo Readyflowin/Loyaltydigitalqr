@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Gift, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import type { CustomerRecord, CustomerReward } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 
 interface RewardRedemptionModalProps {
   isOpen: boolean;
@@ -57,7 +57,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
     setErrorMsg(null);
 
     try {
-      const res = mockLoyaltyService.redeemReward({
+      const res = loyaltyService.redeemReward({
         businessId,
         locationId,
         customerId: customer.id,

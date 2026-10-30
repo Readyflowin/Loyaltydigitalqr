@@ -17,11 +17,12 @@ import {
   Phone,
   Info,
   CheckCircle2,
-  RotateCcw,
+
 } from 'lucide-react';
 import { Link, useRouter } from '../router';
 import { BUSINESS_TYPES, TIMEZONE_OPTIONS, CARD_COLORS } from '../data/onboardingData';
-import { mockAuthService, getDefaultOnboardingData } from '../services/mockAuthService';
+import { authService, getDefaultOnboardingData } from '../services/authService';
+import { businessService } from '../services/businessService';
 import { LoyaltyCardPreview } from '../components/onboarding/LoyaltyCardPreview';
 import type { ThemeMode } from '../types';
 import type { BusinessType, OperatingRegion, OnboardingData } from '../types/onboarding';
@@ -51,31 +52,42 @@ const BusinessIcon: React.FC<{ iconName: string; className?: string }> = ({ icon
 };
 
 export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
-  const { searchParams } = useRouter();
+  const { searchParams, navigate } = useRouter();
   const regionParam = searchParams.get('region');
   const initialRegion: OperatingRegion = regionParam === 'india' ? 'india' : 'usa';
   const planParam = searchParams.get('plan') || 'starter';
+  const currentUser = authService.getCurrentUser();
+
+  // Creating a business requires an account.
+  useEffect(() => {
+    if (!currentUser) {
+      navigate(`/signup?region=${initialRegion}&plan=${planParam}`, { replace: true });
+    }
+  }, [currentUser, initialRegion, planParam, navigate]);
 
   // Load existing draft or initialize default
   const [formData, setFormData] = useState<OnboardingData>(() => {
-    const draft = mockAuthService.getOnboardingDraft();
+    const draft = authService.getOnboardingDraft();
     if (draft && !draft.isCompleted) {
       return draft;
     }
-    return getDefaultOnboardingData(initialRegion, planParam);
+    return {
+      ...getDefaultOnboardingData(initialRegion, planParam),
+      contactEmail: currentUser?.email || '',
+      displayName: currentUser?.displayName || '',
+    };
   });
 
   const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [completedResult, setCompletedResult] = useState<OnboardingData | null>(() => {
-    const completed = mockAuthService.getCompletedOnboarding();
-    return completed && completed.isCompleted ? completed : null;
-  });
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [completedResult, setCompletedResult] = useState<OnboardingData | null>(null);
+  const [createdStaffPin, setCreatedStaffPin] = useState<string | null>(null);
 
   // Auto-save draft on changes (non-sensitive browser persistence)
   useEffect(() => {
     if (!formData.isCompleted) {
-      mockAuthService.saveOnboardingDraft(formData);
+      authService.saveOnboardingDraft(formData);
     }
   }, [formData]);
 
@@ -175,21 +187,22 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
   // Final submission of onboarding wizard
   const handleCompleteSetup = async () => {
+    if (isSubmitting) return;
     setIsSubmitting(true);
-    const result = await mockAuthService.completeOnboarding(formData);
-    setIsSubmitting(false);
-    setCompletedResult(result.data);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setSubmitError(null);
+    try {
+      const business = await businessService.createBusiness(formData);
+      setCreatedStaffPin(business.locations[0]?.staffPin || null);
+      setCompletedResult({ ...formData, isCompleted: true, completedAt: business.createdAt });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Could not create your business. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // Reset demo onboarding
-  const handleResetDemo = () => {
-    mockAuthService.clearOnboardingDraft();
-    setCompletedResult(null);
-    setFormData(getDefaultOnboardingData(initialRegion, planParam));
-    setValidationErrors({});
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  if (!currentUser) return null;
 
   // -------------------------------------------------------------
   // COMPLETION VIEW
@@ -207,7 +220,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-[11px] font-mono font-bold uppercase mb-3">
-              <span>DEMO ONBOARDING COMPLETE</span>
+              <span>SETUP COMPLETE</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
@@ -215,7 +228,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             </h1>
 
             <p className="mt-3 text-sm sm:text-base text-[#60646C] dark:text-[#D0CBC1]">
-              <strong>{completedResult.businessName}</strong> has been set up with digital loyalty cards. Your counter displays and staff stamps are ready to test.
+              <strong>{completedResult.businessName}</strong> is ready. Next, create your counter QR code so customers can join your loyalty card.
             </p>
           </div>
 
@@ -264,32 +277,27 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 </div>
                 <div className="mt-2 flex items-center gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
                   <Check className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Apple Wallet & Google Wallet pass enabled</span>
+                  <span>Customers join by scanning your counter QR code</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Integration Roadmap Notice */}
-          <div className="mt-8 p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-xs text-amber-900 dark:text-amber-200">
-            <div className="flex items-start gap-2.5">
-              <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong>Next Integration Milestones:</strong> This mock workspace is stored safely in your browser storage. Real cloud persistence (Firebase Firestore), production Google authentication, and live multi-counter synchronization will be connected in <strong>Task 10</strong>.
+          {/* Staff PIN */}
+          {createdStaffPin && (
+            <div className="mt-8 p-4 rounded-2xl bg-[#3027F5]/5 dark:bg-[#E4C174]/10 border border-[#3027F5]/20 dark:border-[#E4C174]/25 text-xs text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-start gap-2.5">
+                <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
+                <div>
+                  <strong>Your staff PIN is {createdStaffPin}.</strong> Staff enter it at the counter to issue stamps and
+                  redeem rewards. You can change it any time under Settings. Share it only with your team.
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Action Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-black/10 dark:border-white/10">
-            <button
-              type="button"
-              onClick={handleResetDemo}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset & Test Another Business</span>
-            </button>
+          <div className="mt-8 flex flex-wrap items-center justify-end gap-4 pt-6 border-t border-black/10 dark:border-white/10">
 
             <div className="flex flex-wrap items-center gap-3">
               <Link
@@ -978,11 +986,11 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               </div>
             </div>
 
-            {/* Mock notice */}
+            {/* Confirmation notice */}
             <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-[#60646C] dark:text-[#AAA499]">
               <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <div>
-                <strong>Sandbox Confirmation:</strong> Completing setup will save this draft in browser memory and initialize the demo merchant session. Real backend cloud creation will take place when Firebase is connected in Task 10.
+                <strong>Ready to create your workspace.</strong> Your business, loyalty program and first location will be saved to your account. You can change any of these details later in Settings.
               </div>
             </div>
           </div>
@@ -1029,11 +1037,16 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   : 'bg-[#E4C174] hover:bg-[#EBD294] text-[#11100D] shadow-[0_4px_20px_rgba(228,193,116,0.3)]'
               }`}
             >
-              <span>Complete Setup & Launch Demo</span>
+              <span>{isSubmitting ? 'Creating your workspace…' : 'Complete setup'}</span>
               <Check className="w-4 h-4 stroke-[3]" />
             </button>
           )}
         </div>
+        {submitError && (
+          <div role="alert" className="mt-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
+            {submitError}
+          </div>
+        )}
 
       </div>
 

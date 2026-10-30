@@ -12,17 +12,17 @@ import {
   Gift,
   ArrowRight,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { LoyaltyProgramConfig, CustomerRecord, LoyaltyEvent } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 import { LoyaltyCardPreview } from '../../onboarding/LoyaltyCardPreview';
 import { LoyaltyProgramEditModal } from './LoyaltyProgramEditModal';
 import { StampIssuanceModal } from './StampIssuanceModal';
 import { RewardRedemptionModal } from '../customers/RewardRedemptionModal';
 
 interface LoyaltyProgramViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
   onNavigateToCRM?: () => void;
   onNavigateToQR?: () => void;
@@ -34,17 +34,17 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
   onNavigateToCRM,
   onNavigateToQR,
 }) => {
-  // Live reactive data from mockLoyaltyService
+  // Live reactive data from loyaltyService
   const [program, setProgram] = useState<LoyaltyProgramConfig>(() => {
-    return mockLoyaltyService.getProgram(business.id);
+    return loyaltyService.getProgram(business.id);
   });
 
   const [customers, setCustomers] = useState<CustomerRecord[]>(() => {
-    return mockLoyaltyService.getCustomers(business.id);
+    return loyaltyService.getCustomers(business.id);
   });
 
   const [events, setEvents] = useState<LoyaltyEvent[]>(() => {
-    return mockLoyaltyService.getEvents(business.id, 10);
+    return loyaltyService.getEvents(business.id, 10);
   });
 
   // Modal states
@@ -59,10 +59,10 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
 
   // Refresh local state when service updates
   React.useEffect(() => {
-    const unsub = mockLoyaltyService.subscribe(() => {
-      setProgram(mockLoyaltyService.getProgram(business.id));
-      setCustomers(mockLoyaltyService.getCustomers(business.id));
-      setEvents(mockLoyaltyService.getEvents(business.id, 10));
+    const unsub = loyaltyService.subscribe(() => {
+      setProgram(loyaltyService.getProgram(business.id));
+      setCustomers(loyaltyService.getCustomers(business.id));
+      setEvents(loyaltyService.getEvents(business.id, 10));
     });
     return unsub;
   }, [business.id]);
@@ -89,7 +89,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
 
   const handleToggleStatus = () => {
     const nextStatus = program.status === 'active' ? 'paused' : 'active';
-    mockLoyaltyService.saveProgram(business.id, { status: nextStatus });
+    loyaltyService.saveProgram(business.id, { status: nextStatus });
   };
 
   const handleOpenRedeem = (customer: CustomerRecord) => {
@@ -477,7 +477,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
         program={program}
         businessName={business.name}
         onSaveProgram={(updates) => {
-          mockLoyaltyService.saveProgram(business.id, updates);
+          loyaltyService.saveProgram(business.id, updates);
         }}
         theme={theme}
       />
@@ -504,7 +504,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
           defaultStaffPin={activeLocation.staffPin}
           customer={targetRedemptionCustomer}
           onRedemptionSuccess={() => {
-            setCustomers(mockLoyaltyService.getCustomers(business.id));
+            setCustomers(loyaltyService.getCustomers(business.id));
           }}
         />
       )}

@@ -12,7 +12,7 @@ import {
   Calendar,
   Filter,
 } from 'lucide-react';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type {
   SalonAppointment,
@@ -22,12 +22,12 @@ import {
   APPOINTMENT_STATUS_LABELS,
   VALID_APPOINTMENT_TRANSITIONS,
 } from '../../../types/salon';
-import { mockSalonService } from '../../../services/mockSalonService';
+import { salonService } from '../../../services/salonService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { formatTimeLabel } from '../../../utils/salonScheduling';
 
 interface SalonAppointmentsViewProps {
-  business: MockBusiness;
+  business: Business;
   theme: ThemeMode;
 }
 
@@ -36,7 +36,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
   const [, setVersion] = useState(0);
   useEffect(() => {
-    const unsub = mockSalonService.subscribe(() => {
+    const unsub = salonService.subscribe(() => {
       setVersion((v) => v + 1);
     });
     return unsub;
@@ -74,9 +74,9 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   const [manualInternalNotes, setManualInternalNotes] = useState('');
   const [manualError, setManualError] = useState<string | null>(null);
 
-  const services = mockSalonService.getServices(business.id);
-  const staffList = mockSalonService.getStaff(business.id);
-  const metrics = mockSalonService.getSalonMetrics(business.id);
+  const services = salonService.getServices(business.id);
+  const staffList = salonService.getStaff(business.id);
+  const metrics = salonService.getSalonMetrics(business.id);
 
   if (!isSalon) {
     return (
@@ -97,7 +97,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   }
 
   // Get filtered appointments list
-  const filteredAppointments = mockSalonService.getAppointments(business.id, {
+  const filteredAppointments = salonService.getAppointments(business.id, {
     status: statusFilter,
     staffId: staffFilter,
     serviceId: serviceFilter,
@@ -117,7 +117,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   };
 
   const handleUpdateStatus = (aptId: string, nextStatus: AppointmentStatus, note?: string) => {
-    const res = mockSalonService.updateAppointmentStatus(aptId, nextStatus, 'Staff', note);
+    const res = salonService.updateAppointmentStatus(aptId, nextStatus, 'Staff', note);
     if (res.success && selectedAppointment?.id === aptId) {
       setSelectedAppointment(res.appointment!);
     }
@@ -125,14 +125,14 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
   const handleConfirmCancel = () => {
     if (!cancellingAppointment) return;
-    mockSalonService.updateAppointmentStatus(
+    salonService.updateAppointmentStatus(
       cancellingAppointment.id,
       'cancelled',
       'Staff',
       cancelReason
     );
     if (selectedAppointment?.id === cancellingAppointment.id) {
-      const updated = mockSalonService.getAppointment(cancellingAppointment.id);
+      const updated = salonService.getAppointment(cancellingAppointment.id);
       setSelectedAppointment(updated);
     }
     setCancellingAppointment(null);
@@ -150,7 +150,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
     if (!reschedulingAppointment) return;
     setRescheduleError(null);
 
-    const res = mockSalonService.rescheduleAppointment(
+    const res = salonService.rescheduleAppointment(
       reschedulingAppointment.id,
       rescheduleDate,
       rescheduleTime,
@@ -204,7 +204,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
       return;
     }
 
-    const res = mockSalonService.createAppointment({
+    const res = salonService.createAppointment({
       businessId: business.id,
       serviceId: manualServiceId,
       staffId: manualStaffId,

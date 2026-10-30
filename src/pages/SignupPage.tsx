@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, Info, Mail } from 'lucide-react';
+import { ArrowRight, Check, Lock, Mail } from 'lucide-react';
 import { Logo } from '../components/common/Logo';
 import { Link, useRouter } from '../router';
-import { mockAuthService } from '../services/mockAuthService';
+import { authService, describeAuthError, getDefaultOnboardingData } from '../services/authService';
 import type { ThemeMode } from '../types';
 import type { OperatingRegion } from '../types/onboarding';
 
@@ -18,7 +18,10 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
   const planName = 'Starter';
 
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const pricingDetails =
     region === 'india'
@@ -37,22 +40,48 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           switchLabel: 'Switch to India (₹299/month)',
         };
 
-  const handleGoogleMockSignup = async () => {
-    setIsLoading(true);
-    await mockAuthService.signUpWithMockGoogle({ region, plan: planName });
-    setIsLoading(false);
+  const startOnboarding = (contactEmail: string, displayName?: string) => {
+    const draft = authService.getOnboardingDraft();
+    authService.saveOnboardingDraft({
+      ...(draft ? {} : getDefaultOnboardingData(region, planName.toLowerCase())),
+      region,
+      contactEmail: draft?.contactEmail || contactEmail,
+      displayName: draft?.displayName || displayName || '',
+      timeZone: draft?.timeZone || (region === 'india' ? 'Asia/Kolkata' : 'America/New_York'),
+    });
     navigate(`/onboarding?region=${region}&plan=${planName.toLowerCase()}`);
+  };
+
+  const handleGoogleSignup = async () => {
+    setIsLoading(true);
+    setErrorMsg(null);
+    try {
+      const user = await authService.signInWithGoogle();
+      startOnboarding(user.email, user.displayName);
+    } catch (err) {
+      setErrorMsg(describeAuthError(err));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !password) {
+      setErrorMsg('Please enter an email and a password.');
+      return;
+    }
 
     setIsLoading(true);
-    await mockAuthService.signInWithMockEmail(email);
-    mockAuthService.saveOnboardingDraft({ contactEmail: email, region });
-    setIsLoading(false);
-    navigate(`/onboarding?region=${region}&plan=${planName.toLowerCase()}`);
+    setErrorMsg(null);
+    try {
+      const user = await authService.signUpWithEmail(email, password, fullName);
+      startOnboarding(user.email, fullName);
+    } catch (err) {
+      setErrorMsg(describeAuthError(err));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -107,19 +136,17 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
             </Link>
           </div>
 
-          {/* Explicit Mock / Demo Banner */}
-          <div className="mt-5 p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2 text-xs text-[#60646C] dark:text-[#D0CBC1]">
-            <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
-            <div>
-              <strong className="text-[#111318] dark:text-[#F7F3EB]">Account Creation:</strong> Real Google sign-in is planned for Task 10. Click below to proceed through the business onboarding wizard using a mock session.
+          {errorMsg && (
+            <div role="alert" className="mt-5 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
+              {errorMsg}
             </div>
-          </div>
+          )}
 
           {/* Primary Action: Google Sign Up Button */}
           <div className="mt-6">
             <button
               type="button"
-              onClick={handleGoogleMockSignup}
+              onClick={handleGoogleSignup}
               disabled={isLoading}
               className={`w-full py-4 px-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-3 transition-all duration-200 transform hover:-translate-y-0.5 shadow-md cursor-pointer ${
                 theme === 'light'
@@ -148,7 +175,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                   />
                 </svg>
               </div>
-              <span>Sign up with Google (Demo)</span>
+              <span>{isLoading ? 'Please wait…' : 'Sign up with Google'}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>
@@ -169,6 +196,20 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                Your Name
+              </label>
+              <input
+                type="text"
+                autoComplete="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Alex Patel"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
                 Business Email Address
               </label>
               <div className="relative">
@@ -179,6 +220,26 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="owner@yourbusiness.com"
+                  autoComplete="email"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 8 characters"
                   className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
@@ -189,7 +250,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
               disabled={isLoading}
               className="w-full py-3.5 rounded-xl font-bold text-sm border-2 border-[#3027F5] dark:border-[#E4C174] text-[#3027F5] dark:text-[#E4C174] hover:bg-[#3027F5]/5 dark:hover:bg-[#E4C174]/10 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Continue to Onboarding Wizard</span>
+              <span>{isLoading ? 'Creating account…' : 'Create account & continue'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>

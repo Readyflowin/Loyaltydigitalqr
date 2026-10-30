@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowRight, ArrowLeft, Check, Download, ExternalLink, QrCode as QrIcon, Smartphone } from 'lucide-react';
 import QRCode from 'qrcode';
-import type { MockBusiness } from '../../../types/business';
+import type { Business } from '../../../types/business';
 import type { QrCodeDefinition, QrDestinationType } from '../../../types/loyalty';
-import { mockLoyaltyService } from '../../../services/mockLoyaltyService';
+import { loyaltyService } from '../../../services/loyaltyService';
 
 interface QrCreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  business: MockBusiness;
+  business: Business;
   onCreatedSuccess?: (newQr: QrCodeDefinition) => void;
 }
 
@@ -119,7 +119,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
   };
 
   const handleSaveQrCode = () => {
-    const created = mockLoyaltyService.createQrCode(business.id, {
+    const created = loyaltyService.createQrCode(business.id, {
       name: name.trim() || 'Custom QR Code',
       displayLabel: displayLabel.trim() || undefined,
       destinationType,

@@ -1,6 +1,7 @@
 import type { BusinessType, OperatingRegion } from './onboarding';
+import type { TeamRole } from './growth';
 
-export interface MockLocation {
+export interface BusinessLocation {
   id: string;
   name: string;
   address: string;
@@ -8,7 +9,7 @@ export interface MockLocation {
   staffPin: string;
 }
 
-export interface MockBusiness {
+export interface Business {
   id: string;
   name: string;
   businessType: BusinessType;
@@ -22,16 +23,43 @@ export interface MockBusiness {
   timeZone: string;
   contactEmail: string;
   phoneNumber?: string;
-  locations: MockLocation[];
+  locations: BusinessLocation[];
   activeLocationId: string;
   programName: string;
   stampsRequired: number;
   rewardDescription: string;
   selectedModules: string[];
-  isDemoSample?: boolean;
+  /** Unique public URL slug (menu, booking, catalogue and loyalty card links). */
+  slug: string;
+  createdAt: string;
+  /** End of the free trial (createdAt + 30 days). Billing is not automated yet. */
+  trialEndsAt: string;
+  /** Present only on member-visible documents (never on public profiles). */
+  ownerUid?: string;
+  memberUids?: string[];
+  members?: Record<string, BusinessMemberInfo>;
+  /** True when this object is the public profile seen by a visitor. */
+  isPublicProfile?: boolean;
 }
 
-export interface MockMetrics {
+export interface BusinessMemberInfo {
+  role: TeamRole;
+  email: string;
+  displayName: string;
+  joinedAt: string;
+}
+
+export interface BusinessInvite {
+  email: string;
+  role: TeamRole;
+  businessId: string;
+  businessName: string;
+  invitedByUid: string;
+  invitedByName: string;
+  invitedAt: string;
+}
+
+export interface BusinessMetrics {
   totalCustomers: number;
   loyaltyVisits: number;
   rewardsRedeemed: number;
@@ -39,7 +67,7 @@ export interface MockMetrics {
   activeStamps: number;
 }
 
-export interface MockActivity {
+export interface BusinessActivity {
   id: string;
   type: 'customer_joined' | 'stamp_added' | 'reward_unlocked' | 'pin_verified' | 'offer_redeemed';
   title: string;
@@ -48,7 +76,7 @@ export interface MockActivity {
   badge?: string;
 }
 
-export interface MockChecklistItem {
+export interface ChecklistItem {
   id: string;
   title: string;
   description: string;
@@ -56,7 +84,7 @@ export interface MockChecklistItem {
   targetView: string;
 }
 
-export interface MockNotification {
+export interface BusinessNotification {
   id: string;
   title: string;
   message: string;
