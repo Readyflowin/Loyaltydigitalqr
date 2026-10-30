@@ -237,3 +237,32 @@ export const CARD_COLORS = [
   { id: 'ruby', hex: '#E11D48', name: 'Ruby Crimson' },
   { id: 'ink', hex: '#111318', name: 'Midnight Ink' },
 ];
+
+/** English ordinal: 1st, 2nd, 3rd, 4th … 11th, 12th, 13th, 21st … */
+function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1:
+      return `${n}st`;
+    case 2:
+      return `${n}nd`;
+    case 3:
+      return `${n}rd`;
+    default:
+      return `${n}th`;
+  }
+}
+
+/**
+ * Keep a "Buy N …, get your (N+1)th …" reward in step with the stamp count.
+ * Only rewrites text that still has that exact, self-consistent shape (i.e. an
+ * untouched default); anything the merchant wrote themselves is returned as-is.
+ */
+export function syncRewardWithStamps(reward: string, stamps: number): string {
+  const match = reward.match(/^Buy (\d+)((?: [^,]+)?), get your (\d+)(?:st|nd|rd|th)\b(.*)$/);
+  if (!match) return reward;
+  const [, bought, noun, free, rest] = match;
+  if (Number(free) !== Number(bought) + 1) return reward;
+  return `Buy ${stamps}${noun}, get your ${ordinal(stamps + 1)}${rest}`;
+}

@@ -184,7 +184,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
         {/* Metric 1: Milestone Rule */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold">
               REWARD THRESHOLD
             </span>
             <Award className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
@@ -200,7 +200,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
         {/* Metric 2: Enrolled Members */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold">
               ENROLLED MEMBERS
             </span>
             <Users className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
@@ -216,7 +216,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
         {/* Metric 3: Total Stamps Issued */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold">
               TOTAL VISITS RECORDED
             </span>
             <QrCode className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
@@ -225,14 +225,14 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
             {totalVisitsIssued}
           </div>
           <div className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
-            Verified with counter PIN
+            Each confirmed with a staff PIN
           </div>
         </div>
 
         {/* Metric 4: Rewards Unlocked vs Redeemed */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold">
               REWARDS EARNED
             </span>
             <Gift className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
@@ -256,7 +256,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
             <span className="text-[10px] font-mono uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
               LIVE CUSTOMER PASS
             </span>
-            <span className="text-[11px] font-mono text-[#868A94]">
+            <span className="text-[11px] font-mono text-subtle-foreground">
               Mobile Browser Card
             </span>
           </div>
@@ -271,7 +271,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
           />
 
           <div className="w-full mt-4 pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#60646C] dark:text-[#AAA499]">
-            <span>Model: <strong>Digital Stamp Card</strong></span>
+            <span>Card type: <strong>Digital stamp card</strong></span>
             <button
               type="button"
               onClick={() => setEditModalOpen(true)}
@@ -289,10 +289,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
           <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
-                COUNTER STAMPING SPECIFICATION
-              </span>
-              <span className="font-mono text-xs text-[#868A94]">
-                ID: {program.id}
+                HOW STAMPING WORKS
               </span>
             </div>
 
@@ -315,7 +312,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
             {/* Location & PIN Info */}
             <div className="pt-3 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div>
-                <span className="text-[#868A94] block text-[10px] uppercase font-mono">
+                <span className="text-subtle-foreground block text-[10px] uppercase font-mono">
                   ACTIVE LOCATION
                 </span>
                 <span className="font-heading font-bold text-[#111318] dark:text-[#F7F3EB]">
@@ -324,7 +321,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
               </div>
 
               <div>
-                <span className="text-[#868A94] block text-[10px] uppercase font-mono">
+                <span className="text-subtle-foreground block text-[10px] uppercase font-mono">
                   STAFF PIN (SEE SETTINGS)
                 </span>
                 <span className="font-mono font-black text-sm bg-black/5 dark:bg-white/10 px-2.5 py-0.5 rounded text-[#3027F5] dark:text-[#E4C174]">
@@ -363,7 +360,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
             </div>
 
             {customersWithRewards.length === 0 ? (
-              <div className="py-6 text-center text-xs text-[#868A94]">
+              <div className="py-6 text-center text-xs text-subtle-foreground">
                 No pending unlocked rewards. Customers receive a voucher once they hit {program.stampsRequired} visits.
               </div>
             ) : (
@@ -406,7 +403,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
       <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-6 sm:p-8 shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#868A94] uppercase block">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-subtle-foreground uppercase block">
               AUDIT TRAIL
             </span>
             <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -426,7 +423,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
         </div>
 
         {events.length === 0 ? (
-          <div className="py-8 text-center text-xs text-[#868A94]">
+          <div className="py-8 text-center text-xs text-subtle-foreground">
             No activity recorded yet. Issue your first stamp above.
           </div>
         ) : (
@@ -440,7 +437,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
                         ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
                         : evt.type === 'reward_redeemed'
                         ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-black/5 dark:bg-white/5 text-[#868A94]'
+                        : 'bg-black/5 dark:bg-white/5 text-subtle-foreground'
                     }`}
                   >
                     {evt.type === 'reward_unlocked' ? (
@@ -455,7 +452,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
                     <div className="font-heading font-bold text-[#111318] dark:text-[#F7F3EB]">
                       {evt.details}
                     </div>
-                    <div className="text-[11px] text-[#868A94]">
+                    <div className="text-[11px] text-subtle-foreground">
                       {evt.staffIdentifier} · {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>

@@ -43,7 +43,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </button>
 
         <div>
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-[#868A94] dark:text-[#AAA499] uppercase tracking-wider">
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-subtle-foreground dark:text-[#AAA499] uppercase tracking-wider">
             <span>{breadcrumb}</span>
             <span>/</span>
             <span className="text-[#3027F5] dark:text-[#E4C174] font-bold">{activeBusiness.name}</span>
@@ -91,7 +91,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <span className="text-xs font-mono font-bold uppercase text-[#111318] dark:text-[#F7F3EB]">
                   Activity Notifications
                 </span>
-                <span className="text-[10px] font-mono text-[#868A94]">
+                <span className="text-[10px] font-mono text-subtle-foreground">
                   {notifications.length} {notifications.length === 1 ? 'item' : 'items'}
                 </span>
               </div>
@@ -111,7 +111,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     <p className="text-[#60646C] dark:text-[#D0CBC1] text-[11px] leading-snug">
                       {n.message}
                     </p>
-                    <div className="text-[10px] font-mono text-[#868A94] pt-0.5">
+                    <div className="text-[10px] font-mono text-subtle-foreground pt-0.5">
                       {n.timeAgo}
                     </div>
                   </div>

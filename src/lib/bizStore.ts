@@ -118,6 +118,20 @@ class BizStore {
   private listeners = new Set<() => void>();
   private errorListeners = new Set<(err: StoreError) => void>();
   private notifyScheduled = false;
+  private pendingCommits = 0;
+
+  constructor() {
+    // A save that hasn't reached Firestore yet is lost if the tab reloads or
+    // closes within those few milliseconds, so ask the browser to confirm.
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', (event) => {
+        if (this.pendingCommits > 0) {
+          event.preventDefault();
+          event.returnValue = '';
+        }
+      });
+    }
+  }
 
   register<B>(spec: ModuleSpec<B>): void {
     this.specs.push(spec as ModuleSpec<unknown>);
@@ -443,21 +457,31 @@ class BizStore {
 
   private async commit(businessId: string, ops: Array<{ path: string[]; data: DocumentData | null }>): Promise<void> {
     const CHUNK = 400;
-    for (let i = 0; i < ops.length; i += CHUNK) {
-      const batch = writeBatch(db);
-      for (const op of ops.slice(i, i + CHUNK)) {
-        const ref = doc(db, 'businesses', businessId, ...op.path);
-        if (op.data === null) batch.delete(ref);
-        else batch.set(ref, op.data);
+    this.pendingCommits++;
+    try {
+      for (let i = 0; i < ops.length; i += CHUNK) {
+        const batch = writeBatch(db);
+        for (const op of ops.slice(i, i + CHUNK)) {
+          const ref = doc(db, 'businesses', businessId, ...op.path);
+          if (op.data === null) batch.delete(ref);
+          else batch.set(ref, op.data);
+        }
+        try {
+          await batch.commit();
+        } catch (err) {
+          const state = this.attached.get(businessId);
+          const message = err instanceof Error ? err.message : String(err);
+          if (state) this.reportError(businessId, state, `Save failed: ${message}`);
+        }
       }
-      try {
-        await batch.commit();
-      } catch (err) {
-        const state = this.attached.get(businessId);
-        const message = err instanceof Error ? err.message : String(err);
-        if (state) this.reportError(businessId, state, `Save failed: ${message}`);
-      }
+    } finally {
+      this.pendingCommits--;
     }
+  }
+
+  /** True while a save has not yet been confirmed by the server. */
+  hasPendingWrites(): boolean {
+    return this.pendingCommits > 0;
   }
 
   // ---------------------------------------------------------------------------

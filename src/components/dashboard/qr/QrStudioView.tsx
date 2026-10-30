@@ -155,7 +155,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL QR DEFINITIONS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -167,7 +167,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE COUNTER CODES
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -179,7 +179,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             SUPPORTED DESTINATIONS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -195,7 +195,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+          <Search className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3" />
           <input
             type="text"
             value={searchQuery}
@@ -233,7 +233,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       {/* 4. QR Codes Library Grid */}
       {filtered.length === 0 ? (
         <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-dashed border-[#E5E3DB] dark:border-white/10 p-12 text-center space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-[#868A94]">
+          <div className="w-16 h-16 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-subtle-foreground">
             <QrIcon className="w-8 h-8" />
           </div>
           <div>
@@ -403,7 +403,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
             className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer ${
               qr.status === 'active'
                 ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
-                : 'bg-black/5 dark:bg-white/10 text-[#868A94]'
+                : 'bg-black/5 dark:bg-white/10 text-subtle-foreground'
             }`}
             title="Click to toggle active/disabled status"
           >
@@ -421,7 +421,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
                 className={`w-full h-full object-contain ${qr.status === 'disabled' ? 'grayscale opacity-50' : ''}`}
               />
             ) : (
-              <div className="text-[10px] text-[#868A94]">Loading...</div>
+              <div className="text-[10px] text-subtle-foreground">Loading...</div>
             )}
           </div>
 
@@ -432,7 +432,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
 
         {/* Target URL Info */}
         <div className="pt-2 text-[11px] space-y-1">
-          <div className="flex items-center justify-between text-[#868A94]">
+          <div className="flex items-center justify-between text-subtle-foreground">
             <span>Destination:</span>
             <a
               href={fullUrl}
@@ -444,7 +444,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
               <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
             </a>
           </div>
-          <div className="flex items-center justify-between text-[#868A94] text-[10px]">
+          <div className="flex items-center justify-between text-subtle-foreground text-[10px]">
             <span>Created:</span>
             <span>{new Date(qr.createdAt).toLocaleDateString()}</span>
           </div>
@@ -481,7 +481,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
           <button
             type="button"
             onClick={onRename}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
             title="Rename QR definition"
           >
             <Edit2 className="w-3.5 h-3.5" />
@@ -491,7 +491,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
             type="button"
             data-testid={`toggle-power-${qr.id}`}
             onClick={onToggleStatus}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
             title={qr.status === 'active' ? 'Disable QR code' : 'Enable QR code'}
           >
             <Power className="w-3.5 h-3.5" />
@@ -500,7 +500,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
           <button
             type="button"
             onClick={onDelete}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 cursor-pointer"
             title="Delete QR definition"
           >
             <Trash2 className="w-3.5 h-3.5" />

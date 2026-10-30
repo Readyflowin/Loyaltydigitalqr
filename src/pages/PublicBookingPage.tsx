@@ -225,7 +225,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
                 {business.name}
               </h1>
               <div className="flex items-center gap-1 text-[11px] text-[#60646C] dark:text-[#D0CBC1] truncate">
-                <MapPin className="w-3 h-3 flex-shrink-0 text-[#868A94]" />
+                <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.address}</span>
               </div>
             </div>
@@ -246,7 +246,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
       {/* 2. Step Progress Bar */}
       {currentStep < 6 && (
         <div className="max-w-3xl mx-auto px-4 pt-6">
-          <div className="flex items-center justify-between text-[11px] font-bold text-[#868A94] mb-2 font-mono">
+          <div className="flex items-center justify-between text-[11px] font-bold text-subtle-foreground mb-2 font-mono">
             <span>
               STEP {currentStep} OF 5: {
                 currentStep === 1
@@ -353,7 +353,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
                         {srv.name}
                       </h3>
                       {srv.category && (
-                        <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-md bg-[#F8F7F2] dark:bg-[#1A1916] text-[#868A94]">
+                        <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-md bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground">
                           {srv.category}
                         </span>
                       )}
@@ -361,7 +361,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
                     <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] line-clamp-2">
                       {srv.description}
                     </p>
-                    <div className="flex items-center gap-2 text-xs text-[#868A94] pt-1 font-medium">
+                    <div className="flex items-center gap-2 text-xs text-subtle-foreground pt-1 font-medium">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{srv.durationMinutes} min</span>
                     </div>
@@ -485,13 +485,13 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
 
             {/* Slots Grid */}
             <div>
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-3">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-3">
                 AVAILABLE OPENINGS ({availableSlots.length})
               </span>
 
               {availableSlots.length === 0 ? (
                 <div className="p-10 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-2">
-                  <Calendar className="w-8 h-8 mx-auto text-[#868A94]" />
+                  <Calendar className="w-8 h-8 mx-auto text-subtle-foreground" />
                   <div className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]">
                     No Available Slots On This Day
                   </div>
@@ -640,7 +640,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
             <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-xs space-y-4">
               <div className="flex items-center justify-between pb-4 border-b border-[#E5E3DB] dark:border-white/10">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                  <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                     SERVICE
                   </span>
                   <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
@@ -654,13 +654,13 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
                   <span className="font-heading font-black text-2xl text-[#3027F5] dark:text-[#E4C174]">
                     {formatMinorUnits(selectedService.price, selectedService.currency)}
                   </span>
-                  <span className="text-[10px] text-[#868A94] block">Pay at Salon</span>
+                  <span className="text-[10px] text-subtle-foreground block">Pay at Salon</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                  <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                     DATE & TIME
                   </span>
                   <p className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -676,7 +676,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                  <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                     STYLIST
                   </span>
                   <p className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -689,13 +689,13 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
               </div>
 
               <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 text-xs">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
                   CLIENT INFORMATION
                 </span>
                 <p className="font-semibold text-[#111318] dark:text-[#F7F3EB]">{clientName}</p>
                 <p className="text-[#60646C] dark:text-[#D0CBC1]">{clientEmail} · {clientPhone}</p>
                 {clientNotes && (
-                  <p className="italic text-[#868A94] mt-1">Note: "{clientNotes}"</p>
+                  <p className="italic text-subtle-foreground mt-1">Note: "{clientNotes}"</p>
                 )}
               </div>
             </div>
@@ -779,7 +779,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
               <button
                 type="button"
                 onClick={() => navigate('/')}
-                className="w-full py-2.5 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="w-full py-2.5 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 Return to Website
               </button>

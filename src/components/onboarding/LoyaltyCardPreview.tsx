@@ -77,7 +77,7 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
               className={`h-9 sm:h-10 rounded-xl flex items-center justify-center text-xs font-mono font-bold transition-all ${
                 isStamped
                   ? 'text-white shadow-xs'
-                  : 'bg-black/5 dark:bg-white/5 text-[#868A94] dark:text-[#AAA499] border border-black/5 dark:border-white/5'
+                  : 'bg-black/5 dark:bg-white/5 text-subtle-foreground dark:text-[#AAA499] border border-black/5 dark:border-white/5'
               }`}
               style={isStamped ? { backgroundColor: accentColor } : undefined}
             >
@@ -88,7 +88,7 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
       </div>
 
       {/* Card Footer / Pass Indication */}
-      <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-[#868A94] dark:text-[#AAA499]">
+      <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-subtle-foreground dark:text-[#AAA499]">
         <span>Scan camera · Staff PIN</span>
         <span>Works in any phone browser</span>
       </div>

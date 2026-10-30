@@ -328,7 +328,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                 {/* Location & Upcoming Bookings */}
                 <div className="grid grid-cols-2 gap-2 text-xs pt-1">
                   <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5 flex items-center gap-1">
+                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <MapPin className="w-3 h-3" /> Location
                     </span>
                     <span className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate block">
@@ -337,7 +337,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5 flex items-center gap-1">
+                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <Calendar className="w-3 h-3" /> Upcoming
                     </span>
                     <span className="font-bold text-[#3027F5] dark:text-[#E4C174]">
@@ -348,7 +348,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
                 {/* Assigned Services */}
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+                  <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
                     SERVICES PROVIDED ({assignedServices.length})
                   </span>
                   <div className="flex items-center gap-1 flex-wrap">
@@ -361,7 +361,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                       </span>
                     ))}
                     {assignedServices.length > 3 && (
-                      <span className="text-[10px] text-[#868A94] font-bold">
+                      <span className="text-[10px] text-subtle-foreground font-bold">
                         +{assignedServices.length - 3} more
                       </span>
                     )}
@@ -386,7 +386,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`edit-staff-btn-${stf.id}`}
                     onClick={() => handleOpenEditProfile(stf)}
-                    className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                    className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
                     title="Edit profile"
                   >
                     <Edit2 className="w-4 h-4" />
@@ -395,7 +395,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`delete-staff-btn-${stf.id}`}
                     onClick={() => handleDeleteStaff(stf.id)}
-                    className="p-1.5 rounded-xl text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-xl text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                     title="Delete staff"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -430,7 +430,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setEditorModalOpen(false)}
-                className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -494,7 +494,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
               <div>
                 <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1 flex items-center justify-between">
                   <span>Assigned Services</span>
-                  <span className="text-[10px] text-[#868A94]">Select all they provide</span>
+                  <span className="text-[10px] text-subtle-foreground">Select all they provide</span>
                 </label>
                 <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]">
                   {services.map((srv) => {
@@ -523,7 +523,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                             {srv.name}
                           </span>
                         </div>
-                        <span className="text-[10px] text-[#868A94]">{srv.durationMinutes}m</span>
+                        <span className="text-[10px] text-subtle-foreground">{srv.durationMinutes}m</span>
                       </label>
                     );
                   })}
@@ -536,7 +536,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                   <span className="font-bold text-[#111318] dark:text-[#F7F3EB] block">
                     Active for Bookings
                   </span>
-                  <span className="text-[11px] text-[#868A94]">
+                  <span className="text-[11px] text-subtle-foreground">
                     Disabled staff cannot accept new bookings.
                   </span>
                 </div>
@@ -598,7 +598,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setScheduleModalOpen(false)}
-                className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -650,7 +650,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                           className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
                             daySched.isOpen
                               ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                              : 'bg-black/10 text-[#868A94] dark:bg-white/10'
+                              : 'bg-black/10 text-subtle-foreground dark:bg-white/10'
                           }`}
                         >
                           {daySched.isOpen ? 'WORKING' : 'OFF DUTY'}
@@ -665,7 +665,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                             onChange={(e) => handleUpdateDayTime(idx, 'startTime', e.target.value)}
                             className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs font-mono font-bold"
                           />
-                          <span className="text-[#868A94]">to</span>
+                          <span className="text-subtle-foreground">to</span>
                           <input
                             type="time"
                             value={daySched.endTime}

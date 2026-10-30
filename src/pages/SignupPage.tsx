@@ -186,7 +186,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
               <div className="w-full border-t border-black/10 dark:border-white/10" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-[#141412] px-3 font-mono text-[#868A94] dark:text-[#AAA499]">
+              <span className="bg-white dark:bg-[#141412] px-3 font-mono text-subtle-foreground dark:text-[#AAA499]">
                 or sign up with work email
               </span>
             </div>
@@ -213,7 +213,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                 Business Email Address
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+                <Mail className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3" />
                 <input
                   type="email"
                   required
@@ -231,7 +231,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                 Password
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3" />
                 <input
                   type="password"
                   required

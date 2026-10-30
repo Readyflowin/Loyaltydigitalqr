@@ -218,7 +218,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
                         ? theme === 'light'
                           ? 'bg-[#3027F5] text-white'
                           : 'bg-[#E4C174] text-[#11100D]'
-                        : 'bg-black/5 dark:bg-white/5 text-[#868A94] border border-black/5 dark:border-white/5'
+                        : 'bg-black/5 dark:bg-white/5 text-subtle-foreground border border-black/5 dark:border-white/5'
                     }`}
                   >
                     {i < 3 ? <Check className="w-3.5 h-3.5" /> : i + 1}

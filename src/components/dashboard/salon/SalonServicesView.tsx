@@ -231,7 +231,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL SERVICES
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -240,7 +240,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE BOOKABLE
           </span>
           <div className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -249,7 +249,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             AVG DURATION
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -258,7 +258,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE STYLISTS
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -270,14 +270,14 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 3. Search and Category Filter */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#868A94]" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground" />
           <input
             type="text"
             data-testid="search-services-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search services by name or description..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] placeholder-[#868A94] focus:outline-hidden"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden"
           />
         </div>
 
@@ -315,7 +315,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 4. Services Grid */}
       {filteredServices.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
-          <Scissors className="w-10 h-10 mx-auto text-[#868A94]" />
+          <Scissors className="w-10 h-10 mx-auto text-subtle-foreground" />
           <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
             No services found
           </h4>
@@ -343,7 +343,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                 <div className="space-y-3">
                   {/* Top Bar with Category & Active Toggle */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#868A94]">
+                    <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground">
                       {service.category || 'General'}
                     </span>
 
@@ -372,7 +372,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                   </div>
 
                   {/* Duration & Buffer */}
-                  <div className="flex items-center gap-3 text-xs text-[#868A94] font-medium pt-1">
+                  <div className="flex items-center gap-3 text-xs text-subtle-foreground font-medium pt-1">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{service.durationMinutes} min</span>
@@ -387,7 +387,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
                   {/* Assigned Staff */}
                   <div className="pt-2 border-t border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+                    <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
                       ASSIGNED STYLISTS ({assignedStaff.length})
                     </span>
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -401,7 +401,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                           </span>
                         ))
                       ) : (
-                        <span className="text-[11px] text-[#868A94] italic">
+                        <span className="text-[11px] text-subtle-foreground italic">
                           No staff assigned
                         </span>
                       )}
@@ -426,7 +426,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                       type="button"
                       data-testid={`duplicate-service-btn-${service.id}`}
                       onClick={() => handleDuplicate(service.id)}
-                      className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                      className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
                       title="Duplicate service"
                     >
                       <Copy className="w-4 h-4" />
@@ -435,7 +435,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                       type="button"
                       data-testid={`delete-service-btn-${service.id}`}
                       onClick={() => handleDelete(service.id)}
-                      className="p-1.5 rounded-xl text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-xl text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                       title="Delete service"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -471,7 +471,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
               <button
                 type="button"
                 onClick={() => setEditorModalOpen(false)}
-                className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -588,7 +588,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
               <div>
                 <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1.5 flex items-center justify-between">
                   <span>Assigned Stylists</span>
-                  <span className="text-[10px] text-[#868A94]">Who provides this service?</span>
+                  <span className="text-[10px] text-subtle-foreground">Who provides this service?</span>
                 </label>
                 <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]">
                   {staffList.map((stf) => {
@@ -617,7 +617,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                             {stf.displayName}
                           </span>
                         </div>
-                        <span className="text-[10px] text-[#868A94]">{stf.role}</span>
+                        <span className="text-[10px] text-subtle-foreground">{stf.role}</span>
                       </label>
                     );
                   })}
@@ -630,7 +630,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                   <span className="font-bold text-[#111318] dark:text-[#F7F3EB] block">
                     Public Booking Availability
                   </span>
-                  <span className="text-[11px] text-[#868A94]">
+                  <span className="text-[11px] text-subtle-foreground">
                     Disabled services will not appear on the customer booking page.
                   </span>
                 </div>

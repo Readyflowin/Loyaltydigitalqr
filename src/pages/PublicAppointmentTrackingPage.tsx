@@ -172,7 +172,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
-                <MapPin className="w-3.5 h-3.5 text-[#868A94]" />
+                <MapPin className="w-3.5 h-3.5 text-subtle-foreground" />
                 <span>{appointment.locationName} &bull; {appointment.locationAddress}</span>
               </div>
             </div>
@@ -217,7 +217,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                   </span>
                 </div>
 
-                <span className="text-xs text-[#868A94] flex items-center gap-1 font-mono">
+                <span className="text-xs text-subtle-foreground flex items-center gap-1 font-mono">
                   <Clock className="w-3.5 h-3.5" />
                   <span>{appointment.serviceSnapshot.durationMinutes} min</span>
                 </span>
@@ -244,7 +244,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
                             ? 'text-[#111318] dark:text-[#F7F3EB]'
-                            : 'text-[#868A94]'
+                            : 'text-subtle-foreground'
                         }`}
                       >
                         {stg.label}
@@ -263,7 +263,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider">
               Booking Details
             </h3>
-            <span className="text-xs font-mono text-[#868A94]">
+            <span className="text-xs font-mono text-subtle-foreground">
               Ref: {appointment.bookingToken}
             </span>
           </div>
@@ -288,19 +288,19 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
 
             <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-                <Calendar className="w-4 h-4 text-[#868A94]" />
+                <Calendar className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-date">{dateFormatted}</span>
               </div>
               <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-                <Clock className="w-4 h-4 text-[#868A94]" />
+                <Clock className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-time">{timeFormatted}</span>
               </div>
               <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-                <Scissors className="w-4 h-4 text-[#868A94]" />
+                <Scissors className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-staff-name">Stylist: {appointment.staffName}</span>
               </div>
               <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-                <User className="w-4 h-4 text-[#868A94]" />
+                <User className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-customer-name">Client: {appointment.customerName}</span>
               </div>
             </div>
@@ -314,7 +314,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
           </div>
 
           <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 flex items-center justify-between text-xs">
-            <span className="text-[#868A94]">Total Due at Salon</span>
+            <span className="text-subtle-foreground">Total Due at Salon</span>
             <span
               data-testid="tracking-total"
               className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"
@@ -331,7 +331,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
                 Need to cancel or change plans?
               </div>
-              <div className="text-[11px] text-[#868A94] mt-0.5">
+              <div className="text-[11px] text-subtle-foreground mt-0.5">
                 {appointment.cancellationPolicyNotice || 'Free cancellation up to 2 hours prior to scheduled appointment.'}
               </div>
             </div>
@@ -367,7 +367,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               <button
                 type="button"
                 onClick={() => setShowCancelModal(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <XCircle className="w-5 h-5" />
               </button>

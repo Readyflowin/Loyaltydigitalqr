@@ -2,11 +2,104 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* =============================================================================
+   DESIGN TOKENS
+   Semantic colours are CSS variables (set per theme below) exposed to Tailwind
+   via @theme inline, so `bg-primary`, `text-muted-foreground`, `border-border/60`
+   etc. switch automatically between light and dark.
+   ============================================================================= */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--border-strong);
+  --color-ring: var(--primary);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-reward: var(--reward);
+  --color-highlight: var(--highlight);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-destructive: var(--danger);
+}
+
 @theme {
-  --font-sans: "Inter", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+  /* Tracking tuned for Plus Jakarta Sans (tighter values were set for Space Grotesk) */
+  --tracking-tight: -0.015em;
+  --tracking-tighter: -0.025em;
+
+  /* Type families: headings / UI+body / codes only / hero annotations */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   --font-handwriting: "Caveat", cursive, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type scale (size / line-height / weight / tracking). Nothing below 12px. */
+  --text-display: clamp(2.75rem, 2rem + 3.2vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 800;
+  --text-h1: 2.25rem;
+  --text-h1--line-height: 2.6rem;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 800;
+  --text-page-title: 1.75rem;
+  --text-page-title--line-height: 2.125rem;
+  --text-page-title--letter-spacing: -0.02em;
+  --text-page-title--font-weight: 700;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.75rem;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.5rem;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.25rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1rem;
+  --text-label--font-weight: 600;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1rem;
+  --text-eyebrow--letter-spacing: 0.08em;
+  --text-eyebrow--font-weight: 600;
+  --text-stat: 2rem;
+  --text-stat--line-height: 2.25rem;
+  --text-stat--letter-spacing: -0.02em;
+  --text-stat--font-weight: 700;
+  --text-stat-sm: 1.375rem;
+  --text-stat-sm--line-height: 1.75rem;
+  --text-stat-sm--font-weight: 700;
+
+  /* Radii: chip 8 / control 12 / card 16 / panel 24 */
+  --radius-chip: 0.5rem;
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+
+  /* Elevation: e1 cards, e2 hover & dropdowns, e3 modals & hero mock-ups */
+  --shadow-e1: 0 1px 2px rgb(20 22 27 / 0.06), 0 1px 1px rgb(20 22 27 / 0.04);
+  --shadow-e2: 0 8px 24px -8px rgb(20 22 27 / 0.12), 0 2px 4px rgb(20 22 27 / 0.04);
+  --shadow-e3: 0 24px 64px -16px rgb(20 22 27 / 0.24), 0 4px 12px rgb(20 22 27 / 0.06);
 
   --color-cobalt: #3027F5;
   --color-cobalt-hover: #2319D8;
@@ -40,6 +133,28 @@
 :root {
   color-scheme: light;
   --hero-scale: 1;
+
+  /* Semantic colours: light theme (all text pairs meet WCAG AA on their surface) */
+  --background: #F7F6F2;
+  --foreground: #14161B;
+  --card: #FFFFFF;
+  --muted: #F1EFE9;
+  --muted-foreground: #5B5F69;   /* 5.9:1 on cream */
+  --subtle-foreground: #6E727C;  /* 4.7:1 on cream, use at >= 13px */
+  --border: #E6E3DA;
+  --border-strong: #D3CFC3;
+  --primary: #3027F5;
+  --primary-hover: #2219D9;
+  --primary-soft: #ECEBFF;
+  --primary-foreground: #FFFFFF;
+  --reward: #C8962E;
+  --highlight: #D6FF38;
+  --success: #0E8A5F;
+  --success-soft: #E6F6EF;
+  --warning: #B45309;
+  --warning-soft: #FEF3E2;
+  --danger: #C8102E;
+  --danger-soft: #FDECEE;
 }
 
 /* Fluid responsive hero collage scale */
@@ -78,12 +193,42 @@
 
   --dark-border: rgba(228, 193, 116, 0.25);
   --dark-divider: rgba(228, 193, 116, 0.18);
+
+  /* Semantic colours: dark theme.
+     --primary stays gold for now to match the existing dark dashboard; switch it
+     here (e.g. #7A73FF) when the brand colour is unified across themes. */
+  --background: #0B0B0C;
+  --foreground: #F5F3EE;
+  --card: #141416;
+  --muted: #1C1C1F;
+  --muted-foreground: #B3AFA6;
+  --subtle-foreground: #9A968D;
+  --border: #2A2A2F;
+  --border-strong: #3A3A41;
+  --primary: #E4C174;
+  --primary-hover: #EBD294;
+  --primary-soft: rgba(228, 193, 116, 0.14);
+  --primary-foreground: #11100D;
+  --reward: #E4C174;
+  --highlight: #D6FF38;
+  --success: #34D399;
+  --success-soft: rgba(52, 211, 153, 0.12);
+  --warning: #FBBF24;
+  --warning-soft: rgba(251, 191, 36, 0.12);
+  --danger: #F87171;
+  --danger-soft: rgba(248, 113, 113, 0.12);
 }
 
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   background-color: #F8F7F2;
+  /* Never fake bold: requests for 900 use the heaviest real weight (800). */
+  font-synthesis-weight: none;
+  font-feature-settings: "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .dark body {
@@ -117,4 +262,9 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Plus Jakarta Sans has a narrow word space at heavy weights; open it slightly. */
+.font-heading {
+  word-spacing: 0.05em;
 }

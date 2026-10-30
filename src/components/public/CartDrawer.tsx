@@ -145,7 +145,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         {/* Cart Line Items */}
         <div className="p-5 overflow-y-auto flex-1 space-y-4">
           {cart.length === 0 ? (
-            <div className="p-12 text-center text-[#868A94] space-y-3">
+            <div className="p-12 text-center text-subtle-foreground space-y-3">
               <ShoppingBag className="w-12 h-12 mx-auto stroke-1" />
               <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
                 Your Cart is Empty
@@ -183,7 +183,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       <div key={v.id} className="flex items-center justify-between">
                         <span>• Size: {v.name}</span>
                         {v.priceAdjustment > 0 && (
-                          <span className="text-[#868A94]">
+                          <span className="text-subtle-foreground">
                             +{formatMinorUnits(v.priceAdjustment, item.menuItem.currency)}
                           </span>
                         )}
@@ -194,7 +194,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         <div key={m.id} className="flex items-center justify-between">
                           <span>• {m.name}</span>
                           {m.priceAdjustment > 0 && (
-                            <span className="text-[#868A94]">
+                            <span className="text-subtle-foreground">
                               +{formatMinorUnits(m.priceAdjustment, item.menuItem.currency)}
                             </span>
                           )}
@@ -205,7 +205,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
 
                 {item.specialInstructions && (
-                  <div className="text-[11px] text-[#868A94] italic">
+                  <div className="text-[11px] text-subtle-foreground italic">
                     Note: "{item.specialInstructions}"
                   </div>
                 )}
@@ -238,7 +238,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     type="button"
                     data-testid={`cart-remove-${item.cartItemId}`}
                     onClick={() => onRemoveItem(item.cartItemId)}
-                    className="p-1.5 rounded-lg text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-lg text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                     title="Remove Item"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -263,7 +263,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="e.g. Jordan Lee"
-                className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] placeholder-[#868A94] focus:outline-hidden"
+                className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden"
               />
             </div>
 
@@ -273,7 +273,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span>Items Subtotal ({totalItemCount})</span>
                 <span data-testid="cart-subtotal">{formatMinorUnits(subtotal, business.currency)}</span>
               </div>
-              <div className="flex items-center justify-between text-[#868A94] text-[11px]">
+              <div className="flex items-center justify-between text-subtle-foreground text-[11px]">
                 <span>Taxes & Service</span>
                 <span>Included</span>
               </div>
@@ -289,7 +289,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 type="button"
                 onClick={onClearCart}
                 disabled={isSubmitting}
-                className="px-4 py-3 rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] text-[#868A94] hover:text-red-500 text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
+                className="px-4 py-3 rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] text-subtle-foreground hover:text-red-500 text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
               >
                 Clear
               </button>
@@ -346,7 +346,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span>Payment:</span>
                 <span>Pay at Counter</span>
               </div>
-              <div className="text-[11px] text-[#868A94] flex items-center gap-1 pt-0.5">
+              <div className="text-[11px] text-subtle-foreground flex items-center gap-1 pt-0.5">
                 <Clock className="w-3 h-3" />
                 <span>Estimated prep time: {createdOrder.estimatedWaitMinutes || 6} minutes</span>
               </div>

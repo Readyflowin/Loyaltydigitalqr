@@ -145,7 +145,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
       {/* 2. Top Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE TABLES
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -157,7 +157,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ASSIGNED DIGITAL MENUS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -169,7 +169,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
         </div>
 
         <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             QR CODE STATUS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -184,7 +184,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
       {/* 3. Search & Filter Controls */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#868A94]" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground" />
           <input
             type="text"
             data-testid="search-tables"
@@ -214,7 +214,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
       {/* 4. Tables Grid */}
       {filteredTables.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <Grid className="w-10 h-10 mx-auto text-[#868A94] mb-3" />
+          <Grid className="w-10 h-10 mx-auto text-subtle-foreground mb-3" />
           <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
             No Tables Found
           </h4>
@@ -325,7 +325,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
         {/* Header Badge */}
         <div className="flex items-center justify-between mb-3">
           <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]">
-            ID: {table.id}
+            Table {table.tableNumber}
           </span>
           <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300">
             ACTIVE
@@ -342,7 +342,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
             {thumbUrl ? (
               <img src={thumbUrl} alt="QR Thumbnail" className="w-full h-full object-contain" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[10px] text-[#868A94]">
+              <div className="w-full h-full flex items-center justify-center text-[10px] text-subtle-foreground">
                 QR
               </div>
             )}
@@ -356,7 +356,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
               <MapPin className="w-3 h-3 flex-shrink-0" />
               <span className="truncate">{locationName}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-[#868A94] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs text-subtle-foreground mt-0.5">
               <Utensils className="w-3 h-3 flex-shrink-0" />
               <span className="truncate">{menuName}</span>
             </div>
@@ -365,7 +365,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
 
         {/* Public Path Preview */}
         <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] mb-4">
-          <div className="text-[10px] font-mono text-[#868A94] uppercase tracking-wider mb-0.5">
+          <div className="text-[10px] font-mono text-subtle-foreground uppercase tracking-wider mb-0.5">
             Table Scannable URL
           </div>
           <div className="text-xs font-mono text-[#3027F5] dark:text-[#E4C174] truncate">
@@ -381,7 +381,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
             type="button"
             data-testid={`edit-table-${table.id}`}
             onClick={onEdit}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
             title="Edit Table"
           >
             <Edit2 className="w-4 h-4" />
@@ -390,7 +390,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
             type="button"
             data-testid={`delete-table-${table.id}`}
             onClick={onDelete}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
             title="Delete Table"
           >
             <Trash2 className="w-4 h-4" />
@@ -400,7 +400,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             data-testid={`open-table-menu-${table.id}`}
-            className="p-1.5 rounded-lg text-[#868A94] hover:text-[#3027F5] dark:hover:text-[#E4C174] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
             title="Test Menu URL"
           >
             <ExternalLink className="w-4 h-4" />

@@ -131,7 +131,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
-                <MapPin className="w-3.5 h-3.5 text-[#868A94]" />
+                <MapPin className="w-3.5 h-3.5 text-subtle-foreground" />
                 <span>{order.locationName}</span>
               </div>
             </div>
@@ -174,7 +174,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                 </div>
 
                 {!isCompleted && order.estimatedWaitMinutes && (
-                  <span className="text-xs text-[#868A94] flex items-center gap-1 font-mono">
+                  <span className="text-xs text-subtle-foreground flex items-center gap-1 font-mono">
                     <Clock className="w-3.5 h-3.5" />
                     <span>~{order.estimatedWaitMinutes}m</span>
                   </span>
@@ -202,7 +202,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
                             ? 'text-[#111318] dark:text-[#F7F3EB]'
-                            : 'text-[#868A94]'
+                            : 'text-subtle-foreground'
                         }`}
                       >
                         {stg.label}
@@ -221,7 +221,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
             <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider">
               Ordered Items ({order.items.length})
             </h3>
-            <span className="text-xs font-mono text-[#868A94]">
+            <span className="text-xs font-mono text-subtle-foreground">
               {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           </div>
@@ -243,7 +243,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                     </div>
                   )}
                   {item.modifiers.length > 0 && (
-                    <div className="text-[11px] text-[#868A94]">
+                    <div className="text-[11px] text-subtle-foreground">
                       + {item.modifiers.map((m) => m.name).join(', ')}
                     </div>
                   )}
@@ -266,7 +266,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
               <span>Subtotal</span>
               <span>{formatMinorUnits(order.subtotal, order.currency)}</span>
             </div>
-            <div className="flex items-center justify-between text-[#868A94] text-[11px]">
+            <div className="flex items-center justify-between text-subtle-foreground text-[11px]">
               <span>Payment Mode</span>
               <span>Pay at Counter</span>
             </div>

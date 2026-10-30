@@ -69,7 +69,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      setExportNotice('Audit-grade CSV exported successfully.');
+      setExportNotice('Report downloaded.');
       setTimeout(() => setExportNotice(null), 3000);
     } catch {
       setExportNotice('Export completed in browser session.');
@@ -79,7 +79,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
   if (!summary) {
     return (
-      <div className="p-8 text-center text-xs text-[#868A94]">
+      <div className="p-8 text-center text-xs text-subtle-foreground">
         Loading analytics dataset...
       </div>
     );
@@ -131,7 +131,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             Visit Analytics & Performance
           </h1>
           <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
-            Metrics aggregated truthfully from recorded orders, bookings, sales, check-ins, and redemptions.
+            Based on the orders, bookings, sales, check-ins and redemptions recorded in your workspace.
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold cursor-pointer transition-colors ${
                 dateRange === '7d'
                   ? 'bg-white dark:bg-[#1A1916] text-[#3027F5] dark:text-[#E4C174] shadow-xs'
-                  : 'text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+                  : 'text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
               }`}
             >
               7 Days
@@ -157,7 +157,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold cursor-pointer transition-colors ${
                 dateRange === '30d'
                   ? 'bg-white dark:bg-[#1A1916] text-[#3027F5] dark:text-[#E4C174] shadow-xs'
-                  : 'text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+                  : 'text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
               }`}
             >
               30 Days
@@ -169,7 +169,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold cursor-pointer transition-colors ${
                 dateRange === '90d'
                   ? 'bg-white dark:bg-[#1A1916] text-[#3027F5] dark:text-[#E4C174] shadow-xs'
-                  : 'text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+                  : 'text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
               }`}
             >
               90 Days
@@ -181,7 +181,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold cursor-pointer transition-colors ${
                 dateRange === 'all'
                   ? 'bg-white dark:bg-[#1A1916] text-[#3027F5] dark:text-[#E4C174] shadow-xs'
-                  : 'text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+                  : 'text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
               }`}
             >
               All Time
@@ -205,7 +205,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1: Gross Recorded Revenue */}
         <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-[#868A94]">
+          <div className="flex items-center justify-between text-subtle-foreground">
             <span className="text-[10px] font-mono uppercase font-bold">GROSS RECORDED VALUE</span>
             <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
@@ -219,7 +219,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
         {/* KPI 2: Customer Retention & Repeat Rate */}
         <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-[#868A94]">
+          <div className="flex items-center justify-between text-subtle-foreground">
             <span className="text-[10px] font-mono uppercase font-bold">REPEAT RATE</span>
             <TrendingUp className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
           </div>
@@ -233,7 +233,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
         {/* KPI 3: Loyalty Activity */}
         <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-[#868A94]">
+          <div className="flex items-center justify-between text-subtle-foreground">
             <span className="text-[10px] font-mono uppercase font-bold">STAMPS & ENGAGEMENT</span>
             <Award className="w-4 h-4 text-amber-500" />
           </div>
@@ -247,13 +247,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
         {/* KPI 4: Offer Savings & Feedback */}
         <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1">
-          <div className="flex items-center justify-between text-[#868A94]">
+          <div className="flex items-center justify-between text-subtle-foreground">
             <span className="text-[10px] font-mono uppercase font-bold">CUSTOMER SATISFACTION</span>
             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-black text-amber-500 flex items-center gap-1">
             <span>{summary.averageRating.toFixed(1)}</span>
-            <span className="text-xs font-mono text-[#868A94]">/ 5.0</span>
+            <span className="text-xs font-mono text-subtle-foreground">/ 5.0</span>
           </div>
           <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
             {summary.feedbackCount} reviews · {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)} savings
@@ -271,7 +271,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
                 OPERATIONAL BREAKDOWN
               </span>
               <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
-                {business.businessType.toUpperCase()} PERFORMANCE METRICS
+                {business.businessType.charAt(0).toUpperCase() + business.businessType.slice(1)} performance
               </h3>
             </div>
             <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
@@ -287,19 +287,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">TOTAL ORDERS</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">TOTAL ORDERS</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {orders.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">ORDER VOLUME</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">ORDER VOLUME</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(ordersVolume / 100).toFixed(2)}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">AVG TICKET</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">AVG TICKET</span>
                   <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                     {orders.length > 0
                       ? `${currencySymbol}${(ordersVolume / orders.length / 100).toFixed(2)}`
@@ -318,13 +318,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">APPOINTMENTS</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">APPOINTMENTS</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {appointments.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">APPOINTMENT VALUE</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">APPOINTMENT VALUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(appointmentsVolume / 100).toFixed(2)}
                   </div>
@@ -341,13 +341,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">QUALIFYING SALES</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">QUALIFYING SALES</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {purchases.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">RETAIL REVENUE</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">RETAIL REVENUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(retailVolume / 100).toFixed(2)}
                   </div>
@@ -364,13 +364,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">RECORDED CHECK-INS</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">RECORDED CHECK-INS</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {checkIns.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">ACTIVE MEMBERS</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">ACTIVE MEMBERS</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {memberships.filter((m) => m.status === 'active').length}
                   </div>
@@ -387,13 +387,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">WASHES REDEEMED</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">WASHES REDEEMED</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {carWashes.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">ACTIVE PASSES</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">ACTIVE PASSES</span>
                   <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                     {passes.filter((p) => p.status === 'active').length}
                   </div>
@@ -410,13 +410,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">JOBS RECORDED</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">JOBS RECORDED</span>
                   <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                     {jobs.length}
                   </div>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] font-mono text-[#868A94] uppercase block">JOB REVENUE</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground uppercase block">JOB REVENUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(jobsVolume / 100).toFixed(2)}
                   </div>
@@ -428,7 +428,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] text-xs text-[#60646C] dark:text-[#AAA499] flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>
-              All transactional records are isolated to <strong>{business.name}</strong> ({business.id}).
+              These figures include only <strong>{business.name}</strong>.
             </span>
           </div>
         </div>
@@ -446,7 +446,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           <div className="space-y-3 text-xs">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] space-y-1">
-              <span className="text-[#868A94] font-mono text-[10px] uppercase">FIXED-DISCOUNT SAVINGS</span>
+              <span className="text-subtle-foreground font-mono text-[10px] uppercase">FIXED-DISCOUNT SAVINGS</span>
               <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                 {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)}
               </div>
@@ -456,7 +456,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] space-y-1">
-              <span className="text-[#868A94] font-mono text-[10px] uppercase">LOYALTY REDEMPTION CONVERSION</span>
+              <span className="text-subtle-foreground font-mono text-[10px] uppercase">LOYALTY REDEMPTION CONVERSION</span>
               <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                 {summary.totalLoyaltyStamps > 0
                   ? `${Math.min(100, Math.round((summary.totalRewardsRedeemed / summary.totalLoyaltyStamps) * 100))}%`
@@ -467,9 +467,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               </p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-[11px] text-blue-900 dark:text-blue-200">
-              <strong>Zero-Division Safety:</strong> All rate calculations are guarded against empty states and null divisions.
-            </div>
           </div>
         </div>
       </div>

@@ -62,7 +62,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
 
         {/* Quick Industry Navigation Links */}
         <div className="pt-8 border-t border-black/10 dark:border-white/10">
-          <p className="text-[11px] font-mono text-[#868A94] uppercase tracking-wider mb-3">
+          <p className="text-[11px] font-mono text-subtle-foreground uppercase tracking-wider mb-3">
             Explore Industry Loyalty Programs
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">

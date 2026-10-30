@@ -20,7 +20,7 @@ import {
 
 } from 'lucide-react';
 import { Link, useRouter } from '../router';
-import { BUSINESS_TYPES, TIMEZONE_OPTIONS, CARD_COLORS } from '../data/onboardingData';
+import { BUSINESS_TYPES, TIMEZONE_OPTIONS, CARD_COLORS, syncRewardWithStamps } from '../data/onboardingData';
 import { authService, getDefaultOnboardingData } from '../services/authService';
 import { businessService } from '../services/businessService';
 import { VerifyEmailScreen } from '../components/auth/VerifyEmailScreen';
@@ -423,7 +423,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           />
         </div>
 
-        <div className="hidden sm:grid grid-cols-5 gap-2 mt-3 text-[11px] font-mono text-[#868A94] dark:text-[#AAA499]">
+        <div className="hidden sm:grid grid-cols-5 gap-2 mt-3 text-[11px] font-mono text-subtle-foreground dark:text-[#AAA499]">
           {stepTitles.map((title, idx) => {
             const stepNum = idx + 1;
             const isDone = stepNum < formData.currentStep;
@@ -695,7 +695,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 Contact & Administration Email <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3.5" />
+                <Mail className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3.5" />
                 <input
                   type="email"
                   value={formData.contactEmail}
@@ -727,7 +727,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 Storefront / Venue Address (Optional)
               </label>
               <div className="relative">
-                <MapPin className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3.5" />
+                <MapPin className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   value={formData.address}
@@ -745,7 +745,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   Business Phone (Optional)
                 </label>
                 <div className="relative">
-                  <Phone className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3.5" />
+                  <Phone className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3.5" />
                   <input
                     type="tel"
                     value={formData.phoneNumber}
@@ -823,7 +823,13 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                     <button
                       key={num}
                       type="button"
-                      onClick={() => setFormData((prev) => ({ ...prev, stampsRequired: num }))}
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          stampsRequired: num,
+                          rewardDescription: syncRewardWithStamps(prev.rewardDescription, num),
+                        }))
+                      }
                       className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                         formData.stampsRequired === num
                           ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'

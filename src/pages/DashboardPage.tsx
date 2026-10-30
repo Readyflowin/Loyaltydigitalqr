@@ -579,7 +579,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
               <button
                 type="button"
                 onClick={() => setPassPreviewModalOpen(false)}
-                className="p-1 text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>

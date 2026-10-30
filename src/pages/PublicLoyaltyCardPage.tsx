@@ -216,7 +216,7 @@ const JoinForm: React.FC<{
         >
           {submitting ? 'Joining…' : 'Get my loyalty card'}
         </button>
-        <p className="text-[11px] text-[#868A94] text-center">
+        <p className="text-[11px] text-subtle-foreground text-center">
           Your details are shared only with this business to run its loyalty program.
           {terms ? ` ${terms}` : ''}
         </p>
@@ -290,7 +290,7 @@ const MemberCardView: React.FC<{ businessId: string; slug: string; memberId: str
       <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 shadow-xl">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-xs uppercase font-bold text-[#868A94]">Hi {card.firstName}</div>
+            <div className="text-xs uppercase font-bold text-subtle-foreground">Hi {card.firstName}</div>
             <div className="font-heading font-black text-2xl">
               {card.currentStamps} / {required} stamps
             </div>
@@ -342,7 +342,7 @@ const MemberCardView: React.FC<{ businessId: string; slug: string; memberId: str
         </span>
       </div>
 
-      <button type="button" onClick={forget} className="w-full text-xs text-[#868A94] underline cursor-pointer">
+      <button type="button" onClick={forget} className="w-full text-xs text-subtle-foreground underline cursor-pointer">
         Not you? Use a different number
       </button>
     </div>

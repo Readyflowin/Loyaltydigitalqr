@@ -44,7 +44,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Confident, Ultra-Bold Headline */}
-            <h1 className="mt-4 xl:mt-5 text-[52px] sm:text-[62px] xl:text-[72px] 2xl:text-[76px] font-heading font-black tracking-[-0.038em] leading-[0.96] text-[#111318] dark:text-[#F7F3EB]">
+            <h1 className="mt-4 xl:mt-5 text-[52px] sm:text-[62px] xl:text-[72px] 2xl:text-[76px] font-heading font-black tracking-[-0.028em] leading-[0.98] text-[#111318] dark:text-[#F7F3EB]">
               Give them
               <br />
               a reason to

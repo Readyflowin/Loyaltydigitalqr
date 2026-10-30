@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#how-it-works')}
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   How it works
                 </button>
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#master-wallet')}
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   Master Loyalty Card
                 </button>
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={onOpenVideoDemo}
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left cursor-pointer"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left cursor-pointer"
                 >
                   Watch 1-min demo
                 </button>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/pricing"
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Pricing
                 </Link>
@@ -104,7 +104,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/industries/cafes"
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Cafés & Coffee Shops
                 </Link>
@@ -112,7 +112,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/industries/salons"
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Salons & Barbers
                 </Link>
@@ -121,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#industries')}
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   All Industries
                 </button>
@@ -129,7 +129,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/pricing"
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Regional Pricing
                 </Link>
@@ -154,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/login"
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left inline-block"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left inline-block"
                 >
                   Merchant Log in
                 </Link>
@@ -163,7 +163,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#faq')}
-                  className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   FAQ & Support
                 </button>
@@ -174,19 +174,19 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom Bar: Copyright & Terms */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#868A94] dark:text-[#AAA499]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-subtle-foreground dark:text-[#AAA499]">
           <div>
             © 2026 Loyaltydigitalqr.com. All rights reserved.
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Privacy Policy
             </span>
-            <span className="hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Terms of Service
             </span>
-            <span className="hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Cookie Preferences
             </span>
           </div>

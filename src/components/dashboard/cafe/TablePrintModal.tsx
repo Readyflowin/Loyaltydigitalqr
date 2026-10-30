@@ -243,7 +243,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
               </div>
             )}
 
-            <div className="text-[11px] font-mono text-[#868A94] break-all">
+            <div className="text-[11px] font-mono text-subtle-foreground break-all">
               Target URL: {tableUrl}
             </div>
           </div>
@@ -275,7 +275,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
 
               {/* Table Name Badge */}
               <div className="py-2 px-4 rounded-2xl bg-[#F8F7F2] border border-[#E5E3DB]">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#868A94] uppercase block">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-subtle-foreground uppercase block">
                   ORDER FROM YOUR TABLE
                 </span>
                 <span className="text-2xl font-heading font-black text-[#111318] tracking-tight block">
@@ -292,7 +292,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
                     className="w-48 h-48 mx-auto object-contain"
                   />
                 ) : (
-                  <div className="w-48 h-48 flex items-center justify-center text-xs text-[#868A94]">
+                  <div className="w-48 h-48 flex items-center justify-center text-xs text-subtle-foreground">
                     Generating QR matrix...
                   </div>
                 )}
@@ -303,13 +303,13 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
                 <p className="text-xs font-bold text-[#111318] px-2 leading-snug">
                   {table.instruction || 'Scan with your smartphone camera to view menu & order'}
                 </p>
-                <p className="text-[10px] text-[#868A94] font-medium">
+                <p className="text-[10px] text-subtle-foreground font-medium">
                   No app download or account required
                 </p>
               </div>
 
               {/* Watermark / Brand Attribution */}
-              <div className="pt-2 border-t border-[#E5E3DB] flex items-center justify-center gap-1.5 text-[9px] font-mono text-[#868A94] uppercase tracking-wider">
+              <div className="pt-2 border-t border-[#E5E3DB] flex items-center justify-center gap-1.5 text-[9px] font-mono text-subtle-foreground uppercase tracking-wider">
                 <span>POWERED BY LOYALTYDIGITALQR</span>
               </div>
             </div>

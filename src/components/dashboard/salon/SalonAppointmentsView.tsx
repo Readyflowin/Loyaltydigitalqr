@@ -257,7 +257,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TODAY'S BOOKINGS
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -266,7 +266,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             AWAITING CONFIRMATION
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -275,7 +275,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             UPCOMING THIS WEEK
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -284,7 +284,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             COMPLETED TODAY
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -293,10 +293,10 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             CANCELLED / NO-SHOW
           </span>
-          <div className="text-xl sm:text-2xl font-heading font-black text-[#868A94]">
+          <div className="text-xl sm:text-2xl font-heading font-black text-subtle-foreground">
             {metrics.cancelledOrNoShowToday}
           </div>
         </div>
@@ -337,7 +337,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
             </button>
 
             <div className="flex items-center gap-2 pl-2 border-l border-[#E5E3DB] dark:border-white/10">
-              <Calendar className="w-4 h-4 text-[#868A94]" />
+              <Calendar className="w-4 h-4 text-subtle-foreground" />
               <input
                 type="date"
                 data-testid="appointment-date-input"
@@ -350,21 +350,21 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
           {/* Search Box */}
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#868A94]" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-subtle-foreground" />
             <input
               type="text"
               data-testid="search-appointments-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search client or #APT..."
-              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#111318] dark:text-[#F7F3EB] placeholder-[#868A94] focus:outline-hidden"
+              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden"
             />
           </div>
         </div>
 
         {/* Filter Controls */}
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#E5E3DB] dark:border-white/10 text-xs">
-          <div className="flex items-center gap-1.5 mr-2 text-[#868A94] font-mono text-[10px] uppercase font-bold">
+          <div className="flex items-center gap-1.5 mr-2 text-subtle-foreground font-mono text-[10px] uppercase font-bold">
             <Filter className="w-3 h-3" /> Filters:
           </div>
 
@@ -422,7 +422,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
       {/* 4. Appointments List / Agenda View */}
       {filteredAppointments.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
-          <CalendarCheck className="w-10 h-10 mx-auto text-[#868A94]" />
+          <CalendarCheck className="w-10 h-10 mx-auto text-subtle-foreground" />
           <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
             No appointments on {selectedDate}
           </h4>
@@ -448,14 +448,14 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
                     <span className="font-mono font-black text-sm text-[#3027F5] dark:text-[#E4C174] block">
                       {formatTimeLabel(startTimeStr)}
                     </span>
-                    <span className="text-[10px] text-[#868A94] font-medium block">
+                    <span className="text-[10px] text-subtle-foreground font-medium block">
                       {formatTimeLabel(endTimeStr)}
                     </span>
                   </div>
 
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono font-bold text-xs text-[#868A94]">
+                      <span className="font-mono font-bold text-xs text-subtle-foreground">
                         {apt.appointmentNumber}
                       </span>
                       <span
@@ -588,7 +588,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
             {/* Drawer Header */}
             <div className="p-6 border-b border-[#E5E3DB] dark:border-white/10 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   APPOINTMENT DETAILS
                 </span>
                 <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
@@ -599,7 +599,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
                 type="button"
                 data-testid="close-appointment-drawer-btn"
                 onClick={() => setSelectedAppointment(null)}
-                className="p-2 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -609,7 +609,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
             <div className="p-6 space-y-6 overflow-y-auto flex-1 text-xs">
               {/* Customer Info */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   CLIENT DETAILS
                 </span>
                 <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
@@ -628,7 +628,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
               {/* Service & Staff Details */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-3">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   SERVICE & STYLIST
                 </span>
                 <div className="flex items-center justify-between">
@@ -652,7 +652,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
               {/* Public Tracking Link Sharing */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-2">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   CUSTOMER TRACKING & MANAGEMENT LINK
                 </span>
                 <div className="flex items-center gap-2">
@@ -707,7 +707,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
 
               {/* Status Timeline */}
               <div className="space-y-2">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   AUDIT TIMELINE
                 </span>
                 <div className="space-y-2 pl-2 border-l-2 border-[#E5E3DB] dark:border-white/10">
@@ -718,9 +718,9 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
                         <span className="font-bold text-[#111318] dark:text-[#F7F3EB]">
                           {APPOINTMENT_STATUS_LABELS[h.status]}
                         </span>
-                        <span className="text-[10px] text-[#868A94]">by {h.actor}</span>
+                        <span className="text-[10px] text-subtle-foreground">by {h.actor}</span>
                       </div>
-                      <span className="text-[10px] text-[#868A94] block">
+                      <span className="text-[10px] text-subtle-foreground block">
                         {new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       {h.note && <p className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] mt-0.5">{h.note}</p>}
@@ -926,7 +926,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
               <button
                 type="button"
                 onClick={() => setManualModalOpen(false)}
-                className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>

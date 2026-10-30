@@ -377,7 +377,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* Metric Counters Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PROMOTIONS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -389,7 +389,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL REDEMPTIONS
           </span>
           <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -401,19 +401,19 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             AUDIENCE SEGMENTS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             {segments.length}
           </div>
           <span className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
-            Deterministic CRM
+            Live from customer visits
           </span>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             CUSTOMER REPUTATION
           </span>
           <div className="text-2xl font-heading font-black text-amber-500 flex items-center gap-1">
@@ -435,7 +435,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           className={`px-4 py-2.5 font-heading font-bold text-xs sm:text-sm border-b-2 transition-all cursor-pointer inline-flex items-center gap-2 ${
             activeTab === 'offers'
               ? 'border-[#3027F5] text-[#3027F5] dark:border-[#E4C174] dark:text-[#E4C174]'
-              : 'border-transparent text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+              : 'border-transparent text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
           }`}
         >
           <Tag className="w-4 h-4" />
@@ -449,7 +449,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           className={`px-4 py-2.5 font-heading font-bold text-xs sm:text-sm border-b-2 transition-all cursor-pointer inline-flex items-center gap-2 ${
             activeTab === 'segments'
               ? 'border-[#3027F5] text-[#3027F5] dark:border-[#E4C174] dark:text-[#E4C174]'
-              : 'border-transparent text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+              : 'border-transparent text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
           }`}
         >
           <Users className="w-4 h-4" />
@@ -463,7 +463,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           className={`px-4 py-2.5 font-heading font-bold text-xs sm:text-sm border-b-2 transition-all cursor-pointer inline-flex items-center gap-2 ${
             activeTab === 'winback'
               ? 'border-[#3027F5] text-[#3027F5] dark:border-[#E4C174] dark:text-[#E4C174]'
-              : 'border-transparent text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+              : 'border-transparent text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
           }`}
         >
           <RotateCcw className="w-4 h-4" />
@@ -477,7 +477,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           className={`px-4 py-2.5 font-heading font-bold text-xs sm:text-sm border-b-2 transition-all cursor-pointer inline-flex items-center gap-2 ${
             activeTab === 'feedback'
               ? 'border-[#3027F5] text-[#3027F5] dark:border-[#E4C174] dark:text-[#E4C174]'
-              : 'border-transparent text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+              : 'border-transparent text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
           }`}
         >
           <MessageSquare className="w-4 h-4" />
@@ -602,9 +602,9 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
           <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-[#111318] dark:text-[#F7F3EB] flex items-start gap-3">
             <Sliders className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <div className="font-bold">Explicit Consent Compliance & Deterministic Matching</div>
+              <div className="font-bold">Only customers who opted in</div>
               <p className="text-[#60646C] dark:text-[#AAA499] mt-0.5">
-                Segments are computed deterministically from real customer visit activity in CRM. Marketing outreach strictly respects explicit consent flags; customers without opt-in are never messaged.
+                Segments update automatically from real customer visits. Customers who did not opt in to marketing are never included in exported lists.
               </p>
             </div>
           </div>
@@ -638,7 +638,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
                   <div className="grid grid-cols-2 gap-3 pt-2 border-t border-black/5 dark:border-white/5">
                     <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]">
-                      <div className="flex items-center gap-1.5 text-xs text-[#868A94]">
+                      <div className="flex items-center gap-1.5 text-xs text-subtle-foreground">
                         <Mail className="w-3.5 h-3.5" />
                         <span>Email Consent</span>
                       </div>
@@ -648,7 +648,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     </div>
 
                     <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]">
-                      <div className="flex items-center gap-1.5 text-xs text-[#868A94]">
+                      <div className="flex items-center gap-1.5 text-xs text-subtle-foreground">
                         <MessageSquare className="w-3.5 h-3.5" />
                         <span>SMS Consent</span>
                       </div>
@@ -722,7 +722,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 Exported Lists ({campaignRuns.length})
               </h4>
               {campaignRuns.length === 0 ? (
-                <div className="p-6 text-center text-xs text-[#868A94] border border-dashed rounded-2xl">
+                <div className="p-6 text-center text-xs text-subtle-foreground border border-dashed rounded-2xl">
                   No lists exported yet. Click "Build win-back list" above.
                 </div>
               ) : (
@@ -756,13 +756,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
                       <div className="flex items-center gap-4 text-[11px] font-mono">
                         <div>
-                          <span className="text-[#868A94]">Contacts exported:</span>{' '}
+                          <span className="text-subtle-foreground">Contacts exported:</span>{' '}
                           <strong className="text-emerald-600 dark:text-emerald-400">
                             {run.simulatedSentCount}
                           </strong>
                         </div>
                         <div>
-                          <span className="text-[#868A94]">Target Audience:</span>{' '}
+                          <span className="text-subtle-foreground">Target Audience:</span>{' '}
                           <strong className="text-zinc-600 dark:text-zinc-400">
                             {run.targetAudienceCount}
                           </strong>
@@ -859,7 +859,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                           />
                         ))}
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 text-[#868A94]">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 text-subtle-foreground">
                         {fb.serviceType}
                       </span>
                     </div>
@@ -868,7 +868,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                       "{fb.comment}"
                     </p>
 
-                    <div className="text-[10px] text-[#868A94] font-mono">
+                    <div className="text-[10px] text-subtle-foreground font-mono">
                       Received {new Date(fb.createdAt).toLocaleDateString()}
                     </div>
                   </div>
@@ -919,7 +919,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               <button
                 type="button"
                 onClick={() => setCreateOfferModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1061,7 +1061,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setCreateOfferModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1094,7 +1094,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               <button
                 type="button"
                 onClick={() => setRedeemModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1157,7 +1157,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
                 />
                 <div className="mt-1 flex flex-wrap gap-1 text-[10px]">
-                  <span className="text-[#868A94]">Quick pick:</span>
+                  <span className="text-subtle-foreground">Quick pick:</span>
                   {allCustomers.slice(0, 3).map((c) => (
                     <button
                       key={c.id}
@@ -1175,7 +1175,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setRedeemModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1208,7 +1208,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               <button
                 type="button"
                 onClick={() => setWinbackWizardOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1234,7 +1234,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                       className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold cursor-pointer transition-colors ${
                         inactivityDays === days
                           ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
-                          : 'bg-black/5 dark:bg-white/5 text-[#868A94]'
+                          : 'bg-black/5 dark:bg-white/5 text-subtle-foreground'
                       }`}
                     >
                       {days} Days Dormant
@@ -1256,7 +1256,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                       className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold uppercase cursor-pointer transition-colors ${
                         winbackChannel === ch
                           ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
-                          : 'bg-black/5 dark:bg-white/5 text-[#868A94]'
+                          : 'bg-black/5 dark:bg-white/5 text-subtle-foreground'
                       }`}
                     >
                       {ch}
@@ -1287,12 +1287,12 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               {/* Audience Preview */}
               <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] space-y-2">
-                <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block">
+                <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block">
                   AUDIENCE EVALUATION PREVIEW
                 </span>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="p-2 rounded-xl bg-white dark:bg-[#141412]">
-                    <div className="text-[10px] text-[#868A94]">Dormant Patrons</div>
+                    <div className="text-[10px] text-subtle-foreground">Dormant Patrons</div>
                     <div className="text-base font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                       {dormantsAll.length}
                     </div>
@@ -1320,7 +1320,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setWinbackWizardOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1354,7 +1354,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               <button
                 type="button"
                 onClick={() => setFeedbackModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1415,7 +1415,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setFeedbackModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1448,7 +1448,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               <button
                 type="button"
                 onClick={() => setPublicReviewLinkModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1477,7 +1477,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setPublicReviewLinkModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 >
                   Cancel
                 </button>

@@ -93,7 +93,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                 {business.name}
               </h1>
               <div className="flex items-center gap-1 text-[11px] text-[#60646C] dark:text-[#D0CBC1] truncate">
-                <MapPin className="w-3 h-3 flex-shrink-0 text-[#868A94]" />
+                <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.address}</span>
               </div>
             </div>
@@ -143,14 +143,14 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
           {/* Search Box */}
           <div className="pt-2">
             <div className="relative w-full">
-              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#868A94]" />
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground" />
               <input
                 type="text"
                 data-testid="public-catalog-search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search styles, pieces, or keywords..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs text-[#111318] dark:text-[#F7F3EB] placeholder-[#868A94] focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
               />
             </div>
           </div>
@@ -188,7 +188,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
         {/* 3. Products List */}
         {filteredProducts.length === 0 ? (
           <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-2">
-            <ShoppingBag className="w-10 h-10 mx-auto text-[#868A94]" />
+            <ShoppingBag className="w-10 h-10 mx-auto text-subtle-foreground" />
             <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
               No Pieces Match Your Search
             </h3>
@@ -237,7 +237,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                 </div>
 
                 <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 flex items-center justify-between">
-                  <span className="text-[11px] text-[#868A94]">Regular Price</span>
+                  <span className="text-[11px] text-subtle-foreground">Regular Price</span>
                   <span className="font-mono font-black text-base text-[#111318] dark:text-[#F7F3EB]">
                     {formatMinorUnits(prod.price, prod.currency)}
                   </span>

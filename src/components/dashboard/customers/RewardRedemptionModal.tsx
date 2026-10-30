@@ -103,7 +103,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+            className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -190,7 +190,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
                 <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Staff Confirmation PIN
                 </label>
-                <span className="text-[10px] font-mono text-[#868A94]">
+                <span className="text-[10px] font-mono text-subtle-foreground">
                   Authorization Required
                 </span>
               </div>
@@ -214,7 +214,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <span>
-                Separate audit record: Redemption cannot be executed twice for the same voucher code.
+                Each voucher can be redeemed only once, and every redemption is logged.
               </span>
             </div>
 

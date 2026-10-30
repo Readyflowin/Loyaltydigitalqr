@@ -3,7 +3,7 @@ import { X, Check, AlertCircle } from 'lucide-react';
 import type { LoyaltyProgramConfig, LoyaltyProgramType } from '../../../types/loyalty';
 import type { ThemeMode } from '../../../types';
 import { LoyaltyCardPreview } from '../../onboarding/LoyaltyCardPreview';
-import { CARD_COLORS } from '../../../data/onboardingData';
+import { CARD_COLORS, syncRewardWithStamps } from '../../../data/onboardingData';
 
 interface LoyaltyProgramEditModalProps {
   isOpen: boolean;
@@ -88,7 +88,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -170,7 +170,10 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                   <button
                     key={num}
                     type="button"
-                    onClick={() => setStampsRequired(num)}
+                    onClick={() => {
+                      setStampsRequired(num);
+                      setRewardDescription((prev) => syncRewardWithStamps(prev, num));
+                    }}
                     className={`px-3.5 py-2 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer ${
                       stampsRequired === num
                         ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] shadow-xs'
@@ -293,7 +296,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
               accentColor={accentColor}
               theme={theme}
             />
-            <p className="text-[11px] text-[#868A94] text-center mt-3">
+            <p className="text-[11px] text-subtle-foreground text-center mt-3">
               Preview updates live as you customize colors, milestones, and reward copy.
             </p>
           </div>

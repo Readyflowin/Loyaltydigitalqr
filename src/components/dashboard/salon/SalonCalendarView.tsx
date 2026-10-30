@@ -151,7 +151,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
           className="grid border-b border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]"
           style={{ gridTemplateColumns: `80px repeat(${staffList.length}, minmax(180px, 1fr))` }}
         >
-          <div className="p-3 text-center border-r border-[#E5E3DB] dark:border-white/10 font-mono text-[10px] uppercase font-bold text-[#868A94]">
+          <div className="p-3 text-center border-r border-[#E5E3DB] dark:border-white/10 font-mono text-[10px] uppercase font-bold text-subtle-foreground">
             TIME
           </div>
           {staffList.map((stf) => (
@@ -163,7 +163,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
                 <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] block leading-tight">
                   {stf.displayName}
                 </span>
-                <span className="text-[10px] text-[#868A94] block truncate">{stf.role}</span>
+                <span className="text-[10px] text-subtle-foreground block truncate">{stf.role}</span>
               </div>
               <span
                 className={`w-2 h-2 rounded-full ${
@@ -189,7 +189,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
                 }}
               >
                 {/* Time Label */}
-                <div className="p-2 border-r border-[#E5E3DB] dark:border-white/10 text-center font-mono text-xs font-bold text-[#868A94] bg-[#F8F7F2]/50 dark:bg-[#1A1916]/50">
+                <div className="p-2 border-r border-[#E5E3DB] dark:border-white/10 text-center font-mono text-xs font-bold text-subtle-foreground bg-[#F8F7F2]/50 dark:bg-[#1A1916]/50">
                   {formatTimeLabel(hour)}
                 </div>
 
@@ -232,7 +232,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
                       }`}
                     >
                       {isOffDuty && (
-                        <span className="text-[10px] text-[#868A94] italic block text-center pt-3">
+                        <span className="text-[10px] text-subtle-foreground italic block text-center pt-3">
                           Off Duty
                         </span>
                       )}
@@ -276,7 +276,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
           />
           <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 space-y-3 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-bold text-[#868A94]">
+              <span className="font-mono text-xs font-bold text-subtle-foreground">
                 {selectedAppointment.appointmentNumber}
               </span>
               <span className="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">

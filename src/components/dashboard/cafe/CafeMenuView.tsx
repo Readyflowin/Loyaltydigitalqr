@@ -174,7 +174,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             The active business (<strong>{business.name}</strong>) is configured as a{' '}
             <strong>{business.businessType}</strong>. Café menu management and table QR ordering are scoped strictly to food & beverage establishments.
           </p>
-          <p className="text-xs text-[#868A94]">
+          <p className="text-xs text-subtle-foreground">
             Switch to a café workspace from the top-left business selector to test digital menu management.
           </p>
         </div>
@@ -297,7 +297,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             CATEGORIES
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -305,7 +305,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL ITEMS
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -313,7 +313,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             AVAILABLE
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -321,7 +321,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </div>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             SOLD OUT
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -386,7 +386,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                       isSelected
                         ? 'bg-white/20 text-white dark:text-[#11100D]'
-                        : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#868A94]'
+                        : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground'
                     }`}
                   >
                     {catCount}
@@ -399,7 +399,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     type="button"
                     onClick={() => handleMoveCategory(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1 text-[#868A94] hover:text-[#111318] disabled:opacity-30 cursor-pointer"
+                    className="p-1 text-subtle-foreground hover:text-[#111318] disabled:opacity-30 cursor-pointer"
                     title="Move Category Left"
                   >
                     <ChevronUp className="w-3 h-3 -rotate-90" />
@@ -408,7 +408,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     type="button"
                     onClick={() => handleMoveCategory(idx, 'down')}
                     disabled={idx === categories.length - 1}
-                    className="p-1 text-[#868A94] hover:text-[#111318] disabled:opacity-30 cursor-pointer"
+                    className="p-1 text-subtle-foreground hover:text-[#111318] disabled:opacity-30 cursor-pointer"
                     title="Move Category Right"
                   >
                     <ChevronDown className="w-3 h-3 -rotate-90" />
@@ -416,7 +416,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                   <button
                     type="button"
                     onClick={() => handleEditCategory(cat)}
-                    className="p-1 text-[#868A94] hover:text-[#3027F5] cursor-pointer"
+                    className="p-1 text-subtle-foreground hover:text-[#3027F5] cursor-pointer"
                     title="Edit Category Name"
                   >
                     <Edit2 className="w-3 h-3" />
@@ -424,7 +424,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                   <button
                     type="button"
                     onClick={() => handleDeleteCategory(cat.id)}
-                    className="p-1 text-[#868A94] hover:text-red-500 cursor-pointer"
+                    className="p-1 text-subtle-foreground hover:text-red-500 cursor-pointer"
                     title="Delete Category"
                   >
                     <Trash2 className="w-3 h-3" />
@@ -439,7 +439,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       {/* 4. Search & Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#868A94]" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground" />
           <input
             type="text"
             data-testid="search-menu-items"
@@ -480,7 +480,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       {/* 5. Menu Items Grid */}
       {filteredItems.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <Utensils className="w-10 h-10 mx-auto text-[#868A94] mb-3" />
+          <Utensils className="w-10 h-10 mx-auto text-subtle-foreground mb-3" />
           <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
             No Menu Items Found
           </h4>
@@ -592,7 +592,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                       type="button"
                       data-testid={`duplicate-item-${item.id}`}
                       onClick={() => handleDuplicateItem(item.id)}
-                      className="p-1.5 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
                       title="Duplicate Item"
                     >
                       <Copy className="w-4 h-4" />
@@ -601,7 +601,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                       type="button"
                       data-testid={`delete-item-${item.id}`}
                       onClick={() => handleDeleteItem(item.id)}
-                      className="p-1.5 rounded-lg text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                       title="Delete Item"
                     >
                       <Trash2 className="w-4 h-4" />

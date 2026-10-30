@@ -128,7 +128,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+            className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -153,7 +153,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#868A94] block">
+              <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-subtle-foreground block">
                 {resultState.rewardUnlocked ? 'MILESTONE REACHED' : 'VISIT RECORDED'}
               </span>
               <h4 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -234,7 +234,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
                   <span className="font-mono font-bold text-sm text-[#3027F5] dark:text-[#E4C174]">
                     {activeCustomer.currentStamps} / {program.stampsRequired}
                   </span>
-                  <span className="text-[10px] text-[#868A94] block uppercase">
+                  <span className="text-[10px] text-subtle-foreground block uppercase">
                     Stamps Held
                   </span>
                 </div>
@@ -247,7 +247,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
                 <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
                   Staff Validation PIN
                 </label>
-                <span className="text-[10px] font-mono text-[#868A94]">
+                <span className="text-[10px] font-mono text-subtle-foreground">
                   Authorization Required
                 </span>
               </div>

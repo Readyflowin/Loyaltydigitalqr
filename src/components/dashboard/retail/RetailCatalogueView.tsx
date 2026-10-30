@@ -298,7 +298,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       {/* 2. Key Metrics Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PRODUCTS
           </span>
           <div data-testid="metric-active-products" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -308,7 +308,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             IN-STOCK AVAILABLE
           </span>
           <div data-testid="metric-available-products" className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -318,7 +318,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             QUALIFYING PURCHASES
           </span>
           <div data-testid="metric-recorded-sales" className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -328,7 +328,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-1">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL STORE REVENUE
           </span>
           <div data-testid="metric-store-revenue" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -342,7 +342,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#868A94]" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-subtle-foreground" />
             <input
               type="text"
               data-testid="search-products-input"
@@ -399,7 +399,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       {/* 4. Products Grid */}
       {products.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
-          <Package className="w-10 h-10 mx-auto text-[#868A94]" />
+          <Package className="w-10 h-10 mx-auto text-subtle-foreground" />
           <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
             No Products Found
           </h3>
@@ -436,7 +436,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                       {prod.categoryName}
                     </span>
                     {prod.sku && (
-                      <span className="text-[10px] font-mono text-[#868A94]">
+                      <span className="text-[10px] font-mono text-subtle-foreground">
                         SKU: {prod.sku}
                       </span>
                     )}
@@ -546,7 +546,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               <button
                 type="button"
                 onClick={() => setIsEditorOpen(false)}
-                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-[#868A94] cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-subtle-foreground cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -706,7 +706,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               <button
                 type="button"
                 onClick={() => setIsRecordSaleOpen(false)}
-                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-[#868A94] cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-subtle-foreground cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -828,7 +828,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                       <span>Purchases over $15 qualify for a loyalty stamp.</span>
                     )
                   ) : (
-                    <span className="text-[#868A94]">Select a loyalty member to award stamps.</span>
+                    <span className="text-subtle-foreground">Select a loyalty member to award stamps.</span>
                   )}
                 </div>
               </div>

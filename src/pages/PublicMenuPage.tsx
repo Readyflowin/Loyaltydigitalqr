@@ -158,7 +158,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                 {business.name}
               </h1>
               <div className="flex items-center gap-1 text-[11px] text-[#60646C] dark:text-[#D0CBC1] truncate">
-                <MapPin className="w-3 h-3 flex-shrink-0 text-[#868A94]" />
+                <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.locationName}</span>
               </div>
             </div>
@@ -175,13 +175,13 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                 className="px-2.5 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer"
               >
                 <span>{table ? table.displayName : 'Select Table'}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#868A94]" />
+                <ChevronDown className="w-3.5 h-3.5 text-subtle-foreground" />
               </button>
 
               {/* Table Switcher Dropdown */}
               {tablePickerOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-2 z-40 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#868A94] px-2 py-1 font-bold">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
                     Choose Your Seat
                   </div>
                   {allTables.map((t) => (
@@ -239,7 +239,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
         <div className="max-w-4xl mx-auto space-y-3">
           {/* Search bar */}
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#868A94]" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground" />
             <input
               type="text"
               data-testid="public-menu-search"
@@ -290,7 +290,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
           {/* Dietary Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto pt-1 scrollbar-none">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold mr-1">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold mr-1">
               Diet:
             </span>
             {(['all', 'veg', 'vegan', 'gluten_free'] as const).map((diet) => {
@@ -312,7 +312,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer whitespace-nowrap ${
                     isSel
                       ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
-                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#141412] text-[#868A94]'
+                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#141412] text-subtle-foreground'
                   }`}
                 >
                   {label}
@@ -327,7 +327,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
       <main className="max-w-4xl mx-auto px-4 pt-4">
         {filteredItems.length === 0 ? (
           <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
-            <Utensils className="w-10 h-10 mx-auto text-[#868A94]" />
+            <Utensils className="w-10 h-10 mx-auto text-subtle-foreground" />
             <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
               No dishes match your filter
             </h4>
@@ -398,7 +398,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
                   {/* Add / Sold Out Button */}
                   <div className="pt-3 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center justify-between">
-                    <span className="text-[11px] text-[#868A94]">
+                    <span className="text-[11px] text-subtle-foreground">
                       {isSoldOut ? 'Sold out for the day' : hasOptions ? 'Options available' : 'Freshly prepared'}
                     </span>
 

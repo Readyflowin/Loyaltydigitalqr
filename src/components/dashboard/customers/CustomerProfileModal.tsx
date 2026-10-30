@@ -97,7 +97,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                   className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
                     customer.status === 'active'
                       ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
-                      : 'bg-black/5 dark:bg-white/10 text-[#868A94]'
+                      : 'bg-black/5 dark:bg-white/10 text-subtle-foreground'
                   }`}
                 >
                   {customer.status}
@@ -115,7 +115,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
               onClick={() => {
                 onEditCustomer(customer);
               }}
-              className="p-2 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               title="Edit Profile"
             >
               <Edit2 className="w-4 h-4" />
@@ -123,7 +123,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
             <button
               type="button"
               onClick={handleArchive}
-              className="p-2 rounded-xl text-[#868A94] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-subtle-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
               title="Archive Customer"
             >
               <Archive className="w-4 h-4" />
@@ -131,7 +131,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
             <button
               type="button"
               onClick={onClose}
-              className="p-2 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -145,11 +145,11 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
           {/* Quick Contact & Details Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] text-xs">
             <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-              <Mail className="w-4 h-4 text-[#868A94] flex-shrink-0" />
+              <Mail className="w-4 h-4 text-subtle-foreground flex-shrink-0" />
               <span>{customer.email || 'No email provided'}</span>
             </div>
             <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
-              <Phone className="w-4 h-4 text-[#868A94] flex-shrink-0" />
+              <Phone className="w-4 h-4 text-subtle-foreground flex-shrink-0" />
               <span>{customer.phoneNumber || 'No phone provided'}</span>
             </div>
           </div>
@@ -170,7 +170,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                 <span className="font-mono font-black text-lg text-[#3027F5] dark:text-[#E4C174]">
                   {customer.currentStamps} / {program.stampsRequired}
                 </span>
-                <span className="text-[10px] text-[#868A94] block uppercase">
+                <span className="text-[10px] text-subtle-foreground block uppercase">
                   Stamps Held
                 </span>
               </div>
@@ -186,7 +186,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                     className={`w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-xs transition-all ${
                       isStamped
                         ? 'text-white shadow-xs'
-                        : 'border border-dashed border-[#DDD9CE] dark:border-white/10 text-[#868A94]'
+                        : 'border border-dashed border-[#DDD9CE] dark:border-white/10 text-subtle-foreground'
                     }`}
                     style={{
                       backgroundColor: isStamped ? program.accentColor : 'transparent',
@@ -227,7 +227,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                   <div className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB]">
                     {unlockedRewards[0].rewardDescription}
                   </div>
-                  <div className="text-[11px] font-mono text-[#868A94]">
+                  <div className="text-[11px] font-mono text-subtle-foreground">
                     Voucher Code: #{unlockedRewards[0].voucherCode}
                   </div>
                 </div>
@@ -247,7 +247,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
           {/* Internal Staff Notes */}
           {customer.notes && (
             <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] text-xs space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-[#868A94] block">
+              <span className="text-[10px] font-mono font-bold uppercase text-subtle-foreground block">
                 STAFF NOTES
               </span>
               <p className="text-[#111318] dark:text-[#F7F3EB] italic leading-relaxed">
@@ -259,16 +259,16 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
           {/* Timeline & Audit Events */}
           <div>
             <div className="flex items-center justify-between pb-2 mb-3 border-b border-black/10 dark:border-white/10">
-              <span className="text-xs font-mono font-bold uppercase text-[#868A94]">
+              <span className="text-xs font-mono font-bold uppercase text-subtle-foreground">
                 Visit & Redemption History
               </span>
-              <span className="text-[11px] text-[#868A94]">
+              <span className="text-[11px] text-subtle-foreground">
                 {customerEvents.length} recorded events
               </span>
             </div>
 
             {customerEvents.length === 0 ? (
-              <p className="text-xs text-[#868A94] py-3 text-center">
+              <p className="text-xs text-subtle-foreground py-3 text-center">
                 No recent events recorded for this customer.
               </p>
             ) : (
@@ -285,7 +285,7 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                             ? 'bg-emerald-500/15 text-emerald-600'
                             : evt.type === 'reward_unlocked'
                             ? 'bg-amber-500/15 text-amber-600'
-                            : 'bg-black/5 dark:bg-white/10 text-[#868A94]'
+                            : 'bg-black/5 dark:bg-white/10 text-subtle-foreground'
                         }`}
                       >
                         {evt.type === 'reward_redeemed' ? (
@@ -300,13 +300,13 @@ const CustomerProfileModalContent: React.FC<Omit<CustomerProfileModalProps, 'isO
                         <div className="font-heading font-bold text-[#111318] dark:text-[#F7F3EB]">
                           {evt.details}
                         </div>
-                        <div className="text-[10px] text-[#868A94]">
+                        <div className="text-[10px] text-subtle-foreground">
                           {evt.staffIdentifier} · {new Date(evt.timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                         </div>
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-mono text-[#868A94] uppercase flex-shrink-0">
+                    <span className="text-[10px] font-mono text-subtle-foreground uppercase flex-shrink-0">
                       {evt.type.replace('_', ' ')}
                     </span>
                   </div>

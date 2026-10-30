@@ -214,7 +214,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           {/* Search & Filter Bar */}
           <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="relative w-full sm:w-72">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#868A94]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-subtle-foreground" />
               <input
                 type="text"
                 data-testid="search-members-input"
@@ -226,7 +226,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             </div>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-[#868A94] text-[10px] uppercase font-mono font-bold mr-1">Status:</span>
+              <span className="text-subtle-foreground text-[10px] uppercase font-mono font-bold mr-1">Status:</span>
               {(['all', 'active', 'expired', 'suspended'] as const).map((st) => (
                 <button
                   key={st}
@@ -248,7 +248,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           {/* Members Table */}
           {members.length === 0 ? (
             <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-2">
-              <UserCheck className="w-10 h-10 mx-auto text-[#868A94]" />
+              <UserCheck className="w-10 h-10 mx-auto text-subtle-foreground" />
               <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
                 No Members Found
               </h3>
@@ -260,7 +260,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table data-testid="gym-members-table" className="w-full text-left text-xs">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#1A1916] border-b border-[#E5E3DB] dark:border-white/10 text-[#868A94] font-mono uppercase text-[10px]">
+                  <thead className="bg-[#F8F7F2] dark:bg-[#1A1916] border-b border-[#E5E3DB] dark:border-white/10 text-subtle-foreground font-mono uppercase text-[10px]">
                     <tr>
                       <th className="py-3 px-4">Member</th>
                       <th className="py-3 px-4">Plan Name</th>
@@ -276,7 +276,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                         <td className="py-3.5 px-4 font-bold text-[#111318] dark:text-[#F7F3EB]">
                           <div>{mem.customerName}</div>
                           {mem.customerEmail && (
-                            <div className="text-[11px] font-normal text-[#868A94]">{mem.customerEmail}</div>
+                            <div className="text-[11px] font-normal text-subtle-foreground">{mem.customerEmail}</div>
                           )}
                         </td>
                         <td className="py-3.5 px-4 font-medium text-[#111318] dark:text-[#F7F3EB]">
@@ -293,7 +293,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                               {mem.remainingVisits} of {mem.totalVisitsAllowed} left
                             </span>
                           ) : (
-                            <span className="text-[#868A94]">Unlimited</span>
+                            <span className="text-subtle-foreground">Unlimited</span>
                           )}
                         </td>
                         <td className="py-3.5 px-4 font-mono text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
@@ -349,7 +349,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 space-y-1 text-[11px] text-[#868A94]">
+              <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 space-y-1 text-[11px] text-subtle-foreground">
                 {p.includedVisits && <div>Allowance: {p.includedVisits} total visits</div>}
                 {p.durationDays && <div>Validity: {p.durationDays} days</div>}
                 <div>Class Access: {p.hasClassAccess ? 'Included' : 'Floor Only'}</div>
@@ -373,7 +373,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setIsAssignModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -470,7 +470,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setIsPlanModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

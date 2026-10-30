@@ -331,7 +331,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                 Base Price ({currency}) <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-sm text-[#868A94]">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-sm text-subtle-foreground">
                   {currencySymbol}
                 </span>
                 <input
@@ -472,7 +472,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                         className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
                       />
                       <div className="flex items-center gap-1 w-28">
-                        <span className="text-[11px] text-[#868A94]">+{currencySymbol}</span>
+                        <span className="text-[11px] text-subtle-foreground">+{currencySymbol}</span>
                         <input
                           type="number"
                           step="0.01"
@@ -584,7 +584,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                         className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
                       />
                       <div className="flex items-center gap-1 w-28">
-                        <span className="text-[11px] text-[#868A94]">+{currencySymbol}</span>
+                        <span className="text-[11px] text-subtle-foreground">+{currencySymbol}</span>
                         <input
                           type="number"
                           step="0.01"

@@ -188,7 +188,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
 
         {/* Milestone Indicator */}
         <div className="mt-6 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] max-w-md mx-auto text-xs">
-          <span className="text-[10px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] block font-semibold">
+          <span className="text-[10px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
             IMPLEMENTATION MILESTONE:
           </span>
           <strong className="text-[#3027F5] dark:text-[#E4C174] font-heading font-bold text-sm mt-0.5 block">
@@ -198,14 +198,14 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
 
         {/* Planned Capabilities List */}
         <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 text-left max-w-lg mx-auto">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-[#868A94] dark:text-[#AAA499] font-bold block mb-3">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-3">
             PLANNED CAPABILITIES:
           </span>
           <div className="space-y-2.5">
             {info.plannedFeatures.map((feat, idx) => (
               <div key={idx} className="flex items-start gap-2.5 text-xs text-[#111318] dark:text-[#F7F3EB]">
                 <div className="w-4 h-4 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-[10px] font-mono text-[#868A94]">{idx + 1}</span>
+                  <span className="text-[10px] font-mono text-subtle-foreground">{idx + 1}</span>
                 </div>
                 <span>{feat}</span>
               </div>

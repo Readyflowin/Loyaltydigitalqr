@@ -19,7 +19,7 @@ import {
 import type { Business, BusinessInvite, BusinessLocation } from '../../types/business';
 import type { ThemeMode } from '../../types';
 import type { TeamRole, TeamPermission } from '../../types/growth';
-import { CARD_COLORS } from '../../data/onboardingData';
+import { CARD_COLORS, syncRewardWithStamps } from '../../data/onboardingData';
 import { growthService } from '../../services/growthService';
 import { businessService } from '../../services/businessService';
 import { loyaltyService } from '../../services/loyaltyService';
@@ -461,11 +461,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                     key={num}
                     type="button"
                     disabled={!canManage}
-                    onClick={() => setStampsRequired(num)}
+                    onClick={() => {
+                      setStampsRequired(num);
+                      setRewardDescription((prev) => syncRewardWithStamps(prev, num));
+                    }}
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold cursor-pointer transition-all ${
                       stampsRequired === num
                         ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
-                        : 'bg-black/5 dark:bg-white/5 text-[#868A94]'
+                        : 'bg-black/5 dark:bg-white/5 text-subtle-foreground'
                     }`}
                   >
                     {num}
@@ -541,7 +544,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                   >
                     <div className="min-w-0">
                       <div className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate">
-                        {member.displayName || member.email} {isMe && <span className="text-[#868A94] font-normal">(you)</span>}
+                        {member.displayName || member.email} {isMe && <span className="text-subtle-foreground font-normal">(you)</span>}
                       </div>
                       <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] truncate">{member.email}</div>
                       <div className="mt-1">
@@ -619,7 +622,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">What each role can do</h4>
               <div className="overflow-x-auto rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
                 <table className="w-full text-xs text-left">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] font-mono uppercase text-[10px] text-[#868A94]">
+                  <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] font-mono uppercase text-[10px] text-subtle-foreground">
                     <tr>
                       <th className="p-3.5">Permission</th>
                       {rolesList.map((r) => (
@@ -730,7 +733,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setInviteModalOpen(false)}
-                className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />

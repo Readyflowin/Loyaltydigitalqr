@@ -114,7 +114,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                 </span>
               </div>
               <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] flex items-center gap-1 mt-0.5">
-                <MapPin className="w-3 h-3 text-[#868A94]" />
+                <MapPin className="w-3 h-3 text-subtle-foreground" />
                 {activeBusiness.locations.length > 1 ? (
                   <select
                     value={activeLocationId}
@@ -196,7 +196,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] block">
               {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
-            <span className="text-[10px] text-[#868A94]">LIVE SYSTEM</span>
+            <span className="text-[10px] text-subtle-foreground">LIVE</span>
           </div>
 
           <button
@@ -214,7 +214,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
       {/* 2. Main Ticket Board */}
       <main className="flex-1 p-4 overflow-y-auto">
         {filteredTickets.length === 0 ? (
-          <div className="h-full min-h-[60vh] flex flex-col items-center justify-center p-8 text-center text-[#868A94] space-y-3">
+          <div className="h-full min-h-[60vh] flex flex-col items-center justify-center p-8 text-center text-subtle-foreground space-y-3">
             <ChefHat className="w-16 h-16 stroke-1" />
             <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
               Kitchen Queue is Clear
@@ -272,8 +272,8 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                       <span className="text-sm font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                         {ticket.tableName || ticket.pickupLabel || 'Table Order'}
                       </span>
-                      <span className="text-[10px] font-mono font-bold uppercase text-[#868A94]">
-                        {ticket.items.reduce((acc, i) => acc + i.quantity, 0)} ITEMS
+                      <span className="text-[10px] font-mono font-bold uppercase text-subtle-foreground">
+                        {ticket.items.reduce((acc, i) => acc + i.quantity, 0)} {ticket.items.reduce((acc, i) => acc + i.quantity, 0) === 1 ? 'ITEM' : 'ITEMS'}
                       </span>
                     </div>
                   </div>
@@ -362,7 +362,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                     )}
 
                     {(ticket.status === 'completed' || ticket.status === 'cancelled') && (
-                      <div className="w-full text-center py-2 text-xs font-bold text-[#868A94]">
+                      <div className="w-full text-center py-2 text-xs font-bold text-subtle-foreground">
                         Ticket {ticket.status.toUpperCase()}
                       </div>
                     )}

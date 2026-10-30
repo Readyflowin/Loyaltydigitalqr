@@ -92,7 +92,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+            className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />

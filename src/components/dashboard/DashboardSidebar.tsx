@@ -160,7 +160,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             </div>
           </div>
 
-          <ChevronDown className="w-4 h-4 text-[#868A94] group-hover:text-[#111318] dark:group-hover:text-[#F7F3EB] transition-transform group-hover:translate-y-0.5 flex-shrink-0" />
+          <ChevronDown className="w-4 h-4 text-subtle-foreground group-hover:text-[#111318] dark:group-hover:text-[#F7F3EB] transition-transform group-hover:translate-y-0.5 flex-shrink-0" />
         </button>
       </div>
 
@@ -169,7 +169,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         
         {/* Group 1: Core Workspace */}
         <div>
-          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-[#868A94] dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             CORE WORKSPACE
           </span>
           <nav className="space-y-1">
@@ -202,7 +202,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Group 2: Industry-Specific Modules */}
         <div>
           <div className="px-3 flex items-center justify-between mb-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[#868A94] dark:text-[#AAA499] font-bold block">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block">
               {activeBusiness.businessType.toUpperCase()} MODULES
             </span>
           </div>
@@ -248,7 +248,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
         {/* Group 3: Administration */}
         <div>
-          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-[#868A94] dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             ADMINISTRATION
           </span>
           <nav className="space-y-1">

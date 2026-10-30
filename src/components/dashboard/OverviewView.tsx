@@ -169,7 +169,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         {/* Metric 1: Total Customers */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] font-bold">
+            <span className="text-[11px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] font-bold">
               TOTAL CUSTOMERS
             </span>
             <div className="w-7 h-7 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
@@ -187,7 +187,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         {/* Metric 2: Loyalty Visits */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] font-bold">
+            <span className="text-[11px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] font-bold">
               LOYALTY VISITS
             </span>
             <div className="w-7 h-7 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
@@ -198,14 +198,14 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             {metrics.loyaltyVisits}
           </div>
           <div className="mt-1 text-[11px] text-[#60646C] dark:text-[#AAA499]">
-            Counter stamp scans
+            Stamps issued at your counter
           </div>
         </div>
 
         {/* Metric 3: Rewards Redeemed */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] font-bold">
+            <span className="text-[11px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] font-bold">
               REWARDS REDEEMED
             </span>
             <div className="w-7 h-7 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
@@ -223,7 +223,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         {/* Metric 4: Repeat Rate */}
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] font-bold">
+            <span className="text-[11px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] font-bold">
               REPEAT RATE
             </span>
             <div className="w-7 h-7 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
@@ -278,7 +278,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 NEW AWAITING
               </span>
               <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -286,7 +286,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 IN PREPARATION
               </span>
               <div className="text-xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -294,7 +294,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 READY TO SERVE
               </span>
               <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -302,7 +302,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 COMPLETED TODAY
               </span>
               <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -351,7 +351,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 TODAY'S APPOINTMENTS
               </span>
               <div data-testid="salon-metric-today" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -359,7 +359,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 AWAITING CONFIRMATION
               </span>
               <div data-testid="salon-metric-awaiting" className="text-xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -367,7 +367,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 UPCOMING THIS WEEK
               </span>
               <div data-testid="salon-metric-week" className="text-xl font-heading font-black text-blue-600 dark:text-blue-400">
@@ -375,7 +375,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 COMPLETED TODAY
               </span>
               <div data-testid="salon-metric-completed" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -383,7 +383,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 CANCELLED / NO-SHOW
               </span>
               <div data-testid="salon-metric-cancelled" className="text-xl font-heading font-black text-[#60646C] dark:text-[#AAA499]">
@@ -433,7 +433,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 ACTIVE PRODUCTS
               </span>
               <div data-testid="retail-metric-products" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -441,7 +441,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 IN-STOCK & AVAILABLE
               </span>
               <div data-testid="retail-metric-active" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -449,7 +449,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 SALES RECORDED
               </span>
               <div data-testid="retail-metric-sales" className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -457,7 +457,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 GROSS REVENUE
               </span>
               <div data-testid="retail-metric-revenue" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -506,7 +506,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 ACTIVE MEMBERS
               </span>
               <div data-testid="gym-metric-members" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -514,7 +514,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 VISITS TODAY
               </span>
               <div data-testid="gym-metric-visits" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -522,7 +522,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 EXPIRING IN 7 DAYS
               </span>
               <div data-testid="gym-metric-expiring" className="text-xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -530,7 +530,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 CLASS OCCUPANCY
               </span>
               <div data-testid="gym-metric-occupancy" className="text-xl font-heading font-black text-blue-600 dark:text-blue-400">
@@ -579,7 +579,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 ACTIVE VEHICLE PASSES
               </span>
               <div data-testid="carwash-metric-passes" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -587,7 +587,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 WASHES TODAY
               </span>
               <div data-testid="carwash-metric-washes" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -595,7 +595,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 EXPIRING PASSES
               </span>
               <div data-testid="carwash-metric-expiring" className="text-xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -603,7 +603,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 TOP TIER
               </span>
               <div data-testid="carwash-metric-tier" className="text-sm font-heading font-bold text-[#111318] dark:text-[#F7F3EB] truncate mt-1">
@@ -652,7 +652,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 ACTIVE OFFERINGS
               </span>
               <div data-testid="service-metric-offerings" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -660,7 +660,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 JOBS TODAY
               </span>
               <div data-testid="service-metric-completed" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -668,7 +668,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 IN PROGRESS
               </span>
               <div data-testid="service-metric-active" className="text-xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -676,7 +676,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
               </div>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-              <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+              <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
                 SERVICE REVENUE
               </span>
               <div data-testid="service-metric-revenue" className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -725,7 +725,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
               ACTIVE OFFERS
             </span>
             <div data-testid="overview-active-offers-metric" className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -733,7 +733,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </div>
           </div>
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
               FIXED-DISCOUNT SAVINGS
             </span>
             <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -741,7 +741,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </div>
           </div>
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
               CUSTOMER SATISFACTION
             </span>
             <div className="text-xl font-heading font-black text-amber-500 flex items-center gap-1">
@@ -750,7 +750,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </div>
           </div>
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
-            <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
+            <span className="text-[10px] font-mono uppercase text-subtle-foreground font-bold block mb-0.5">
               REPEAT RATE
             </span>
             <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -794,7 +794,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                   {item.isDone ? (
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   ) : (
-                    <Circle className="w-5 h-5 text-[#868A94]" />
+                    <Circle className="w-5 h-5 text-subtle-foreground" />
                   )}
                 </div>
 
@@ -807,7 +807,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                   </p>
                 </div>
 
-                <ChevronRight className="w-4 h-4 text-[#868A94] self-center flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-subtle-foreground self-center flex-shrink-0" />
               </div>
             ))}
           </div>
@@ -856,7 +856,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           {/* Quick Actions Shortcuts */}
           <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-6 shadow-xs space-y-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#868A94] dark:text-[#AAA499] uppercase block mb-2">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-subtle-foreground dark:text-[#AAA499] uppercase block mb-2">
               WORKSPACE SHORTCUTS
             </span>
 
@@ -869,7 +869,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 <QrCode className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
                 <span>Open Counter QR Studio</span>
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-[#868A94]" />
+              <ArrowRight className="w-3.5 h-3.5 text-subtle-foreground" />
             </button>
 
             <button
@@ -881,7 +881,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 <Users className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
                 <span>View Customer CRM</span>
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-[#868A94]" />
+              <ArrowRight className="w-3.5 h-3.5 text-subtle-foreground" />
             </button>
 
             <button
@@ -893,7 +893,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 <Store className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
                 <span>Counter & Staff PIN Settings</span>
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-[#868A94]" />
+              <ArrowRight className="w-3.5 h-3.5 text-subtle-foreground" />
             </button>
           </div>
 
@@ -905,7 +905,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-6 sm:p-8 shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#868A94] dark:text-[#AAA499] uppercase block">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-subtle-foreground dark:text-[#AAA499] uppercase block">
               LIVE ACTIVITY LOG
             </span>
             <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -925,7 +925,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             >
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Clock className="w-4 h-4 text-[#868A94]" />
+                  <Clock className="w-4 h-4 text-subtle-foreground" />
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -944,7 +944,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 </div>
               </div>
 
-              <span className="text-[10px] font-mono text-[#868A94] flex-shrink-0">
+              <span className="text-[10px] font-mono text-subtle-foreground flex-shrink-0">
                 {act.timeAgo}
               </span>
             </div>

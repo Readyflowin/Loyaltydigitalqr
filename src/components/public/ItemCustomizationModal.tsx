@@ -229,7 +229,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
                   <span className="text-xs font-bold uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]">
                     {group.name} {group.required && <span className="text-red-500">*</span>}
                   </span>
-                  <span className="text-[10px] text-[#868A94]">Select one</span>
+                  <span className="text-[10px] text-subtle-foreground">Select one</span>
                 </div>
 
                 <div className="space-y-2">
@@ -286,7 +286,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
                   <span className="text-xs font-bold uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]">
                     {group.name} {group.required && <span className="text-red-500">*</span>}
                   </span>
-                  <span className="text-[10px] text-[#868A94]">
+                  <span className="text-[10px] text-subtle-foreground">
                     {group.maxSelections === 1
                       ? 'Select 1 option'
                       : `Select up to ${group.maxSelections} options`}

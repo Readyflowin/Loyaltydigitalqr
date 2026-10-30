@@ -178,7 +178,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
               <div className="w-full border-t border-black/10 dark:border-white/10" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-[#141412] px-3 font-mono text-[#868A94] dark:text-[#AAA499]">
+              <span className="bg-white dark:bg-[#141412] px-3 font-mono text-subtle-foreground dark:text-[#AAA499]">
                 or sign in with email
               </span>
             </div>
@@ -191,7 +191,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
                 Business Email
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+                <Mail className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3" />
                 <input
                   type="email"
                   value={email}
@@ -212,7 +212,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
                 </button>
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#868A94] absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-subtle-foreground absolute left-3.5 top-3" />
                 <input
                   type="password"
                   value={password}

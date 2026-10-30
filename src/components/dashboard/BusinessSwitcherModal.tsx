@@ -127,7 +127,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                 {/* Sub-locations list if multiple */}
                 {biz.locations.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
-                    <span className="text-[10px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] block font-semibold">
+                    <span className="text-[10px] font-mono uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
                       Counters / Locations:
                     </span>
                     {biz.locations.map((loc) => {
@@ -148,7 +148,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                           }`}
                         >
                           <div className="flex items-center gap-2 truncate">
-                            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-[#868A94]" />
+                            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-subtle-foreground" />
                             <span className="truncate">{loc.name}</span>
                           </div>
                           {isLocActive && <span className="text-[10px] font-mono text-[#3027F5] dark:text-[#E4C174]">Active</span>}

@@ -162,7 +162,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 QR STUDIO CREATOR
               </span>
-              <span className="text-xs text-[#868A94]">· Step {step} of 4</span>
+              <span className="text-xs text-subtle-foreground">· Step {step} of 4</span>
             </div>
             <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
               {step === 1 && '1. Choose Destination'}
@@ -174,7 +174,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+            className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -235,7 +235,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                       {dest.desc}
                     </p>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 font-mono text-[10px] text-[#868A94] truncate">
+                  <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 font-mono text-[10px] text-subtle-foreground truncate">
                     {dest.route}
                   </div>
                 </button>
@@ -318,13 +318,13 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               
               {/* Genuine QR Code Card (Left) */}
               <div className="sm:col-span-6 flex flex-col items-center p-6 rounded-3xl bg-white dark:bg-[#181816] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-md text-center">
-                <span className="text-[10px] font-mono uppercase font-bold text-[#868A94] mb-2">
+                <span className="text-[10px] font-mono uppercase font-bold text-subtle-foreground mb-2">
                   {business.name}
                 </span>
 
                 <div className="w-52 h-52 bg-white p-3 rounded-2xl border border-black/10 flex items-center justify-center shadow-inner">
                   {isGenerating ? (
-                    <div className="text-xs font-mono text-[#868A94]">Generating Matrix...</div>
+                    <div className="text-xs font-mono text-subtle-foreground">Generating Matrix...</div>
                   ) : pngDataUrl ? (
                     <img
                       src={pngDataUrl}
@@ -340,7 +340,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 <div className="mt-3 font-heading font-bold text-xs text-[#111318] dark:text-[#F7F3EB]">
                   {displayLabel || 'Scan to Open'}
                 </div>
-                <span className="text-[9px] font-mono text-[#868A94] uppercase mt-0.5">
+                <span className="text-[9px] font-mono text-subtle-foreground uppercase mt-0.5">
                   High Contrast · Margin 2 · EC-M
                 </span>
               </div>
@@ -359,7 +359,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
 
                 <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-xs space-y-2">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-[#868A94] block">
+                    <span className="text-[10px] font-mono uppercase text-subtle-foreground block">
                       DECODED DESTINATION URL:
                     </span>
                     <a
@@ -374,12 +374,12 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                   </div>
 
                   <div className="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px]">
-                    <span className="text-[#868A94]">Format Output:</span>
+                    <span className="text-subtle-foreground">Format Output:</span>
                     <strong className="text-[#111318] dark:text-[#F7F3EB]">PNG 512px + Vector SVG</strong>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-[#868A94]">
+                <div className="flex items-center gap-2 text-xs text-subtle-foreground">
                   <Smartphone className="w-4 h-4 flex-shrink-0" />
                   <span>Customer points smartphone camera &rarr; loyalty pass opens instantly</span>
                 </div>
@@ -425,7 +425,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               </button>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-center text-[11px] text-[#868A94] max-w-md mx-auto">
+            <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-center text-[11px] text-subtle-foreground max-w-md mx-auto">
               Saved QR codes remain active and can be downloaded again from your QR Studio library anytime.
             </div>
           </div>

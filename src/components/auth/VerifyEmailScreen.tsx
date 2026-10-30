@@ -84,9 +84,9 @@ export const VerifyEmailScreen: React.FC = () => {
           We sent a verification link to <strong className="text-[#111318] dark:text-[#F7F3EB] break-all">{email}</strong>.
           Click the link, then come back here. This page continues automatically once you're verified.
         </p>
-        <p className="mt-2 text-xs text-[#868A94]">Can't find it? Check your spam or promotions folder.</p>
+        <p className="mt-2 text-xs text-subtle-foreground">Can't find it? Check your spam or promotions folder.</p>
 
-        <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#868A94]">
+        <div className="mt-5 flex items-center justify-center gap-2 text-xs text-subtle-foreground">
           <Loader2 className="w-3.5 h-3.5 animate-spin" />
           <span>Waiting for verification…</span>
         </div>
