@@ -1,3 +1,4 @@
+import { isLocalToday } from '../../../utils/dates';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Car,
@@ -104,8 +105,7 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
   };
 
   const todayCount = useMemo(() => {
-    const todayStr = new Date().toISOString().split('T')[0];
-    return visits.filter((v) => v.timestamp.startsWith(todayStr)).length;
+    return visits.filter((v) => isLocalToday(v.timestamp)).length;
   }, [visits]);
 
   return (

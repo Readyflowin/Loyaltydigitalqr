@@ -31,6 +31,7 @@ import { newId, shortCode } from '../lib/ids';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
 import type { DocumentData } from 'firebase/firestore';
+import { localDateKey } from '../utils/dates';
 
 export interface BusinessSalonBundle {
   services: SalonService[];
@@ -785,7 +786,7 @@ class SalonBookingService {
       list = list.filter((a) => a.locationId === locationId);
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
     const todayApts = list.filter((a) => a.startIso.startsWith(todayStr));
 
     const totalAppointmentsToday = todayApts.length;

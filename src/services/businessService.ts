@@ -285,6 +285,7 @@ class BusinessService {
     const user = authService.getCurrentUser();
     if (!user) throw new Error('Please sign in before creating a business.');
 
+    await authService.ensureFreshToken();
     const businessId = newId();
     const name = data.businessName.trim();
     const isIndia = data.region === 'india';
@@ -497,6 +498,7 @@ class BusinessService {
       // Google accounts are verified; email/password accounts must verify first.
       throw new Error('Please verify your email address before joining a team.');
     }
+    await authService.ensureFreshToken();
     const bizRef = doc(db, 'businesses', invite.businessId);
     const inviteRef = doc(db, 'businesses', invite.businessId, 'invites', invite.email);
     const member: BusinessMemberInfo = {

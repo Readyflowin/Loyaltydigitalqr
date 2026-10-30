@@ -1,3 +1,4 @@
+import { isLocalToday } from '../../../utils/dates';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Search,
@@ -102,8 +103,7 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
   };
 
   const todayCount = useMemo(() => {
-    const todayStr = new Date().toISOString().split('T')[0];
-    return checkIns.filter((c) => c.timestamp.startsWith(todayStr)).length;
+    return checkIns.filter((c) => isLocalToday(c.timestamp)).length;
   }, [checkIns]);
 
   return (

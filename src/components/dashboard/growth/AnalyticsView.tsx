@@ -23,6 +23,7 @@ import { retailService } from '../../../services/retailService';
 import { gymService } from '../../../services/gymService';
 import { carWashService } from '../../../services/carWashService';
 import { genericService } from '../../../services/genericService';
+import { localDateKey } from '../../../utils/dates';
 
 interface AnalyticsViewProps {
   business: Business;
@@ -61,7 +62,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       link.setAttribute('href', url);
       link.setAttribute(
         'download',
-        `loyaltydigitalqr-analytics-${business.id}-${new Date().toISOString().split('T')[0]}.csv`
+        `loyaltydigitalqr-analytics-${business.id}-${localDateKey()}.csv`
       );
       document.body.appendChild(link);
       link.click();

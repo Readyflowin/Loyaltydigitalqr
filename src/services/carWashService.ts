@@ -12,6 +12,7 @@ import { newId } from '../lib/ids';
 import { actorLabel } from '../lib/actor';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
+import { localDateKey, isLocalToday } from '../utils/dates';
 
 interface CarWashStoreBundle {
   services: CarWashService[];
@@ -251,10 +252,8 @@ class CarWashOperationsService {
     const store = data[input.businessId] || this.getBundle(input.businessId);
 
     const today = new Date();
-    const startDate = today.toISOString().split('T')[0];
-    const endDate = new Date(today.getTime() + bundle.validityDays * 86400000)
-      .toISOString()
-      .split('T')[0];
+    const startDate = localDateKey(today);
+    const endDate = localDateKey(new Date(today.getTime() + bundle.validityDays * 86400000));
 
     const newPass: CarWashCustomerPass = {
       id: `pass_${newId()}`,
@@ -263,6 +262,7 @@ class CarWashOperationsService {
       customerId: input.customerId,
       customerName: input.customerName,
       customerPhone: input.customerPhone,
+      pricePaidMinor: bundle.price,
       customerEmail: input.customerEmail,
       vehiclePlate: input.vehiclePlate?.toUpperCase().trim(),
       vehicleMakeModel: input.vehicleMakeModel?.trim(),
@@ -310,7 +310,7 @@ class CarWashOperationsService {
       }
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
 
     // If using pass: validate status, expiration, remaining visits
     if (pass) {
@@ -453,12 +453,12 @@ class CarWashOperationsService {
 
   getCarWashMetrics(businessId: string): CarWashMetrics {
     const store = this.getBundle(businessId);
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
 
     const activePasses = store.passes.filter((p) => p.status === 'active').length;
-    const washesToday = store.visits.filter((v) => v.timestamp.startsWith(todayStr)).length;
+    const washesToday = store.visits.filter((v) => isLocalToday(v.timestamp)).length;
 
-    const nextWeekStr = new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0];
+    const nextWeekStr = localDateKey(new Date(Date.now() + 86400000 * 7));
     const expiringPasses = store.passes.filter(
       (p) => p.status === 'active' && p.endDate && p.endDate >= todayStr && p.endDate <= nextWeekStr
     ).length;

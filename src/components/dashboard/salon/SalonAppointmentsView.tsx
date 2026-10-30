@@ -25,6 +25,7 @@ import {
 import { salonService } from '../../../services/salonService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { formatTimeLabel } from '../../../utils/salonScheduling';
+import { localDateKey } from '../../../utils/dates';
 
 interface SalonAppointmentsViewProps {
   business: Business;
@@ -43,7 +44,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   }, []);
 
   // Today string YYYY-MM-DD
-  const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(() => localDateKey());
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | 'all'>('all');
   const [staffFilter, setStaffFilter] = useState<string>('all');
   const [serviceFilter, setServiceFilter] = useState<string>('all');
@@ -65,7 +66,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   const [manualModalOpen, setManualModalOpen] = useState(false);
   const [manualServiceId, setManualServiceId] = useState('');
   const [manualStaffId, setManualStaffId] = useState('any');
-  const [manualDate, setManualDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [manualDate, setManualDate] = useState(() => localDateKey());
   const [manualTime, setManualTime] = useState('10:00');
   const [manualCustomerName, setManualCustomerName] = useState('');
   const [manualCustomerEmail, setManualCustomerEmail] = useState('');
@@ -109,11 +110,11 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
   const handleShiftDate = (days: number) => {
     const current = new Date(`${selectedDate}T12:00:00`);
     current.setDate(current.getDate() + days);
-    setSelectedDate(current.toISOString().split('T')[0]);
+    setSelectedDate(localDateKey(current));
   };
 
   const handleSetToday = () => {
-    setSelectedDate(new Date().toISOString().split('T')[0]);
+    setSelectedDate(localDateKey());
   };
 
   const handleUpdateStatus = (aptId: string, nextStatus: AppointmentStatus, note?: string) => {

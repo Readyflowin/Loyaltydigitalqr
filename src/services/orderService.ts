@@ -22,6 +22,7 @@ import { bizStore, type ModuleSpec } from '../lib/bizStore';
 import { newId, shortCode } from '../lib/ids';
 import { businessService } from './businessService';
 import { cafeService } from './cafeService';
+import { isLocalToday } from '../utils/dates';
 
 const IDEMPOTENCY_KEY = 'loyalty_order_idempotency_v1';
 
@@ -143,9 +144,8 @@ class OrderService {
 
   getOrderMetrics(businessId: string): OrderMetrics {
     const orders = this.getOrders(businessId);
-    const today = new Date().toISOString().split('T')[0];
 
-    const ordersToday = orders.filter((o) => o.createdAt.startsWith(today));
+    const ordersToday = orders.filter((o) => isLocalToday(o.createdAt));
     const newOrders = orders.filter((o) => o.status === 'new').length;
     const preparingOrders = orders.filter((o) => o.status === 'accepted' || o.status === 'preparing').length;
     const readyOrders = orders.filter((o) => o.status === 'ready').length;

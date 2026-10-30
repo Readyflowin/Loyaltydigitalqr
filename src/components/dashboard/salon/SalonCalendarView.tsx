@@ -10,6 +10,7 @@ import type { SalonAppointment } from '../../../types/salon';
 import { salonService } from '../../../services/salonService';
 import { formatTimeLabel, timeToMinutes } from '../../../utils/salonScheduling';
 import { formatMinorUnits } from '../../../types/cafe';
+import { localDateKey } from '../../../utils/dates';
 
 interface SalonCalendarViewProps {
   business: Business;
@@ -40,7 +41,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
     return unsub;
   }, []);
 
-  const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(() => localDateKey());
   const [selectedLocationId, setSelectedLocationId] = useState('all');
   const [selectedAppointment, setSelectedAppointment] = useState<SalonAppointment | null>(null);
 
@@ -71,11 +72,11 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
   const handleShiftDate = (days: number) => {
     const d = new Date(`${selectedDate}T12:00:00`);
     d.setDate(d.getDate() + days);
-    setSelectedDate(d.toISOString().split('T')[0]);
+    setSelectedDate(localDateKey(d));
   };
 
   const handleSetToday = () => {
-    setSelectedDate(new Date().toISOString().split('T')[0]);
+    setSelectedDate(localDateKey());
   };
 
   const dayOfWeek = new Date(`${selectedDate}T12:00:00`).getDay();

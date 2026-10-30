@@ -11,6 +11,7 @@ import type { GymMemberRecord, GymMembershipPlan, GymPlanType } from '../../../t
 import { gymService } from '../../../services/gymService';
 import { loyaltyService } from '../../../services/loyaltyService';
 import { formatMinorUnits } from '../../../types/cafe';
+import { localDateKey } from '../../../utils/dates';
 
 interface GymMembersViewProps {
   business: Business;
@@ -35,7 +36,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [assignCustomerId, setAssignCustomerId] = useState('');
   const [assignPlanId, setAssignPlanId] = useState('');
-  const [assignStartDate, setAssignStartDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [assignStartDate, setAssignStartDate] = useState(() => localDateKey());
   const [assignError, setAssignError] = useState<string | null>(null);
 
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
@@ -55,7 +56,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
   const handleOpenAssignModal = () => {
     setAssignCustomerId(customers[0]?.id || '');
     setAssignPlanId(plans[0]?.id || '');
-    setAssignStartDate(new Date().toISOString().split('T')[0]);
+    setAssignStartDate(localDateKey());
     setAssignError(null);
     setIsAssignModalOpen(true);
   };

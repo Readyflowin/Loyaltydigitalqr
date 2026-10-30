@@ -67,6 +67,29 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
       navigate(`/signup?region=${initialRegion}&plan=${planParam}`, { replace: true });
     }
   }, [currentUser, initialRegion, planParam, navigate]);
+  // Someone invited to a team (and with no workspace yet) should see the invite first.
+  const wantsOwnBusiness = searchParams.get('own') === '1';
+  useEffect(() => {
+    const redirectToInvite = () => {
+      if (
+        !wantsOwnBusiness &&
+        authService.getCurrentUser()?.emailVerified &&
+        businessService.getLoadState() === 'ready' &&
+        !businessService.hasBusinesses() &&
+        businessService.getPendingInvites().length > 0
+      ) {
+        navigate('/dashboard', { replace: true });
+      }
+    };
+    redirectToInvite();
+    const unsubBiz = businessService.subscribe(redirectToInvite);
+    const unsubAuth = authService.subscribe(redirectToInvite);
+    return () => {
+      unsubBiz();
+      unsubAuth();
+    };
+  }, [wantsOwnBusiness, navigate]);
+
 
   // Load existing draft or initialize default
   const [formData, setFormData] = useState<OnboardingData>(() => {
@@ -199,7 +222,16 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
       setCompletedResult({ ...formData, isCompleted: true, completedAt: business.createdAt });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Could not create your business. Please try again.');
+      const code = (err as { code?: string })?.code;
+      setSubmitError(
+        code === 'permission-denied'
+          ? 'We could not confirm your account yet. Please refresh the page and try again.'
+          : code === 'unavailable'
+            ? 'You appear to be offline. Check your connection and try again.'
+            : err instanceof Error
+              ? err.message
+              : 'Could not create your business. Please try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }

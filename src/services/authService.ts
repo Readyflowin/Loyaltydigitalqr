@@ -112,6 +112,7 @@ class AuthService {
     this.initPromise = new Promise((resolve) => {
       onAuthStateChanged(auth, (fbUser) => {
         this.user = fbUser ? toAppUser(fbUser) : null;
+        if (fbUser) void this.ensureFreshToken().catch(() => {});
         if (!this.initialized) {
           this.initialized = true;
           resolve();
@@ -186,6 +187,20 @@ class AuthService {
   async resendVerificationEmail(): Promise<void> {
     if (!auth.currentUser) throw new Error('Please sign in first.');
     await sendEmailVerification(auth.currentUser, verificationSettings());
+  }
+
+  /**
+   * The account can be verified while the cached ID token still says
+   * email_verified=false (e.g. the user verified, then reloaded the page).
+   * Firestore rules read the token, so refresh it before verified-only writes.
+   */
+  async ensureFreshToken(): Promise<void> {
+    const fbUser = auth.currentUser;
+    if (!fbUser || !fbUser.emailVerified) return;
+    const result = await fbUser.getIdTokenResult();
+    if (result.claims.email_verified !== true) {
+      await fbUser.getIdToken(true);
+    }
   }
 
   /** Email/password accounts must confirm their address; Google accounts arrive verified. */

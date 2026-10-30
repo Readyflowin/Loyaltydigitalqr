@@ -7,6 +7,7 @@ import { bizStore, type ModuleSpec } from '../lib/bizStore';
 import { newId } from '../lib/ids';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
+import { localDateKey, isLocalToday } from '../utils/dates';
 
 interface GenericServiceBundle {
   services: GenericServiceItem[];
@@ -172,7 +173,7 @@ class GenericService {
       return { success: false, error: 'Customer must be selected.' };
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
     const idempotencyKey =
       input.idempotencyKey ||
       `job_${input.customerId}_${input.serviceId}_${todayStr}_${Math.floor(Date.now() / 300000)}`;
@@ -247,10 +248,9 @@ class GenericService {
 
   getMetrics(businessId: string): GenericServiceMetrics {
     const bundle = this.getBundle(businessId);
-    const todayStr = new Date().toISOString().split('T')[0];
 
     const jobsCompletedToday = bundle.jobs.filter(
-      (j) => j.timestamp.startsWith(todayStr) && j.status === 'completed'
+      (j) => isLocalToday(j.timestamp) && j.status === 'completed'
     ).length;
 
     const totalServiceRevenueCents = bundle.jobs.reduce((acc, j) => acc + j.amountCharged, 0);

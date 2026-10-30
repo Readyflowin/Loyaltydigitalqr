@@ -14,6 +14,7 @@ import { newId } from '../lib/ids';
 import { actorLabel } from '../lib/actor';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
+import { localDateKey, isLocalToday } from '../utils/dates';
 
 interface GymBundle {
   plans: GymMembershipPlan[];
@@ -159,7 +160,7 @@ class GymService {
     const business = businessService.getBusinessById(businessId);
     const locationId = input.locationId || business?.activeLocationId || 'loc_gym_main';
 
-    const startDate = input.startDate || new Date().toISOString().split('T')[0];
+    const startDate = input.startDate || localDateKey();
     let endDate: string | undefined = undefined;
 
     if (plan.durationDays) {
@@ -179,6 +180,7 @@ class GymService {
       locationId,
       customerId: input.customerId,
       customerName: input.customerName || 'Fitness Member',
+      pricePaidMinor: plan.price,
       customerEmail: input.customerEmail,
       customerPhone: input.customerPhone,
       planId: plan.id,
@@ -230,7 +232,7 @@ class GymService {
     }
 
     // 2. Expiration date validation
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
     if (member.endDate && member.endDate < todayStr) {
       return {
         success: false,
@@ -452,13 +454,13 @@ class GymService {
 
   getGymMetrics(businessId: string): GymMetrics {
     const bundle = this.getBundle(businessId);
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
 
     const activeMemberships = bundle.members.filter((m) => m.status === 'active').length;
-    const visitsToday = bundle.checkIns.filter((c) => c.timestamp.startsWith(todayStr)).length;
+    const visitsToday = bundle.checkIns.filter((c) => isLocalToday(c.timestamp)).length;
 
     // Expiring memberships: active with endDate within 7 days
-    const nextWeekStr = new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0];
+    const nextWeekStr = localDateKey(new Date(Date.now() + 86400000 * 7));
     const expiringMemberships = bundle.members.filter(
       (m) => m.status === 'active' && m.endDate && m.endDate >= todayStr && m.endDate <= nextWeekStr
     ).length;

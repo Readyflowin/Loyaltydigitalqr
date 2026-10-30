@@ -700,7 +700,7 @@ const PendingInvitesPanel: React.FC<{ invites: BusinessInvite[]; user: AppUser }
         {error && <div className="text-xs text-red-600 dark:text-red-400">{error}</div>}
         <button
           type="button"
-          onClick={() => navigate('/onboarding')}
+          onClick={() => navigate('/onboarding?own=1')}
           className="w-full text-xs text-[#60646C] dark:text-[#AAA499] underline cursor-pointer pt-2"
         >
           Set up my own business instead

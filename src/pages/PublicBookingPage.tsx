@@ -20,6 +20,7 @@ import { formatMinorUnits } from '../types/cafe';
 import { formatTimeLabel } from '../utils/salonScheduling';
 import type { ThemeMode } from '../types';
 import type { SalonService, TimeSlot, SalonAppointment } from '../types/salon';
+import { localDateKey } from '../utils/dates';
 
 interface PublicBookingPageProps {
   theme: ThemeMode;
@@ -31,7 +32,7 @@ function generateAvailableDates(): { dateStr: string; label: string; dayName: st
   const base = new Date();
   for (let i = 0; i < 12; i++) {
     const d = new Date(base.getTime() + i * 86400000);
-    const dateStr = d.toISOString().split('T')[0];
+    const dateStr = localDateKey(d);
     const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
     const label = `${d.toLocaleDateString('en-US', { month: 'short' })} ${d.getDate()}`;
     dates.push({ dateStr, label, dayName });
@@ -70,7 +71,7 @@ export const PublicBookingPage: React.FC<PublicBookingPageProps> = ({
   const [selectedStaffId, setSelectedStaffId] = useState<string>('any'); // 'any' or specific staffId
   const [selectedDate, setSelectedDate] = useState<string>(() => {
     const tomorrow = new Date(new Date().getTime() + 86400000);
-    return tomorrow.toISOString().split('T')[0];
+    return localDateKey(tomorrow);
   });
   const [availableDates] = useState(() => generateAvailableDates());
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);

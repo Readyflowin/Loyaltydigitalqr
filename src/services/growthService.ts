@@ -26,6 +26,7 @@ import { businessService } from './businessService';
 
 import { bizStore, type ModuleSpec } from '../lib/bizStore';
 import { newId } from '../lib/ids';
+import { localDateKey } from '../utils/dates';
 
 export const ROLE_PERMISSIONS: Record<TeamRole, TeamPermission[]> = {
   owner: [
@@ -344,7 +345,7 @@ class GrowthService {
       return { success: false, error: `Offer is currently ${offer.status.toUpperCase()}.` };
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
     if (offer.startDate && todayStr < offer.startDate) {
       return { success: false, error: `Offer is not active yet (starts on ${offer.startDate}).` };
     }

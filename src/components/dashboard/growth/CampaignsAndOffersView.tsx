@@ -27,6 +27,7 @@ import type {
 } from '../../../types/growth';
 import { growthService } from '../../../services/growthService';
 import { loyaltyService } from '../../../services/loyaltyService';
+import { localDateKey } from '../../../utils/dates';
 
 interface CampaignsAndOffersViewProps {
   business: Business;
@@ -60,9 +61,9 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   const [newType, setNewType] = useState<OfferType>('percentage');
   const [newDiscountValue, setNewDiscountValue] = useState('15');
   const [newMinSpend, setNewMinSpend] = useState('0');
-  const [newStartDate, setNewStartDate] = useState(new Date().toISOString().split('T')[0]);
+  const [newStartDate, setNewStartDate] = useState(localDateKey());
   const [newEndDate, setNewEndDate] = useState(
-    new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]
+    localDateKey(new Date(Date.now() + 30 * 86400000))
   );
   const [newMaxRedemptions, setNewMaxRedemptions] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
