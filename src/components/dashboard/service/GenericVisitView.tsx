@@ -30,7 +30,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
   const [amountMajor, setAmountMajor] = useState('');
   const [notes, setNotes] = useState('');
   const [status, setStatus] = useState<'completed' | 'in_progress'>('completed');
-  const [staffPin] = useState('8831');
+  const [staffPin] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const business = businessService.getBusinessById(businessId);

@@ -35,9 +35,9 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = () => {
     },
     {
       icon: Wallet,
-      title: 'Apple & Google Wallet passes',
+      title: 'Save to home screen',
       subtitle: 'NATIVE 1-TAP INTEGRATION',
-      desc: 'Customers can save their digital card straight into Apple Wallet or Google Wallet for automatic lock-screen pass reminders near your store.',
+      desc: 'Customers can bookmark their card or add it to their phone home screen to check stamps any time.',
     },
     {
       icon: BarChart3,

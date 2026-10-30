@@ -13,7 +13,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -45,7 +45,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -77,7 +77,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -109,7 +109,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -141,7 +141,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -173,7 +173,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },
@@ -198,7 +198,7 @@ export const BUSINESS_TYPES: BusinessTypeConfig[] = [
       {
         id: 'loyalty-cards',
         name: 'Digital Loyalty Cards',
-        description: 'Instant QR camera scan, staff PIN stamp validation, Apple & Google Wallet passes.',
+        description: 'Instant QR camera scan, staff PIN stamp validation, browser-based loyalty card.',
         status: 'available',
         isDefault: true,
       },

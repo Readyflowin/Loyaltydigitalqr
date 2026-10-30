@@ -445,7 +445,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           <div className="space-y-3 text-xs">
             <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] space-y-1">
-              <span className="text-[#868A94] font-mono text-[10px] uppercase">TOTAL INCENTIVE SAVINGS</span>
+              <span className="text-[#868A94] font-mono text-[10px] uppercase">FIXED-DISCOUNT SAVINGS</span>
               <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                 {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)}
               </div>

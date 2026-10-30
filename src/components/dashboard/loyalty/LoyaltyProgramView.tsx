@@ -257,7 +257,7 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
               LIVE CUSTOMER PASS
             </span>
             <span className="text-[11px] font-mono text-[#868A94]">
-              Apple / Google Wallet Format
+              Mobile Browser Card
             </span>
           </div>
 
@@ -325,10 +325,10 @@ export const LoyaltyProgramView: React.FC<LoyaltyProgramViewProps> = ({
 
               <div>
                 <span className="text-[#868A94] block text-[10px] uppercase font-mono">
-                  COUNTER STAFF PIN
+                  STAFF PIN (SEE SETTINGS)
                 </span>
                 <span className="font-mono font-black text-sm bg-black/5 dark:bg-white/10 px-2.5 py-0.5 rounded text-[#3027F5] dark:text-[#E4C174]">
-                  {activeLocation.staffPin}
+                  ••••
                 </span>
               </div>
 

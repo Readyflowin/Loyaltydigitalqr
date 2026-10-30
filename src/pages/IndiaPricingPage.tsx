@@ -29,7 +29,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
     'Unlimited customer visits and joins',
     'Staff PIN stamp validation system',
     'Customer retention & visit analytics',
-    'Apple Wallet & Google Wallet pass support',
+    'Card works in any phone browser — no app',
     'Mobile browser access — no app required',
     'Standard email & customer support',
   ];
@@ -45,7 +45,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
     },
     {
       q: 'Do customers need to download an app?',
-      a: 'No. When customers scan your QR standee using their phone camera, their loyalty card opens in their mobile browser instantly. They can also save it to Google Wallet or Apple Wallet with one tap.',
+      a: 'No. When customers scan your QR standee using their phone camera, their loyalty card opens in their mobile browser instantly. They can bookmark it or add it to their home screen.',
     },
     {
       q: 'Do I need special POS hardware or billing software integration?',

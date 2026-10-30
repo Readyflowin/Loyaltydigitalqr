@@ -22,7 +22,6 @@ import {
 } from 'lucide-react';
 import type { Business, BusinessMetrics, BusinessActivity, ChecklistItem } from '../../types/business';
 import type { ThemeMode } from '../../types';
-import { generateBusinessSlug } from '../../utils/qrUrlBuilder';
 import { orderService } from '../../services/orderService';
 import { salonService } from '../../services/salonService';
 import { retailService } from '../../services/retailService';
@@ -30,6 +29,7 @@ import { gymService } from '../../services/gymService';
 import { carWashService } from '../../services/carWashService';
 import { genericService } from '../../services/genericService';
 import { growthService } from '../../services/growthService';
+import { loyaltyService } from '../../services/loyaltyService';
 
 interface OverviewViewProps {
   business: Business;
@@ -106,11 +106,19 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   const avgGrowthRating =
     growthFeedback.length > 0
       ? (growthFeedback.reduce((acc, f) => acc + f.rating, 0) / growthFeedback.length).toFixed(1)
-      : '5.0';
+      : '—';
   const growthSummary = growthService.getAnalyticsSummary(business.id, 'all');
 
   const activeLocation =
     business.locations.find((l) => l.id === business.activeLocationId) || business.locations[0];
+
+  const nowMs = Date.now();
+  const joinedThisWeek = loyaltyService
+    .getCustomers(business.id)
+    .filter((c) => nowMs - new Date(c.enrolledAt).getTime() < 7 * 86400000).length;
+  const trialDaysLeft = business.trialEndsAt
+    ? Math.ceil((new Date(business.trialEndsAt).getTime() - nowMs) / 86400000)
+    : 0;
 
   const completedCount = checklist.filter((c) => c.isDone).length;
   const progressPercent = Math.round((completedCount / checklist.length) * 100);
@@ -128,8 +136,8 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             <span className="px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 text-[10px] font-mono font-medium text-[#60646C] dark:text-[#AAA499]">
               {business.planPrice} · {business.region === 'india' ? 'India Region' : 'US Region'}
             </span>
-            <span className="px-2 py-0.5 rounded text-[9px] font-mono uppercase bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 font-bold">
-              Demo Sandbox
+            <span className="px-2 py-0.5 rounded text-[9px] font-mono uppercase bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold">
+              {trialDaysLeft > 0 ? `Free trial · ${trialDaysLeft}d left` : 'Trial ended'}
             </span>
           </div>
 
@@ -138,7 +146,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </h1>
 
           <p className="mt-1 text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1]">
-            Active Counter: <strong className="text-[#111318] dark:text-[#F7F3EB]">{activeLocation.name}</strong> · Staff PIN: <code className="font-mono bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-xs">{activeLocation.staffPin}</code>
+            Active location: <strong className="text-[#111318] dark:text-[#F7F3EB]">{activeLocation.name}</strong> · Staff PINs are in Settings
           </p>
         </div>
 
@@ -172,7 +180,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             {metrics.totalCustomers}
           </div>
           <div className="mt-1 text-[11px] text-[#60646C] dark:text-[#AAA499]">
-            +18 joined this week (demo)
+            {joinedThisWeek} joined in the last 7 days
           </div>
         </div>
 
@@ -198,7 +206,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         <div className="rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-mono uppercase text-[#868A94] dark:text-[#AAA499] font-bold">
-              REWARDS EARNED
+              REWARDS REDEEMED
             </span>
             <div className="w-7 h-7 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
               <Award className="w-3.5 h-3.5" />
@@ -208,7 +216,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             {metrics.rewardsRedeemed}
           </div>
           <div className="mt-1 text-[11px] text-[#60646C] dark:text-[#AAA499]">
-            Milestones unlocked
+            Vouchers used at the counter
           </div>
         </div>
 
@@ -411,7 +419,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 View Catalogue
               </button>
               <a
-                href={`/catalog/${generateBusinessSlug(business.name)}`}
+                href={`/catalog/${business.slug}`}
                 target="_blank"
                 rel="noreferrer"
                 data-testid="overview-preview-catalog-btn"
@@ -726,7 +734,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
           <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]">
             <span className="text-[10px] font-mono uppercase text-[#868A94] font-bold block mb-0.5">
-              INCENTIVE SAVINGS
+              FIXED-DISCOUNT SAVINGS
             </span>
             <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
               {currencySymbol}{(growthSummary.totalOfferSavingsMinor / 100).toFixed(2)}
@@ -905,7 +913,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </h3>
           </div>
           <span className="text-xs font-mono text-[#60646C] dark:text-[#AAA499]">
-            Simulated Events
+            Latest 6 events
           </span>
         </div>
 

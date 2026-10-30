@@ -92,11 +92,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                   Activity Notifications
                 </span>
                 <span className="text-[10px] font-mono text-[#868A94]">
-                  Demo Feed
+                  {notifications.length} {notifications.length === 1 ? 'item' : 'items'}
                 </span>
               </div>
 
               <div className="space-y-2 max-h-60 overflow-y-auto">
+                {notifications.length === 0 && (
+                  <p className="p-2.5 text-[11px] text-[#60646C] dark:text-[#AAA499]">You are all caught up.</p>
+                )}
                 {notifications.map((n) => (
                   <div
                     key={n.id}

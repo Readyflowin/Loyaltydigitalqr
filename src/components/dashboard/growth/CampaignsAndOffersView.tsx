@@ -80,9 +80,9 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
   const [winbackSuccess, setWinbackSuccess] = useState<string | null>(null);
 
   // Feedback test form state
-  const [testCustomerName, setTestCustomerName] = useState('Sarah Jenkins');
+  const [testCustomerName, setTestCustomerName] = useState('');
   const [testRating, setTestRating] = useState<number>(5);
-  const [testComment, setTestComment] = useState('Exceptional counter service and fast redemption process!');
+  const [testComment, setTestComment] = useState('');
   const [testServiceType] = useState<'cafe' | 'salon' | 'retail' | 'gym' | 'carwash' | 'service' | 'general'>('general');
 
   // Review link config state
@@ -224,7 +224,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
     }, 2000);
   };
 
-  // Handle Winback Simulation
+  // Build and download the win-back audience (opted-in contacts only)
   const handleLaunchWinback = () => {
     setWinbackSuccess(null);
     const result = growthService.simulateWinBackCampaign(business.id, {
@@ -241,8 +241,30 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       return;
     }
 
+    const audience = growthService.evaluateAudience(
+      business.id,
+      { criteriaType: 'inactive_dormant', inactivityDays },
+      winbackChannel
+    );
+    const offerCode = offers.find((o) => o.id === selectedWinbackOfferId)?.code || '';
+    const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const csv = [
+      'Name,Phone,Email,Last visit,Offer code',
+      ...audience.map((c) =>
+        [c.name, c.phoneNumber || '', c.email || '', c.lastVisitAt ? c.lastVisitAt.slice(0, 10) : '', offerCode]
+          .map((v) => esc(String(v)))
+          .join(',')
+      ),
+    ].join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `win-back-${inactivityDays}d-${winbackChannel}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+
     setWinbackSuccess(
-      `Campaign run recorded! ${result.campaignRun?.simulatedSentCount} qualified customers reached (simulated).`
+      `Downloaded ${result.campaignRun?.targetAudienceCount} opted-in contacts.`
     );
     setTimeout(() => {
       setWinbackWizardOpen(false);
@@ -664,13 +686,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
-                  WIN-BACK AUTOMATION (SIMULATED)
+                  WIN-BACK AUDIENCE
                 </span>
                 <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
                   Re-Engage Dormant Counter Patrons
                 </h3>
                 <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                  Identify customers with zero visits in the last 30–60 days and dispatch re-engagement incentives.
+                  Find customers who haven't visited in 30–60 days and opted in to marketing, then download the list to message them.
                 </p>
               </div>
 
@@ -681,7 +703,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>Simulate Win-Back Dispatch</span>
+                <span>Build win-back list</span>
               </button>
             </div>
 
@@ -689,18 +711,18 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
             <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
               <span>
-                <strong>Simulated Environment:</strong> In this pre-Firebase stage, campaigns create deterministic audit records without dispatching real SMS or email messages.
+                Messages are not sent from this dashboard. Download the list (CSV) and send it with your own SMS or email tool. Only customers who opted in are included.
               </span>
             </div>
 
             {/* Past Campaign Run Records */}
             <div>
               <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] mb-3">
-                Simulated Campaign History ({campaignRuns.length})
+                Exported Lists ({campaignRuns.length})
               </h4>
               {campaignRuns.length === 0 ? (
                 <div className="p-6 text-center text-xs text-[#868A94] border border-dashed rounded-2xl">
-                  No simulated campaigns launched yet. Click "Simulate Win-Back Dispatch" above to test the audience evaluator.
+                  No lists exported yet. Click "Build win-back list" above.
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -718,11 +740,11 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                             {run.channel}
                           </span>
                           <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
-                            {run.status}
+                            CSV exported
                           </span>
                         </div>
                         <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 flex items-center gap-4">
-                          <span>Ran on: {new Date(run.simulatedAt).toLocaleString()}</span>
+                          <span>Exported: {new Date(run.simulatedAt).toLocaleString()}</span>
                           {run.offerName && (
                             <span>
                               Offer: <strong>{run.offerName}</strong>
@@ -733,7 +755,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
                       <div className="flex items-center gap-4 text-[11px] font-mono">
                         <div>
-                          <span className="text-[#868A94]">Delivered (Simulated):</span>{' '}
+                          <span className="text-[#868A94]">Contacts exported:</span>{' '}
                           <strong className="text-emerald-600 dark:text-emerald-400">
                             {run.simulatedSentCount}
                           </strong>
@@ -1179,7 +1201,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   CAMPAIGN RUNNER
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
-                  Simulate Win-Back Dispatch
+                  Build win-back list
                 </h3>
               </div>
               <button
@@ -1290,7 +1312,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-900 dark:text-amber-200">
-                <strong>Notice:</strong> This simulates dispatch. An official audit run record will be added to your campaign history.
+                <strong>Note:</strong> This downloads a CSV of opted-in customers. No messages are sent automatically.
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
@@ -1307,7 +1329,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   onClick={handleLaunchWinback}
                   className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs cursor-pointer shadow-sm"
                 >
-                  Simulate Run
+                  Download list (CSV)
                 </button>
               </div>
             </div>
@@ -1322,7 +1344,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
-                  TEST FEEDBACK ENTRY
+                  LOG FEEDBACK
                 </span>
                 <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
                   Record Customer Review

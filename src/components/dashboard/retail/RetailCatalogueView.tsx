@@ -19,7 +19,6 @@ import type { RetailProduct, RetailProductCategory } from '../../../types/retail
 import { retailService } from '../../../services/retailService';
 import { loyaltyService } from '../../../services/loyaltyService';
 import { formatMinorUnits } from '../../../types/cafe';
-import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 import { useRouter } from '../../../router';
 
 interface RetailCatalogueViewProps {
@@ -71,7 +70,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
   const metrics = retailService.getRetailMetrics(business.id);
   const customers = loyaltyService.getCustomers(business.id);
 
-  const businessSlug = generateBusinessSlug(business.name);
+  const businessSlug = business.slug;
 
   // Open editor for new product
   const handleOpenNewProduct = () => {
@@ -335,7 +334,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           <div data-testid="metric-store-revenue" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
             {formatMinorUnits(metrics.totalRevenueMinor, business.currency)}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Recorded via demo POS</span>
+          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Recorded in-store sales</span>
         </div>
       </div>
 
@@ -698,7 +697,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-mono font-bold tracking-widest text-[#059669] uppercase block">
-                  DEMO TRANSACTION
+                  IN-STORE SALE
                 </span>
                 <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
                   Record In-Store Purchase

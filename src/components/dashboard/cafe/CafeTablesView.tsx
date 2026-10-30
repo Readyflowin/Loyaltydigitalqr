@@ -15,7 +15,7 @@ import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { CafeTable, Menu } from '../../../types/cafe';
 import { cafeService } from '../../../services/cafeService';
-import { generateBusinessSlug, buildTableMenuUrl } from '../../../utils/qrUrlBuilder';
+import { buildTableMenuUrl } from '../../../utils/qrUrlBuilder';
 import { TableEditModal } from './TableEditModal';
 import { TablePrintModal } from './TablePrintModal';
 
@@ -103,7 +103,7 @@ export const CafeTablesView: React.FC<CafeTablesViewProps> = ({ business }) => {
     setPrintModalOpen(true);
   };
 
-  const businessSlug = generateBusinessSlug(business.name);
+  const businessSlug = business.slug;
 
   // Filtered tables
   const filteredTables = tables.filter((tbl) => {

@@ -18,7 +18,6 @@ import type { SalonService } from '../../../types/salon';
 import { salonService } from '../../../services/salonService';
 import { formatMinorUnits } from '../../../types/cafe';
 import { useRouter } from '../../../router';
-import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 
 interface SalonServicesViewProps {
   business: Business;
@@ -188,7 +187,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
     }
   };
 
-  const publicBookingSlug = generateBusinessSlug(business.name);
+  const publicBookingSlug = business.slug;
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in duration-150">

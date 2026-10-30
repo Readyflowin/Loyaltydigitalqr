@@ -25,7 +25,7 @@ export const CarWashVisitsView: React.FC<CarWashVisitsViewProps> = ({ businessId
   const [visits, setVisits] = useState<CarWashVisitEvent[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPass, setSelectedPass] = useState<CarWashCustomerPass | null>(null);
-  const [staffPin, setStaffPin] = useState('8831');
+  const [staffPin, setStaffPin] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';

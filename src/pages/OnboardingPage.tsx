@@ -859,7 +859,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 theme={theme}
               />
               <p className="mt-3 text-[11px] text-center text-[#60646C] dark:text-[#AAA499]">
-                Customers view this card in mobile Safari, Chrome, Apple Wallet, or Google Wallet.
+                Customers view this card in mobile Safari or Chrome — no app needed.
               </p>
             </div>
           </div>
@@ -875,7 +875,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 CONFIGURATION SUMMARY
               </span>
               <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
-                Review your business parameters before initializing your demo workspace.
+                Review your details before creating your workspace.
               </p>
             </div>
 

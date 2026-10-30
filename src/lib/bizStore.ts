@@ -312,10 +312,15 @@ class BizStore {
     const bundle = spec.empty(businessId) as Record<string, unknown>;
     if (state) {
       for (const arr of spec.arrays) {
-        const sourceName = state.mode === 'public' && !arr.public && arr.publicSource ? arr.publicSource : arr.collection;
-        const coll = state.collections.get(sourceName);
-        if (!coll) continue;
-        const items = [...coll.values()].map((e) => JSON.parse(e.json) as DocumentData);
+        const usesSource = state.mode === 'public' && !arr.public && !!arr.publicSource;
+        const coll = state.collections.get(usesSource ? arr.publicSource! : arr.collection);
+        const own = usesSource ? state.collections.get(arr.collection) : undefined;
+        if (!coll && !own) continue;
+        // Visitors see the public projection, overlaid with any full documents
+        // they may read (pinned by id) or have just created themselves.
+        const merged = new Map<string, Entry>(coll ?? []);
+        for (const [id, entry] of own ?? []) merged.set(id, entry);
+        const items = [...merged.values()].map((e) => JSON.parse(e.json) as DocumentData);
         if (arr.sort) items.sort(arr.sort);
         bundle[arr.key] = items;
       }
@@ -371,7 +376,8 @@ class BizStore {
         if (typeof id !== 'string' || !id || id.includes('/')) continue;
         seen.add(id);
         const json = stableStringify(item);
-        if (baseline.get(id)?.json === json) continue;
+        const known = target.get(id) ?? baseline.get(id);
+        if (known?.json === json) continue;
 
         const data = toFirestoreData(item);
         ops.push({ path: [arr.collection, id], data });

@@ -48,7 +48,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
           'No app for customers to download while waiting in the coffee queue',
           'Fast 3-second staff PIN stamping to prevent line bottlenecks',
           'Replace bent, lost, or water-damaged paper punch cards completely',
-          'Customers earn stamps effortlessly and save to Apple or Google Wallet',
+          'Customers earn stamps effortlessly — no app to download',
         ];
       case 'salons':
         return [
@@ -76,7 +76,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
           'Incentivize workout streaks, class attendance, and fitness consistency',
           'Fast front-desk check-in terminal with instant member search',
           'Prevents duplicate check-ins and detects expired memberships automatically',
-          'Digital membership cards live directly in Apple and Google Wallet',
+          'Digital membership cards open in any phone browser',
         ];
       case 'carwash':
         return [
@@ -90,7 +90,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
           'Turn one-time visitors into repeat regulars with digital loyalty cards',
           'Zero app downloads required — works straight from mobile camera scans',
           'Instant staff PIN validation for frictionless in-person stamping',
-          'Digital passes live conveniently in Apple Wallet and Google Wallet',
+          'Digital passes open instantly in any phone browser',
         ];
     }
   };
@@ -229,7 +229,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
               <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-[#60646C] dark:text-[#AAA499]">
                 <div className="flex items-center gap-1.5">
                   <Smartphone className="w-3.5 h-3.5" />
-                  <span>Apple / Google Wallet</span>
+                  <span>No app needed</span>
                 </div>
                 <Link
                   href="/pricing"

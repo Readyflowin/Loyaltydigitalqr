@@ -21,7 +21,6 @@ import type {
 } from '../../../types/cafe';
 import { formatMinorUnits } from '../../../types/cafe';
 import { cafeService } from '../../../services/cafeService';
-import { generateBusinessSlug } from '../../../utils/qrUrlBuilder';
 import { MenuItemEditModal } from './MenuItemEditModal';
 import { MenuEditModal } from './MenuEditModal';
 
@@ -216,7 +215,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
     );
   }
 
-  const publicSlug = generateBusinessSlug(business.name);
+  const publicSlug = business.slug;
   const publicMenuUrl = `/menu/${publicSlug}`;
 
   // Filtered items

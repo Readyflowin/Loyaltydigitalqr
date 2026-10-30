@@ -67,7 +67,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Simulate atomic processing
+      // Issue the stamp (PIN verified against the location PIN)
       const res = loyaltyService.issueStamp({
         businessId,
         locationId,
@@ -272,7 +272,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <span>
-                Demonstration staff validation: Atomic transaction recorded in mock audit log.
+                Each stamp is recorded in the activity log with the staff member's name and time.
               </span>
             </div>
 

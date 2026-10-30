@@ -299,7 +299,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 {currentUser?.displayName || 'Merchant Owner'}
               </div>
               <div className="text-[10px] text-[#60646C] dark:text-[#AAA499] truncate">
-                {currentUser?.email || 'demo@merchant.com'}
+                {currentUser?.email || ''}
               </div>
             </div>
           </div>
@@ -308,7 +308,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             type="button"
             onClick={onSignOut}
             className="p-2 rounded-xl text-[#60646C] dark:text-[#AAA499] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer flex-shrink-0 inline-flex items-center gap-1.5"
-            title="Sign out of demo session"
+            title="Sign out"
             aria-label="Sign Out"
             data-testid="sign-out-btn"
           >

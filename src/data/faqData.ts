@@ -5,7 +5,7 @@ export const FAQ_DATA: FaqItem[] = [
     id: 'no-app',
     category: 'Product',
     question: 'Do customers need to download an app?',
-    answer: 'No. Customers never need to visit the App Store or Google Play, remember passwords, or download an application. When they scan your counter QR code with their phone camera, their loyalty card opens immediately in their default browser (Safari, Chrome, etc.). They can save it to their home screen or Apple Wallet / Google Wallet with a single tap.',
+    answer: 'No. Customers never need to visit the App Store or Google Play, remember passwords, or download an application. When they scan your counter QR code with their phone camera, their loyalty card opens immediately in their default browser (Safari, Chrome, etc.). They can save it to their home screen with a single tap.',
   },
   {
     id: 'no-pos',

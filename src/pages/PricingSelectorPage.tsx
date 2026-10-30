@@ -18,7 +18,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
     'Print-ready counter standee QR kit (PDF export)',
     'Unlimited customer joins and visit stamps',
     'Fraud-resistant 4-digit staff PIN verification',
-    'Apple Wallet & Google Wallet pass support',
+    'Card works in any phone browser — no app',
     'Works on any smartphone browser — no app required',
   ];
 
@@ -107,7 +107,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                 <div className="text-[11px] font-mono font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
-                {['Single flat price — no tiers', 'Unlimited loyalty members', 'Apple & Google Wallet passes'].map((item, idx) => (
+                {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 text-xs text-[#111318] dark:text-[#F7F3EB]">
                     <Check className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0" />
                     <span>{item}</span>
@@ -174,7 +174,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                 <div className="text-[11px] font-mono font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
-                {['Single flat price — no tiers', 'Unlimited loyalty members', 'Apple & Google Wallet passes'].map((item, idx) => (
+                {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 text-xs text-[#111318] dark:text-[#F7F3EB]">
                     <Check className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0" />
                     <span>{item}</span>

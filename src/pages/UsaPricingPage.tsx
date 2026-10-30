@@ -29,7 +29,7 @@ export const UsaPricingPage: React.FC<UsaPricingPageProps> = ({
     'Unlimited customer visits and joins',
     'Staff PIN stamp validation system',
     'Customer retention & visit analytics',
-    'Apple Wallet & Google Wallet pass support',
+    'Card works in any phone browser — no app',
     'Mobile browser access — no app required',
     'Standard email & customer support',
   ];
@@ -44,8 +44,8 @@ export const UsaPricingPage: React.FC<UsaPricingPageProps> = ({
       a: 'If you choose to continue using Loyaltydigitalqr after your 30-day trial, the subscription is a flat $10/month billed monthly. There are no setup fees, per-transaction charges, or long-term contracts.',
     },
     {
-      q: 'Can customers save their card to Apple Wallet and Google Wallet?',
-      a: 'Yes. Customers can instantly add their digital loyalty card directly to Apple Wallet or Google Wallet with one tap, or bookmark it in Safari or Chrome.',
+      q: 'Do customers need to install an app?',
+      a: 'No. The card opens in Safari or Chrome when they scan your QR code, and they can bookmark it or add it to their home screen.',
     },
     {
       q: 'Do I need special POS hardware or a tablet at checkout?',

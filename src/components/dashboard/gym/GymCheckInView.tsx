@@ -25,7 +25,7 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
   const [checkIns, setCheckIns] = useState<GymCheckInEvent[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMember, setSelectedMember] = useState<GymMemberRecord | null>(null);
-  const [staffPin, setStaffPin] = useState('8831');
+  const [staffPin, setStaffPin] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string; stamps?: boolean } | null>(null);
 

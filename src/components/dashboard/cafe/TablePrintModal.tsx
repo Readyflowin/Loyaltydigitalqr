@@ -14,7 +14,6 @@ import type { CafeTable } from '../../../types/cafe';
 import type { Business } from '../../../types/business';
 import {
   buildTableMenuUrl,
-  generateBusinessSlug,
   getQrEnvironmentMode,
   setQrEnvironmentMode,
   type QrEnvironmentMode,
@@ -36,7 +35,7 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
   const [mode, setMode] = useState<QrEnvironmentMode>(() => getQrEnvironmentMode());
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
 
-  const businessSlug = generateBusinessSlug(business.name);
+  const businessSlug = business.slug;
   const { url: tableUrl, isSafeForPrint, domain, pathWithQuery } = buildTableMenuUrl({
     businessSlug,
     tableId: table.id,

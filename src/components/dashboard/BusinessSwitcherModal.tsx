@@ -150,7 +150,6 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                           <div className="flex items-center gap-2 truncate">
                             <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-[#868A94]" />
                             <span className="truncate">{loc.name}</span>
-                            <span className="text-[10px] text-[#868A94]">(PIN {loc.staffPin})</span>
                           </div>
                           {isLocActive && <span className="text-[10px] font-mono text-[#3027F5] dark:text-[#E4C174]">Active</span>}
                         </button>
@@ -167,7 +166,8 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
         <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-[#60646C] dark:text-[#AAA499]">
           <div className="flex items-center gap-1.5">
             <Building2 className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
-            <span>Simulated multi-business membership</span>
+            <span>Businesses you belong to</span>
+            <a href="/onboarding" className="ml-3 font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline">+ Add a business</a>
           </div>
           <button
             type="button"

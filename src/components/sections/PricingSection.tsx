@@ -19,7 +19,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     'Unlimited customer visits and joins',
     'Staff PIN stamp validation system',
     'Customer retention & visit analytics',
-    'Apple Wallet & Google Wallet pass support',
+    'Card works in any phone browser — no app',
     'Mobile browser access — no app required',
     'Standard email & customer support',
   ];

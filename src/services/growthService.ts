@@ -380,7 +380,8 @@ class GrowthService {
 
     try {
       const now = new Date().toISOString();
-      const amountSaved = offer.offerType === 'fixed_amount' ? offer.discountValue : 350; // default estimated $3.50 savings
+      // Only fixed-amount discounts have a known value; percentage savings depend on the bill and are not invented.
+      const amountSaved = offer.offerType === 'fixed_amount' ? offer.discountValue : 0;
 
       const redemption: OfferRedemption = {
         id: `red_${newId()}`,
@@ -558,7 +559,7 @@ class GrowthService {
       simulatedAt: now,
       status: 'simulated',
       simulationNotice:
-        'Demonstration / Simulation only: No real email or SMS was transmitted.',
+        'Contact list exported as CSV. No messages were sent by the platform.',
     };
 
     const data = this.loadData();

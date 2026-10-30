@@ -35,7 +35,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
     {
       title: '2. Card opens in browser in 3 seconds',
       subtitle: 'SEAMLESS WEB APP',
-      desc: 'The customer’s unique pass is generated and stored in their browser cache. Optionally adds to Apple Wallet.',
+      desc: 'The customer’s card opens in their phone browser and can be saved to the home screen.',
       visual: (
         <div className="w-64 bg-[#111318] text-white rounded-2xl p-4 shadow-xl text-center">
           <div className="text-[10px] font-mono text-white/50">GOODDAY COFFEE</div>

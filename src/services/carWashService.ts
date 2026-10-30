@@ -463,16 +463,18 @@ class CarWashOperationsService {
       (p) => p.status === 'active' && p.endDate && p.endDate >= todayStr && p.endDate <= nextWeekStr
     ).length;
 
-    // Approximate revenue from services + bundles
-    const serviceRev = store.services.reduce((acc, s) => acc + s.price, 0);
-    const bundleRev = store.bundles.reduce((acc, b) => acc + b.price, 0);
+    // Revenue = recorded pass purchase prices (single washes carry no recorded price)
+    const passRevenue = store.passes.reduce((acc, p) => acc + (p.pricePaidMinor || 0), 0);
+    const visitCounts = new Map<string, number>();
+    for (const v of store.visits) visitCounts.set(v.serviceOrBundleName, (visitCounts.get(v.serviceOrBundleName) || 0) + 1);
+    const popular = [...visitCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
 
     return {
       activePasses,
       washesToday,
       expiringPasses,
-      popularTier: store.services[0]?.name || 'Express Exterior',
-      totalWashRevenueCents: serviceRev + bundleRev,
+      popularTier: popular || '—',
+      totalWashRevenueCents: passRevenue,
     };
   }
 }

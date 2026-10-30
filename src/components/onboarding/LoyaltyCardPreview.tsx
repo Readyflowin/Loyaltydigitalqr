@@ -90,7 +90,7 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
       {/* Card Footer / Pass Indication */}
       <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] font-mono text-[#868A94] dark:text-[#AAA499]">
         <span>Scan camera · Staff PIN</span>
-        <span>Apple & Google Wallet</span>
+        <span>Works in any phone browser</span>
       </div>
     </div>
   );

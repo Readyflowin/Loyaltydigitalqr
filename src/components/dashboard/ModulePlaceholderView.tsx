@@ -150,7 +150,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
     plannedFeatures: [
       'Tailored industry workflows',
       'Dedicated counter and tablet interfaces',
-      'Firebase persistence and real-time syncing',
+      'Real-time syncing across devices',
     ],
   };
 

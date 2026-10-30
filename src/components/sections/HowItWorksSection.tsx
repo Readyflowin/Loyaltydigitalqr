@@ -179,8 +179,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                       <div className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">Secret 4-Digit PIN</div>
                     </div>
                     <div className="p-2.5 rounded-lg bg-black/5 dark:bg-white/5">
-                      <div className="text-[#60646C] dark:text-[#AAA499]">Wallet Pass</div>
-                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">Apple & Google</div>
+                      <div className="text-[#60646C] dark:text-[#AAA499]">Customer Card</div>
+                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">Any phone browser</div>
                     </div>
                   </div>
                 </div>

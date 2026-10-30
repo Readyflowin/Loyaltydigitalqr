@@ -141,7 +141,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
             </div>
           )}
 
-          {/* Primary Action: Google Demo Button */}
+          {/* Primary Action: Google sign-in */}
           <div className="mt-6">
             <button
               type="button"
@@ -184,7 +184,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme }) => {
             </div>
           </div>
 
-          {/* Email Mock Form */}
+          {/* Email + password sign-in */}
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
