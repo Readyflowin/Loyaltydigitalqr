@@ -50,15 +50,15 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
 
   if (!order) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB]">
-        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4 shadow-xl">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <ShoppingBag className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Order Not Found
           </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             We couldn't locate an order matching tracking code "<strong>{token}</strong>". The link may have expired or was typed incorrectly.
           </p>
           <button
@@ -81,7 +81,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
   const currentStageIndex = stageOrder.indexOf(order.status);
 
   return (
-    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] pb-16 transition-colors duration-200">
+    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-16 transition-colors duration-200">
       {/* 1. Header Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
@@ -101,7 +101,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
             </span>
             <span
               data-testid="tracking-order-number"
-              className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]"
+              className="font-heading font-black text-sm text-foreground"
             >
               {order.orderNumber}
             </span>
@@ -122,15 +122,15 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
       {/* 2. Main Order Status Card */}
       <main className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         {/* Business & Destination Banner */}
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-xs space-y-4">
+        <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <span className="text-xl font-heading font-black text-foreground">
                   {order.businessName}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <MapPin className="w-3.5 h-3.5 text-subtle-foreground" />
                 <span>{order.locationName}</span>
               </div>
@@ -163,7 +163,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                   <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
                   <span
                     data-testid="tracking-status-badge"
-                    className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-heading font-black text-base text-foreground"
                   >
                     {order.status === 'new' && 'Order Placed & Queued'}
                     {order.status === 'accepted' && 'Order Accepted by Kitchen'}
@@ -201,17 +201,17 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                           isCurrent
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
-                            ? 'text-[#111318] dark:text-[#F7F3EB]'
+                            ? 'text-foreground'
                             : 'text-subtle-foreground'
-                        }`} > {stg.label} </span> </div> ); })} </div> </div> )} </div> {/* 3. Items & Receipt Breakdown */} <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4"> <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10"> <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider"> Ordered Items ({order.items.length}) </h3> <span className="text-xs text-subtle-foreground"> {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </span> </div> <div className="space-y-3"> {order.items.map((item, idx) => ( <div key={idx} data-testid={`tracking-item-${idx}`}
+                        }`} > {stg.label} </span> </div> ); })} </div> </div> )} </div> {/* 3. Items & Receipt Breakdown */} <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-4"> <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10"> <h3 className="font-heading font-black text-sm text-foreground uppercase tracking-wider"> Ordered Items ({order.items.length}) </h3> <span className="text-xs text-subtle-foreground"> {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </span> </div> <div className="space-y-3"> {order.items.map((item, idx) => ( <div key={idx} data-testid={`tracking-item-${idx}`}
                 className="flex items-start justify-between gap-3 text-xs"
               >
                 <div className="space-y-0.5">
-                  <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                  <div className="font-bold text-foreground">
                     {item.quantity} × {item.name}
                   </div>
                   {item.variants.length > 0 && (
-                    <div className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                    <div className="text-xs text-muted-foreground">
                       {item.variants.map((v) => `${v.groupName}: ${v.name}`).join(', ')}
                     </div>
                   )}
@@ -227,7 +227,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                   )}
                 </div>
 
-                <span className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB] whitespace-nowrap">
+                <span className="font-mono font-bold text-foreground whitespace-nowrap">
                   {formatMinorUnits(item.lineTotal, order.currency)}
                 </span>
               </div>
@@ -235,7 +235,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
           </div>
 
           <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 space-y-1.5 text-xs">
-            <div className="flex items-center justify-between text-[#60646C] dark:text-[#D0CBC1]">
+            <div className="flex items-center justify-between text-muted-foreground">
               <span>Subtotal</span>
               <span>{formatMinorUnits(order.subtotal, order.currency)}</span>
             </div>
@@ -243,7 +243,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
               <span>Payment Mode</span>
               <span>Pay at Counter</span>
             </div>
-            <div className="flex items-center justify-between font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] pt-2 border-t border-[#E5E3DB] dark:border-white/10">
+            <div className="flex items-center justify-between font-heading font-black text-base text-foreground pt-2 border-t border-[#E5E3DB] dark:border-white/10">
               <span>Total</span>
               <span data-testid="tracking-order-total">{formatMinorUnits(order.total, order.currency)}</span>
             </div>
@@ -251,7 +251,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
         </div>
 
         {/* 4. Live Updates Info Pill */}
-        <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center gap-3 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+        <div className="p-4 rounded-2xl bg-muted border border-border flex items-center gap-3 text-xs text-muted-foreground">
           <Bell className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0" />
           <span>
             This tracking page updates automatically in real time as the kitchen prepares your order.

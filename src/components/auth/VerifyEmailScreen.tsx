@@ -73,15 +73,15 @@ export const VerifyEmailScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB]">
-      <div className="w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-8 shadow-xl text-center">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+      <div className="w-full max-w-md rounded-3xl bg-card border border-border p-8 shadow-xl text-center">
         <div className="w-14 h-14 rounded-2xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center mx-auto mb-4">
           <MailCheck className="w-7 h-7" />
         </div>
 
         <h1 className="text-2xl font-heading font-black tracking-tight">Check your email to continue</h1>
-        <p className="mt-2 text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
-          We sent a verification link to <strong className="text-[#111318] dark:text-[#F7F3EB] break-all">{email}</strong>.
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+          We sent a verification link to <strong className="text-foreground break-all">{email}</strong>.
           Click the link, then come back here. This page continues automatically once you're verified.
         </p>
         <p className="mt-2 text-xs text-subtle-foreground">Can't find it? Check your spam or promotions folder.</p>
@@ -115,7 +115,7 @@ export const VerifyEmailScreen: React.FC = () => {
           type="button"
           onClick={resend}
           disabled={cooldown > 0}
-          className="mt-3 w-full py-3 rounded-xl font-bold text-sm border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-3 w-full py-3 rounded-xl font-bold text-sm border border-border cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {cooldown > 0 ? `Resend email in ${cooldown}s` : 'Resend verification email'}
         </button>
@@ -123,7 +123,7 @@ export const VerifyEmailScreen: React.FC = () => {
         <button
           type="button"
           onClick={switchAccount}
-          className="mt-5 text-xs text-[#60646C] dark:text-[#AAA499] underline cursor-pointer"
+          className="mt-5 text-xs text-muted-foreground underline cursor-pointer"
         >
           Wrong email? Use a different account
         </button>

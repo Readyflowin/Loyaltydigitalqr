@@ -154,12 +154,12 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
     }
 
     const cartItem: CartItem = {
-      cartItemId: `cart_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`, menuItem: item, selectedVariants, selectedModifiers, quantity, unitPrice, lineTotal, specialInstructions: specialInstructions.trim() || undefined, }; onAddToCart(cartItem); onClose(); }; return ( <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"> <div className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity" onClick={onClose} aria-hidden="true" /> <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-t-3xl sm:rounded-3xl bg-white dark:bg-[#141412] border-t-2 sm:border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl z-10 animate-in slide-in-from-bottom duration-200 overflow-hidden"> {/* Header */} <div className="p-5 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-start justify-between flex-shrink-0"> <div> <div className="flex items-center gap-2 mb-1"> <span className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]"> {item.name} </span> {isSoldOut && ( <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300"> SOLD OUT </span> )} </div> <div className="text-sm font-bold text-[#111318] dark:text-[#F7F3EB]"> Base {formatMinorUnits(item.price, item.currency)} </div> </div> <button type="button" onClick={onClose} className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer" aria-label="Close" > <X className="w-5 h-5" /> </button> </div> {/* Scrollable Content */} <div className="p-5 space-y-6 overflow-y-auto flex-1"> {item.description && ( <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed"> {item.description} </p> )} {validationError && ( <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs text-red-700 dark:text-red-300 flex items-center gap-2"> <AlertCircle className="w-4 h-4 flex-shrink-0" /> <span>{validationError}</span> </div> )} {/* Variant Groups (e.g. Size: Small, Regular, Large) */} {item.variantGroups?.map((group) => { const currentSelected = selectedVariants[group.id]; return ( <div key={group.id} className="space-y-2.5"> <div className="flex items-center justify-between"> <span className="text-xs font-bold uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]"> {group.name} {group.required && <span className="text-red-500">*</span>} </span> <span className="text-xs text-subtle-foreground">Select one</span> </div> <div className="space-y-2"> {group.options.map((opt) => { const isSelected = currentSelected?.id === opt.id; return ( <button key={opt.id} type="button" data-testid={`variant-opt-${opt.id}`}
+      cartItemId: `cart_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`, menuItem: item, selectedVariants, selectedModifiers, quantity, unitPrice, lineTotal, specialInstructions: specialInstructions.trim() || undefined, }; onAddToCart(cartItem); onClose(); }; return ( <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"> <div className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity" onClick={onClose} aria-hidden="true" /> <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-t-3xl sm:rounded-3xl bg-card border-t-2 sm:border border-border shadow-2xl z-10 animate-in slide-in-from-bottom duration-200 overflow-hidden"> {/* Header */} <div className="p-5 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-start justify-between flex-shrink-0"> <div> <div className="flex items-center gap-2 mb-1"> <span className="text-xl font-heading font-black text-foreground"> {item.name} </span> {isSoldOut && ( <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300"> SOLD OUT </span> )} </div> <div className="text-sm font-bold text-foreground"> Base {formatMinorUnits(item.price, item.currency)} </div> </div> <button type="button" onClick={onClose} className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer" aria-label="Close" > <X className="w-5 h-5" /> </button> </div> {/* Scrollable Content */} <div className="p-5 space-y-6 overflow-y-auto flex-1"> {item.description && ( <p className="text-xs text-muted-foreground leading-relaxed"> {item.description} </p> )} {validationError && ( <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs text-red-700 dark:text-red-300 flex items-center gap-2"> <AlertCircle className="w-4 h-4 flex-shrink-0" /> <span>{validationError}</span> </div> )} {/* Variant Groups (e.g. Size: Small, Regular, Large) */} {item.variantGroups?.map((group) => { const currentSelected = selectedVariants[group.id]; return ( <div key={group.id} className="space-y-2.5"> <div className="flex items-center justify-between"> <span className="text-xs font-bold uppercase tracking-wider text-foreground"> {group.name} {group.required && <span className="text-red-500">*</span>} </span> <span className="text-xs text-subtle-foreground">Select one</span> </div> <div className="space-y-2"> {group.options.map((opt) => { const isSelected = currentSelected?.id === opt.id; return ( <button key={opt.id} type="button" data-testid={`variant-opt-${opt.id}`}
                         onClick={() => handleSelectVariant(group.id, opt)}
                         className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                           isSelected
                             ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                            : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] hover:bg-[#F8F7F2]'
+                            : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-card hover:bg-[#F8F7F2]'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -174,11 +174,11 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
                               <div className="w-2 h-2 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
                             )}
                           </div>
-                          <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="text-xs font-bold text-foreground">
                             {opt.name}
                           </span>
                         </div>
-                        <span className="text-xs font-semibold text-[#60646C] dark:text-[#D0CBC1]">
+                        <span className="text-xs font-semibold text-muted-foreground">
                           {opt.priceAdjustment === 0
                             ? 'Included'
                             : `+${formatMinorUnits(opt.priceAdjustment, item.currency)}`}
@@ -198,7 +198,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
             return (
               <div key={group.id} className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]">
+                  <span className="text-xs font-bold uppercase tracking-wider text-foreground">
                     {group.name} {group.required && <span className="text-red-500">*</span>}
                   </span>
                   <span className="text-xs text-subtle-foreground">
@@ -220,7 +220,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
                         className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                           isSelected
                             ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                            : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] hover:bg-[#F8F7F2]'
+                            : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-card hover:bg-[#F8F7F2]'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -235,11 +235,11 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
                               <Check className="w-3 h-3 text-white dark:text-[#11100D] stroke-[3]" />
                             )}
                           </div>
-                          <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="text-xs font-bold text-foreground">
                             {opt.name}
                           </span>
                         </div>
-                        <span className="text-xs font-semibold text-[#60646C] dark:text-[#D0CBC1]">
+                        <span className="text-xs font-semibold text-muted-foreground">
                           {opt.priceAdjustment === 0
                             ? 'Included'
                             : `+${formatMinorUnits(opt.priceAdjustment, item.currency)}`}
@@ -254,7 +254,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
 
           {/* Special Instructions */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB] mb-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
               Special Instructions
             </label>
             <input
@@ -263,27 +263,27 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
               value={specialInstructions}
               onChange={(e) => setSpecialInstructions(e.target.value)}
               placeholder="e.g. Extra hot, no lid, light ice..."
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
             />
           </div>
         </div>
 
         {/* Bottom Bar: Quantity & Add to Order CTA */}
-        <div className="p-4 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] flex items-center justify-between gap-4 flex-shrink-0">
+        <div className="p-4 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-card flex items-center justify-between gap-4 flex-shrink-0">
           {/* Quantity Stepper */}
-          <div className="flex items-center gap-2 p-1 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916]">
+          <div className="flex items-center gap-2 p-1 rounded-xl border border-border bg-muted">
             <button
               type="button"
               data-testid="decrease-qty-btn"
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
               disabled={quantity <= 1 || isSoldOut}
-              className="p-1.5 rounded-lg text-[#111318] dark:text-[#F7F3EB] hover:bg-white dark:hover:bg-[#201F1B] disabled:opacity-30 cursor-pointer"
+              className="p-1.5 rounded-lg text-foreground hover:bg-white dark:hover:bg-[#201F1B] disabled:opacity-30 cursor-pointer"
             >
               <Minus className="w-3.5 h-3.5" />
             </button>
             <span
               data-testid="item-quantity-display"
-              className="w-6 text-center text-xs font-bold text-[#111318] dark:text-[#F7F3EB]"
+              className="w-6 text-center text-xs font-bold text-foreground"
             >
               {quantity}
             </span>
@@ -292,7 +292,7 @@ const ItemCustomizationModalForm: React.FC<InnerFormProps> = ({
               data-testid="increase-qty-btn"
               onClick={() => setQuantity(quantity + 1)}
               disabled={isSoldOut}
-              className="p-1.5 rounded-lg text-[#111318] dark:text-[#F7F3EB] hover:bg-white dark:hover:bg-[#201F1B] disabled:opacity-30 cursor-pointer"
+              className="p-1.5 rounded-lg text-foreground hover:bg-white dark:hover:bg-[#201F1B] disabled:opacity-30 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
             </button>

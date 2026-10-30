@@ -35,7 +35,7 @@ interface MemberCard {
 const MEMBER_KEY = (businessId: string) => `loyalty_member_${businessId}`;
 
 const inputClass =
-  'w-full px-4 py-3 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-base focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]';
+  'w-full px-4 py-3 rounded-xl border border-border bg-white dark:bg-[#1A1916] text-foreground text-base focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]';
 
 /**
  * Customer-facing loyalty card.
@@ -67,7 +67,7 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
       <div className="min-h-screen flex items-center justify-center p-6 text-center">
         <div className="max-w-sm">
           <h1 className="text-2xl font-heading font-black">Loyalty card not found</h1>
-          <p className="mt-2 text-sm text-[#60646C] dark:text-[#AAA499]">
+          <p className="mt-2 text-sm text-muted-foreground">
             This link may be mistyped or the business is no longer active. Please scan the QR code at the counter again.
           </p>
         </div>
@@ -91,7 +91,7 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
             </div>
             <div className="min-w-0">
               <div className="font-heading font-black text-lg truncate">{business.name}</div>
-              <div className="text-xs text-[#60646C] dark:text-[#AAA499] truncate">{program.name}</div>
+              <div className="text-xs text-muted-foreground truncate">{program.name}</div>
             </div>
           </div>
           <button
@@ -107,7 +107,7 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
         {memberId ? (
           <MemberCardView business={business} slug={business.slug} memberId={memberId} accent={accent} />
         ) : program.status !== 'active' ? (
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-white/10 text-sm text-center">
+          <div className="p-5 rounded-3xl bg-card border border-[#E5E3DB] dark:border-white/10 text-sm text-center">
             This loyalty program is paused right now. Please ask at the counter.
           </div>
         ) : (
@@ -166,17 +166,17 @@ const JoinForm: React.FC<{
   };
 
   return (
-    <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 shadow-xl">
+    <div className="rounded-3xl bg-card border border-border p-6 shadow-xl">
       <div className="flex items-start gap-3 p-4 rounded-2xl mb-6" style={{ backgroundColor: `${accent}14` }}>
         <Gift className="w-6 h-6 flex-shrink-0" style={{ color: accent }} />
         <div className="text-sm">
           <div className="font-bold">Collect {stampsRequired} stamps</div>
-          <div className="text-[#60646C] dark:text-[#D0CBC1]">and get: {rewardDescription}</div>
+          <div className="text-muted-foreground">and get: {rewardDescription}</div>
         </div>
       </div>
 
       <h1 className="text-xl font-heading font-black">Join in seconds</h1>
-      <p className="text-sm text-[#60646C] dark:text-[#AAA499] mt-1 mb-5">No app needed. Staff find your card by phone number.</p>
+      <p className="text-sm text-muted-foreground mt-1 mb-5">No app needed. Staff find your card by phone number.</p>
 
       <form onSubmit={submit} className="space-y-4">
         <div>
@@ -199,7 +199,7 @@ const JoinForm: React.FC<{
           <label className="block text-xs font-bold uppercase mb-1">Email (optional)</label>
           <input className={inputClass} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
         </div>
-        <label className="flex items-start gap-2.5 text-xs text-[#60646C] dark:text-[#AAA499] cursor-pointer">
+        <label className="flex items-start gap-2.5 text-xs text-muted-foreground cursor-pointer">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5" />
           <span>I'd like to receive offers from this business by SMS/email. (Optional — you can still join without this.)</span>
         </label>
@@ -275,9 +275,9 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
 
   if (state === 'missing' || !card) {
     return (
-      <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-white/10 text-center space-y-3">
+      <div className="p-6 rounded-3xl bg-card border border-[#E5E3DB] dark:border-white/10 text-center space-y-3">
         <h2 className="font-heading font-black text-lg">Card not found</h2>
-        <p className="text-sm text-[#60646C] dark:text-[#AAA499]">This card may have been removed by the business.</p>
+        <p className="text-sm text-muted-foreground">This card may have been removed by the business.</p>
         <button type="button" onClick={forget} className="text-sm font-bold underline cursor-pointer" style={{ color: accent }}>
           Join again
         </button>
@@ -333,7 +333,7 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
         </div>
       )}
 
-      <div className="p-4 rounded-2xl bg-[#F0EEE6] dark:bg-[#1A1916] text-xs text-[#60646C] dark:text-[#AAA499] flex items-start gap-2">
+      <div className="p-4 rounded-2xl bg-muted text-xs text-muted-foreground flex items-start gap-2">
         <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
         <span>
           To collect a stamp, tell staff your mobile number at the counter. Bookmark this page or add it to your home screen to

@@ -59,15 +59,15 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
 
   if (!appointment) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB]">
-        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4 shadow-xl">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Scissors className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Appointment Not Found
           </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             We couldn't locate a booking matching code "<strong>{token}</strong>". The link may have expired or was typed incorrectly.
           </p>
           <button
@@ -122,7 +122,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] pb-16 transition-colors duration-200">
+    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-16 transition-colors duration-200">
       {/* 1. Top Header Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
@@ -142,7 +142,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             </span>
             <span
               data-testid="tracking-appointment-number"
-              className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]"
+              className="font-heading font-black text-sm text-foreground"
             >
               {appointment.appointmentNumber}
             </span>
@@ -163,15 +163,15 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
       {/* 2. Main Tracking Content */}
       <main className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         {/* Salon & Status Banner */}
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-xs space-y-5">
+        <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <span className="text-xl font-heading font-black text-foreground">
                   {appointment.businessName}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <MapPin className="w-3.5 h-3.5 text-subtle-foreground" />
                 <span>{appointment.locationName} &bull; {appointment.locationAddress}</span>
               </div>
@@ -211,7 +211,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                   />
                   <span
                     data-testid="tracking-status-badge"
-                    className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-heading font-black text-base text-foreground"
                   >
                     {APPOINTMENT_STATUS_LABELS[appointment.status]}
                   </span>
@@ -243,7 +243,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                           isCurrent
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
-                            ? 'text-[#111318] dark:text-[#F7F3EB]'
+                            ? 'text-foreground'
                             : 'text-subtle-foreground'
                         }`}
                       >
@@ -258,9 +258,9 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
         </div>
 
         {/* 3. Service & Booking Details */}
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4">
+        <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
-            <h3 className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider">
+            <h3 className="font-heading font-black text-sm text-foreground uppercase tracking-wider">
               Booking Details
             </h3>
             <span className="text-xs font-mono text-subtle-foreground">
@@ -273,41 +273,41 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               <div className="space-y-1">
                 <div
                   data-testid="tracking-service-name"
-                  className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB]"
+                  className="font-heading font-black text-sm text-foreground"
                 >
                   {appointment.serviceSnapshot.name}
                 </div>
-                <div className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                <div className="text-xs text-muted-foreground">
                   Duration: {appointment.serviceSnapshot.durationMinutes} minutes
                 </div>
               </div>
-              <span className="font-mono font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
+              <span className="font-mono font-bold text-sm text-foreground">
                 {formatMinorUnits(appointment.price, appointment.currency)}
               </span>
             </div>
 
             <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-date">{dateFormatted}</span>
               </div>
-              <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-time">{timeFormatted}</span>
               </div>
-              <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Scissors className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-staff-name">Stylist: {appointment.staffName}</span>
               </div>
-              <div className="flex items-center gap-2 text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <User className="w-4 h-4 text-subtle-foreground" />
                 <span data-testid="tracking-customer-name">Client: {appointment.customerName}</span>
               </div>
             </div>
 
             {appointment.customerNotes && (
-              <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#60646C] dark:text-[#D0CBC1]">
-                <span className="font-bold text-[#111318] dark:text-[#F7F3EB]">Client Note: </span>
+              <div className="p-3 rounded-xl bg-muted text-xs text-muted-foreground">
+                <span className="font-bold text-foreground">Client Note: </span>
                 <span>{appointment.customerNotes}</span>
               </div>
             )}
@@ -317,7 +317,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             <span className="text-subtle-foreground">Total Due at Salon</span>
             <span
               data-testid="tracking-total"
-              className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"
+              className="font-heading font-black text-base text-foreground"
             >
               {formatMinorUnits(appointment.price, appointment.currency)}
             </span>
@@ -326,9 +326,9 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
 
         {/* 4. Self-Service Cancellation Option (if eligible) */}
         {appointment.canCancelOrReschedule && !isCancelled && !isCompleted && !isNoShow && (
-          <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="p-5 rounded-3xl bg-card border border-border shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div>
-              <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="font-bold text-foreground">
                 Need to cancel or change plans?
               </div>
               <div className="text-xs text-subtle-foreground mt-0.5">
@@ -348,7 +348,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
         )}
 
         {/* 5. Live Updates Info Pill */}
-        <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center gap-3 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+        <div className="p-4 rounded-2xl bg-muted border border-border flex items-center gap-3 text-xs text-muted-foreground">
           <Bell className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0" />
           <span>
             This tracking page automatically updates in real-time as your stylist updates your chair status.
@@ -359,9 +359,9 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
       {/* Customer Cancellation Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="max-w-md w-full p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-card border border-border shadow-2xl space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-base text-foreground">
                 Cancel Appointment
               </h3>
               <button
@@ -373,7 +373,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               </button>
             </div>
 
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs text-muted-foreground">
               Please let the salon know why you're cancelling appointment <strong>{appointment.appointmentNumber}</strong>:
             </p>
 
@@ -389,14 +389,14 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               value={cancelReason}
               onChange={(e) => setCancelReason(e.target.value)}
               placeholder="e.g., Unforeseen schedule conflict, sick, rescheduling..."
-              className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-xs text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#3027F5]"
+              className="w-full px-3 py-2 rounded-xl bg-muted border border-border text-xs text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#3027F5]"
             />
 
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setShowCancelModal(false)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-[#60646C] dark:text-[#D0CBC1] hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
               >
                 Keep Appointment
               </button>

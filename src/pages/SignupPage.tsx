@@ -94,7 +94,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
         </div>
 
         {/* Card Container */}
-        <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-8 sm:p-10 shadow-xl transition-all">
+        <div className="rounded-3xl bg-card border border-border p-8 sm:p-10 shadow-xl transition-all">
           
           {/* Eyebrow badge */}
           <div className="text-center">
@@ -105,22 +105,22 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight text-foreground leading-tight">
               Set up your business for repeat customers.
             </h1>
 
-            <p className="mt-2 text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               Join local businesses replacing paper punch cards with a friction-free digital loyalty wallet.
             </p>
           </div>
 
           {/* Selected Region / Plan Context Callout */}
-          <div className="mt-6 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="mt-6 p-4 rounded-2xl bg-muted border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] block font-semibold">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground block font-semibold">
                 SELECTED REGIONAL PLAN
               </span>
-              <div className="font-heading font-bold text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+              <div className="font-heading font-bold text-sm sm:text-base text-foreground mt-0.5">
                 {planName} Plan · {pricingDetails.country} ({pricingDetails.priceFormatted})
               </div>
               <div className="text-xs text-[#3027F5] dark:text-[#E4C174] font-semibold mt-0.5">
@@ -130,7 +130,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
 
             <Link
               href={pricingDetails.switchHref}
-              className="text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:text-[#111318] dark:hover:text-[#E4C174] underline self-start sm:self-auto"
+              className="text-xs font-semibold text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] underline self-start sm:self-auto"
             >
               {pricingDetails.switchLabel}
             </Link>
@@ -186,7 +186,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
               <div className="w-full border-t border-black/10 dark:border-white/10" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-[#141412] px-3 font-mono text-subtle-foreground dark:text-[#AAA499]">
+              <span className="bg-card px-3 font-mono text-subtle-foreground dark:text-[#AAA499]">
                 or sign up with work email
               </span>
             </div>
@@ -195,7 +195,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           {/* Email Signup Form */}
           <form onSubmit={handleEmailSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Your Name
               </label>
               <input
@@ -204,12 +204,12 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Alex Patel"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Business Email Address
               </label>
               <div className="relative">
@@ -221,13 +221,13 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="owner@yourbusiness.com"
                   autoComplete="email"
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Password
               </label>
               <div className="relative">
@@ -240,7 +240,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
             </div>
@@ -256,7 +256,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           </form>
 
           {/* Guarantees */}
-          <div className="mt-6 pt-5 border-t border-black/10 dark:border-white/10 space-y-2 text-xs text-[#60646C] dark:text-[#AAA499]">
+          <div className="mt-6 pt-5 border-t border-black/10 dark:border-white/10 space-y-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <Check className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
               <span>No credit card required to start</span>
@@ -272,7 +272,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           </div>
 
           {/* Navigation to Login */}
-          <div className="mt-6 pt-5 border-t border-black/10 dark:border-white/10 text-center text-xs text-[#60646C] dark:text-[#AAA499]">
+          <div className="mt-6 pt-5 border-t border-black/10 dark:border-white/10 text-center text-xs text-muted-foreground">
             Already have an account?{' '}
             <Link
               href="/login"
@@ -285,7 +285,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
         </div>
 
         {/* Legal Disclaimers & Back Link */}
-        <div className="mt-6 text-center text-xs text-[#60646C] dark:text-[#AAA499] space-y-2">
+        <div className="mt-6 text-center text-xs text-muted-foreground space-y-2">
           <p>
             By continuing, you agree to Loyaltydigitalqr's Terms of Service and Privacy Policy.
           </p>

@@ -29,15 +29,15 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB]">
-        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4 shadow-xl">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/40 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
             <ShoppingBag className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Catalogue Not Found
           </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             We couldn't locate a published product catalogue matching "<strong>{slug}</strong>". The link may have expired or was typed incorrectly.
           </p>
           <button
@@ -73,7 +73,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
   return (
     <div
       data-testid="public-catalog-page"
-      className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] pb-16 transition-colors duration-200"
+      className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-16 transition-colors duration-200"
     >
       {/* 1. Top Navigation Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
@@ -88,11 +88,11 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
             <div className="min-w-0">
               <h1
                 data-testid="public-catalog-brand"
-                className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB] truncate leading-tight"
+                className="font-heading font-black text-sm sm:text-base text-foreground truncate leading-tight"
               >
                 {business.name}
               </h1>
-              <div className="flex items-center gap-1 text-xs text-[#60646C] dark:text-[#D0CBC1] truncate">
+              <div className="flex items-center gap-1 text-xs text-muted-foreground truncate">
                 <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.address}</span>
               </div>
@@ -120,16 +120,16 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
       {/* 2. Main Content Container */}
       <main className="max-w-4xl mx-auto px-4 pt-6 space-y-6">
         {/* Store Welcome Banner */}
-        <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-xs space-y-3">
+        <div className="p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs font-bold tracking-widest text-[#059669] uppercase block mb-1">
                 IN-STORE CURATION
               </span>
-              <h2 className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+              <h2 className="text-xl sm:text-2xl font-heading font-black text-foreground">
                 Curated Boutique Catalogue
               </h2>
-              <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-xl">
                 Browse our current seasonal collection. Visit our showroom at {business.address} to try on or purchase items.
               </p>
             </div>
@@ -150,7 +150,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search styles, pieces, or keywords..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-xs text-foreground placeholder:text-subtle-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
               />
             </div>
           </div>
@@ -163,7 +163,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
               className={`px-3 py-1.5 rounded-xl font-bold cursor-pointer transition-colors ${
                 selectedCategoryId === 'all'
                   ? 'bg-[#059669] text-white shadow-xs'
-                  : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+                  : 'bg-muted text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
               }`}
             >
               All Pieces ({products.length})
@@ -176,7 +176,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                 className={`px-3 py-1.5 rounded-xl font-bold cursor-pointer transition-colors ${
                   selectedCategoryId === c.id
                     ? 'bg-[#059669] text-white shadow-xs'
-                    : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+                    : 'bg-muted text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 {c.name}
@@ -187,12 +187,12 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
 
         {/* 3. Products List */}
         {filteredProducts.length === 0 ? (
-          <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-2">
+          <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-2">
             <ShoppingBag className="w-10 h-10 mx-auto text-subtle-foreground" />
-            <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+            <h3 className="font-heading font-black text-base text-foreground">
               No Pieces Match Your Search
             </h3>
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs text-muted-foreground">
               Try searching with different terms or selecting another category.
             </p>
           </div>
@@ -202,11 +202,11 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
               <div
                 key={prod.id}
                 data-testid={`catalog-item-${prod.id}`}
-                className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:border-[#059669] transition-all flex flex-col justify-between space-y-4"
+                className="p-5 rounded-3xl bg-card border border-border shadow-xs hover:border-[#059669] transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="px-2 py-0.5 rounded-md bg-[#F8F7F2] dark:bg-[#1A1916] font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+                    <span className="px-2 py-0.5 rounded-md bg-muted font-mono font-bold text-muted-foreground">
                       {prod.categoryName}
                     </span>
                     <span className="font-mono text-[#059669] font-bold">
@@ -214,11 +214,11 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                     </span>
                   </div>
 
-                  <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+                  <h3 className="font-heading font-black text-base text-foreground">
                     {prod.name}
                   </h3>
 
-                  <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed">
                     {prod.description}
                   </p>
 
@@ -227,7 +227,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
                       {prod.variants.map((v) => (
                         <span
                           key={v.name}
-                          className="px-2 py-0.5 rounded text-xs bg-[#F8F7F2] dark:bg-[#1A1916] font-mono text-[#60646C] dark:text-[#D0CBC1]"
+                          className="px-2 py-0.5 rounded text-xs bg-muted font-mono text-muted-foreground"
                         >
                           {v.name}: {v.options.join(', ')}
                         </span>
@@ -238,7 +238,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
 
                 <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 flex items-center justify-between">
                   <span className="text-xs text-subtle-foreground">Regular Price</span>
-                  <span className="font-mono font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+                  <span className="font-mono font-black text-base text-foreground">
                     {formatMinorUnits(prod.price, prod.currency)}
                   </span>
                 </div>

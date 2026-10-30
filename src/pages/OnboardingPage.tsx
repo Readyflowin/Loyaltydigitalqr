@@ -247,7 +247,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
     return (
       <div className="py-12 sm:py-20 max-w-4xl mx-auto px-4 sm:px-6">
         {/* Completion Card */}
-        <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] p-8 sm:p-12 shadow-2xl">
+        <div className="rounded-3xl bg-card border border-border p-8 sm:p-12 shadow-2xl">
           
           {/* Header */}
           <div className="text-center max-w-xl mx-auto">
@@ -259,20 +259,20 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               <span>SETUP COMPLETE</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+            <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight text-foreground">
               Your business workspace is configured!
             </h1>
 
-            <p className="mt-3 text-sm sm:text-base text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground">
               <strong>{completedResult.businessName}</strong> is ready. Next, create your counter QR code so customers can join your loyalty card.
             </p>
           </div>
 
           {/* Configured Summary Grid */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-2xl bg-muted border border-border">
             {/* Business Identity */}
             <div className="space-y-3">
-              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold block">
                 BUSINESS IDENTITY & REGION
               </span>
               <div className="flex items-center gap-3">
@@ -283,35 +283,35 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   <BusinessIcon iconName={currentBusinessConfig.iconName} className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+                  <h3 className="font-heading font-bold text-base text-foreground">
                     {completedResult.businessName}
                   </h3>
-                  <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                  <p className="text-xs text-muted-foreground">
                     {currentBusinessConfig.title} · {completedResult.region === 'india' ? 'India (INR)' : 'United States (USD)'}
                   </p>
                 </div>
               </div>
 
-              <div className="text-xs text-[#60646C] dark:text-[#AAA499] space-y-1 pt-2">
-                <div>Email: <strong className="text-[#111318] dark:text-[#F7F3EB]">{completedResult.contactEmail}</strong></div>
-                <div>Timezone: <strong className="text-[#111318] dark:text-[#F7F3EB]">{completedResult.timeZone}</strong></div>
-                <div>Plan: <strong className="text-[#111318] dark:text-[#F7F3EB]">{completedResult.region === 'india' ? '₹299/mo (30 days free)' : '$10/mo (30 days free)'}</strong></div>
+              <div className="text-xs text-muted-foreground space-y-1 pt-2">
+                <div>Email: <strong className="text-foreground">{completedResult.contactEmail}</strong></div>
+                <div>Timezone: <strong className="text-foreground">{completedResult.timeZone}</strong></div>
+                <div>Plan: <strong className="text-foreground">{completedResult.region === 'india' ? '₹299/mo (30 days free)' : '$10/mo (30 days free)'}</strong></div>
               </div>
             </div>
 
             {/* Loyalty Card Summary */}
             <div className="space-y-3">
-              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold block">
                 CONFIGURED PROGRAM
               </span>
-              <div className="p-3.5 rounded-xl bg-white dark:bg-[#121211] border border-black/5 dark:border-white/5">
-                <div className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
+              <div className="p-3.5 rounded-xl bg-card border border-black/5 dark:border-white/5">
+                <div className="font-heading font-bold text-sm text-foreground">
                   {completedResult.programName}
                 </div>
                 <div className="text-xs text-[#3027F5] dark:text-[#E4C174] font-semibold mt-0.5">
                   {completedResult.stampsRequired} visits = {completedResult.rewardDescription}
                 </div>
-                <div className="mt-2 flex items-center gap-2 text-xs text-[#60646C] dark:text-[#AAA499]">
+                <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
                   <Check className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Customers join by scanning your counter QR code</span>
                 </div>
@@ -321,7 +321,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
           {/* Staff PIN */}
           {createdStaffPin && (
-            <div className="mt-8 p-4 rounded-2xl bg-[#3027F5]/5 dark:bg-[#E4C174]/10 border border-[#3027F5]/20 dark:border-[#E4C174]/25 text-xs text-[#111318] dark:text-[#F7F3EB]">
+            <div className="mt-8 p-4 rounded-2xl bg-[#3027F5]/5 dark:bg-[#E4C174]/10 border border-[#3027F5]/20 dark:border-[#E4C174]/25 text-xs text-foreground">
               <div className="flex items-start gap-2.5">
                 <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
                 <div>
@@ -338,7 +338,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border text-xs font-semibold text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               >
                 <span>Return to Loyaltydigitalqr Homepage</span>
               </Link>
@@ -380,7 +380,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4">
           <div>
-            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499]">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
               <Link href="/" className="hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors">
                 Home
               </Link>
@@ -389,11 +389,11 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 Step {formData.currentStep} of 5
               </span>
               <span>·</span>
-              <span className="text-[#111318] dark:text-[#F7F3EB] font-bold">
+              <span className="text-foreground font-bold">
                 {stepTitles[formData.currentStep - 1]}
               </span>
             </div>
-            <h1 className="mt-1 text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+            <h1 className="mt-1 text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
               {formData.currentStep === 1 && 'Tell us about your business'}
               {formData.currentStep === 2 && 'Select your business modules'}
               {formData.currentStep === 3 && 'Provide your contact details'}
@@ -403,12 +403,12 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-xs font-mono font-bold text-muted-foreground">
               {formData.region === 'india' ? 'India Plan · ₹299/mo' : 'US Plan · $10/mo'}
             </span>
             <Link
               href="/"
-              className="text-xs text-[#60646C] dark:text-[#AAA499] hover:text-[#111318] dark:hover:text-[#E4C174] underline"
+              className="text-xs text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] underline"
             >
               Cancel
             </Link>
@@ -439,7 +439,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   isCurrent
                     ? 'text-[#3027F5] dark:text-[#E4C174] font-bold'
                     : isDone
-                    ? 'text-[#111318] dark:text-[#F7F3EB] cursor-pointer hover:underline'
+                    ? 'text-foreground cursor-pointer hover:underline'
                     : 'text-[#A0A2A8] dark:text-[#666] cursor-not-allowed'
                 }`}
               >
@@ -451,7 +451,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
       </div>
 
       {/* Main Form Step Card */}
-      <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 sm:p-10 shadow-xl transition-all">
+      <div className="rounded-3xl bg-card border border-border p-6 sm:p-10 shadow-xl transition-all">
         
         {/* ========================================================= */}
         {/* STEP 1: BUSINESS BASICS                                    */}
@@ -460,7 +460,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           <div className="space-y-8 animate-in fade-in duration-150">
             {/* Business Name Field */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                 Business Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -482,7 +482,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base font-medium focus:outline-none focus:ring-2 ${
                   validationErrors.businessName
                     ? 'border-red-500 bg-red-50/20 dark:bg-red-950/20 text-red-900 dark:text-red-200 focus:ring-red-500'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-muted text-foreground focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
                 }`}
               />
               {validationErrors.businessName && (
@@ -496,10 +496,10 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             {/* Business Type Selector (Cards) */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-foreground uppercase">
                   Business Type <span className="text-red-500">*</span>
                 </label>
-                <span className="text-xs text-[#60646C] dark:text-[#AAA499]">
+                <span className="text-xs text-muted-foreground">
                   Configures recommended features
                 </span>
               </div>
@@ -524,7 +524,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                           className={`w-9 h-9 rounded-xl flex items-center justify-center ${
                             isSelected
                               ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
-                              : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]'
+                              : 'bg-black/5 dark:bg-white/5 text-muted-foreground'
                           }`}
                         >
                           <BusinessIcon iconName={bt.iconName} className="w-4 h-4" />
@@ -535,10 +535,10 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                           </div>
                         )}
                       </div>
-                      <div className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
+                      <div className="font-heading font-bold text-sm text-foreground">
                         {bt.title}
                       </div>
-                      <div className="text-xs text-[#60646C] dark:text-[#AAA499] mt-1 leading-snug">
+                      <div className="text-xs text-muted-foreground mt-1 leading-snug">
                         {bt.subtitle}
                       </div>
                     </button>
@@ -550,7 +550,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             {/* Operating Region & Timezone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Operating Region <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -563,7 +563,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       timeZone: reg === 'india' ? 'Asia/Kolkata' : 'America/New_York',
                     }));
                   }}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 >
                   <option value="usa">United States (USD — $10/mo)</option>
                   <option value="india">India (INR — ₹299/mo)</option>
@@ -572,13 +572,13 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Operating Timezone
                 </label>
                 <select
                   value={formData.timeZone}
                   onChange={(e) => setFormData((prev) => ({ ...prev, timeZone: e.target.value }))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 >
                   {TIMEZONE_OPTIONS.map((tz) => (
                     <option key={tz.value} value={tz.value}>
@@ -600,7 +600,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                 TAILORED FOR {currentBusinessConfig.title.toUpperCase()}
               </span>
-              <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Select the capabilities you want active in your counter workspace. Available modules are ready to configure immediately.
               </p>
             </div>
@@ -632,7 +632,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${
                         isChecked
                           ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
-                          : 'border-2 border-[#868A94] bg-white dark:bg-[#121211]'
+                          : 'border-2 border-[#868A94] bg-card'
                       }`}
                     >
                       {isChecked && <Check className="w-4 h-4 stroke-[3]" />}
@@ -640,7 +640,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+                        <h3 className="font-heading font-bold text-base text-foreground">
                           {mod.name}
                         </h3>
 
@@ -656,7 +656,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                         )}
                       </div>
 
-                      <p className="mt-1 text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
                         {mod.description}
                       </p>
                     </div>
@@ -666,7 +666,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             </div>
 
             {/* Informative Note */}
-            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-3.5 rounded-xl bg-muted border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-muted-foreground">
               <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <div>
                 <strong>Staged Feature Rollout:</strong> Digital Loyalty Cards with counter QR generation are fully ready today. Planned modules can be enabled now and will activate seamlessly as their staged tasks complete.
@@ -684,14 +684,14 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                 CONTACT & LOCATION
               </span>
-              <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Provide public details for customer receipts and staff stamp notifications.
               </p>
             </div>
 
             {/* Contact Email */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                 Contact & Administration Email <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -709,7 +709,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm font-medium focus:outline-none focus:ring-2 ${
                     validationErrors.contactEmail
                       ? 'border-red-500 bg-red-50/20 dark:bg-red-950/20 text-red-900 dark:text-red-200'
-                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
+                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-muted text-foreground focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
                   }`}
                 />
               </div>
@@ -723,7 +723,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
             {/* Business Address */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                 Storefront / Venue Address (Optional)
               </label>
               <div className="relative">
@@ -733,7 +733,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                   value={formData.address}
                   onChange={(e) => setFormData((prev) => ({ ...prev, address: e.target.value }))}
                   placeholder="e.g. 142 Elm St, Suite B or Market Road"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
             </div>
@@ -741,7 +741,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             {/* Phone Number */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Business Phone (Optional)
                 </label>
                 <div className="relative">
@@ -751,13 +751,13 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                     value={formData.phoneNumber}
                     onChange={(e) => setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))}
                     placeholder="+1 (555) 000-0000"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Location Type
                 </label>
                 <select
@@ -768,7 +768,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       locationType: e.target.value as 'first' | 'additional',
                     }))
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 >
                   <option value="first">First / Primary Location</option>
                   <option value="additional">Additional Branch / Multi-Location</option>
@@ -789,14 +789,14 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                   PROGRAM REWARDS
                 </span>
-                <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                   Design the incentive that brings customers back. You can edit this anytime.
                 </p>
               </div>
 
               {/* Program Name */}
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Loyalty Program Title <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -809,13 +809,13 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                     }
                   }}
                   placeholder="e.g. Regulars Club, VIP Punch Pass"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
 
               {/* Stamps Required */}
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-2">
+                <label className="block text-xs font-bold text-foreground uppercase mb-2">
                   Visits Required for Reward: <span className="text-[#3027F5] dark:text-[#E4C174] font-black">{formData.stampsRequired} visits</span>
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -833,7 +833,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                         formData.stampsRequired === num
                           ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                          : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499] hover:bg-black/10 dark:hover:bg-white/10'
+                          : 'bg-black/5 dark:bg-white/5 text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10'
                       }`}
                     >
                       {num} Stamps
@@ -844,7 +844,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
               {/* Reward Description */}
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                   Reward Unlocked Upon Completion <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -857,13 +857,13 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                     }
                   }}
                   placeholder="e.g. 1 Free Coffee, 15% off haircut, Free dessert"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
 
               {/* Card Accent Color */}
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-2">
+                <label className="block text-xs font-bold text-foreground uppercase mb-2">
                   Brand Color Accent
                 </label>
                 <div className="flex items-center gap-3">
@@ -889,7 +889,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
             {/* Live Interactive Card Preview */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] mb-3 font-semibold">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground mb-3 font-semibold">
                 LIVE CUSTOMER PASS PREVIEW
               </span>
               <LoyaltyCardPreview
@@ -901,7 +901,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 accentColor={formData.accentColor}
                 theme={theme}
               />
-              <p className="mt-3 text-xs text-center text-[#60646C] dark:text-[#AAA499]">
+              <p className="mt-3 text-xs text-center text-muted-foreground">
                 Customers view this card in mobile Safari or Chrome — no app needed.
               </p>
             </div>
@@ -917,27 +917,27 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                 CONFIGURATION SUMMARY
               </span>
-              <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Review your details before creating your workspace.
               </p>
             </div>
 
             <div className="space-y-4">
               {/* Section 1: Business Basics */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl bg-muted border border-border flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-muted-foreground font-bold block">
                     1. BUSINESS BASICS
                   </span>
-                  <div className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+                  <div className="font-heading font-black text-lg text-foreground mt-0.5">
                     {formData.businessName}
                   </div>
-                  <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
-                    Type: <strong className="text-[#111318] dark:text-[#F7F3EB]">{currentBusinessConfig.title}</strong>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Type: <strong className="text-foreground">{currentBusinessConfig.title}</strong>
                     {' · '}
-                    Region: <strong className="text-[#111318] dark:text-[#F7F3EB]">{formData.region === 'india' ? 'India' : 'United States'}</strong>
+                    Region: <strong className="text-foreground">{formData.region === 'india' ? 'India' : 'United States'}</strong>
                     {' · '}
-                    Timezone: <strong className="text-[#111318] dark:text-[#F7F3EB]">{formData.timeZone}</strong>
+                    Timezone: <strong className="text-foreground">{formData.timeZone}</strong>
                   </div>
                 </div>
                 <button
@@ -950,9 +950,9 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               </div>
 
               {/* Section 2: Selected Modules */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl bg-muted border border-border flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-muted-foreground font-bold block">
                     2. ACTIVE & PLANNED MODULES
                   </span>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -966,7 +966,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium ${
                             isAvail
                               ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
-                              : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]'
+                              : 'bg-black/5 dark:bg-white/5 text-muted-foreground'
                           }`}
                         >
                           {isAvail ? <Check className="w-3 h-3 text-emerald-600" /> : <Clock className="w-3 h-3" />}
@@ -986,15 +986,15 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               </div>
 
               {/* Section 3: Contact Details */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl bg-muted border border-border flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-muted-foreground font-bold block">
                     3. CONTACT & LOCATION
                   </span>
-                  <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1 space-y-0.5">
-                    <div>Contact: <strong className="text-[#111318] dark:text-[#F7F3EB]">{formData.contactEmail}</strong></div>
-                    {formData.address && <div>Address: <strong className="text-[#111318] dark:text-[#F7F3EB]">{formData.address}</strong></div>}
-                    <div>Location: <strong className="text-[#111318] dark:text-[#F7F3EB]">{formData.locationType === 'first' ? 'Primary Storefront' : 'Additional Branch'}</strong></div>
+                  <div className="text-xs text-muted-foreground mt-1 space-y-0.5">
+                    <div>Contact: <strong className="text-foreground">{formData.contactEmail}</strong></div>
+                    {formData.address && <div>Address: <strong className="text-foreground">{formData.address}</strong></div>}
+                    <div>Location: <strong className="text-foreground">{formData.locationType === 'first' ? 'Primary Storefront' : 'Additional Branch'}</strong></div>
                   </div>
                 </div>
                 <button
@@ -1007,12 +1007,12 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               </div>
 
               {/* Section 4: Loyalty Program */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl bg-muted border border-border flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-muted-foreground font-bold block">
                     4. LOYALTY PROGRAM
                   </span>
-                  <div className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+                  <div className="font-heading font-bold text-base text-foreground mt-0.5">
                     {formData.programName}
                   </div>
                   <div className="text-xs text-[#3027F5] dark:text-[#E4C174] font-semibold mt-1">
@@ -1030,7 +1030,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             </div>
 
             {/* Confirmation notice */}
-            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-3.5 rounded-xl bg-muted border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] flex items-start gap-2.5 text-xs text-muted-foreground">
               <Info className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <div>
                 <strong>Ready to create your workspace.</strong> Your business, loyalty program and first location will be saved to your account. You can change any of these details later in Settings.
@@ -1047,7 +1047,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
             <button
               type="button"
               onClick={handlePrevStep}
-              className="px-5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] text-xs sm:text-sm font-semibold text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-border text-xs sm:text-sm font-semibold text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>

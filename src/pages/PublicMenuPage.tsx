@@ -64,15 +64,15 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB]">
-        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4 shadow-xl">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Utensils className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Digital Menu Unavailable
           </h2>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             The menu for "<strong>{slug}</strong>" could not be found or is currently saved as a private draft. Please ask your server or scan the table QR code again.
           </p>
           <button
@@ -141,7 +141,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] pb-24 transition-colors duration-200">
+    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-24 transition-colors duration-200">
       {/* 1. Mobile-First Sticky Top Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
@@ -154,10 +154,10 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               {business.logoInitial}
             </div>
             <div className="min-w-0">
-              <h1 className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB] truncate leading-tight">
+              <h1 className="font-heading font-black text-sm sm:text-base text-foreground truncate leading-tight">
                 {business.name}
               </h1>
-              <div className="flex items-center gap-1 text-xs text-[#60646C] dark:text-[#D0CBC1] truncate">
+              <div className="flex items-center gap-1 text-xs text-muted-foreground truncate">
                 <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.locationName}</span>
               </div>
@@ -172,7 +172,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                 type="button"
                 data-testid="table-selector-btn"
                 onClick={() => setTablePickerOpen(!tablePickerOpen)}
-                className="px-2.5 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 py-1.5 rounded-xl border border-border bg-muted text-foreground text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer"
               >
                 <span>{table ? table.displayName : 'Select Table'}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-subtle-foreground" />
@@ -180,7 +180,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
               {/* Table Switcher Dropdown */}
               {tablePickerOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-2 z-40 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-card border border-border shadow-2xl p-2 z-40 animate-in fade-in zoom-in-95 duration-100">
                   <div className="text-xs uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
                     Choose Your Seat
                   </div>
@@ -192,7 +192,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                       className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer transition-colors ${
                         table?.id === t.id
                           ? 'bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
-                          : 'text-[#111318] dark:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916]'
+                          : 'text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916]'
                       }`}
                     >
                       <span>{t.displayName}</span>
@@ -219,16 +219,16 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
       {/* 2. Menu Banner & Description */}
       <div className="max-w-4xl mx-auto px-4 pt-6 pb-4">
-        <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-2">
+        <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#1A1916] border border-border shadow-xs space-y-2">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               DIGITAL MENU & INSTANT ORDERING
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl sm:text-2xl font-heading font-black text-foreground">
             {menu.name}
           </h2>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed max-w-2xl">
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl">
             {menu.description || 'Select freshly crafted beverages and kitchen specials to order directly to your table.'}
           </p>
         </div>
@@ -246,7 +246,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search latte, matcha, avocado toast, pastries..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] shadow-xs"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-border bg-card text-foreground text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] shadow-xs"
             />
           </div>
 
@@ -259,7 +259,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 activeCategory === 'all'
                   ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                  : 'bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#60646C] dark:text-[#D0CBC1]'
+                  : 'bg-card border border-border text-muted-foreground'
               }`}
             >
               All Items ({items.length})
@@ -278,7 +278,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                   className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                     isSelected
                       ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                      : 'bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#60646C] dark:text-[#D0CBC1]'
+                      : 'bg-card border border-border text-muted-foreground'
                   }`}
                 >
                   <span>{cat.name}</span>
@@ -312,7 +312,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                   className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap ${
                     isSel
                       ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
-                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#141412] text-subtle-foreground'
+                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-card text-subtle-foreground'
                   }`}
                 >
                   {label}
@@ -326,12 +326,12 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
       {/* 4. Menu Items Section */}
       <main className="max-w-4xl mx-auto px-4 pt-4">
         {filteredItems.length === 0 ? (
-          <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
+          <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
             <Utensils className="w-10 h-10 mx-auto text-subtle-foreground" />
-            <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+            <h4 className="font-heading font-black text-base text-foreground">
               No dishes match your filter
             </h4>
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs text-muted-foreground">
               Try searching for something else or tap another category.
             </p>
           </div>
@@ -347,26 +347,26 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                 <div
                   key={item.id}
                   data-testid={`public-item-card-${item.id}`}
-                  className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all flex flex-col justify-between ${
+                  className={`p-5 rounded-3xl bg-card border transition-all flex flex-col justify-between ${
                     isSoldOut
-                      ? 'border-amber-200 dark:border-amber-900/30 opacity-75'
-                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:shadow-md'
+                      ? 'border-border'
+                      : 'border-border shadow-xs hover:shadow-md'
                   }`}
                 >
                   <div>
                     {/* Title & Price */}
                     <div className="flex items-start justify-between gap-2 mb-1.5">
-                      <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                      <h3 className="font-heading font-black text-base text-foreground leading-tight">
                         {item.name}
                       </h3>
-                      <span className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] whitespace-nowrap">
+                      <span className="font-heading font-black text-base text-foreground whitespace-nowrap">
                         {formatMinorUnits(item.price, item.currency)}
                       </span>
                     </div>
 
                     {/* Description */}
                     {item.description && (
-                      <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] line-clamp-2 mb-3 leading-relaxed">
+                      <p className="text-xs text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
                         {item.description}
                       </p>
                     )}
@@ -376,7 +376,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                       {item.dietary?.map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] border border-[#E5E3DB] dark:border-white/5"
+                          className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-muted text-muted-foreground border border-[#E5E3DB] dark:border-white/5"
                         >
                           {tag === 'veg'
                             ? 'Vegetarian'
