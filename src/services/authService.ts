@@ -61,6 +61,11 @@ function toAppUser(user: User): AppUser {
   };
 }
 
+/** The verification link brings the user back to the app to continue setup. */
+function verificationSettings() {
+  return { url: `${window.location.origin}/onboarding`, handleCodeInApp: false };
+}
+
 /** Human-readable messages for Firebase Auth error codes. */
 export function describeAuthError(err: unknown): string {
   const code = (err as { code?: string })?.code || '';
@@ -169,7 +174,7 @@ class AuthService {
       await updateProfile(cred.user, { displayName: displayName.trim() });
     }
     try {
-      await sendEmailVerification(cred.user);
+      await sendEmailVerification(cred.user, verificationSettings());
     } catch (err) {
       console.warn('Could not send verification email', err);
     }
@@ -180,16 +185,31 @@ class AuthService {
 
   async resendVerificationEmail(): Promise<void> {
     if (!auth.currentUser) throw new Error('Please sign in first.');
-    await sendEmailVerification(auth.currentUser);
+    await sendEmailVerification(auth.currentUser, verificationSettings());
   }
 
-  /** Re-read the account (e.g. after the user clicked the verification link). */
+  /** Email/password accounts must confirm their address; Google accounts arrive verified. */
+  needsEmailVerification(): boolean {
+    return !!this.user && !this.user.emailVerified;
+  }
+
+  /**
+   * Re-read the account (e.g. after the user clicked the verification link).
+   * When it has just become verified, refresh the ID token so Firestore rules
+   * see email_verified = true, then notify listeners.
+   */
   async reloadUser(): Promise<AppUser | null> {
     if (!auth.currentUser) return null;
+    const wasVerified = this.user?.emailVerified ?? false;
     await auth.currentUser.reload();
-    await auth.currentUser.getIdToken(true);
-    this.user = toAppUser(auth.currentUser);
-    this.listeners.forEach((l) => l(this.user));
+    const next = toAppUser(auth.currentUser);
+    if (next.emailVerified && !wasVerified) {
+      await auth.currentUser.getIdToken(true);
+    }
+    this.user = next;
+    if (next.emailVerified !== wasVerified) {
+      this.listeners.forEach((l) => l(this.user));
+    }
     return this.user;
   }
 

@@ -17,6 +17,7 @@ import { orderService } from '../services/orderService';
 import { authService } from '../services/authService';
 import { useRouter } from '../router';
 import { bizStore } from '../lib/bizStore';
+import { VerifyEmailScreen } from '../components/auth/VerifyEmailScreen';
 import type { Business } from '../types/business';
 
 interface KitchenDisplayPageProps {
@@ -399,6 +400,8 @@ export const KitchenDisplayPage: React.FC<KitchenDisplayPageProps> = (props) => 
     if (!user) navigate('/login?redirect=/dashboard/kitchen', { replace: true });
     else if (loadState === 'ready' && !active) navigate('/dashboard', { replace: true });
   }, [user, loadState, active, navigate]);
+
+  if (user && !user.emailVerified) return <VerifyEmailScreen />;
 
   const message = !user
     ? 'Redirecting to sign in…'

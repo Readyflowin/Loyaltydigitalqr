@@ -23,6 +23,7 @@ import { Link, useRouter } from '../router';
 import { BUSINESS_TYPES, TIMEZONE_OPTIONS, CARD_COLORS } from '../data/onboardingData';
 import { authService, getDefaultOnboardingData } from '../services/authService';
 import { businessService } from '../services/businessService';
+import { VerifyEmailScreen } from '../components/auth/VerifyEmailScreen';
 import { LoyaltyCardPreview } from '../components/onboarding/LoyaltyCardPreview';
 import type { ThemeMode } from '../types';
 import type { BusinessType, OperatingRegion, OnboardingData } from '../types/onboarding';
@@ -57,6 +58,8 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
   const initialRegion: OperatingRegion = regionParam === 'india' ? 'india' : 'usa';
   const planParam = searchParams.get('plan') || 'starter';
   const currentUser = authService.getCurrentUser();
+  const [, setAuthVersion] = useState(0);
+  useEffect(() => authService.subscribe(() => setAuthVersion((v) => v + 1)), []);
 
   // Creating a business requires an account.
   useEffect(() => {
@@ -203,6 +206,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
   };
 
   if (!currentUser) return null;
+  if (authService.needsEmailVerification()) return <VerifyEmailScreen />;
 
   // -------------------------------------------------------------
   // COMPLETION VIEW

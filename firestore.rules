@@ -112,8 +112,9 @@ service cloud.firestore {
       // Members only. The dashboard query is `where memberUids array-contains uid`.
       allow read: if signedIn() && request.auth.uid in resource.data.memberUids;
 
-      // Creating a workspace: the creator is the sole owner.
+      // Creating a workspace: a verified account becomes the sole owner.
       allow create: if signedIn()
+        && request.auth.token.email_verified == true
         && request.resource.data.ownerUid == request.auth.uid
         && request.resource.data.memberUids == [request.auth.uid]
         && request.resource.data.members.keys().hasOnly([request.auth.uid])

@@ -35,6 +35,7 @@ import { useRouter } from '../router';
 import type { ThemeMode } from '../types';
 import type { Business, BusinessMetrics, BusinessActivity, ChecklistItem, BusinessNotification, BusinessInvite } from '../types/business';
 import { bizStore } from '../lib/bizStore';
+import { VerifyEmailScreen } from '../components/auth/VerifyEmailScreen';
 import type { AppUser } from '../types/auth';
 import { X, Flame, Loader2 } from 'lucide-react';
 
@@ -738,6 +739,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = (props) => {
   }, [user, loadState, active, invites.length, navigate]);
 
   if (!user) return <GateScreen title="Redirecting to sign in…" />;
+  if (!user.emailVerified) return <VerifyEmailScreen />;
   if (loadState === 'error') {
     return (
       <GateScreen
