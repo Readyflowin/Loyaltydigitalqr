@@ -51,10 +51,10 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               SEAMLESS 3-STEP SETUP
             </span>
           </div>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-foreground">
             How it works
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#60646C] dark:text-[#D0CBC1]">
+          <p className="mt-3 text-base sm:text-lg text-muted-foreground">
             No complex POS integration. No software installations. Designed to be launched in minutes by any busy business owner.
           </p>
         </div>
@@ -83,7 +83,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                       <span className="font-mono text-sm font-black text-[#111318]/40 dark:text-[#E4C174]/60">
                         {step.num}
                       </span>
-                      <span className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+                      <span className="font-heading font-bold text-base text-foreground">
                         {step.title}
                       </span>
                     </div>
@@ -93,7 +93,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                           ? theme === 'light'
                             ? 'bg-[#3027F5]/10 text-[#3027F5]'
                             : 'bg-[#E4C174]/15 text-[#E4C174]'
-                          : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]'
+                          : 'bg-black/5 dark:bg-white/5 text-muted-foreground'
                       }`}
                     >
                       {step.badge}
@@ -102,10 +102,10 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
 
                   {isActive && (
                     <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/5 animate-in fade-in duration-200">
-                      <h4 className="font-semibold text-sm text-[#111318] dark:text-[#F7F3EB]">
+                      <h4 className="font-semibold text-sm text-foreground">
                         {step.headline}
                       </h4>
-                      <p className="mt-1 text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+                      <p className="mt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -137,7 +137,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               {/* Step 01 Preview: Card Design Workshop */}
               {activeStep === 0 && (
                 <div className="w-full max-w-md bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg animate-in zoom-in-95 duration-200">
-                  <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5 text-xs font-mono text-[#60646C] dark:text-[#AAA499]">
+                  <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5 text-xs font-mono text-muted-foreground">
                     <span>STEP 1: CARD BUILDER</span>
                     <span className="text-[#3027F5] dark:text-[#E4C174] font-bold">READY</span>
                   </div>
@@ -148,10 +148,10 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                         <Coffee className="w-5 h-5 text-white dark:text-[#11100D]" />
                       </div>
                       <div>
-                        <div className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
+                        <div className="font-heading font-bold text-sm text-foreground">
                           Your Business Name
                         </div>
-                        <div className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                        <div className="text-xs text-muted-foreground">
                           Collect 8 stamps = 1 Free Reward
                         </div>
                       </div>
@@ -175,12 +175,12 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
 
                   <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
                     <div className="p-2.5 rounded-lg bg-black/5 dark:bg-white/5">
-                      <div className="text-[#60646C] dark:text-[#AAA499]">Validation Mode</div>
-                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">Secret 4-Digit PIN</div>
+                      <div className="text-muted-foreground">Validation Mode</div>
+                      <div className="font-bold text-foreground mt-0.5">Secret 4-Digit PIN</div>
                     </div>
                     <div className="p-2.5 rounded-lg bg-black/5 dark:bg-white/5">
-                      <div className="text-[#60646C] dark:text-[#AAA499]">Customer Card</div>
-                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] mt-0.5">Any phone browser</div>
+                      <div className="text-muted-foreground">Customer Card</div>
+                      <div className="font-bold text-foreground mt-0.5">Any phone browser</div>
                     </div>
                   </div>
                 </div>
@@ -189,13 +189,13 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               {/* Step 02 Preview: Counter QR Standee Printout */}
               {activeStep === 1 && (
                 <div className="w-full max-w-sm bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-2xl text-center animate-in zoom-in-95 duration-200">
-                  <div className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
+                  <div className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
                     PRINTABLE COUNTER STANDEE
                   </div>
-                  <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-2">
+                  <h3 className="font-heading font-black text-lg text-foreground mt-2">
                     Join Our VIP Loyalty Club
                   </h3>
-                  <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     Scan with your phone camera. No app download required.
                   </p>
 

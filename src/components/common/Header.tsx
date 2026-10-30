@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="p-2.5 bg-white dark:bg-[#1A1916] rounded-2xl shadow-xl border border-[#E7E5DE] dark:border-[rgba(228,193,116,0.25)] animate-in fade-in slide-in-from-top-1 duration-150">
                     <Link
                       href="/industries/cafes"
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground"
                       onClick={() => setBusinessesDropdownOpen(false)}
                     >
                       <Coffee className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </Link>
                     <Link
                       href="/industries/salons"
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground"
                       onClick={() => setBusinessesDropdownOpen(false)}
                     >
                       <Scissors className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
                         setBusinessesDropdownOpen(false);
                         handleNavClick('#industries');
                       }}
-                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] cursor-pointer"
+                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground cursor-pointer"
                     >
                       <UtensilsCrossed className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
                       <span>All Industries</span>
@@ -153,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({
                         setResourcesDropdownOpen(false);
                         onOpenVideoDemo();
                       }}
-                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] cursor-pointer"
+                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground cursor-pointer"
                     >
                       <Play className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
                       <span>Watch 1 min demo</span>
@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
                         setResourcesDropdownOpen(false);
                         handleNavClick('#faq');
                       }}
-                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] cursor-pointer"
+                      className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground cursor-pointer"
                     >
                       <HelpCircle className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
                       <span>FAQ</span>
@@ -179,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             <Link
               href="/login"
-              className="text-[14px] xl:text-[15px] font-medium text-[#111318] dark:text-[#F7F3EB] hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors cursor-pointer"
+              className="text-[14px] xl:text-[15px] font-medium text-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors cursor-pointer"
             >
               Log in
             </Link>
@@ -198,7 +198,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -211,7 +211,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#F8F7F2] dark:bg-[#121211] border-b border-[#E7E5DE] dark:border-[rgba(228,193,116,0.2)] px-6 py-6 shadow-xl">
-          <div className="flex flex-col gap-4 text-sm font-semibold text-[#111318] dark:text-[#F7F3EB]">
+          <div className="flex flex-col gap-4 text-sm font-semibold text-foreground">
             <button
               type="button"
               onClick={() => handleNavClick('#how-it-works')}

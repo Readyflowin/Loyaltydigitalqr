@@ -44,10 +44,10 @@ export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> =
             </span>
           </div>
 
-          <h2 className="mt-5 text-3xl sm:text-5xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="mt-5 text-3xl sm:text-5xl font-heading font-black tracking-tight text-foreground">
             One card. Multiple stores.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#60646C] dark:text-[#D0CBC1] max-w-2xl mx-auto">
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             Every loyalty balance, organized in one place. No paper cards lost in wallets. No app store friction.
           </p>
         </div>
@@ -57,20 +57,20 @@ export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> =
           {pillars.map((pillar, idx) => (
             <div
               key={idx}
-              className="p-7 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="p-7 rounded-2xl bg-card border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               <div>
                 <div className="w-8 h-8 rounded-lg bg-black/5 dark:bg-[#1F1E1A] text-[#3027F5] dark:text-[#E4C174] font-mono font-bold text-xs flex items-center justify-center">
                   0{idx + 1}
                 </div>
-                <h3 className="mt-4 font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] tracking-tight">
+                <h3 className="mt-4 font-heading font-black text-lg text-foreground tracking-tight">
                   {pillar.title}
                 </h3>
                 <div className="text-[13px] font-medium text-[#3027F5] dark:text-[#E4C174] mt-1.5 leading-snug">
                   {pillar.subtitle}
                 </div>
               </div>
-              <p className="mt-4 text-[14.5px] text-[#60646C] dark:text-[#D0CBC1] leading-[1.6]">
+              <p className="mt-4 text-[14.5px] text-muted-foreground leading-[1.6]">
                 {pillar.desc}
               </p>
             </div>
@@ -80,7 +80,7 @@ export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> =
         {/* Interactive Showcase Box */}
         <div className="mt-16 pt-12 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)]">
           <div className="text-center mb-8">
-            <span className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
+            <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
               INTERACTIVE PREVIEW · CLICK TO TEST SWITCHING STORES
             </span>
           </div>

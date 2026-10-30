@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { X, ArrowRight, QrCode, Coffee, Scissors, Utensils, Dumbbell, ShoppingBag, Check } from 'lucide-react';
 import type { ThemeMode } from '../../types';
+import { LoyaltyCard } from '../ui';
+import { toBusinessType } from '../../data/cardThemes';
 
 interface CardBuilderModalProps {
   isOpen: boolean;
@@ -55,7 +57,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-3xl rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Close Button */}
         <button
@@ -73,10 +75,10 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
             <div className="w-16 h-16 rounded-full bg-[#D6FF38] dark:bg-[#E4C174] text-[#111318] dark:text-[#11100D] font-bold flex items-center justify-center mx-auto shadow-md">
               <Check className="w-8 h-8 stroke-[3]" />
             </div>
-            <h3 className="mt-5 text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+            <h3 className="mt-5 text-2xl font-heading font-black text-foreground">
               Your Loyalty Card is Ready!
             </h3>
-            <p className="mt-2 text-sm text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+            <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
               We’ve activated your 30-day free trial for <strong>{businessName}</strong>. Check your inbox ({email || 'your email'}) for your printable counter QR kit.
             </p>
 
@@ -102,10 +104,10 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                 INTERACTIVE CARD BUILDER
               </span>
             </div>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+            <h2 className="mt-1 text-2xl sm:text-3xl font-heading font-black text-foreground">
               Build your digital loyalty card
             </h2>
-            <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Customize your reward, test how it looks on mobile, and claim your 30-day trial.
             </p>
 
@@ -115,7 +117,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Business Name */}
                 <div>
-                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-foreground uppercase mb-1">
                     Business Name
                   </label>
                   <input
@@ -124,13 +126,13 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
                     placeholder="e.g. Goodday Coffee"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                   />
                 </div>
 
                 {/* Industry Category */}
                 <div>
-                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-foreground uppercase mb-1">
                     Industry Type
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -145,7 +147,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                           className={`flex items-center gap-2 p-2 rounded-xl text-left border text-xs font-medium transition-all ${
                             isSel
                               ? 'bg-black/5 dark:bg-[#1E1D19] border-[#3027F5] dark:border-[#E4C174] text-[#111318] dark:text-[#E4C174] font-bold'
-                              : 'bg-transparent border-[#E5E3DB] dark:border-white/10 text-[#60646C] dark:text-[#D0CBC1]'
+                              : 'bg-transparent border-[#E5E3DB] dark:border-white/10 text-muted-foreground'
                           }`}
                         >
                           <Icon className="w-3.5 h-3.5 flex-shrink-0" />
@@ -158,7 +160,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Stamps Milestone */}
                 <div>
-                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-foreground uppercase mb-1">
                     Stamps Required for Reward
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -170,7 +172,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                         className={`py-2 rounded-xl border text-xs font-bold font-mono transition-all ${
                           stampsGoal === num
                             ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] border-transparent'
-                            : 'bg-transparent border-[#E5E3DB] dark:border-white/10 text-[#60646C] dark:text-[#D0CBC1]'
+                            : 'bg-transparent border-[#E5E3DB] dark:border-white/10 text-muted-foreground'
                         }`}
                       >
                         {num} Visits
@@ -181,7 +183,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
 
                 {/* Reward Description */}
                 <div>
-                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-foreground uppercase mb-1">
                     Reward Unlocked
                   </label>
                   <input
@@ -190,13 +192,13 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                     value={rewardTitle}
                     onChange={(e) => setRewardTitle(e.target.value)}
                     placeholder="e.g. 1 Free Coffee"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                   />
                 </div>
 
                 {/* Email Input */}
                 <div>
-                  <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block text-xs font-bold text-foreground uppercase mb-1">
                     Your Work Email (For Free 30-Day Trial)
                   </label>
                   <input
@@ -205,7 +207,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="owner@yourbusiness.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                   />
                 </div>
 
@@ -215,25 +217,20 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                     theme === 'light'
                       ? 'bg-[#3027F5] text-white hover:bg-[#2319D8]'
                       : 'bg-[#E4C174] text-[#11100D] hover:bg-[#EBD294]'
-                  }`} > <span>Claim 30-Day Free Trial</span> <ArrowRight className="w-4 h-4" /> </button> <div className="text-xs text-center text-[#60646C] dark:text-[#AAA499]"> No credit card required · Instant setup in under 3 minutes </div> </form> {/* Live Card Preview Column */} <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#0E0E0D] border border-black/10 dark:border-white/10 flex flex-col items-center"> <div className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase mb-3"> LIVE CUSTOMER PREVIEW </div> {/* Preview Card */} <div className="w-full max-w-[260px] rounded-2xl bg-white dark:bg-[#1C1A16] border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg overflow-hidden"> <div className="bg-[#111318] text-white p-3 flex items-center justify-between text-xs font-bold"> <span className="truncate">{businessName || 'Business Name'}</span> <span className="text-xs text-white/50">MEMBER</span> </div> <div className="p-4 text-center"> <div className="text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]"> Collect {stampsGoal} visits, get: </div> <div className="text-sm font-extrabold text-[#3027F5] dark:text-[#E4C174] mt-0.5"> {rewardTitle || 'Free Reward'} </div> {/* Stamps preview */} <div className="grid grid-cols-4 gap-1.5 my-3"> {Array.from({ length: stampsGoal }).map((_, i) => ( <div key={i} className={`h-7 rounded-full flex items-center justify-center text-xs font-bold ${
-                            i < 3
-                              ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D]'
-                              : 'border border-dashed border-black/20 dark:border-white/20 text-black/30 dark:text-white/30'
-                          }`}
-                        >
-                          {i < 3 ? <Check className="w-3.5 h-3.5 stroke-[2.5]" /> : i + 1}
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="text-xs font-mono text-[#60646C] dark:text-[#AAA499]">
-                      3 / {stampsGoal} visits collected
-                    </div>
-                  </div>
-                </div>
+                  }`} > <span>Claim 30-Day Free Trial</span> <ArrowRight className="w-4 h-4" /> </button> <div className="text-xs text-center text-muted-foreground"> No credit card required · Instant setup in under 3 minutes </div> </form> {/* Live Card Preview Column */} <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#0E0E0D] border border-black/10 dark:border-white/10 flex flex-col items-center"> <div className="text-xs font-bold tracking-widest text-muted-foreground uppercase mb-3"> LIVE CUSTOMER PREVIEW </div> {/* Preview Card */}
+                <LoyaltyCard
+                  businessType={toBusinessType(category)}
+                  businessName={businessName || 'Your Business'}
+                  programName="Loyalty Club"
+                  rewardDescription={rewardTitle || 'Free reward'}
+                  stampsRequired={stampsGoal}
+                  currentStamps={3}
+                  accentColor="#3027F5"
+                  className="max-w-[280px]"
+                />
 
                 {/* Counter QR Standee Badge */}
-                <div className="mt-4 flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-[#111318] dark:text-[#F7F3EB]">
+                <div className="mt-4 flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-foreground">
                   <QrCode className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
                   <span>Generates your counter QR standee PDF</span>
                 </div>

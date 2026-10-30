@@ -62,7 +62,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
       desc: 'During checkout, your staff enters your 4-digit code directly on the customer’s phone or taps validate.',
       visual: (
         <div className="w-64 bg-white dark:bg-[#1C1A16] rounded-2xl p-4 border border-black/10 dark:border-white/10 shadow-xl text-center">
-          <div className="text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+          <div className="text-xs font-mono font-bold text-muted-foreground">
             STAFF VERIFICATION PIN
           </div>
           <div className="flex justify-center gap-2 my-3">
@@ -124,7 +124,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-2xl rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl rounded-3xl bg-card border border-border shadow-2xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Top Header */}
         <div className="p-5 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
@@ -138,7 +138,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-lg text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -155,10 +155,10 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
           <div className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
             {steps[currentStep].subtitle}
           </div>
-          <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
             {steps[currentStep].title}
           </h3>
-          <p className="mt-1 text-sm text-[#60646C] dark:text-[#D0CBC1]">
+          <p className="mt-1 text-sm text-muted-foreground">
             {steps[currentStep].desc}
           </p>
 
@@ -187,7 +187,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
             <button
               type="button"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499] hover:text-[#111318] dark:hover:text-[#E4C174]"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174]"
             >
               {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
               <span>{isPlaying ? 'PAUSE' : 'AUTO-PLAY'}</span>
@@ -200,7 +200,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
                   setCurrentStep((prev) => (prev > 0 ? prev - 1 : steps.length - 1));
                   setIsPlaying(false);
                 }}
-                className="p-2 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-[#111318] dark:text-[#F7F3EB]"
+                className="p-2 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
                 aria-label="Previous step"
               >
                 <ArrowLeft className="w-4 h-4" />

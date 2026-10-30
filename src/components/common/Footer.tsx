@@ -40,11 +40,11 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand Info (2 cols on md) */}
           <div className="col-span-2">
             <Logo size="md" />
-            <p className="mt-4 text-sm text-[#60646C] dark:text-[#D0CBC1] max-w-sm leading-relaxed">
+            <p className="mt-4 text-sm text-muted-foreground max-w-sm leading-relaxed">
               A digital loyalty card your customers can join in seconds. No app. No POS integration. Just a simple reason to return.
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <span className="text-xs font-mono font-medium text-[#60646C] dark:text-[#AAA499]">
+              <span className="text-xs font-mono font-medium text-muted-foreground">
                 Theme:
               </span>
               <ThemeToggle theme={theme} onToggle={onThemeToggle} />
@@ -56,12 +56,12 @@ export const Footer: React.FC<FooterProps> = ({
             <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Product
             </h4>
-            <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
+            <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
               <li>
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#how-it-works')}
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   How it works
                 </button>
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#master-wallet')}
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   Master Loyalty Card
                 </button>
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={onOpenVideoDemo}
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left cursor-pointer"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left cursor-pointer"
                 >
                   Watch 1-min demo
                 </button>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/pricing"
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Pricing
                 </Link>
@@ -100,11 +100,11 @@ export const Footer: React.FC<FooterProps> = ({
             <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Businesses
             </h4>
-            <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
+            <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
               <li>
                 <Link
                   href="/industries/cafes"
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Cafés & Coffee Shops
                 </Link>
@@ -112,7 +112,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/industries/salons"
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Salons & Barbers
                 </Link>
@@ -121,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#industries')}
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   All Industries
                 </button>
@@ -129,7 +129,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/pricing"
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
                   Regional Pricing
                 </Link>
@@ -142,7 +142,7 @@ export const Footer: React.FC<FooterProps> = ({
             <h4 className="text-xs font-bold tracking-widest text-[#111318] dark:text-[#E4C174] uppercase">
               Account
             </h4>
-            <ul className="mt-4 space-y-2.5 text-sm text-[#60646C] dark:text-[#D0CBC1]">
+            <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
               <li>
                 <Link
                   href="/signup"
@@ -154,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <Link
                   href="/login"
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left inline-block"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors text-left inline-block"
                 >
                   Merchant Log in
                 </Link>
@@ -163,7 +163,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavAnchor('#faq')}
-                  className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
+                  className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer text-left"
                 >
                   FAQ & Support
                 </button>
@@ -180,13 +180,13 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Privacy Policy
             </span>
-            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Terms of Service
             </span>
-            <span className="text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
+            <span className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] cursor-pointer">
               Cookie Preferences
             </span>
           </div>

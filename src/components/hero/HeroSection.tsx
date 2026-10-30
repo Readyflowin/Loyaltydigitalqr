@@ -44,7 +44,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Confident, Ultra-Bold Headline */}
-            <h1 className="mt-4 xl:mt-5 text-[52px] sm:text-[62px] xl:text-[72px] 2xl:text-[76px] font-heading font-black tracking-[-0.028em] leading-[0.98] text-[#111318] dark:text-[#F7F3EB]">
+            <h1 className="mt-4 xl:mt-5 text-[52px] sm:text-[62px] xl:text-[72px] 2xl:text-[76px] font-heading font-black tracking-[-0.028em] leading-[0.98] text-foreground">
               Give them
               <br />
               a reason to
@@ -92,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 type="button"
                 onClick={onOpenVideoDemo}
-                className="inline-flex items-center gap-2.5 text-[14px] xl:text-[15px] font-bold text-[#111318] dark:text-[#F7F3EB] hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors group cursor-pointer"
+                className="inline-flex items-center gap-2.5 text-[14px] xl:text-[15px] font-bold text-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors group cursor-pointer"
               >
                 <div className="w-[30px] h-[30px] xl:w-[34px] xl:h-[34px] rounded-full bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] flex items-center justify-center transition-transform group-hover:scale-110 shadow-xs">
                   <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
@@ -102,7 +102,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Trial Reassurance */}
-            <div className="mt-6 xl:mt-8 flex flex-wrap items-center gap-2 xl:gap-3 text-[12px] xl:text-[13px] text-[#60646C] dark:text-[#AAA499] font-medium">
+            <div className="mt-6 xl:mt-8 flex flex-wrap items-center gap-2 xl:gap-3 text-[12px] xl:text-[13px] text-muted-foreground font-medium">
               <div className="inline-flex items-center gap-1.5">
                 <div className="w-3.5 h-3.5 rounded-full border border-[#60646C] dark:border-[#AAA499] flex items-center justify-center">
                   <Check className="w-2 h-2 stroke-[2.5]" />
@@ -154,7 +154,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <Pencil className="w-4 h-4 xl:w-5 xl:h-5 text-current" />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-foreground leading-tight">
                   Create your card
                 </h3>
                 <p className="mt-0.5 text-[12px] xl:text-[13px] text-[#5A5D66] dark:text-[#AAA499] leading-snug">
@@ -172,7 +172,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <QrCode className="w-4 h-4 xl:w-5 xl:h-5 text-current" />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-foreground leading-tight">
                   Share your QR code
                 </h3>
                 <p className="mt-0.5 text-[12px] xl:text-[13px] text-[#5A5D66] dark:text-[#AAA499] leading-snug">
@@ -190,7 +190,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <UsersRound className="w-4 h-4 xl:w-5 xl:h-5 text-current" />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                <h3 className="font-heading font-bold text-[14px] xl:text-[15.5px] text-foreground leading-tight">
                   Reward your regulars
                 </h3>
                 <p className="mt-0.5 text-[12px] xl:text-[13px] text-[#5A5D66] dark:text-[#AAA499] leading-snug">

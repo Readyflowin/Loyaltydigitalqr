@@ -64,10 +64,10 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = () => {
               WHY SMALL BUSINESSES CHOOSE US
             </span>
           </div>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-foreground">
             All the loyalty power. None of the enterprise complexity.
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#60646C] dark:text-[#D0CBC1]">
+          <p className="mt-3 text-base sm:text-lg text-muted-foreground">
             Traditional loyalty programs demand expensive POS contracts, tablet hardware, and clunky apps. We stripped away all the friction.
           </p>
         </div>
@@ -79,7 +79,7 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = () => {
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-sm hover:shadow-md transition-all duration-200"
+                className="p-6 sm:p-7 rounded-3xl bg-card border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-sm hover:shadow-md transition-all duration-200"
               >
                 <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-[#1F1E1A] border border-black/5 dark:border-[rgba(228,193,116,0.2)] flex items-center justify-center text-[#3027F5] dark:text-[#E4C174]">
                   <Icon className="w-6 h-6" />
@@ -89,11 +89,11 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = () => {
                   {b.subtitle}
                 </div>
 
-                <h3 className="mt-1 font-heading font-black text-lg sm:text-xl text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="mt-1 font-heading font-black text-lg sm:text-xl text-foreground">
                   {b.title}
                 </h3>
 
-                <p className="mt-2 text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                   {b.desc}
                 </p>
               </div>

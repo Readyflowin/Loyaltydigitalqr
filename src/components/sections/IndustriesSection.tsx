@@ -31,10 +31,10 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                 TAILORED FOR LOCAL COMMERCE
               </span>
             </div>
-            <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+            <h2 className="mt-4 text-3xl sm:text-4xl font-heading font-black tracking-tight text-foreground">
               Built for businesses that rely on repeat visits
             </h2>
-            <p className="mt-3 text-base sm:text-lg text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="mt-3 text-base sm:text-lg text-muted-foreground">
               From neighborhood espresso bars to auto detailers, Loyaltydigitalqr replaces paper punch cards with zero friction.
             </p>
           </div>
@@ -49,7 +49,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                   ? theme === 'light'
                     ? 'bg-[#3027F5] text-white'
                     : 'bg-[#E4C174] text-[#11100D]'
-                  : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/10 dark:hover:bg-white/10 dark:hover:text-[#F7F3EB]'
+                  : 'bg-black/5 dark:bg-white/5 text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10 dark:hover:text-[#F7F3EB]'
               }`}
             >
               All Categories
@@ -64,7 +64,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                     ? theme === 'light'
                       ? 'bg-[#3027F5] text-white'
                       : 'bg-[#E4C174] text-[#11100D]'
-                    : 'bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/10 dark:hover:bg-white/10 dark:hover:text-[#F7F3EB]'
+                    : 'bg-black/5 dark:bg-white/5 text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10 dark:hover:text-[#F7F3EB]'
                 }`}
               >
                 {ind.title.split('&')[0].trim()}
@@ -79,7 +79,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
             <div
               key={ind.id}
               onClick={() => onSelectIndustry(ind.id)}
-              className="group cursor-pointer rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+              className="group cursor-pointer rounded-3xl bg-card border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               {/* Image Banner */}
               <div className="relative h-48 overflow-hidden bg-black/10">
@@ -107,18 +107,18 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
               {/* Card Body */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB] group-hover:text-[#3027F5] dark:group-hover:text-[#E4C174] transition-colors">
+                  <h3 className="font-heading font-black text-xl text-foreground group-hover:text-[#3027F5] dark:group-hover:text-[#E4C174] transition-colors">
                     {ind.title}
                   </h3>
-                  <p className="mt-1 text-sm text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
                     {ind.subtitle}
                   </p>
 
-                  <div className="mt-4 p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-black/5 dark:border-[rgba(228,193,116,0.2)]">
+                  <div className="mt-4 p-3 rounded-xl bg-muted border border-black/5 dark:border-[rgba(228,193,116,0.2)]">
                     <div className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                       SAMPLE REWARD
                     </div>
-                    <div className="text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+                    <div className="text-xs font-semibold text-foreground mt-0.5">
                       {ind.sampleReward}
                     </div>
                   </div>
@@ -129,7 +129,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                     {ind.tags.slice(0, 2).map((tag, i) => (
                       <span
                         key={i}
-                        className="text-xs font-mono px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]"
+                        className="text-xs font-mono px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-muted-foreground"
                       >
                         {tag}
                       </span>
