@@ -332,13 +332,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             GROWTH & CAMPAIGNS ENGINE
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Campaigns, Offers & Customer Retention
           </h1>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Drive repeat counter visits, win back dormant customers, and maintain reputation.
           </p>
         </div>
@@ -353,7 +353,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               setSelectedOfferForRedeem(offers.find((o) => o.status === 'active') || null);
               setRedeemModalOpen(true);
             }}
-            className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 font-bold text-xs sm:text-sm cursor-pointer shadow-xs inline-flex items-center gap-2"
+            className="px-4 py-2.5 rounded-xl border border-border bg-white dark:bg-[#1A1916] text-foreground hover:bg-black/5 dark:hover:bg-white/5 font-bold text-xs sm:text-sm cursor-pointer shadow-xs inline-flex items-center gap-2"
           >
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Redeem Test Terminal</span>
@@ -376,51 +376,51 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
       {/* Metric Counters Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PROMOTIONS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             {activeOffersCount}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+          <span className="text-xs text-muted-foreground">
             {offers.length} total recorded
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL REDEMPTIONS
           </span>
-          <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl font-heading font-black text-foreground">
             {totalRedemptions}
           </div>
-          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+          <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
             Single-use protected
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             AUDIENCE SEGMENTS
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             {segments.length}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+          <span className="text-xs text-muted-foreground">
             Live from customer visits
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             CUSTOMER REPUTATION
           </span>
           <div className="text-2xl font-heading font-black text-amber-500 flex items-center gap-1">
             <span>{avgRating}</span>
             <Star className="w-5 h-5 fill-amber-400 text-amber-400 inline" />
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+          <span className="text-xs text-muted-foreground">
             {feedbackList.length} verified reviews
           </span>
         </div>
@@ -503,7 +503,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               return (
                 <div
                   key={offer.id}
-                  className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all flex flex-col justify-between ${
+                  className={`p-5 rounded-3xl bg-card border transition-all flex flex-col justify-between ${
                     offer.status === 'active'
                       ? 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-xs'
                       : 'border-black/5 dark:border-white/5 opacity-70 bg-[#FBFBF9] dark:bg-[#10100E]'
@@ -511,11 +511,11 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="px-2.5 py-1 rounded-lg font-mono text-[10px] font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
+                      <span className="px-2.5 py-1 rounded-lg font-mono text-xs font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
                         {offer.offerType.replace('_', ' ').toUpperCase()}
                       </span>
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
+                        className={`px-2 py-0.5 rounded text-xs font-mono font-bold uppercase ${
                           offer.status === 'active'
                             ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'
                             : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
@@ -526,35 +526,35 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     </div>
 
                     <div>
-                      <div className="font-mono text-xl font-black text-[#111318] dark:text-[#F7F3EB] tracking-wider">
+                      <div className="font-mono text-xl font-black text-foreground tracking-wider">
                         {offer.code}
                       </div>
                       <h4 className="font-heading font-bold text-sm text-[#3027F5] dark:text-[#E4C174] mt-0.5">
                         {discountLabel}
                       </h4>
-                      <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1 line-clamp-2">
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                         {offer.description || offer.name}
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816] text-[11px] text-[#60646C] dark:text-[#AAA499] space-y-1">
+                    <div className="p-3 rounded-xl bg-muted text-xs text-muted-foreground space-y-1">
                       <div className="flex justify-between">
                         <span>Validity:</span>
-                        <span className="font-mono text-[#111318] dark:text-[#F7F3EB]">
+                        <span className="font-mono text-foreground">
                           {offer.startDate} to {offer.endDate}
                         </span>
                       </div>
                       {offer.minimumSpendMinor && offer.minimumSpendMinor > 0 && (
                         <div className="flex justify-between">
                           <span>Min Spend:</span>
-                          <span className="font-mono text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="font-mono text-foreground">
                             {currencySymbol}{(offer.minimumSpendMinor / 100).toFixed(2)}
                           </span>
                         </div>
                       )}
                       <div className="flex justify-between">
                         <span>Redemptions:</span>
-                        <span className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <span className="font-mono font-bold text-foreground">
                           {offer.redemptionCount}{' '}
                           {offer.totalRedemptionLimit ? `/ ${offer.totalRedemptionLimit}` : ''}
                         </span>
@@ -570,7 +570,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                         offer.status === 'active'
                           ? 'text-amber-700 bg-amber-50 dark:bg-amber-950/30 hover:bg-amber-100 dark:hover:bg-amber-900/40'
                           : 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/40'
-                      }`} > {offer.status === 'active' ? 'Pause Offer' : 'Activate Offer'} </button> <button type="button" onClick={() => { setSelectedOfferForRedeem(offer); setRedeemError(null); setRedeemSuccess(null); setRedeemModalOpen(true); }} disabled={offer.status !== 'active'} className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] hover:bg-[#3027F5]/20 disabled:opacity-40 cursor-pointer" > Test Redeem </button> </div> </div> ); })} </div> </div> )} {/* TAB 2: Customer Segments */} {activeTab === 'segments' && ( <div className="space-y-4"> <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-[#111318] dark:text-[#F7F3EB] flex items-start gap-3"> <Sliders className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" /> <div> <div className="font-bold">Only customers who opted in</div> <p className="text-[#60646C] dark:text-[#AAA499] mt-0.5"> Segments update automatically from real customer visits. Customers who did not opt in to marketing are never included in exported lists. </p> </div> </div> <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {segments.map((seg) => { const matchedList = growthService.evaluateAudience(business.id, { criteriaType: seg.criteriaType, inactivityDays: seg.inactivityDays, }); const emailConsentCount = matchedList.filter((c) => c.marketingConsent?.email).length; const smsConsentCount = matchedList.filter((c) => c.marketingConsent?.sms).length; return ( <div key={seg.id} className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-4" > <div className="flex items-center justify-between"> <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"> {seg.name} </h3> <span className="px-2.5 py-1 rounded-full font-bold text-xs bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]"> {matchedList.length} customers </span> </div> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]"> {seg.description} </p> <div className="grid grid-cols-2 gap-3 pt-2 border-t border-black/5 dark:border-white/5"> <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <Mail className="w-3.5 h-3.5" /> <span>Email Consent</span> </div> <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1"> {emailConsentCount} / {matchedList.length} </div> </div> <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#181816]"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <MessageSquare className="w-3.5 h-3.5" /> <span>SMS Consent</span> </div> <div className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-1"> {smsConsentCount} / {matchedList.length} </div> </div> </div> <div className="flex justify-end"> <button type="button" onClick={() => { if (seg.inactivityDays) { setInactivityDays(seg.inactivityDays); } setActiveTab('winback'); }} className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer inline-flex items-center gap-1" > <span>Launch Targeted Campaign</span> <Share2 className="w-3.5 h-3.5" /> </button> </div> </div> ); })} </div> </div> )} {/* TAB 3: Win-Back Campaigns */} {activeTab === 'winback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> WIN-BACK AUDIENCE </span> <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5"> Re-Engage Dormant Counter Patrons </h3> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5"> Find customers who haven't visited in 30–60 days and opted in to marketing, then download the list to message them. </p> </div> <button type="button" data-testid="launch-winback-btn" onClick={() => setWinbackWizardOpen(true)} className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2" > <RotateCcw className="w-4 h-4" /> <span>Build win-back list</span> </button> </div> {/* Campaign Execution Notice */} <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2"> <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" /> <span> Messages are not sent from this dashboard. Download the list (CSV) and send it with your own SMS or email tool. Only customers who opted in are included. </span> </div> {/* Past Campaign Run Records */} <div> <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] mb-3"> Exported Lists ({campaignRuns.length}) </h4> {campaignRuns.length === 0 ? ( <div className="p-6 text-center text-xs text-subtle-foreground border border-dashed rounded-2xl"> No lists exported yet. Click "Build win-back list" above. </div> ) : ( <div className="space-y-3"> {campaignRuns.map((run) => ( <div key={run.id} className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs" > <div> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]"> {run.name} </span> <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300"> {run.channel} </span> <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"> CSV exported </span> </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 flex items-center gap-4"> <span>Exported: {new Date(run.simulatedAt).toLocaleString()}</span> {run.offerName && ( <span> Offer: <strong>{run.offerName}</strong> </span> )} </div> </div> <div className="flex items-center gap-4 text-[11px] font-mono"> <div> <span className="text-subtle-foreground">Contacts exported:</span>{' '} <strong className="text-emerald-600 dark:text-emerald-400"> {run.simulatedSentCount} </strong> </div> <div> <span className="text-subtle-foreground">Target Audience:</span>{' '} <strong className="text-zinc-600 dark:text-zinc-400"> {run.targetAudienceCount} </strong> </div> </div> </div> ))} </div> )} </div> </div> </div> )} {/* TAB 4: Customer Feedback & Reviews */} {activeTab === 'feedback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> CUSTOMER SENTIMENT & REVIEWS </span> <h3 className="text-lg font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5"> Post-Visit Feedback & Review Request Policy </h3> <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5"> Collect authentic ratings. Public review links are unconditional without rating gating. </p> </div> <div className="flex items-center gap-2"> <button type="button" onClick={() => setPublicReviewLinkModalOpen(true)} className="px-3.5 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5" > <ExternalLink className="w-3.5 h-3.5" /> <span>Configure Public Link</span> </button> <button type="button" data-testid="submit-test-feedback-btn" onClick={() => setFeedbackModalOpen(true)} className="px-3.5 py-2 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] text-xs font-bold cursor-pointer inline-flex items-center gap-1.5" > <Plus className="w-3.5 h-3.5" /> <span>Add Customer Feedback</span> </button> </div> </div> {/* Non-Gating Notice */} <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between gap-3"> <div className="flex items-center gap-2"> <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" /> <span> <strong>Ethical Review Policy:</strong> Google Business review URL ({customReviewUrl || 'Configured'}) is surfaced transparently to all customers regardless of star rating. </span> </div> <a href={customReviewUrl} target="_blank" rel="noreferrer" className="text-xs font-bold underline flex items-center gap-1 flex-shrink-0" > <span>Preview Link</span> <ExternalLink className="w-3 h-3" /> </a> </div> {/* Feedback List */} <div className="space-y-3"> {feedbackList.map((fb) => ( <div key={fb.id} className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs" > <div className="space-y-1.5 flex-1"> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]"> {fb.customerName} </span> <div className="flex items-center text-amber-500"> {Array.from({ length: 5 }).map((_, i) => ( <Star key={i} className={`w-3.5 h-3.5 ${
+                      }`} > {offer.status === 'active' ? 'Pause Offer' : 'Activate Offer'} </button> <button type="button" onClick={() => { setSelectedOfferForRedeem(offer); setRedeemError(null); setRedeemSuccess(null); setRedeemModalOpen(true); }} disabled={offer.status !== 'active'} className="text-xs font-bold px-3 py-1.5 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] hover:bg-[#3027F5]/20 disabled:opacity-40 cursor-pointer" > Test Redeem </button> </div> </div> ); })} </div> </div> )} {/* TAB 2: Customer Segments */} {activeTab === 'segments' && ( <div className="space-y-4"> <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-foreground flex items-start gap-3"> <Sliders className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" /> <div> <div className="font-bold">Only customers who opted in</div> <p className="text-muted-foreground mt-0.5"> Segments update automatically from real customer visits. Customers who did not opt in to marketing are never included in exported lists. </p> </div> </div> <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {segments.map((seg) => { const matchedList = growthService.evaluateAudience(business.id, { criteriaType: seg.criteriaType, inactivityDays: seg.inactivityDays, }); const emailConsentCount = matchedList.filter((c) => c.marketingConsent?.email).length; const smsConsentCount = matchedList.filter((c) => c.marketingConsent?.sms).length; return ( <div key={seg.id} className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-4" > <div className="flex items-center justify-between"> <h3 className="font-heading font-black text-base text-foreground"> {seg.name} </h3> <span className="px-2.5 py-1 rounded-full font-bold text-xs bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]"> {matchedList.length} customers </span> </div> <p className="text-xs text-muted-foreground"> {seg.description} </p> <div className="grid grid-cols-2 gap-3 pt-2 border-t border-black/5 dark:border-white/5"> <div className="p-3 rounded-xl bg-muted"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <Mail className="w-3.5 h-3.5" /> <span>Email Consent</span> </div> <div className="text-lg font-heading font-black text-foreground mt-1"> {emailConsentCount} / {matchedList.length} </div> </div> <div className="p-3 rounded-xl bg-muted"> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground"> <MessageSquare className="w-3.5 h-3.5" /> <span>SMS Consent</span> </div> <div className="text-lg font-heading font-black text-foreground mt-1"> {smsConsentCount} / {matchedList.length} </div> </div> </div> <div className="flex justify-end"> <button type="button" onClick={() => { if (seg.inactivityDays) { setInactivityDays(seg.inactivityDays); } setActiveTab('winback'); }} className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer inline-flex items-center gap-1" > <span>Launch Targeted Campaign</span> <Share2 className="w-3.5 h-3.5" /> </button> </div> </div> ); })} </div> </div> )} {/* TAB 3: Win-Back Campaigns */} {activeTab === 'winback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> WIN-BACK AUDIENCE </span> <h3 className="text-lg font-heading font-black text-foreground mt-0.5"> Re-Engage Dormant Counter Patrons </h3> <p className="text-xs text-muted-foreground mt-0.5"> Find customers who haven't visited in 30–60 days and opted in to marketing, then download the list to message them. </p> </div> <button type="button" data-testid="launch-winback-btn" onClick={() => setWinbackWizardOpen(true)} className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2" > <RotateCcw className="w-4 h-4" /> <span>Build win-back list</span> </button> </div> {/* Campaign Execution Notice */} <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2"> <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" /> <span> Messages are not sent from this dashboard. Download the list (CSV) and send it with your own SMS or email tool. Only customers who opted in are included. </span> </div> {/* Past Campaign Run Records */} <div> <h4 className="font-heading font-bold text-sm text-foreground mb-3"> Exported Lists ({campaignRuns.length}) </h4> {campaignRuns.length === 0 ? ( <div className="p-6 text-center text-xs text-subtle-foreground border border-dashed rounded-2xl"> No lists exported yet. Click "Build win-back list" above. </div> ) : ( <div className="space-y-3"> {campaignRuns.map((run) => ( <div key={run.id} className="p-4 rounded-2xl bg-muted border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs" > <div> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-foreground"> {run.name} </span> <span className="px-2 py-0.5 rounded text-xs font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300"> {run.channel} </span> <span className="px-2 py-0.5 rounded text-xs font-bold uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"> CSV exported </span> </div> <div className="text-xs text-muted-foreground mt-1 flex items-center gap-4"> <span>Exported: {new Date(run.simulatedAt).toLocaleString()}</span> {run.offerName && ( <span> Offer: <strong>{run.offerName}</strong> </span> )} </div> </div> <div className="flex items-center gap-4 text-xs font-mono"> <div> <span className="text-subtle-foreground">Contacts exported:</span>{' '} <strong className="text-emerald-600 dark:text-emerald-400"> {run.simulatedSentCount} </strong> </div> <div> <span className="text-subtle-foreground">Target Audience:</span>{' '} <strong className="text-zinc-600 dark:text-zinc-400"> {run.targetAudienceCount} </strong> </div> </div> </div> ))} </div> )} </div> </div> </div> )} {/* TAB 4: Customer Feedback & Reviews */} {activeTab === 'feedback' && ( <div className="space-y-6"> <div className="p-6 rounded-3xl bg-card border border-border shadow-xs space-y-5"> <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10"> <div> <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> CUSTOMER SENTIMENT & REVIEWS </span> <h3 className="text-lg font-heading font-black text-foreground mt-0.5"> Post-Visit Feedback & Review Request Policy </h3> <p className="text-xs text-muted-foreground mt-0.5"> Collect authentic ratings. Public review links are unconditional without rating gating. </p> </div> <div className="flex items-center gap-2"> <button type="button" onClick={() => setPublicReviewLinkModalOpen(true)} className="px-3.5 py-2 rounded-xl border border-border bg-white dark:bg-[#1A1916] text-foreground text-xs font-bold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5" > <ExternalLink className="w-3.5 h-3.5" /> <span>Configure Public Link</span> </button> <button type="button" data-testid="submit-test-feedback-btn" onClick={() => setFeedbackModalOpen(true)} className="px-3.5 py-2 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] text-xs font-bold cursor-pointer inline-flex items-center gap-1.5" > <Plus className="w-3.5 h-3.5" /> <span>Add Customer Feedback</span> </button> </div> </div> {/* Non-Gating Notice */} <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between gap-3"> <div className="flex items-center gap-2"> <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" /> <span> <strong>Ethical Review Policy:</strong> Google Business review URL ({customReviewUrl || 'Configured'}) is surfaced transparently to all customers regardless of star rating. </span> </div> <a href={customReviewUrl} target="_blank" rel="noreferrer" className="text-xs font-bold underline flex items-center gap-1 flex-shrink-0" > <span>Preview Link</span> <ExternalLink className="w-3 h-3" /> </a> </div> {/* Feedback List */} <div className="space-y-3"> {feedbackList.map((fb) => ( <div key={fb.id} className="p-4 rounded-2xl bg-muted border border-border flex flex-col sm:flex-row sm:items-start justify-between gap-3 text-xs" > <div className="space-y-1.5 flex-1"> <div className="flex items-center gap-2"> <span className="font-heading font-bold text-sm text-foreground"> {fb.customerName} </span> <div className="flex items-center text-amber-500"> {Array.from({ length: 5 }).map((_, i) => ( <Star key={i} className={`w-3.5 h-3.5 ${
                               i < fb.rating
                                 ? 'fill-amber-400 text-amber-400'
                                 : 'text-zinc-300 dark:text-zinc-700'
@@ -578,23 +578,23 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                           />
                         ))}
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 text-subtle-foreground">
+                      <span className="text-xs font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 text-subtle-foreground">
                         {fb.serviceType}
                       </span>
                     </div>
 
-                    <p className="text-xs text-[#111318] dark:text-[#F7F3EB] font-medium">
+                    <p className="text-xs text-foreground font-medium">
                       "{fb.comment}"
                     </p>
 
-                    <div className="text-[10px] text-subtle-foreground font-mono">
+                    <div className="text-xs text-subtle-foreground font-mono">
                       Received {new Date(fb.createdAt).toLocaleDateString()}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 self-end sm:self-center">
                     <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
+                      className={`px-2 py-0.5 rounded text-xs font-mono font-bold uppercase ${
                         fb.status === 'reviewed'
                           ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'
                           : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
@@ -609,7 +609,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                           growthService.updateFeedbackStatus(business.id, fb.id, 'reviewed');
                           refreshData();
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-[11px] font-bold text-[#111318] dark:text-[#F7F3EB] cursor-pointer"
+                        className="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-bold text-foreground cursor-pointer"
                       >
                         Mark Reviewed
                       </button>
@@ -625,13 +625,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Create New Offer */}
       {createOfferModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+          <div className="bg-card border border-border rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   PROMOTION CONFIGURATOR
                 </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="text-xl font-heading font-black text-foreground">
                   Create Promotional Offer
                 </h3>
               </div>
@@ -653,7 +653,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleCreateOffer} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Offer Title
                 </label>
                 <input
@@ -662,13 +662,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   placeholder="e.g. Weekend Double Stamp Special"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     Redemption Promo Code
                   </label>
                   <input
@@ -677,18 +677,18 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     placeholder="e.g. SUMMER15"
                     value={newCode}
                     onChange={(e) => setNewCode(e.target.value.toUpperCase())}
-                    className="w-full uppercase px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full uppercase px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     Offer Type
                   </label>
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value as OfferType)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   >
                     <option value="percentage">Percentage Discount (%)</option>
                     <option value="fixed_amount">Fixed Amount ({currencySymbol})</option>
@@ -700,7 +700,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     {newType === 'percentage' || newType === 'winback'
                       ? 'Discount Percentage (%)'
                       : newType === 'fixed_amount'
@@ -713,12 +713,12 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     required
                     value={newDiscountValue}
                     onChange={(e) => setNewDiscountValue(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     Min Spend ({currencySymbol})
                   </label>
                   <input
@@ -726,14 +726,14 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     step="any"
                     value={newMinSpend}
                     onChange={(e) => setNewMinSpend(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     Start Date
                   </label>
                   <input
@@ -741,12 +741,12 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     required
                     value={newStartDate}
                     onChange={(e) => setNewStartDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                  <label className="block font-bold text-foreground uppercase mb-1">
                     End Date
                   </label>
                   <input
@@ -754,13 +754,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     required
                     value={newEndDate}
                     onChange={(e) => setNewEndDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Description / Terms
                 </label>
                 <textarea
@@ -768,11 +768,11 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   placeholder="Terms and conditions for counter display..."
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[11px] text-blue-900 dark:text-blue-200">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200">
                 <strong>Policy Enforcement:</strong> Offers strictly enforce single-use per customer. Duplicate redemptions by the same customer will be rejected automatically.
               </div>
 
@@ -800,13 +800,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Redeem Test Terminal */}
       {redeemModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   COUNTER REDEMPTION TERMINAL
                 </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="text-xl font-heading font-black text-foreground">
                   Redeem Offer
                 </h3>
               </div>
@@ -841,7 +841,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleRedeem} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Active Offer
                 </label>
                 <select
@@ -850,7 +850,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                     const found = offers.find((o) => o.id === e.target.value);
                     setSelectedOfferForRedeem(found || null);
                   }}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 >
                   {offers
                     .filter((o) => o.status === 'active')
@@ -863,7 +863,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Customer ID, Name, or Phone
                 </label>
                 <input
@@ -873,9 +873,9 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   placeholder="e.g. cust_c1 or Maya Lin"
                   value={customerSearchQuery}
                   onChange={(e) => setCustomerSearchQuery(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
-                <div className="mt-1 flex flex-wrap gap-1 text-[10px]">
+                <div className="mt-1 flex flex-wrap gap-1 text-xs">
                   <span className="text-subtle-foreground">Quick pick:</span>
                   {allCustomers.slice(0, 3).map((c) => (
                     <button
@@ -914,13 +914,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Win-Back Campaign Wizard */}
       {winbackWizardOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   CAMPAIGN RUNNER
                 </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="text-xl font-heading font-black text-foreground">
                   Build win-back list
                 </h3>
               </div>
@@ -941,7 +941,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <div className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Inactivity Threshold
                 </label>
                 <div className="flex gap-2">
@@ -963,7 +963,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Outreach Channel
                 </label>
                 <div className="flex gap-2">
@@ -985,13 +985,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Attach Special Offer (Optional)
                 </label>
                 <select
                   value={selectedWinbackOfferId}
                   onChange={(e) => setSelectedWinbackOfferId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 >
                   <option value="">No offer (greeting only)</option>
                   {offers
@@ -1005,25 +1005,25 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               {/* Audience Preview */}
-              <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] space-y-2">
-                <span className="text-[10px] uppercase text-subtle-foreground font-bold block">
+              <div className="p-4 rounded-2xl bg-muted border border-border space-y-2">
+                <span className="text-xs uppercase text-subtle-foreground font-bold block">
                   AUDIENCE EVALUATION PREVIEW
                 </span>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="p-2 rounded-xl bg-white dark:bg-[#141412]">
-                    <div className="text-[10px] text-subtle-foreground">Dormant Patrons</div>
-                    <div className="text-base font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                  <div className="p-2 rounded-xl bg-card">
+                    <div className="text-xs text-subtle-foreground">Dormant Patrons</div>
+                    <div className="text-base font-heading font-black text-foreground">
                       {dormantsAll.length}
                     </div>
                   </div>
-                  <div className="p-2 rounded-xl bg-white dark:bg-[#141412]">
-                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400">Consent Given</div>
+                  <div className="p-2 rounded-xl bg-card">
+                    <div className="text-xs text-emerald-600 dark:text-emerald-400">Consent Given</div>
                     <div className="text-base font-heading font-black text-emerald-600 dark:text-emerald-400">
                       {withConsent.length}
                     </div>
                   </div>
-                  <div className="p-2 rounded-xl bg-white dark:bg-[#141412]">
-                    <div className="text-[10px] text-amber-600 dark:text-amber-400">Excluded (No Opt-in)</div>
+                  <div className="p-2 rounded-xl bg-card">
+                    <div className="text-xs text-amber-600 dark:text-amber-400">Excluded (No Opt-in)</div>
                     <div className="text-base font-heading font-black text-amber-600 dark:text-amber-400">
                       {withoutConsent.length}
                     </div>
@@ -1031,7 +1031,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-900 dark:text-amber-200">
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200">
                 <strong>Note:</strong> This downloads a CSV of opted-in customers. No messages are sent automatically.
               </div>
 
@@ -1060,13 +1060,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Submit Test Feedback */}
       {feedbackModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   LOG FEEDBACK
                 </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="text-xl font-heading font-black text-foreground">
                   Record Customer Review
                 </h3>
               </div>
@@ -1081,7 +1081,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleCreateTestFeedback} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Customer Name
                 </label>
                 <input
@@ -1090,12 +1090,12 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   data-testid="feedback-name-input"
                   value={testCustomerName}
                   onChange={(e) => setTestCustomerName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Star Rating (1 to 5)
                 </label>
                 <div className="flex items-center gap-2">
@@ -1117,7 +1117,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Customer Feedback Comments
                 </label>
                 <textarea
@@ -1126,7 +1126,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   data-testid="feedback-comment-input"
                   value={testComment}
                   onChange={(e) => setTestComment(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
               </div>
 
@@ -1154,13 +1154,13 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Configure Public Review Link */}
       {publicReviewLinkModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
                   REPUTATION POLICY
                 </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="text-xl font-heading font-black text-foreground">
                   Public Review Destination
                 </h3>
               </div>
@@ -1175,7 +1175,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
 
             <form onSubmit={handleSaveReviewUrl} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block font-bold text-foreground uppercase mb-1">
                   Public Review URL (Google, Yelp, Tripadvisor)
                 </label>
                 <input
@@ -1184,11 +1184,11 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
                   placeholder="https://g.page/r/your-google-business-review"
                   value={customReviewUrl}
                   onChange={(e) => setCustomReviewUrl(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-muted text-foreground"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[11px] text-blue-900 dark:text-blue-200">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200">
                 <strong>Non-Gating Standard:</strong> In alignment with customer protection standards, this public link is provided without rating gating or negative feedback diversion.
               </div>
 

@@ -96,7 +96,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               LIVE TRACKER
             </span>
             <span
@@ -197,7 +197,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                         } ${isCurrent ? 'ring-2 ring-[#3027F5]/30 dark:ring-[#E4C174]/40' : ''}`}
                       />
                       <span
-                        className={`text-[10px] font-bold block truncate ${
+                        className={`text-xs font-bold block truncate ${
                           isCurrent
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
@@ -211,17 +211,17 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
                     {item.quantity} × {item.name}
                   </div>
                   {item.variants.length > 0 && (
-                    <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                    <div className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
                       {item.variants.map((v) => `${v.groupName}: ${v.name}`).join(', ')}
                     </div>
                   )}
                   {item.modifiers.length > 0 && (
-                    <div className="text-[11px] text-subtle-foreground">
+                    <div className="text-xs text-subtle-foreground">
                       + {item.modifiers.map((m) => m.name).join(', ')}
                     </div>
                   )}
                   {item.specialInstructions && (
-                    <div className="text-[11px] text-amber-700 dark:text-amber-400 italic">
+                    <div className="text-xs text-amber-700 dark:text-amber-400 italic">
                       Note: "{item.specialInstructions}"
                     </div>
                   )}
@@ -239,7 +239,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
               <span>Subtotal</span>
               <span>{formatMinorUnits(order.subtotal, order.currency)}</span>
             </div>
-            <div className="flex items-center justify-between text-subtle-foreground text-[11px]">
+            <div className="flex items-center justify-between text-subtle-foreground text-xs">
               <span>Payment Mode</span>
               <span>Pay at Counter</span>
             </div>

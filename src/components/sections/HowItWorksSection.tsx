@@ -47,7 +47,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         {/* Section Header */}
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
-            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SEAMLESS 3-STEP SETUP
             </span>
           </div>
@@ -88,7 +88,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                       </span>
                     </div>
                     <span
-                      className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full ${
+                      className={`text-xs font-mono font-semibold px-2 py-0.5 rounded-full ${
                         isActive
                           ? theme === 'light'
                             ? 'bg-[#3027F5]/10 text-[#3027F5]'
@@ -161,7 +161,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                         <div
                           key={i}
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-mono ${
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono ${
                             i <= 3
                               ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] font-bold'
                               : 'border border-dashed border-black/20 dark:border-white/20 text-black/40 dark:text-white/40'
@@ -189,7 +189,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               {/* Step 02 Preview: Counter QR Standee Printout */}
               {activeStep === 1 && (
                 <div className="w-full max-w-sm bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-2xl text-center animate-in zoom-in-95 duration-200">
-                  <div className="text-[10px] font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
+                  <div className="text-xs font-bold tracking-widest text-[#60646C] dark:text-[#AAA499] uppercase">
                     PRINTABLE COUNTER STANDEE
                   </div>
                   <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-2">
@@ -213,7 +213,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               {activeStep === 2 && (
                 <div className="w-full max-w-xs bg-black rounded-3xl p-3 border-4 border-[#222] shadow-2xl animate-in zoom-in-95 duration-200">
                   <div className="rounded-2xl bg-[#111318] text-white p-4">
-                    <div className="flex items-center justify-between text-[10px] text-white/60 font-mono">
+                    <div className="flex items-center justify-between text-xs text-white/60 font-mono">
                       <span>SAFARI BROWSER</span>
                       <span>5G 100%</span>
                     </div>
@@ -231,7 +231,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                     </div>
 
                     <div className="mt-5 p-3 rounded-xl bg-white/10 text-center">
-                      <div className="text-[10px] font-mono text-white/50 tracking-widest">
+                      <div className="text-xs font-mono text-white/50 tracking-widest">
                         ONE-TIME VERIFICATION CODE
                       </div>
                       <div className="font-mono font-bold text-lg text-[#D6FF38] mt-0.5">

@@ -175,15 +175,15 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
                       <h3 className="text-lg font-bold text-foreground mt-0.5">{cls.name}</h3>
                     </div>
                     {isCancelled ? (
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
+                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
                         Cancelled
                       </span>
                     ) : isFull ? (
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                         Full
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                         Open
                       </span>
                     )}
@@ -237,14 +237,14 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
                   {/* Enrolled members list preview */}
                   {cls.enrolledMembers && cls.enrolledMembers.length > 0 && (
                     <div className="mt-3 pt-2">
-                      <span className="text-[11px] text-muted-foreground block mb-1">
+                      <span className="text-xs text-muted-foreground block mb-1">
                         Roster ({cls.enrolledMembers.length}):
                       </span>
                       <div className="flex flex-wrap gap-1">
                         {cls.enrolledMembers.map((em: { memberId: string; memberName: string }) => (
                           <span
                             key={em.memberId}
-                            className="inline-block px-2 py-0.5 rounded text-[11px] bg-muted text-foreground"
+                            className="inline-block px-2 py-0.5 rounded text-xs bg-muted text-foreground"
                           >
                             {em.memberName}
                           </span>

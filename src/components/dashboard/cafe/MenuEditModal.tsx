@@ -66,14 +66,14 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
+      <div className="relative w-full max-w-lg rounded-3xl bg-card border border-border shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
         {/* Header */}
         <div className="p-6 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               MENU SETTINGS
             </span>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               Edit Menu Information
             </h3>
           </div>
@@ -97,7 +97,7 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
           )}
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Menu Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -105,13 +105,13 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. All-Day Café & Roastery Menu"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               autoFocus
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Public Description
             </label>
             <textarea
@@ -119,12 +119,12 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               placeholder="Brief summary visible to customers at the top of the digital menu..."
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Publish Status
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -134,13 +134,13 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
                 className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
                   status === 'published'
                     ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-muted'
                 }`}
               >
                 <div className="font-bold text-xs text-emerald-700 dark:text-emerald-400">
                   Published
                 </div>
-                <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Visible to table QR scanners
                 </div>
               </button>
@@ -151,13 +151,13 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
                 className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
                   status === 'draft'
                     ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/30'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-muted'
                 }`}
               >
                 <div className="font-bold text-xs text-amber-700 dark:text-amber-400">
                   Draft
                 </div>
-                <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Hidden from public scanners
                 </div>
               </button>
@@ -168,7 +168,7 @@ const MenuEditModalForm: React.FC<InnerFormProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-[#60646C] dark:text-[#D0CBC1] text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-border text-muted-foreground text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
             >
               Cancel
             </button>

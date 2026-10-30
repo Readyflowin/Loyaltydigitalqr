@@ -124,13 +124,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       {/* Header & Date Range Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             BUSINESS INTELLIGENCE & REPORTING
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Visit Analytics & Performance
           </h1>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Based on the orders, bookings, sales, check-ins and redemptions recorded in your workspace.
           </p>
         </div>
@@ -182,7 +182,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
                 dateRange === 'all'
                   ? 'bg-white dark:bg-[#1A1916] text-[#3027F5] dark:text-[#E4C174] shadow-xs'
                   : 'text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB]'
-              }`} > All Time </button> </div> {/* Safe CSV Export Button */} <button type="button" data-testid="export-analytics-csv-btn" onClick={handleExportCsv} className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2" > <Download className="w-4 h-4" /> <span>Export Report (CSV)</span> </button> </div> </div> {/* Primary KPI Grid */} <div className="grid grid-cols-2 lg:grid-cols-4 gap-4"> {/* KPI 1: Gross Recorded Revenue */} <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-[10px] uppercase font-bold">GROSS RECORDED VALUE</span> <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400"> {currencySymbol}{(summary.recordedGrossValueMinor / 100).toFixed(2)} </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]"> Across verified recorded sales (unpriced passes excluded) </div> </div> {/* KPI 2: Customer Retention & Repeat Rate */} <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-[10px] uppercase font-bold">REPEAT RATE</span> <TrendingUp className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]"> {summary.repeatRate}% </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]"> {summary.activeCustomers} active / {summary.totalCustomers} total members </div> </div> {/* KPI 3: Loyalty Activity */} <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-[10px] uppercase font-bold">STAMPS & ENGAGEMENT</span> <Award className="w-4 h-4 text-amber-500" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]"> {summary.totalLoyaltyStamps} </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]"> {summary.totalRewardsRedeemed} rewards unlocked </div> </div> {/* KPI 4: Offer Savings & Feedback */} <div className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-[10px] uppercase font-bold">CUSTOMER SATISFACTION</span> <Star className="w-4 h-4 text-amber-400 fill-amber-400" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-amber-500 flex items-center gap-1"> <span>{summary.averageRating.toFixed(1)}</span> <span className="text-xs text-subtle-foreground">/ 5.0</span> </div> <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]"> {summary.feedbackCount} reviews · {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)} savings </div> </div> </div> {/* Operational Breakdown by Vertical */} <div className="grid grid-cols-1 lg:grid-cols-3 gap-6"> {/* Left Column: Vertical Specific Metrics */} <div className="lg:col-span-2 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-6 shadow-xs space-y-4"> <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10"> <div> <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold"> OPERATIONAL BREAKDOWN </span> <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]"> {business.businessType.charAt(0).toUpperCase() + business.businessType.slice(1)} performance </h3> </div> <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]"> {dateRange.toUpperCase()} FILTER </span> </div> {isCafe && ( <div className="space-y-3"> <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]"> <Coffee className="w-4 h-4 text-amber-600" /> <span>Café & Restaurant Transactions</span> </div> <div className="grid grid-cols-3 gap-3"> <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]"> <span className="text-[10px] text-subtle-foreground uppercase block">TOTAL ORDERS</span> <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]"> {orders.length} </div> </div> <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]"> <span className="text-[10px] text-subtle-foreground uppercase block">ORDER VOLUME</span> <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400"> {currencySymbol}{(ordersVolume / 100).toFixed(2)} </div> </div> <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]"> <span className="text-[10px] text-subtle-foreground uppercase block">AVG TICKET</span> <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]"> {orders.length > 0 ? `${currencySymbol}${(ordersVolume / orders.length / 100).toFixed(2)}`
+              }`} > All Time </button> </div> {/* Safe CSV Export Button */} <button type="button" data-testid="export-analytics-csv-btn" onClick={handleExportCsv} className="px-4 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm cursor-pointer shadow-sm inline-flex items-center gap-2" > <Download className="w-4 h-4" /> <span>Export Report (CSV)</span> </button> </div> </div> {/* Primary KPI Grid */} <div className="grid grid-cols-2 lg:grid-cols-4 gap-4"> {/* KPI 1: Gross Recorded Revenue */} <div className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-xs uppercase font-bold">GROSS RECORDED VALUE</span> <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400"> {currencySymbol}{(summary.recordedGrossValueMinor / 100).toFixed(2)} </div> <div className="text-xs text-muted-foreground"> Across verified recorded sales (unpriced passes excluded) </div> </div> {/* KPI 2: Customer Retention & Repeat Rate */} <div className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-xs uppercase font-bold">REPEAT RATE</span> <TrendingUp className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-foreground"> {summary.repeatRate}% </div> <div className="text-xs text-muted-foreground"> {summary.activeCustomers} active / {summary.totalCustomers} total members </div> </div> {/* KPI 3: Loyalty Activity */} <div className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-xs uppercase font-bold">STAMPS & ENGAGEMENT</span> <Award className="w-4 h-4 text-amber-500" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]"> {summary.totalLoyaltyStamps} </div> <div className="text-xs text-muted-foreground"> {summary.totalRewardsRedeemed} rewards unlocked </div> </div> {/* KPI 4: Offer Savings & Feedback */} <div className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-1"> <div className="flex items-center justify-between text-subtle-foreground"> <span className="text-xs uppercase font-bold">CUSTOMER SATISFACTION</span> <Star className="w-4 h-4 text-amber-400 fill-amber-400" /> </div> <div className="text-2xl sm:text-3xl font-heading font-black text-amber-500 flex items-center gap-1"> <span>{summary.averageRating.toFixed(1)}</span> <span className="text-xs text-subtle-foreground">/ 5.0</span> </div> <div className="text-xs text-muted-foreground"> {summary.feedbackCount} reviews · {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)} savings </div> </div> </div> {/* Operational Breakdown by Vertical */} <div className="grid grid-cols-1 lg:grid-cols-3 gap-6"> {/* Left Column: Vertical Specific Metrics */} <div className="lg:col-span-2 rounded-3xl bg-card border border-border p-6 shadow-xs space-y-4"> <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10"> <div> <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold"> OPERATIONAL BREAKDOWN </span> <h3 className="font-heading font-black text-lg text-foreground"> {business.businessType.charAt(0).toUpperCase() + business.businessType.slice(1)} performance </h3> </div> <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]"> {dateRange.toUpperCase()} FILTER </span> </div> {isCafe && ( <div className="space-y-3"> <div className="flex items-center gap-2 text-xs font-bold text-foreground"> <Coffee className="w-4 h-4 text-amber-600" /> <span>Café & Restaurant Transactions</span> </div> <div className="grid grid-cols-3 gap-3"> <div className="p-3.5 rounded-2xl bg-muted"> <span className="text-xs text-subtle-foreground uppercase block">TOTAL ORDERS</span> <div className="text-xl font-heading font-black text-foreground"> {orders.length} </div> </div> <div className="p-3.5 rounded-2xl bg-muted"> <span className="text-xs text-subtle-foreground uppercase block">ORDER VOLUME</span> <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400"> {currencySymbol}{(ordersVolume / 100).toFixed(2)} </div> </div> <div className="p-3.5 rounded-2xl bg-muted"> <span className="text-xs text-subtle-foreground uppercase block">AVG TICKET</span> <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]"> {orders.length > 0 ? `${currencySymbol}${(ordersVolume / orders.length / 100).toFixed(2)}`
                       : `${currencySymbol}0.00`}
                   </div>
                 </div>
@@ -192,19 +192,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           {isSalon && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <Scissors className="w-4 h-4 text-purple-600" />
                 <span>Salon & Barbershop Bookings</span>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">APPOINTMENTS</span>
-                  <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">APPOINTMENTS</span>
+                  <div className="text-xl font-heading font-black text-foreground">
                     {appointments.length}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">APPOINTMENT VALUE</span>
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">APPOINTMENT VALUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(appointmentsVolume / 100).toFixed(2)}
                   </div>
@@ -215,19 +215,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           {isRetail && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <ShoppingBag className="w-4 h-4 text-emerald-600" />
                 <span>Retail Store & Boutique Purchases</span>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">QUALIFYING SALES</span>
-                  <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">QUALIFYING SALES</span>
+                  <div className="text-xl font-heading font-black text-foreground">
                     {purchases.length}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">RETAIL REVENUE</span>
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">RETAIL REVENUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(retailVolume / 100).toFixed(2)}
                   </div>
@@ -238,19 +238,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           {isGym && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <Dumbbell className="w-4 h-4 text-rose-600" />
                 <span>Gym & Fitness Studio Check-Ins</span>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">RECORDED CHECK-INS</span>
-                  <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">RECORDED CHECK-INS</span>
+                  <div className="text-xl font-heading font-black text-foreground">
                     {checkIns.length}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">ACTIVE MEMBERS</span>
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">ACTIVE MEMBERS</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {memberships.filter((m) => m.status === 'active').length}
                   </div>
@@ -261,19 +261,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           {isCarWash && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <Car className="w-4 h-4 text-cyan-600" />
                 <span>Express Car Wash Visits</span>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">WASHES REDEEMED</span>
-                  <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">WASHES REDEEMED</span>
+                  <div className="text-xl font-heading font-black text-foreground">
                     {carWashes.length}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">ACTIVE PASSES</span>
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">ACTIVE PASSES</span>
                   <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                     {passes.filter((p) => p.status === 'active').length}
                   </div>
@@ -284,19 +284,19 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
           {isService && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <div className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <Wrench className="w-4 h-4 text-amber-600" />
                 <span>Service Business Jobs</span>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">JOBS RECORDED</span>
-                  <div className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">JOBS RECORDED</span>
+                  <div className="text-xl font-heading font-black text-foreground">
                     {jobs.length}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816]">
-                  <span className="text-[10px] text-subtle-foreground uppercase block">JOB REVENUE</span>
+                <div className="p-3.5 rounded-2xl bg-muted">
+                  <span className="text-xs text-subtle-foreground uppercase block">JOB REVENUE</span>
                   <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                     {currencySymbol}{(jobsVolume / 100).toFixed(2)}
                   </div>
@@ -305,7 +305,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             </div>
           )}
 
-          <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] text-xs text-[#60646C] dark:text-[#AAA499] flex items-center gap-2">
+          <div className="p-3.5 rounded-2xl bg-muted text-xs text-muted-foreground flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>
               These figures include only <strong>{business.name}</strong>.
@@ -314,35 +314,35 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
         </div>
 
         {/* Right Column: Promotional Impact & Safety */}
-        <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] p-6 shadow-xs space-y-4">
+        <div className="rounded-3xl bg-card border border-border p-6 shadow-xs space-y-4">
           <div className="pb-3 border-b border-black/10 dark:border-white/10">
-            <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
+            <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
               PROMOTIONS & AUDIT
             </span>
-            <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+            <h3 className="font-heading font-black text-lg text-foreground">
               Campaign Performance
             </h3>
           </div>
 
           <div className="space-y-3 text-xs">
-            <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] space-y-1">
-              <span className="text-subtle-foreground text-[10px] uppercase">FIXED-DISCOUNT SAVINGS</span>
+            <div className="p-3.5 rounded-2xl bg-muted space-y-1">
+              <span className="text-subtle-foreground text-xs uppercase">FIXED-DISCOUNT SAVINGS</span>
               <div className="text-xl font-heading font-black text-emerald-600 dark:text-emerald-400">
                 {currencySymbol}{(summary.totalOfferSavingsMinor / 100).toFixed(2)}
               </div>
-              <p className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+              <p className="text-xs text-muted-foreground">
                 Discounts redeemed through verified promo codes.
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] space-y-1">
-              <span className="text-subtle-foreground text-[10px] uppercase">LOYALTY REDEMPTION CONVERSION</span>
+            <div className="p-3.5 rounded-2xl bg-muted space-y-1">
+              <span className="text-subtle-foreground text-xs uppercase">LOYALTY REDEMPTION CONVERSION</span>
               <div className="text-xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                 {summary.totalLoyaltyStamps > 0
                   ? `${Math.min(100, Math.round((summary.totalRewardsRedeemed / summary.totalLoyaltyStamps) * 100))}%`
                   : '0%'}
               </div>
-              <p className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+              <p className="text-xs text-muted-foreground">
                 Ratio of unlocked rewards to issued counter stamps.
               </p>
             </div>

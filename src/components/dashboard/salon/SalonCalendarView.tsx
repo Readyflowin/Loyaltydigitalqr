@@ -54,14 +54,14 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
   if (!isSalon) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <CalendarIcon className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h3 className="text-xl font-heading font-black text-foreground">
             Calendar Module Unavailable
           </h3>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-xs text-muted-foreground max-w-md mx-auto">
             This module is reserved for salon and barbershop appointments workspaces.
           </p>
         </div>
@@ -79,9 +79,9 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
     setSelectedDate(localDateKey());
   };
 
-  const dayOfWeek = new Date(`${selectedDate}T12:00:00`).getDay(); return ( <div className="space-y-6 max-w-6xl mx-auto animate-in fade-in duration-150"> {/* 1. Header & Date Navigator */} <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"> <div> <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> CHAIRS & SCHEDULE GRID </span> <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5"> Staff & Chairs Calendar </h1> <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1"> Visual column grid showing real-time bookings, scheduled breaks, and open slots. </p> </div> {/* Date & Location Selector */} <div className="flex flex-wrap items-center gap-2"> {business.locations.length > 1 && ( <select value={selectedLocationId} onChange={(e) => setSelectedLocationId(e.target.value)} className="px-3 py-1.5 rounded-2xl text-xs font-bold bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#111318] dark:text-[#F7F3EB] shadow-xs cursor-pointer" > <option value="all">All Locations</option> {business.locations.map((loc) => ( <option key={loc.id} value={loc.id}>{loc.name}</option> ))} </select> )} <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs"> <button type="button" onClick={() => handleShiftDate(-1)} className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > <ChevronLeft className="w-4 h-4" /> </button> <button type="button" onClick={handleSetToday} className="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > Today </button> <button type="button" onClick={() => handleShiftDate(1)} className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > <ChevronRight className="w-4 h-4" /> </button> <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="px-2 py-1 text-xs font-bold bg-transparent outline-hidden cursor-pointer" /> </div> </div> </div> {/* 2. Visual Calendar Grid */} <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs overflow-hidden"> {/* Column Headers (Staff Members) */} <div className="grid border-b border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]" style={{ gridTemplateColumns: `80px repeat(${staffList.length}, minmax(180px, 1fr))` }}
+  const dayOfWeek = new Date(`${selectedDate}T12:00:00`).getDay(); return ( <div className="space-y-6 max-w-6xl mx-auto animate-in fade-in duration-150"> {/* 1. Header & Date Navigator */} <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"> <div> <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block"> CHAIRS & SCHEDULE GRID </span> <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5"> Staff & Chairs Calendar </h1> <p className="text-xs sm:text-sm text-muted-foreground mt-1"> Visual column grid showing real-time bookings, scheduled breaks, and open slots. </p> </div> {/* Date & Location Selector */} <div className="flex flex-wrap items-center gap-2"> {business.locations.length > 1 && ( <select value={selectedLocationId} onChange={(e) => setSelectedLocationId(e.target.value)} className="px-3 py-1.5 rounded-2xl text-xs font-bold bg-card border border-border text-foreground shadow-xs cursor-pointer" > <option value="all">All Locations</option> {business.locations.map((loc) => ( <option key={loc.id} value={loc.id}>{loc.name}</option> ))} </select> )} <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-card border border-border shadow-xs"> <button type="button" onClick={() => handleShiftDate(-1)} className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > <ChevronLeft className="w-4 h-4" /> </button> <button type="button" onClick={handleSetToday} className="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > Today </button> <button type="button" onClick={() => handleShiftDate(1)} className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer" > <ChevronRight className="w-4 h-4" /> </button> <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="px-2 py-1 text-xs font-bold bg-transparent outline-hidden cursor-pointer" /> </div> </div> </div> {/* 2. Visual Calendar Grid */} <div className="rounded-3xl bg-card border border-border shadow-xs overflow-hidden"> {/* Column Headers (Staff Members) */} <div className="grid border-b border-[#E5E3DB] dark:border-white/10 bg-muted" style={{ gridTemplateColumns: `80px repeat(${staffList.length}, minmax(180px, 1fr))` }}
         >
-          <div className="p-3 text-center border-r border-[#E5E3DB] dark:border-white/10 text-[10px] uppercase font-bold text-subtle-foreground">
+          <div className="p-3 text-center border-r border-[#E5E3DB] dark:border-white/10 text-xs uppercase font-bold text-subtle-foreground">
             TIME
           </div>
           {staffList.map((stf) => (
@@ -90,10 +90,10 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
               className="p-3 border-r last:border-r-0 border-[#E5E3DB] dark:border-white/10 flex items-center justify-between gap-2"
             >
               <div>
-                <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] block leading-tight">
+                <span className="font-heading font-black text-sm text-foreground block leading-tight">
                   {stf.displayName}
                 </span>
-                <span className="text-[10px] text-subtle-foreground block truncate">{stf.role}</span>
+                <span className="text-xs text-subtle-foreground block truncate">{stf.role}</span>
               </div>
               <span
                 className={`w-2 h-2 rounded-full ${
@@ -162,13 +162,13 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
                       }`}
                     >
                       {isOffDuty && (
-                        <span className="text-[10px] text-subtle-foreground italic block text-center pt-3">
+                        <span className="text-xs text-subtle-foreground italic block text-center pt-3">
                           Off Duty
                         </span>
                       )}
 
                       {isBreak && !isOffDuty && (
-                        <span className="text-[10px] text-amber-700 dark:text-amber-400 font-bold block text-center pt-3">
+                        <span className="text-xs text-amber-700 dark:text-amber-400 font-bold block text-center pt-3">
                           Scheduled Break
                         </span>
                       )}
@@ -181,8 +181,8 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
                           className="p-2 rounded-xl bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] shadow-xs cursor-pointer hover:opacity-90 transition-all text-xs space-y-0.5"
                         >
                           <div className="font-heading font-black truncate">{apt.customerName}</div>
-                          <div className="text-[10px] opacity-90 truncate">{apt.serviceSnapshot.name}</div>
-                          <div className="text-[11px] font-mono opacity-80">
+                          <div className="text-xs opacity-90 truncate">{apt.serviceSnapshot.name}</div>
+                          <div className="text-xs font-mono opacity-80">
                             {formatTimeLabel(apt.startIso.split('T')[1].substring(0, 5))} (
                             {apt.serviceSnapshot.durationMinutes}m)
                           </div>
@@ -204,26 +204,26 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setSelectedAppointment(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 space-y-3 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-3 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-subtle-foreground">
                 {selectedAppointment.appointmentNumber}
               </span>
-              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              <span className="text-xs uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
                 {selectedAppointment.status.toUpperCase()}
               </span>
             </div>
 
             <div>
-              <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-lg text-foreground">
                 {selectedAppointment.customerName}
               </h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+              <p className="text-xs text-muted-foreground">
                 {selectedAppointment.serviceSnapshot.name} ({selectedAppointment.serviceSnapshot.durationMinutes} min)
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-xs space-y-1">
+            <div className="p-3 rounded-xl bg-muted text-xs space-y-1">
               <p>Stylist: <strong>{selectedAppointment.staffName}</strong></p>
               <p>
                 Time: {formatTimeLabel(selectedAppointment.startIso.split('T')[1].substring(0, 5))} -{' '}

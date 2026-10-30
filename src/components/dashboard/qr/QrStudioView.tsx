@@ -130,13 +130,13 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       {/* 1. Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             QR STUDIO & PRINT ASSETS
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Counter & Digital Pass QR Codes
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Create, preview, customize, and export genuine scannable QR matrices for print standees and digital passes.
           </p>
         </div>
@@ -154,38 +154,38 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
 
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL QR DEFINITIONS
           </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl sm:text-3xl font-heading font-black text-foreground">
             {qrCodes.length}
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             Scoped to {business.name}
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE COUNTER CODES
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-emerald-600 dark:text-emerald-400">
             {activeCount}
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             Ready for customer smartphone scans
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             SUPPORTED DESTINATIONS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             3 Types
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             Enrollment · Standee · Web Specials
           </div>
         </div>
@@ -201,7 +201,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by QR name, label, or path..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-border bg-card text-xs sm:text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
           />
         </div>
 
@@ -210,7 +210,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value as 'all' | QrDestinationType)}
-            className="px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] font-medium"
+            className="px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground font-medium"
           >
             <option value="all">All Destinations</option>
             <option value="counter_display">Counter Standee</option>
@@ -221,7 +221,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'disabled')}
-            className="px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] font-medium"
+            className="px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground font-medium"
           >
             <option value="all">All Statuses</option>
             <option value="active">Active Only</option>
@@ -232,15 +232,15 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
 
       {/* 4. QR Codes Library Grid */}
       {filtered.length === 0 ? (
-        <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-dashed border-[#E5E3DB] dark:border-white/10 p-12 text-center space-y-4">
+        <div className="rounded-3xl bg-card border-2 border-dashed border-[#E5E3DB] dark:border-white/10 p-12 text-center space-y-4">
           <div className="w-16 h-16 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-subtle-foreground">
             <QrIcon className="w-8 h-8" />
           </div>
           <div>
-            <h4 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
+            <h4 className="font-heading font-bold text-lg text-foreground">
               No QR Codes Found
             </h4>
-            <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#AAA499] mt-1 max-w-sm mx-auto">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-sm mx-auto">
               {searchQuery || typeFilter !== 'all' || statusFilter !== 'all'
                 ? 'No QR definitions matched your search and filter criteria.'
                 : 'Create your first QR code for table tents, counter displays, or window stickers.'}
@@ -285,8 +285,8 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/70 backdrop-blur-xs"
             onClick={() => setRenamingQr(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150">
-            <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] mb-3">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150">
+            <h4 className="font-heading font-black text-base text-foreground mb-3">
               Rename QR Code
             </h4>
             <form onSubmit={handleSaveRename} className="space-y-4">
@@ -294,7 +294,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
                 type="text"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
                 autoFocus
               />
               <div className="flex items-center justify-end gap-2">
@@ -380,7 +380,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
       data-testid={`qr-card-${qr.id}`}
       className={`rounded-3xl border-2 transition-all p-5 flex flex-col justify-between shadow-xs ${
         qr.status === 'active'
-          ? 'bg-white dark:bg-[#141412] border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]'
+          ? 'bg-card border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]'
           : 'bg-[#F8F7F2]/60 dark:bg-[#121211]/80 border-dashed border-[#DDD9CE] dark:border-white/10 opacity-75'
       }`}
     >
@@ -388,10 +388,10 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
         {/* Card Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
-            <span className="inline-block px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] mb-1">
+            <span className="inline-block px-2 py-0.5 rounded text-xs uppercase font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] mb-1">
               {getTypeLabel(qr.destinationType)}
             </span>
-            <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-tight">
+            <h4 className="font-heading font-black text-base text-foreground leading-tight">
               {qr.name}
             </h4>
           </div>
@@ -400,7 +400,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
           <button
             type="button"
             onClick={onToggleStatus}
-            className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase transition-colors cursor-pointer ${
+            className={`px-2 py-0.5 rounded-full text-xs font-mono font-bold uppercase transition-colors cursor-pointer ${
               qr.status === 'active'
                 ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
                 : 'bg-black/5 dark:bg-white/10 text-subtle-foreground'
@@ -412,7 +412,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
         </div>
 
         {/* Live QR Matrix Display */}
-        <div className="w-full bg-[#F8F7F2] dark:bg-[#181816] rounded-2xl p-4 flex flex-col items-center justify-center border border-black/5 dark:border-white/5 my-2">
+        <div className="w-full bg-muted rounded-2xl p-4 flex flex-col items-center justify-center border border-black/5 dark:border-white/5 my-2">
           <div className="w-36 h-36 bg-white p-2 rounded-xl shadow-xs flex items-center justify-center">
             {dataUrl ? (
               <img
@@ -421,17 +421,17 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
                 className={`w-full h-full object-contain ${qr.status === 'disabled' ? 'grayscale opacity-50' : ''}`}
               />
             ) : (
-              <div className="text-[10px] text-subtle-foreground">Loading...</div>
+              <div className="text-xs text-subtle-foreground">Loading...</div>
             )}
           </div>
 
-          <div className="mt-2 text-[11px] font-medium text-[#111318] dark:text-[#F7F3EB] text-center truncate max-w-full">
+          <div className="mt-2 text-xs font-medium text-foreground text-center truncate max-w-full">
             {qr.displayLabel || 'Scan to open'}
           </div>
         </div>
 
         {/* Target URL Info */}
-        <div className="pt-2 text-[11px] space-y-1">
+        <div className="pt-2 text-xs space-y-1">
           <div className="flex items-center justify-between text-subtle-foreground">
             <span>Destination:</span>
             <a
@@ -444,7 +444,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
               <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
             </a>
           </div>
-          <div className="flex items-center justify-between text-subtle-foreground text-[10px]">
+          <div className="flex items-center justify-between text-subtle-foreground text-xs">
             <span>Created:</span>
             <span>{new Date(qr.createdAt).toLocaleDateString()}</span>
           </div>
@@ -458,22 +458,22 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
             type="button"
             data-testid={`download-png-${qr.id}`}
             onClick={onDownloadPng}
-            className="p-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1 text-[#111318] dark:text-[#F7F3EB]"
+            className="p-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1 text-foreground"
             title="Download PNG (1024px)"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="text-[11px]">PNG</span>
+            <span className="text-xs">PNG</span>
           </button>
 
           <button
             type="button"
             data-testid={`download-svg-${qr.id}`}
             onClick={onDownloadSvg}
-            className="p-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1 text-[#111318] dark:text-[#F7F3EB]"
+            className="p-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1 text-foreground"
             title="Download Vector SVG"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="text-[11px]">SVG</span>
+            <span className="text-xs">SVG</span>
           </button>
         </div>
 

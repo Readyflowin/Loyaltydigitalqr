@@ -51,22 +51,22 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
       />
 
       {/* Dialog */}
-      <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-lg rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               WORKSPACE SWITCHER
             </span>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               Select Business or Counter
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -107,11 +107,11 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+                        <h4 className="font-heading font-bold text-base text-foreground">
                           {biz.name}
                         </h4>
                       </div>
-                      <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                      <p className="text-xs text-muted-foreground">
                         {biz.businessType.toUpperCase()} · {biz.planPrice} · {biz.locations.length} {biz.locations.length === 1 ? 'Location' : 'Locations'}
                       </p>
                     </div>
@@ -127,7 +127,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                 {/* Sub-locations list if multiple */}
                 {biz.locations.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
-                    <span className="text-[10px] uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
+                    <span className="text-xs uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
                       Counters / Locations:
                     </span>
                     {biz.locations.map((loc) => {
@@ -143,15 +143,15 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                           }}
                           className={`w-full py-1.5 px-2.5 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${
                             isLocActive
-                              ? 'bg-black/10 dark:bg-white/10 font-bold text-[#111318] dark:text-[#F7F3EB]'
-                              : 'hover:bg-black/5 dark:hover:bg-white/5 text-[#60646C] dark:text-[#D0CBC1]'
+                              ? 'bg-black/10 dark:bg-white/10 font-bold text-foreground'
+                              : 'hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground'
                           }`}
                         >
                           <div className="flex items-center gap-2 truncate">
                             <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-subtle-foreground" />
                             <span className="truncate">{loc.name}</span>
                           </div>
-                          {isLocActive && <span className="text-[10px] font-mono text-[#3027F5] dark:text-[#E4C174]">Active</span>}
+                          {isLocActive && <span className="text-xs font-mono text-[#3027F5] dark:text-[#E4C174]">Active</span>}
                         </button>
                       );
                     })}
@@ -163,7 +163,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
         </div>
 
         {/* Footer Note */}
-        <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-[#60646C] dark:text-[#AAA499]">
+        <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <Building2 className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
             <span>Businesses you belong to</span>

@@ -37,8 +37,8 @@ interface SettingsViewProps {
 type SettingsTab = 'profile' | 'locations' | 'loyalty' | 'team' | 'billing';
 
 const inputClass =
-  'w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] disabled:opacity-60';
-const labelClass = 'block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1';
+  'w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] disabled:opacity-60';
+const labelClass = 'block text-xs font-mono font-bold text-foreground uppercase mb-1';
 const primaryButton =
   'px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-60 disabled:cursor-not-allowed';
 
@@ -201,10 +201,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
     <div data-testid="settings-view" className="space-y-6 animate-in fade-in duration-150">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             WORKSPACE CONFIGURATION
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Settings
           </h1>
         </div>
@@ -243,7 +243,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-all cursor-pointer ${
                 isActive
                   ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                  : 'text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#111318] dark:hover:text-[#F7F3EB]'
+                  : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#111318] dark:hover:text-[#F7F3EB]'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -253,13 +253,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
         })}
       </div>
 
-      <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 sm:p-8 shadow-sm">
+      <div className="rounded-3xl bg-card border border-border p-6 sm:p-8 shadow-sm">
         {/* PROFILE */}
         {activeTab === 'profile' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Business Profile</h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+              <h3 className="font-heading font-bold text-lg text-foreground">Business Profile</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Shown on your public menu, booking page, catalogue and customer loyalty card.
               </p>
             </div>
@@ -308,21 +308,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs text-[#60646C] dark:text-[#AAA499]">Logo upload becomes available once image storage is connected.</p>
+                  <p className="text-xs text-muted-foreground">Logo upload becomes available once image storage is connected.</p>
                 )}
               </div>
             </div>
 
             <div>
               <label className={labelClass}>Industry & Region</label>
-              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs text-[#60646C] dark:text-[#AAA499]">
+              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs text-muted-foreground">
                 {business.businessType.toUpperCase()} · {business.region === 'india' ? 'India (INR)' : 'United States (USD)'} · {business.timeZone}
               </div>
             </div>
 
             <div>
               <label className={labelClass}>Your public link name</label>
-              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs font-mono text-[#111318] dark:text-[#F7F3EB] flex items-center justify-between gap-2">
+              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs font-mono text-foreground flex items-center justify-between gap-2">
                 <span className="truncate">{publicOrigin}/card/{business.slug}</span>
                 <button
                   type="button"
@@ -346,8 +346,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
         {activeTab === 'locations' && (
           <div className="space-y-6 max-w-2xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Locations & Staff PINs</h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+              <h3 className="font-heading font-bold text-lg text-foreground">Locations & Staff PINs</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Staff enter a location's PIN to issue stamps and redeem rewards. Keep PINs private to your team.
               </p>
             </div>
@@ -356,10 +356,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               {locations.map((loc, idx) => (
                 <div
                   key={loc.id}
-                  className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] space-y-3"
+                  className="p-4 rounded-2xl bg-muted border border-border space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase text-[#3027F5] dark:text-[#E4C174]">
+                    <span className="text-xs font-bold uppercase text-[#3027F5] dark:text-[#E4C174]">
                       {idx === 0 ? 'Primary location' : `Location ${idx + 1}`}
                     </span>
                     {idx > 0 && canManage && (
@@ -442,8 +442,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
         {activeTab === 'loyalty' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Loyalty Reward Rules</h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+              <h3 className="font-heading font-bold text-lg text-foreground">Loyalty Reward Rules</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Changes apply to new stamps immediately. Customers' existing progress is kept.
               </p>
             </div>
@@ -515,8 +515,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Team Members ({members.length})</h3>
-                <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+                <h3 className="font-heading font-bold text-lg text-foreground">Team Members ({members.length})</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Everyone listed here can sign in to this workspace with their own account.
                 </p>
               </div>
@@ -540,13 +540,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                 return (
                   <div
                     key={member.uid}
-                    className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center justify-between gap-3 text-xs"
+                    className="p-3.5 rounded-2xl bg-muted border border-border flex items-center justify-between gap-3 text-xs"
                   >
                     <div className="min-w-0">
-                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate">
+                      <div className="font-bold text-foreground truncate">
                         {member.displayName || member.email} {isMe && <span className="text-subtle-foreground font-normal">(you)</span>}
                       </div>
-                      <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] truncate">{member.email}</div>
+                      <div className="text-xs text-muted-foreground truncate">{member.email}</div>
                       <div className="mt-1">
                         {canManage && !isOwner && !isMe ? (
                           <select
@@ -554,14 +554,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                             onChange={(e) =>
                               void run('Role', () => businessService.updateMemberRole(business.id, member.uid, e.target.value as TeamRole))
                             }
-                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-[11px] uppercase"
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-xs uppercase"
                           >
                             <option value="manager">Manager</option>
                             <option value="staff">Staff</option>
                             <option value="receptionist">Receptionist</option>
                           </select>
                         ) : (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
+                          <span className="px-2 py-0.5 rounded text-xs font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
                             {member.role}
                           </span>
                         )}
@@ -575,7 +575,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                             void run('Team', () => businessService.removeMember(business.id, member.uid));
                           }
                         }}
-                        className="text-[11px] text-rose-600 hover:underline cursor-pointer flex-shrink-0"
+                        className="text-xs text-rose-600 hover:underline cursor-pointer flex-shrink-0"
                       >
                         Remove
                       </button>
@@ -587,7 +587,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
 
             {canManage && invites.length > 0 && (
               <div className="space-y-3">
-                <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">Pending invites ({invites.length})</h4>
+                <h4 className="font-heading font-bold text-sm text-foreground">Pending invites ({invites.length})</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {invites.map((inv) => (
                     <div
@@ -595,8 +595,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                       className="p-3.5 rounded-2xl border border-dashed border-[#E5E3DB] dark:border-white/15 flex items-center justify-between gap-3 text-xs"
                     >
                       <div className="min-w-0">
-                        <div className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate">{inv.email}</div>
-                        <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+                        <div className="font-bold text-foreground truncate">{inv.email}</div>
+                        <div className="text-xs text-muted-foreground">
                           Invited as {inv.role} · {new Date(inv.invitedAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -608,7 +608,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                             await refreshInvites();
                           })
                         }
-                        className="text-[11px] text-rose-600 hover:underline cursor-pointer flex-shrink-0"
+                        className="text-xs text-rose-600 hover:underline cursor-pointer flex-shrink-0"
                       >
                         Revoke
                       </button>
@@ -619,10 +619,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
             )}
 
             <div className="pt-6 border-t border-black/10 dark:border-white/10 space-y-3">
-              <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">What each role can do</h4>
-              <div className="overflow-x-auto rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
+              <h4 className="font-heading font-bold text-sm text-foreground">What each role can do</h4>
+              <div className="overflow-x-auto rounded-2xl border border-border">
                 <table className="w-full text-xs text-left">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] uppercase text-[10px] text-subtle-foreground">
+                  <thead className="bg-muted border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] uppercase text-xs text-subtle-foreground">
                     <tr>
                       <th className="p-3.5">Permission</th>
                       {rolesList.map((r) => (
@@ -635,7 +635,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                   <tbody className="divide-y divide-[#E5E3DB] dark:divide-[rgba(228,193,116,0.1)]">
                     {permissionsList.map((perm) => (
                       <tr key={perm.key}>
-                        <td className="p-3.5 font-medium text-[#111318] dark:text-[#F7F3EB]">{perm.label}</td>
+                        <td className="p-3.5 font-medium text-foreground">{perm.label}</td>
                         {rolesList.map((r) => (
                           <td key={r} className="p-3.5 text-center">
                             {growthService.hasPermission(r, perm.key) ? (
@@ -660,14 +660,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
         {activeTab === 'billing' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Plan & Billing</h3>
+              <h3 className="font-heading font-bold text-lg text-foreground">Plan & Billing</h3>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-4">
+            <div className="p-5 rounded-2xl bg-muted border border-border space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">CURRENT PLAN</span>
-                  <div className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB]">
+                  <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">CURRENT PLAN</span>
+                  <div className="font-heading font-black text-2xl text-foreground">
                     {business.planName || 'Starter'} · {regionalPrice}
                   </div>
                 </div>
@@ -682,16 +682,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                 </span>
               </div>
 
-              <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
+              <div className="text-xs text-muted-foreground pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
                 <div className="flex justify-between">
                   <span>Workspace created:</span>
-                  <strong className="text-[#111318] dark:text-[#F7F3EB]">
+                  <strong className="text-foreground">
                     {business.createdAt ? new Date(business.createdAt).toLocaleDateString() : '—'}
                   </strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Free trial {trialDaysLeft !== null && trialDaysLeft > 0 ? 'ends' : 'ended'}:</span>
-                  <strong className="text-[#111318] dark:text-[#F7F3EB]">{trialEnds ? trialEnds.toLocaleDateString() : '—'}</strong>
+                  <strong className="text-foreground">{trialEnds ? trialEnds.toLocaleDateString() : '—'}</strong>
                 </div>
               </div>
 
@@ -704,7 +704,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               </a>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-muted-foreground">
               Online card payments are not available in the dashboard yet. No payment details are stored and you will not be
               charged automatically.
               {SUPPORT_EMAIL ? (
@@ -724,11 +724,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
       {/* Invite modal */}
       {inviteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">TEAM INVITATION</span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">Invite a team member</h3>
+                <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">TEAM INVITATION</span>
+                <h3 className="text-xl font-heading font-black text-foreground">Invite a team member</h3>
               </div>
               <button
                 type="button"
@@ -740,9 +740,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               </button>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] text-xs text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] text-xs text-muted-foreground">
               No email is sent automatically. After you create the invite, ask them to sign in at{' '}
-              <strong className="text-[#111318] dark:text-[#F7F3EB]">{publicOrigin}/login</strong> using this exact email address.
+              <strong className="text-foreground">{publicOrigin}/login</strong> using this exact email address.
               The invite will be waiting for them.
             </div>
 

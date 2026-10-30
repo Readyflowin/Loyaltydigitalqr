@@ -39,7 +39,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
             <Globe className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
-            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SELECT YOUR REGION
             </span>
           </div>
@@ -71,7 +71,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     US
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+                    <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                       REGION
                     </span>
                     <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -79,7 +79,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     </h2>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-md bg-[#F2F0E8] dark:bg-[#1E1D19] text-[11px] font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+                <span className="px-2.5 py-1 rounded-md bg-[#F2F0E8] dark:bg-[#1E1D19] text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
                   USD ($)
                 </span>
               </div>
@@ -104,7 +104,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
 
               {/* Highlights */}
               <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5 space-y-2.5">
-                <div className="text-[11px] font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
+                <div className="text-xs font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
                 {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (
@@ -138,7 +138,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     IN
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+                    <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                       REGION
                     </span>
                     <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
@@ -146,7 +146,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
                     </h2>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-md bg-[#F2F0E8] dark:bg-[#1E1D19] text-[11px] font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+                <span className="px-2.5 py-1 rounded-md bg-[#F2F0E8] dark:bg-[#1E1D19] text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
                   INR (₹)
                 </span>
               </div>
@@ -171,7 +171,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
 
               {/* Highlights */}
               <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5 space-y-2.5">
-                <div className="text-[11px] font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
+                <div className="text-xs font-bold tracking-wider text-[#60646C] dark:text-[#AAA499] uppercase">
                   PLAN HIGHLIGHTS:
                 </div>
                 {['Single flat price — no tiers', 'Unlimited loyalty members', 'Works in any phone browser'].map((item, idx) => (

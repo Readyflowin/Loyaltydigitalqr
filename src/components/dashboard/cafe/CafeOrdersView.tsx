@@ -56,14 +56,14 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
   if (!isFoodService) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <ShoppingBag className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Order Management Not Available
           </h2>
-          <p className="text-sm text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto">
             The active workspace (<strong>{business.name}</strong>) is configured as a{' '}
             <strong>{business.businessType}</strong>. Order queue and kitchen displays are scoped strictly to café and restaurant businesses.
           </p>
@@ -132,13 +132,13 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
       {/* 1. Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             CAFÉ & RESTAURANT ORDER MANAGEMENT
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Orders Queue
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Accept, prepare, and complete customer orders submitted from table QR standees.
           </p>
         </div>
@@ -156,8 +156,8 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             NEW AWAITING
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -165,8 +165,8 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             IN PREPARATION
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -174,8 +174,8 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             READY TO SERVE
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -183,17 +183,17 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             COMPLETED TODAY
           </span>
-          <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-xl sm:text-2xl font-heading font-black text-foreground">
             {metrics.completedOrders}
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] col-span-2 sm:col-span-1">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border col-span-2 sm:col-span-1">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             FULFILLED SALES
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -222,7 +222,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
               className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === tab.id
                   ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                  : 'bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#60646C] dark:text-[#D0CBC1] hover:bg-[#F8F7F2]'
+                  : 'bg-card border border-border text-muted-foreground hover:bg-[#F8F7F2]'
               }`}
             >
               {tab.label}
@@ -239,19 +239,19 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search #1042, Table 01..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-border bg-card text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
           />
         </div>
       </div>
 
       {/* 4. Orders Queue List */}
       {filteredOrders.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
+        <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
           <ShoppingBag className="w-10 h-10 mx-auto text-subtle-foreground" />
-          <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+          <h4 className="font-heading font-black text-base text-foreground">
             No Orders Found
           </h4>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-sm mx-auto">
+          <p className="text-xs text-muted-foreground max-w-sm mx-auto">
             {searchQuery || statusFilter !== 'all'
               ? 'No orders match your search criteria or active status filter.'
               : 'Incoming orders submitted by customers scanning table QR codes will appear here live.'}
@@ -266,7 +266,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
               <div
                 key={order.id}
                 data-testid={`order-card-${order.id}`}
-                className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all flex flex-col justify-between shadow-xs hover:shadow-md ${
+                className={`p-5 rounded-3xl bg-card border transition-all flex flex-col justify-between shadow-xs hover:shadow-md ${
                   order.status === 'new'
                     ? 'border-[#3027F5]/40 dark:border-[#E4C174]/40 ring-1 ring-[#3027F5]/20 dark:ring-[#E4C174]/20'
                     : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]'
@@ -276,17 +276,17 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                   {/* Top Bar: Order # & Status Badge */}
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+                      <span className="font-heading font-black text-base text-foreground">
                         {order.orderNumber}
                       </span>
-                      <span className="text-[10px] font-mono text-subtle-foreground">
+                      <span className="text-xs font-mono text-subtle-foreground">
                         {formatElapsed(order.createdAt)}
                       </span>
                     </div>
 
                     <span
                       data-testid={`order-status-${order.id}`}
-                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
                         order.status === 'new'
                           ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300'
                           : order.status === 'accepted'
@@ -309,21 +309,21 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                     <span className="font-bold text-[#3027F5] dark:text-[#E4C174]">
                       {order.tableName || order.pickupLabel || 'Table Order'}
                     </span>
-                    <span className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB]">
+                    <span className="font-mono font-bold text-foreground">
                       {formatMinorUnits(order.total, order.currency)}
                     </span>
                   </div>
 
                   {/* Items summary */}
-                  <div className="space-y-1 mb-4 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                  <div className="space-y-1 mb-4 text-xs text-muted-foreground">
                     {order.items.slice(0, 3).map((item, idx) => (
                       <div key={idx} className="truncate">
-                        <span className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <span className="font-bold text-foreground">
                           {item.quantity}×
                         </span>{' '}
                         <span>{item.name}</span>
                         {item.variants.length > 0 && (
-                          <span className="text-[10px] text-subtle-foreground">
+                          <span className="text-xs text-subtle-foreground">
                             {' '}
                             ({item.variants.map((v) => v.name).join(', ')})
                           </span>
@@ -331,14 +331,14 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                       </div>
                     ))}
                     {order.items.length > 3 && (
-                      <div className="text-[11px] text-subtle-foreground italic">
+                      <div className="text-xs text-subtle-foreground italic">
                         +{order.items.length - 3} more items...
                       </div>
                     )}
                   </div>
 
                   {hasNotes && (
-                    <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/30 text-[11px] text-amber-800 dark:text-amber-300 mb-4 truncate flex items-center gap-1.5">
+                    <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/30 text-xs text-amber-800 dark:text-amber-300 mb-4 truncate flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                       <span className="truncate">Special instructions on ticket</span>
                     </div>
@@ -351,7 +351,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`view-order-${order.id}`}
                     onClick={() => setSelectedOrder(order)}
-                    className="px-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] text-xs font-bold text-[#111318] dark:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
                   >
                     View Ticket
                   </button>
@@ -453,17 +453,17 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
           <div
             data-testid="order-detail-drawer"
-            className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative w-full max-w-lg rounded-3xl bg-card border border-border shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden flex flex-col max-h-[90vh]"
           >
             {/* Header */}
             <div className="p-6 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between flex-shrink-0">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
+                  <span className="font-heading font-black text-xl text-foreground">
                     {selectedOrder.orderNumber}
                   </span>
                   <span
-                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                    className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
                       selectedOrder.status === 'ready'
                         ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                         : selectedOrder.status === 'preparing'
@@ -476,7 +476,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                     {ORDER_STATUS_LABELS[selectedOrder.status].toUpperCase()}
                   </span>
                 </div>
-                <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                <p className="text-xs text-muted-foreground">
                   {selectedOrder.tableName || selectedOrder.pickupLabel} · Placed{' '}
                   {new Date(selectedOrder.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
@@ -496,8 +496,8 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
             {/* Content */}
             <div className="p-6 space-y-6 overflow-y-auto flex-1 text-xs">
               {/* Customer Tracking Link Sharing */}
-              <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] space-y-2">
-                <span className="text-[10px] uppercase text-subtle-foreground font-bold block">
+              <div className="p-4 rounded-2xl bg-muted border border-border space-y-2">
+                <span className="text-xs uppercase text-subtle-foreground font-bold block">
                   CUSTOMER LIVE TRACKING LINK
                 </span>
                 <div className="flex items-center gap-2">
@@ -505,13 +505,13 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                     type="text"
                     readOnly
                     value={`/order/${selectedOrder.trackingToken}`}
-                    className="flex-1 px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] font-mono text-[11px] text-[#3027F5] dark:text-[#E4C174]"
+                    className="flex-1 px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-card font-mono text-xs text-[#3027F5] dark:text-[#E4C174]"
                   />
                   <button
                     type="button"
                     data-testid="copy-tracking-link-btn"
                     onClick={() => handleCopyTrackingLink(selectedOrder.trackingToken)}
-                    className="px-3 py-1.5 rounded-lg bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] font-bold text-xs flex items-center gap-1 cursor-pointer"
                   >
                     {copiedToken === selectedOrder.trackingToken ? (
                       <>
@@ -539,7 +539,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
               {/* Items List */}
               <div className="space-y-3">
-                <h4 className="font-heading font-black text-xs uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]">
+                <h4 className="font-heading font-black text-xs uppercase tracking-wider text-foreground">
                   Ticket Items ({selectedOrder.items.length})
                 </h4>
 
@@ -547,26 +547,26 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                   {selectedOrder.items.map((item, idx) => (
                     <div key={idx} className="py-2.5 flex items-start justify-between gap-3">
                       <div className="space-y-0.5">
-                        <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <div className="font-bold text-foreground">
                           {item.quantity} × {item.name}
                         </div>
                         {item.variants.length > 0 && (
-                          <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                          <div className="text-xs text-muted-foreground">
                             {item.variants.map((v) => `${v.groupName}: ${v.name}`).join(', ')}
                           </div>
                         )}
                         {item.modifiers.length > 0 && (
-                          <div className="text-[11px] text-subtle-foreground">
+                          <div className="text-xs text-subtle-foreground">
                             + {item.modifiers.map((m) => m.name).join(', ')}
                           </div>
                         )}
                         {item.specialInstructions && (
-                          <div className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">
+                          <div className="text-xs text-amber-700 dark:text-amber-400 font-medium">
                             Note: "{item.specialInstructions}"
                           </div>
                         )}
                       </div>
-                      <span className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB]">
+                      <span className="font-mono font-bold text-foreground">
                         {formatMinorUnits(item.lineTotal, selectedOrder.currency)}
                       </span>
                     </div>
@@ -574,11 +574,11 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                 </div>
 
                 <div className="pt-2 border-t border-[#E5E3DB] dark:border-white/10 space-y-1">
-                  <div className="flex items-center justify-between text-[#60646C] dark:text-[#D0CBC1]">
+                  <div className="flex items-center justify-between text-muted-foreground">
                     <span>Subtotal</span>
                     <span>{formatMinorUnits(selectedOrder.subtotal, selectedOrder.currency)}</span>
                   </div>
-                  <div className="flex items-center justify-between font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] pt-1">
+                  <div className="flex items-center justify-between font-heading font-black text-sm text-foreground pt-1">
                     <span>Total Due</span>
                     <span>{formatMinorUnits(selectedOrder.total, selectedOrder.currency)}</span>
                   </div>
@@ -587,17 +587,17 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
 
               {/* Status History Timeline */}
               <div className="space-y-2">
-                <h4 className="font-heading font-black text-xs uppercase tracking-wider text-[#111318] dark:text-[#F7F3EB]">
+                <h4 className="font-heading font-black text-xs uppercase tracking-wider text-foreground">
                   Status Audit Log
                 </h4>
                 <div className="space-y-2">
                   {selectedOrder.statusHistory.map((h, idx) => (
                     <div
                       key={idx}
-                      className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] flex items-center justify-between text-[11px]"
+                      className="p-2.5 rounded-xl bg-muted flex items-center justify-between text-xs"
                     >
                       <div>
-                        <span className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <span className="font-bold text-foreground">
                           {ORDER_STATUS_LABELS[h.status]}
                         </span>
                         <span className="text-subtle-foreground ml-2">by {h.actor}</span>
@@ -676,28 +676,28 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setCancellingOrder(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] border-2 border-red-200 dark:border-red-900/40 shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border-2 border-red-200 dark:border-red-900/40 shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center">
               <AlertTriangle className="w-6 h-6 stroke-[2.5]" />
             </div>
 
             <div>
-              <h4 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+              <h4 className="font-heading font-black text-lg text-foreground">
                 Cancel {cancellingOrder.orderNumber}?
               </h4>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 This will terminate the ticket and notify the customer tracking screen immediately.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+              <label className="block text-xs font-bold text-foreground">
                 Cancellation Reason
               </label>
               <select
                 value={cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#111318] dark:text-[#F7F3EB] focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-xs text-foreground focus:outline-none"
               >
                 <option value="Customer requested cancellation">Customer requested cancellation</option>
                 <option value="Item or ingredients out of stock">Item or ingredients out of stock</option>

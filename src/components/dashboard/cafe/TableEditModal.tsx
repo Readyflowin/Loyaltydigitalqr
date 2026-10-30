@@ -114,14 +114,14 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
+      <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
         {/* Header */}
         <div className="p-6 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               {initialTable ? 'EDIT TABLE' : 'NEW TABLE'}
             </span>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               {initialTable ? `Edit ${initialTable.displayName}` : 'Add Table & QR'}
             </h3>
           </div>
@@ -146,7 +146,7 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+              <label className="block text-xs font-bold text-foreground mb-1.5">
                 Table # / Code <span className="text-red-500">*</span>
               </label>
               <input
@@ -155,13 +155,13 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
                 value={tableNumber}
                 onChange={(e) => handleTableNumberChange(e.target.value)}
                 placeholder="e.g. 05, P2, Bar"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
                 autoFocus
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+              <label className="block text-xs font-bold text-foreground mb-1.5">
                 Display Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -170,19 +170,19 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="e.g. Table 05"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Assigned Location
             </label>
             <select
               value={locationId}
               onChange={(e) => setLocationId(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none cursor-pointer"
             >
               {business.locations.map((loc) => (
                 <option key={loc.id} value={loc.id}>
@@ -193,13 +193,13 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Assigned Digital Menu
             </label>
             <select
               value={menuId}
               onChange={(e) => setMenuId(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none cursor-pointer"
             >
               {menus.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -210,7 +210,7 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+            <label className="block text-xs font-bold text-foreground mb-1.5">
               Printed Standee Instruction
             </label>
             <input
@@ -218,7 +218,7 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
               value={instruction}
               onChange={(e) => setInstruction(e.target.value)}
               placeholder="e.g. Scan with smartphone camera to view menu & order"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
             />
           </div>
 
@@ -226,7 +226,7 @@ const TableEditModalForm: React.FC<InnerFormProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-[#60646C] dark:text-[#D0CBC1] text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-border text-muted-foreground text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
             >
               Cancel
             </button>

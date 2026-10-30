@@ -38,13 +38,13 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
       desc: 'The customer’s card opens in their phone browser and can be saved to the home screen.',
       visual: (
         <div className="w-64 bg-[#111318] text-white rounded-2xl p-4 shadow-xl text-center">
-          <div className="text-[10px] font-mono text-white/50">GOODDAY COFFEE</div>
+          <div className="text-xs font-mono text-white/50">GOODDAY COFFEE</div>
           <div className="font-heading font-black text-sm mt-1">1st Visit Stamped!</div>
           <div className="mt-3 flex justify-center gap-1.5">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
                   i === 1 ? 'bg-[#3027F5] text-white' : 'border border-dashed border-white/30 text-white/40'
                 }`}
               >
@@ -52,7 +52,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
               </div>
             ))}
           </div>
-          <div className="mt-3 text-[10px] text-white/70">1 / 8 visits collected</div>
+          <div className="mt-3 text-xs text-white/70">1 / 8 visits collected</div>
         </div>
       ),
     },
@@ -75,7 +75,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
               </div>
             ))}
           </div>
-          <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center gap-1">
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center gap-1">
             <CheckCircle className="w-3.5 h-3.5" />
             <span>Stamp Authorized!</span>
           </div>
@@ -95,7 +95,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
           <div className="text-xs font-medium mt-1">
             1 Free Specialty Coffee on the house
           </div>
-          <div className="mt-3 py-1.5 px-3 rounded-lg bg-black text-white text-[11px] font-bold">
+          <div className="mt-3 py-1.5 px-3 rounded-lg bg-black text-white text-xs font-bold">
             Staff: Tap to Redeem
           </div>
         </div>
@@ -152,7 +152,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
 
         {/* Step Explanation & Navigation */}
         <div className="p-6">
-          <div className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+          <div className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
             {steps[currentStep].subtitle}
           </div>
           <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">

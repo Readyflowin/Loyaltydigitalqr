@@ -81,7 +81,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
 
           <Link
             href="/pricing"
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8E6DE]/60 dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors text-[11px]"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8E6DE]/60 dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors text-xs"
           >
             <Globe className="w-3 h-3 text-[#3027F5] dark:text-[#E4C174]" />
             <span>Change Region</span>
@@ -91,7 +91,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
-            <span className="text-[11px] font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
               INDIA · INR
             </span>
           </div>
@@ -132,7 +132,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
                     /month
                   </span>
                 </div>
-                <div className="text-[11px] font-mono text-[#3027F5] dark:text-[#E4C174] font-semibold mt-1">
+                <div className="text-xs font-mono text-[#3027F5] dark:text-[#E4C174] font-semibold mt-1">
                   BILLED MONTHLY · INR
                 </div>
               </div>

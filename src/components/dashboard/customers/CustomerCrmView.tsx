@@ -109,13 +109,13 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
       {/* 1. Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             CUSTOMER RELATIONSHIP MANAGEMENT
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Loyalty Members & Customer CRM
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Search members, view individual stamp balances, record counter visits, and redeem unlocked rewards.
           </p>
         </div>
@@ -133,50 +133,50 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
 
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ENROLLED MEMBERS
           </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl sm:text-3xl font-heading font-black text-foreground">
             {activeCount}
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             Active digital passes
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             REWARDS UNLOCKED
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-amber-600 dark:text-amber-400">
             {rewardReadyCount}
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             Ready for counter redemption
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             RECORDED VISITS
           </span>
           <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             {customers.reduce((acc, c) => acc + c.totalVisits, 0)}
           </div>
-          <div className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-0.5">
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">
             Verified visits across counters
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE STAMPS HELD
           </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl sm:text-3xl font-heading font-black text-foreground">
             {customers.reduce((acc, c) => acc + c.currentStamps, 0)}
           </div>
-          <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-0.5">
+          <div className="text-xs text-muted-foreground mt-0.5">
             In customer wallet cards
           </div>
         </div>
@@ -193,7 +193,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by customer name, email, or phone..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-border bg-card text-xs sm:text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
           />
         </div>
 
@@ -202,7 +202,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] font-medium"
+            className="px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground font-medium"
           >
             <option value="all">All Statuses ({activeCount})</option>
             <option value="reward_ready">Reward Ready ({rewardReadyCount})</option>
@@ -213,7 +213,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] bg-white dark:bg-[#141412] text-xs text-[#111318] dark:text-[#F7F3EB] font-medium"
+            className="px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground font-medium"
           >
             <option value="last_visit">Sort: Recent Visit</option>
             <option value="name">Sort: Name (A-Z)</option>
@@ -223,15 +223,15 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
       </div>
 
       {/* 4. Customer Table (Desktop) & Card List (Mobile) */}
-      <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] overflow-hidden shadow-xs">
+      <div className="rounded-3xl bg-card border border-border overflow-hidden shadow-xs">
         
         {sorted.length === 0 ? (
           <div className="py-16 text-center space-y-3">
             <Users className="w-12 h-12 text-subtle-foreground mx-auto opacity-40" />
-            <h4 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+            <h4 className="font-heading font-bold text-base text-foreground">
               No Customers Found
             </h4>
-            <p className="text-xs text-[#60646C] dark:text-[#AAA499] max-w-sm mx-auto">
+            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
               {searchQuery
                 ? `No customer profiles matching "${searchQuery}".`
                 : 'Enroll your first loyalty member to begin recording stamps.'}
@@ -247,7 +247,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
         ) : (
           <div>
             {/* Desktop Table Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3.5 border-b border-black/5 dark:border-white/5 text-[10px] font-bold uppercase text-subtle-foreground">
+            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3.5 border-b border-black/5 dark:border-white/5 text-xs font-bold uppercase text-subtle-foreground">
               <span className="col-span-4">MEMBER & CONTACT</span>
               <span className="col-span-3">LOYALTY PROGRESS</span>
               <span className="col-span-2">TOTAL VISITS</span>
@@ -281,11 +281,11 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                           <button
                             type="button"
                             onClick={() => setProfileCustomerId(c.id)}
-                            className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors text-left truncate block cursor-pointer"
+                            className="font-heading font-bold text-sm text-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] transition-colors text-left truncate block cursor-pointer"
                           >
                             {c.name}
                           </button>
-                          <div className="text-[11px] text-subtle-foreground truncate">
+                          <div className="text-xs text-subtle-foreground truncate">
                             {c.email || c.phoneNumber || 'No contact on file'}
                           </div>
                         </div>
@@ -294,15 +294,15 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                       {/* Loyalty Progress Bar & Counter */}
                       <div className="col-span-3 space-y-1">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="font-mono font-bold text-foreground">
                             {c.currentStamps} / {program.stampsRequired} visits
                           </span>
                           {hasUnlocked ? (
-                            <span className="px-1.5 py-0.5 rounded text-[11px] uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                            <span className="px-1.5 py-0.5 rounded text-xs uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
                               Reward Ready
                             </span>
                           ) : (
-                            <span className="text-[10px] text-subtle-foreground">
+                            <span className="text-xs text-subtle-foreground">
                               {program.stampsRequired - c.currentStamps} to reward
                             </span>
                           )}
@@ -322,10 +322,10 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
 
                       {/* Total Visits & Last Activity */}
                       <div className="col-span-2 text-xs">
-                        <div className="font-mono font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <div className="font-mono font-bold text-foreground">
                           {c.totalVisits} visits
                         </div>
-                        <div className="text-[10px] text-subtle-foreground">
+                        <div className="text-xs text-subtle-foreground">
                           {c.lastVisitAt ? new Date(c.lastVisitAt).toLocaleDateString() : 'Never'}
                         </div>
                       </div>
@@ -347,7 +347,7 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                           type="button"
                           data-testid={`crm-stamp-${c.id}`}
                           onClick={() => setStampingCustomer(c)}
-                          className="px-2.5 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 hover:border-[#3027F5] dark:hover:border-[#E4C174] text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-all"
+                          className="px-2.5 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 hover:border-[#3027F5] dark:hover:border-[#E4C174] text-xs font-semibold text-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-all"
                         >
                           Stamp (+1)
                         </button>
@@ -371,12 +371,12 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                         <button
                           type="button"
                           onClick={() => setProfileCustomerId(c.id)}
-                          className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB] text-left"
+                          className="font-heading font-bold text-sm text-foreground text-left"
                         >
                           {c.name}
                         </button>
                         {hasUnlocked ? (
-                          <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                          <span className="px-2 py-0.5 rounded text-xs uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
                             Reward Ready
                           </span>
                         ) : (

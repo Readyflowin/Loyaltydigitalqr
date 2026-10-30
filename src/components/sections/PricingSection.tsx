@@ -31,7 +31,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
-            <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               TRANSPARENT & HONEST PRICING
             </span>
           </div>
@@ -67,7 +67,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     /month
                   </span>
                 </div>
-                <div className="text-[11px] font-mono text-[#3027F5] dark:text-[#E4C174] font-semibold mt-0.5">
+                <div className="text-xs font-mono text-[#3027F5] dark:text-[#E4C174] font-semibold mt-0.5">
                   FIRST 30 DAYS FREE
                 </div>
               </div>

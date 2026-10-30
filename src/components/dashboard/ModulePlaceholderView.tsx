@@ -161,34 +161,34 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
       <button
         type="button"
         onClick={() => onNavigate('overview')}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-3.5 h-3.5" />
         <span>Back to Overview</span>
       </button>
 
       {/* Main Placeholder Card */}
-      <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-8 sm:p-10 shadow-lg text-center">
+      <div className="rounded-3xl bg-card border border-border p-8 sm:p-10 shadow-lg text-center">
         
         <div className="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto mb-4">
           <Clock className="w-7 h-7 stroke-[2.2]" />
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-[11px] font-bold uppercase mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-bold uppercase mb-3">
           <span>PLANNED MODULE · STAGED PRODUCT ROADMAP</span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+        <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
           {info.title}
         </h1>
 
-        <p className="mt-2 text-sm sm:text-base text-[#60646C] dark:text-[#D0CBC1] max-w-xl mx-auto">
+        <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
           {info.description}
         </p>
 
         {/* Milestone Indicator */}
-        <div className="mt-6 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] max-w-md mx-auto text-xs">
-          <span className="text-[10px] uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
+        <div className="mt-6 p-4 rounded-2xl bg-muted border border-border max-w-md mx-auto text-xs">
+          <span className="text-xs uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
             IMPLEMENTATION MILESTONE:
           </span>
           <strong className="text-[#3027F5] dark:text-[#E4C174] font-heading font-bold text-sm mt-0.5 block">
@@ -198,14 +198,14 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
 
         {/* Planned Capabilities List */}
         <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 text-left max-w-lg mx-auto">
-          <span className="text-[11px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-3">
+          <span className="text-xs uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-3">
             PLANNED CAPABILITIES:
           </span>
           <div className="space-y-2.5">
             {info.plannedFeatures.map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-2.5 text-xs text-[#111318] dark:text-[#F7F3EB]">
+              <div key={idx} className="flex items-start gap-2.5 text-xs text-foreground">
                 <div className="w-4 h-4 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-[10px] font-mono text-subtle-foreground">{idx + 1}</span>
+                  <span className="text-xs font-mono text-subtle-foreground">{idx + 1}</span>
                 </div>
                 <span>{feat}</span>
               </div>
@@ -225,7 +225,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
           <button
             type="button"
             onClick={() => onNavigate('loyalty')}
-            className="px-5 py-3 rounded-xl font-bold text-xs sm:text-sm border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            className="px-5 py-3 rounded-xl font-bold text-xs sm:text-sm border border-border text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
           >
             Manage Digital Loyalty Card
           </button>

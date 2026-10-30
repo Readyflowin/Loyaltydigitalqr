@@ -100,7 +100,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           <div className="text-center">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
-              <span className="text-[10px] font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-wider text-[#3027F5] dark:text-[#E4C174] uppercase">
                 30-DAY UNRESTRICTED FREE TRIAL
               </span>
             </div>
@@ -117,7 +117,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
           {/* Selected Region / Plan Context Callout */}
           <div className="mt-6 p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span className="text-[10px] uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] block font-semibold">
+              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] block font-semibold">
                 SELECTED REGIONAL PLAN
               </span>
               <div className="font-heading font-bold text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB] mt-0.5">

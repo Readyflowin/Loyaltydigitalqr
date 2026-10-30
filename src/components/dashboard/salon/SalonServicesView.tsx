@@ -60,14 +60,14 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
   if (!isSalon) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Scissors className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h3 className="text-xl font-heading font-black text-foreground">
             Salon Services Module Unavailable
           </h3>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-xs text-muted-foreground max-w-md mx-auto">
             This module is reserved for salons, barbershops, and appointment-based businesses. The active workspace is registered as a {business.businessType}.
           </p>
         </div>
@@ -194,13 +194,13 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
       {/* 1. Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             SALON & BARBERSHOP CATALOGUE
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Service Menu & Pricing
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Configure haircuts, treatments, duration, and assigned stylists.
           </p>
         </div>
@@ -210,7 +210,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
             type="button"
             data-testid="preview-booking-flow-btn"
             onClick={() => navigate(`/book/${publicBookingSlug}`)}
-            className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-foreground text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Preview Booking Page</span>
@@ -230,17 +230,17 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL SERVICES
           </span>
-          <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl font-heading font-black text-foreground">
             {services.length}
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE BOOKABLE
           </span>
           <div className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
@@ -248,8 +248,8 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             AVG DURATION
           </span>
           <div className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
@@ -257,11 +257,11 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE STYLISTS
           </span>
-          <div className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-2xl font-heading font-black text-foreground">
             {staffList.filter((s) => s.isActive).length}
           </div>
         </div>
@@ -277,7 +277,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search services by name or description..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] placeholder:text-subtle-foreground focus:outline-hidden"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-card text-xs sm:text-sm text-foreground placeholder:text-subtle-foreground focus:outline-hidden"
           />
         </div>
 
@@ -289,7 +289,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
               selectedCategory === 'all'
                 ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                : 'text-[#60646C] dark:text-[#D0CBC1] bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-white/10'
+                : 'text-muted-foreground bg-card border border-[#E5E3DB] dark:border-white/10'
             }`}
           >
             All Categories ({services.length})
@@ -303,7 +303,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat
                   ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                  : 'text-[#60646C] dark:text-[#D0CBC1] bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-white/10'
+                  : 'text-muted-foreground bg-card border border-[#E5E3DB] dark:border-white/10'
               }`}
             >
               {cat}
@@ -314,12 +314,12 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
       {/* 4. Services Grid */}
       {filteredServices.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
+        <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
           <Scissors className="w-10 h-10 mx-auto text-subtle-foreground" />
-          <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+          <h4 className="font-heading font-black text-base text-foreground">
             No services found
           </h4>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+          <p className="text-xs text-muted-foreground">
             Try adjusting your search query or add a new service to get started.
           </p>
         </div>
@@ -334,7 +334,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
               <div
                 key={service.id}
                 data-testid={`service-card-${service.id}`}
-                className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all flex flex-col justify-between ${
+                className={`p-5 rounded-3xl bg-card border transition-all flex flex-col justify-between ${
                   service.isEnabled
                     ? 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:shadow-md'
                     : 'border-amber-200 dark:border-amber-900/30 opacity-70 bg-amber-50/20'
@@ -343,7 +343,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                 <div className="space-y-3">
                   {/* Top Bar with Category & Active Toggle */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground">
+                    <span className="text-xs uppercase font-bold px-2 py-0.5 rounded-lg bg-muted text-subtle-foreground">
                       {service.category || 'General'}
                     </span>
 
@@ -351,7 +351,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                       type="button"
                       data-testid={`toggle-service-btn-${service.id}`}
                       onClick={() => handleToggleActive(service)}
-                      className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full cursor-pointer transition-all ${
+                      className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full cursor-pointer transition-all ${
                         service.isEnabled
                           ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                           : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
@@ -363,10 +363,10 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
                   {/* Title & Price */}
                   <div>
-                    <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                    <h3 className="font-heading font-black text-base text-foreground leading-tight">
                       {service.name}
                     </h3>
-                    <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1 line-clamp-2">
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                       {service.description}
                     </p>
                   </div>
@@ -380,14 +380,14 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                     {service.bufferAfterMinutes ? (
                       <span>+{service.bufferAfterMinutes}m buffer</span>
                     ) : null}
-                    <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] ml-auto">
+                    <span className="font-heading font-black text-sm text-foreground ml-auto">
                       {formatMinorUnits(service.price, service.currency)}
                     </span>
                   </div>
 
                   {/* Assigned Staff */}
                   <div className="pt-2 border-t border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+                    <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
                       ASSIGNED STYLISTS ({assignedStaff.length})
                     </span>
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -395,13 +395,13 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                         assignedStaff.map((stf) => (
                           <span
                             key={stf.id}
-                            className="text-[11px] font-semibold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#4A4D55] dark:text-[#D0CBC1]"
+                            className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-muted text-[#4A4D55] dark:text-[#D0CBC1]"
                           >
                             {stf.displayName}
                           </span>
                         ))
                       ) : (
-                        <span className="text-[11px] text-subtle-foreground italic">
+                        <span className="text-xs text-subtle-foreground italic">
                           No staff assigned
                         </span>
                       )}
@@ -415,7 +415,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                     type="button"
                     data-testid={`edit-service-btn-${service.id}`}
                     onClick={() => handleOpenEditModal(service)}
-                    className="px-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] text-xs font-bold text-[#111318] dark:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer inline-flex items-center gap-1"
+                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer inline-flex items-center gap-1"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     <span>Edit</span>
@@ -458,13 +458,13 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setEditorModalOpen(false)}
           />
-          <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-lg rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center font-bold">
                   <Scissors className="w-4 h-4" />
                 </div>
-                <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="font-heading font-black text-lg text-foreground">
                   {editingService ? 'Edit Service' : 'Add New Service'}
                 </h3>
               </div>
@@ -486,7 +486,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
             <form onSubmit={handleSaveService} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Service Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -495,13 +495,13 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="e.g. Signature Beard Trim & Lineup"
-                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                   required
                 />
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Description
                 </label>
                 <textarea
@@ -510,20 +510,20 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                   onChange={(e) => setFormDescription(e.target.value)}
                   placeholder="Brief description of what is included..."
                   rows={2}
-                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Duration (Minutes) <span className="text-red-500">*</span>
                   </label>
                   <select
                     data-testid="input-service-duration"
                     value={formDuration}
                     onChange={(e) => setFormDuration(parseInt(e.target.value, 10))}
-                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                   >
                     <option value={15}>15 minutes</option>
                     <option value={30}>30 minutes</option>
@@ -535,7 +535,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                 </div>
 
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Price ({business.currency || 'USD'}) <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -546,7 +546,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                     value={formPriceDollars}
                     onChange={(e) => setFormPriceDollars(e.target.value)}
                     placeholder="45.00"
-                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                     required
                   />
                 </div>
@@ -554,7 +554,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Category
                   </label>
                   <input
@@ -563,18 +563,18 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value)}
                     placeholder="e.g. Haircuts, Shaves"
-                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Post-Service Buffer
                   </label>
                   <select
                     value={formBufferAfter}
                     onChange={(e) => setFormBufferAfter(parseInt(e.target.value, 10))}
-                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                   >
                     <option value={0}>No buffer</option>
                     <option value={5}>5 min cleanup</option>
@@ -586,11 +586,11 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
 
               {/* Assigned Staff Selection */}
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1.5 flex items-center justify-between">
+                <label className="font-bold text-foreground block mb-1.5 flex items-center justify-between">
                   <span>Assigned Stylists</span>
-                  <span className="text-[10px] text-subtle-foreground">Who provides this service?</span>
+                  <span className="text-xs text-subtle-foreground">Who provides this service?</span>
                 </label>
-                <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]">
+                <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted">
                   {staffList.map((stf) => {
                     const isChecked = formAssignedStaffIds.includes(stf.id);
                     return (
@@ -613,11 +613,11 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                             }}
                             className="rounded text-[#3027F5]"
                           />
-                          <span className="font-semibold text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="font-semibold text-foreground">
                             {stf.displayName}
                           </span>
                         </div>
-                        <span className="text-[10px] text-subtle-foreground">{stf.role}</span>
+                        <span className="text-xs text-subtle-foreground">{stf.role}</span>
                       </label>
                     );
                   })}
@@ -625,12 +625,12 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
               </div>
 
               {/* Active Toggle */}
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-muted border border-[#E5E3DB] dark:border-white/10">
                 <div>
-                  <span className="font-bold text-[#111318] dark:text-[#F7F3EB] block">
+                  <span className="font-bold text-foreground block">
                     Public Booking Availability
                   </span>
-                  <span className="text-[11px] text-subtle-foreground">
+                  <span className="text-xs text-subtle-foreground">
                     Disabled services will not appear on the customer booking page.
                   </span>
                 </div>

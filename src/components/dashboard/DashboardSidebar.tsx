@@ -127,7 +127,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Brand Header */}
       <div className="h-16 xl:h-20 px-5 flex items-center justify-between border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex-shrink-0">
         <Logo size="sm" />
-        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
+        <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
           DASHBOARD
         </span>
       </div>
@@ -140,7 +140,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           aria-haspopup="dialog"
           aria-label="Switch business or location"
           data-testid="business-switcher-btn"
-          className="w-full p-2.5 rounded-2xl bg-white dark:bg-[#151513] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] hover:border-[#3027F5]/50 dark:hover:border-[#E4C174]/60 transition-all text-left flex items-center justify-between shadow-xs cursor-pointer group"
+          className="w-full p-2.5 rounded-2xl bg-white dark:bg-[#151513] border border-border hover:border-[#3027F5]/50 dark:hover:border-[#E4C174]/60 transition-all text-left flex items-center justify-between shadow-xs cursor-pointer group"
           title="Switch business workspace or location"
         >
           <div className="flex items-center gap-2.5 truncate">
@@ -151,10 +151,10 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
               {activeBusiness.logoInitial}
             </div>
             <div className="truncate">
-              <div className="font-heading font-bold text-xs sm:text-sm text-[#111318] dark:text-[#F7F3EB] truncate">
+              <div className="font-heading font-bold text-xs sm:text-sm text-foreground truncate">
                 {activeBusiness.name}
               </div>
-              <div className="text-[10px] font-mono text-[#60646C] dark:text-[#AAA499] truncate">
+              <div className="text-xs font-mono text-muted-foreground truncate">
                 {activeLocation?.name || 'Main Counter'}
               </div>
             </div>
@@ -169,7 +169,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         
         {/* Group 1: Core Workspace */}
         <div>
-          <span className="px-3 text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-xs uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             CORE WORKSPACE
           </span>
           <nav className="space-y-1">
@@ -202,7 +202,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Group 2: Industry-Specific Modules */}
         <div>
           <div className="px-3 flex items-center justify-between mb-1.5">
-            <span className="text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block">
+            <span className="text-xs uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block">
               {activeBusiness.businessType.toUpperCase()} MODULES
             </span>
           </div>
@@ -231,7 +231,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
                   {item.badge && (
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[11px] font-mono uppercase font-bold flex-shrink-0 ${
+                      className={`px-1.5 py-0.5 rounded text-xs font-mono uppercase font-bold flex-shrink-0 ${
                         item.isPlanned
                           ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
                           : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
@@ -248,7 +248,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
         {/* Group 3: Administration */}
         <div>
-          <span className="px-3 text-[10px] uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
+          <span className="px-3 text-xs uppercase tracking-wider text-subtle-foreground dark:text-[#AAA499] font-bold block mb-1.5">
             ADMINISTRATION
           </span>
           <nav className="space-y-1">
@@ -295,10 +295,10 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
               {currentUser?.displayName?.charAt(0).toUpperCase() || 'M'}
             </div>
             <div className="truncate">
-              <div className="font-heading font-bold text-xs text-[#111318] dark:text-[#F7F3EB] truncate">
+              <div className="font-heading font-bold text-xs text-foreground truncate">
                 {currentUser?.displayName || 'Merchant Owner'}
               </div>
-              <div className="text-[10px] text-[#60646C] dark:text-[#AAA499] truncate">
+              <div className="text-xs text-muted-foreground truncate">
                 {currentUser?.email || ''}
               </div>
             </div>
@@ -307,7 +307,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <button
             type="button"
             onClick={onSignOut}
-            className="p-2 rounded-xl text-[#60646C] dark:text-[#AAA499] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer flex-shrink-0 inline-flex items-center gap-1.5"
+            className="p-2 rounded-xl text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer flex-shrink-0 inline-flex items-center gap-1.5"
             title="Sign out"
             aria-label="Sign Out"
             data-testid="sign-out-btn"

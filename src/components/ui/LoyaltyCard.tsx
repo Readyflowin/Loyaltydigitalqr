@@ -166,7 +166,7 @@ export const LoyaltyCard: React.FC<LoyaltyCardProps> = ({
             <Gift className="w-4 h-4" />
           </span>
           <div className="min-w-0">
-            <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: theme.inkMuted }}>
+            <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.inkMuted }}>
               Reward at {stampsRequired} {theme.noun}
             </div>
             <div className={cx('font-heading font-semibold leading-snug', full ? 'text-[15px]' : 'text-sm')}>{reward}</div>

@@ -86,15 +86,15 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
   };
 
   return (
-    <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#0A0A0A] text-[#111318] dark:text-[#F7F3EB] flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#0A0A0A] text-foreground flex flex-col font-sans transition-colors duration-200">
       {/* 1. KDS Top Bar */}
-      <header className="bg-white dark:bg-[#141412] border-b-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3 flex items-center justify-between gap-3 shadow-xs flex-shrink-0">
+      <header className="bg-card border-b-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3 flex items-center justify-between gap-3 shadow-xs flex-shrink-0">
         <div className="flex items-center gap-4">
           <button
             type="button"
             data-testid="exit-kds-btn"
             onClick={() => navigate('/dashboard')}
-            className="px-3.5 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] hover:bg-white dark:hover:bg-[#201F1B] text-xs font-bold text-[#111318] dark:text-[#F7F3EB] flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-3.5 py-2 rounded-xl border border-border bg-muted hover:bg-white dark:hover:bg-[#201F1B] text-xs font-bold text-foreground flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Exit KDS</span>
@@ -106,21 +106,21 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-none">
+                <h1 className="font-heading font-black text-base text-foreground leading-none">
                   {activeBusiness.name}
                 </h1>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
+                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
                   KITCHEN DISPLAY
                 </span>
               </div>
-              <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] flex items-center gap-1 mt-0.5">
+              <span className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                 <MapPin className="w-3 h-3 text-subtle-foreground" />
                 {activeBusiness.locations.length > 1 ? (
                   <select
                     value={activeLocationId}
                     onChange={(e) => setActiveLocationId(e.target.value)}
                     aria-label="Select Kitchen Location"
-                    className="bg-transparent text-[11px] text-[#60646C] dark:text-[#D0CBC1] outline-hidden cursor-pointer"
+                    className="bg-transparent text-xs text-muted-foreground outline-hidden cursor-pointer"
                   >
                     {activeBusiness.locations.map((loc) => (
                       <option key={loc.id} value={loc.id} className="bg-white dark:bg-[#1A1916]">
@@ -139,7 +139,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
         </div>
 
         {/* Center / Filter buttons */}
-        <div className="hidden md:flex items-center gap-1.5 p-1 bg-[#F8F7F2] dark:bg-[#1A1916] rounded-2xl border border-[#E5E3DB] dark:border-white/10">
+        <div className="hidden md:flex items-center gap-1.5 p-1 bg-muted rounded-2xl border border-[#E5E3DB] dark:border-white/10">
           <button
             type="button"
             data-testid="kds-filter-active"
@@ -147,7 +147,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               kdsFilter === 'active'
                 ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                : 'text-[#60646C] dark:text-[#D0CBC1]'
+                : 'text-muted-foreground'
             }`}
           >
             Active Queue ({activeCount})
@@ -159,7 +159,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               kdsFilter === 'preparing'
                 ? 'bg-amber-600 text-white shadow-xs'
-                : 'text-[#60646C] dark:text-[#D0CBC1]'
+                : 'text-muted-foreground'
             }`}
           >
             Preparing Only
@@ -171,7 +171,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               kdsFilter === 'ready'
                 ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-[#60646C] dark:text-[#D0CBC1]'
+                : 'text-muted-foreground'
             }`}
           >
             Ready for Server ({readyCount})
@@ -183,7 +183,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               kdsFilter === 'all'
                 ? 'bg-[#111318] text-white dark:bg-white dark:text-[#111318] shadow-xs'
-                : 'text-[#60646C] dark:text-[#D0CBC1]'
+                : 'text-muted-foreground'
             }`}
           >
             All Tickets
@@ -193,17 +193,17 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
         {/* Right Info: Clock & Theme Toggle */}
         <div className="flex items-center gap-3">
           <div className="text-right font-mono hidden sm:block">
-            <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] block">
+            <span className="text-xs font-bold text-foreground block">
               {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
-            <span className="text-[10px] text-subtle-foreground">LIVE</span>
+            <span className="text-xs text-subtle-foreground">LIVE</span>
           </div>
 
           <button
             type="button"
             data-testid="kds-theme-toggle"
             onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+            className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-muted-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -216,10 +216,10 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
         {filteredTickets.length === 0 ? (
           <div className="h-full min-h-[60vh] flex flex-col items-center justify-center p-8 text-center text-subtle-foreground space-y-3">
             <ChefHat className="w-16 h-16 stroke-1" />
-            <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
+            <h3 className="font-heading font-black text-xl text-foreground">
               Kitchen Queue is Clear
             </h3>
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-sm">
+            <p className="text-xs text-muted-foreground max-w-sm">
               All tickets fulfilled. New orders submitted by customers scanning table QR codes will appear here instantly.
             </p>
           </div>
@@ -233,7 +233,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                 <div
                   key={ticket.id}
                   data-testid={`kds-ticket-${ticket.id}`}
-                  className={`rounded-3xl bg-white dark:bg-[#141412] border-2 shadow-md flex flex-col justify-between overflow-hidden transition-all ${
+                  className={`rounded-3xl bg-card border-2 shadow-md flex flex-col justify-between overflow-hidden transition-all ${
                     isUrgent
                       ? 'border-red-400 dark:border-red-800'
                       : ticket.status === 'ready'
@@ -250,18 +250,18 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                         ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/40'
                         : ticket.status === 'preparing'
                         ? 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/40'
-                        : 'bg-[#F8F7F2] dark:bg-[#1A1916] border-[#E5E3DB] dark:border-white/10'
+                        : 'bg-muted border-[#E5E3DB] dark:border-white/10'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB]">
+                      <span className="font-heading font-black text-2xl text-foreground">
                         {ticket.orderNumber}
                       </span>
                       <span
                         className={`text-xs font-mono font-bold px-2.5 py-1 rounded-xl ${
                           isUrgent
                             ? 'bg-red-500 text-white animate-pulse'
-                            : 'bg-black/10 dark:bg-white/10 text-[#111318] dark:text-[#F7F3EB]'
+                            : 'bg-black/10 dark:bg-white/10 text-foreground'
                         }`}
                       >
                         {minutesAgo < 1 ? 'JUST NOW' : `${minutesAgo} MIN AGO`}
@@ -272,7 +272,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                       <span className="text-sm font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
                         {ticket.tableName || ticket.pickupLabel || 'Table Order'}
                       </span>
-                      <span className="text-[10px] font-bold uppercase text-subtle-foreground">
+                      <span className="text-xs font-bold uppercase text-subtle-foreground">
                         {ticket.items.reduce((acc, i) => acc + i.quantity, 0)} {ticket.items.reduce((acc, i) => acc + i.quantity, 0) === 1 ? 'ITEM' : 'ITEMS'}
                       </span>
                     </div>
@@ -283,10 +283,10 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                     {ticket.items.map((item, idx) => (
                       <div key={idx} className="space-y-1">
                         <div className="flex items-start gap-2">
-                          <span className="font-mono font-black text-sm bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="font-mono font-black text-sm bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded text-foreground">
                             {item.quantity}×
                           </span>
-                          <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] leading-snug">
+                          <span className="font-heading font-black text-sm text-foreground leading-snug">
                             {item.name}
                           </span>
                         </div>
@@ -298,13 +298,13 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                         )}
 
                         {item.modifiers.length > 0 && (
-                          <div className="pl-8 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                          <div className="pl-8 text-xs text-muted-foreground">
                             {item.modifiers.map((m) => `• ${m.name}`).join(' ')}
                           </div>
                         )}
 
                         {item.specialInstructions && (
-                          <div className="ml-8 mt-1 p-2 rounded-xl bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-[11px] font-black text-amber-900 dark:text-amber-200">
+                          <div className="ml-8 mt-1 p-2 rounded-xl bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-xs font-black text-amber-900 dark:text-amber-200">
                             NOTE: {item.specialInstructions.toUpperCase()}
                           </div>
                         )}
@@ -313,7 +313,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                   </div>
 
                   {/* Ticket Bottom Actions */}
-                  <div className="p-3 border-t border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] flex items-center justify-between gap-2">
+                  <div className="p-3 border-t border-[#E5E3DB] dark:border-white/10 bg-muted flex items-center justify-between gap-2">
                     {ticket.status === 'new' && (
                       <button
                         type="button"

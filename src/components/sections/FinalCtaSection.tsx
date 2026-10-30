@@ -39,7 +39,7 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({
           <div className="relative z-10 max-w-3xl">
             {/* Eyebrow */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15">
-              <span className="text-[11px] font-bold tracking-wider text-[#D6FF38] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-wider text-[#D6FF38] dark:text-[#E4C174] uppercase">
                 LAUNCH IN 3 MINUTES
               </span>
             </div>

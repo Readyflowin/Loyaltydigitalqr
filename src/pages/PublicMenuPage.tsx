@@ -157,7 +157,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               <h1 className="font-heading font-black text-sm sm:text-base text-[#111318] dark:text-[#F7F3EB] truncate leading-tight">
                 {business.name}
               </h1>
-              <div className="flex items-center gap-1 text-[11px] text-[#60646C] dark:text-[#D0CBC1] truncate">
+              <div className="flex items-center gap-1 text-xs text-[#60646C] dark:text-[#D0CBC1] truncate">
                 <MapPin className="w-3 h-3 flex-shrink-0 text-subtle-foreground" />
                 <span className="truncate">{business.locationName}</span>
               </div>
@@ -181,7 +181,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               {/* Table Switcher Dropdown */}
               {tablePickerOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-2 z-40 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="text-[10px] uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
+                  <div className="text-xs uppercase tracking-wider text-subtle-foreground px-2 py-1 font-bold">
                     Choose Your Seat
                   </div>
                   {allTables.map((t) => (
@@ -221,7 +221,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
       <div className="max-w-4xl mx-auto px-4 pt-6 pb-4">
         <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               DIGITAL MENU & INSTANT ORDERING
             </span>
           </div>
@@ -282,7 +282,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                   }`}
                 >
                   <span>{cat.name}</span>
-                  <span className="text-[10px] opacity-75">({catCount})</span>
+                  <span className="text-xs opacity-75">({catCount})</span>
                 </button>
               );
             })}
@@ -290,7 +290,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
           {/* Dietary Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto pt-1 scrollbar-none">
-            <span className="text-[10px] uppercase text-subtle-foreground font-bold mr-1">
+            <span className="text-xs uppercase text-subtle-foreground font-bold mr-1">
               Diet:
             </span>
             {(['all', 'veg', 'vegan', 'gluten_free'] as const).map((diet) => {
@@ -309,7 +309,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                   type="button"
                   data-testid={`dietary-filter-${diet}`}
                   onClick={() => setActiveDietary(diet)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer whitespace-nowrap ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap ${
                     isSel
                       ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
                       : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#141412] text-subtle-foreground'
@@ -376,7 +376,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                       {item.dietary?.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] border border-[#E5E3DB] dark:border-white/5"
+                          className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] border border-[#E5E3DB] dark:border-white/5"
                         >
                           {tag === 'veg'
                             ? 'Vegetarian'
@@ -389,7 +389,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                       ))}
 
                       {hasOptions && (
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]">
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]">
                           Customizable
                         </span>
                       )}
@@ -398,7 +398,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
                   {/* Add / Sold Out Button */}
                   <div className="pt-3 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center justify-between">
-                    <span className="text-[11px] text-subtle-foreground">
+                    <span className="text-xs text-subtle-foreground">
                       {isSoldOut ? 'Sold out for the day' : hasOptions ? 'Options available' : 'Freshly prepared'}
                     </span>
 

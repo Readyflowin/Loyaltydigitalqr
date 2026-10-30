@@ -250,14 +250,14 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#059669]/10 text-[#059669] text-[10px] font-bold uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-bold uppercase tracking-wider">
               RETAIL & MERCHANDISE
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
             Product Catalogue & Inventory
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
             Manage your store's boutique items, availability, pricing, and record in-store transactions.
           </p>
         </div>
@@ -267,7 +267,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
             type="button"
             data-testid="preview-catalog-btn"
             onClick={() => navigate(`/catalog/${businessSlug}`)}
-            className="px-3.5 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+            className="px-3.5 py-2 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-foreground text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Online Catalogue</span>
@@ -297,49 +297,49 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
       {/* 2. Key Metrics Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             ACTIVE PRODUCTS
           </span>
-          <div data-testid="metric-active-products" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div data-testid="metric-active-products" className="text-2xl font-heading font-black text-foreground">
             {metrics.activeProducts}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Published in catalogue</span>
+          <span className="text-xs text-muted-foreground">Published in catalogue</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             IN-STOCK AVAILABLE
           </span>
           <div data-testid="metric-available-products" className="text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
             {metrics.availableProducts}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Ready for customer purchase</span>
+          <span className="text-xs text-muted-foreground">Ready for customer purchase</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             QUALIFYING PURCHASES
           </span>
           <div data-testid="metric-recorded-sales" className="text-2xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
             {metrics.qualifyingPurchases}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Eligible retail transactions</span>
+          <span className="text-xs text-muted-foreground">Eligible retail transactions</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL STORE REVENUE
           </span>
-          <div data-testid="metric-store-revenue" className="text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div data-testid="metric-store-revenue" className="text-2xl font-heading font-black text-foreground">
             {formatMinorUnits(metrics.totalRevenueMinor, business.currency)}
           </div>
-          <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">Recorded in-store sales</span>
+          <span className="text-xs text-muted-foreground">Recorded in-store sales</span>
         </div>
       </div>
 
       {/* 3. Search & Filter Bar */}
-      <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
+      <div className="p-4 rounded-2xl bg-card border border-border space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="relative w-full sm:w-80">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-subtle-foreground" />
@@ -349,11 +349,11 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search product, SKU or description..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+              className="w-full pl-9 pr-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-xs text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
             />
           </div>
 
-          <label className="flex items-center gap-2 text-xs font-bold text-[#60646C] dark:text-[#D0CBC1] cursor-pointer">
+          <label className="flex items-center gap-2 text-xs font-bold text-muted-foreground cursor-pointer">
             <input
               type="checkbox"
               checked={includeArchived}
@@ -373,7 +373,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
             className={`px-3 py-1 rounded-xl font-bold cursor-pointer transition-colors ${
               selectedCategory === 'all'
                 ? 'bg-[#059669] text-white shadow-xs'
-                : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+                : 'bg-muted text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
             All Products ({retailService.getProducts(business.id, { includeArchived }).length})
@@ -387,7 +387,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               className={`px-3 py-1 rounded-xl font-bold cursor-pointer transition-colors ${
                 selectedCategory === cat.id
                   ? 'bg-[#059669] text-white shadow-xs'
-                  : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+                  : 'bg-muted text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
               }`}
             >
               {cat.name}
@@ -398,12 +398,12 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
       {/* 4. Products Grid */}
       {products.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3">
+        <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-3">
           <Package className="w-10 h-10 mx-auto text-subtle-foreground" />
-          <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+          <h3 className="font-heading font-black text-base text-foreground">
             No Products Found
           </h3>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-sm mx-auto">
+          <p className="text-xs text-muted-foreground max-w-sm mx-auto">
             {searchQuery
               ? `No products matched "${searchQuery}". Try clearing search.`
               : 'Add your first product to start building your retail catalogue.'}
@@ -423,7 +423,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
             <div
               key={prod.id}
               data-testid={`product-card-${prod.id}`}
-              className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all ${
+              className={`p-5 rounded-3xl bg-card border transition-all ${
                 prod.isArchived
                   ? 'border-gray-300 dark:border-gray-800 opacity-60'
                   : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:border-[#059669]'
@@ -432,18 +432,18 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-md bg-[#F8F7F2] dark:bg-[#1A1916] text-[10px] font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+                    <span className="px-2 py-0.5 rounded-md bg-muted text-xs font-mono font-bold text-muted-foreground">
                       {prod.categoryName}
                     </span>
                     {prod.sku && (
-                      <span className="text-[10px] font-mono text-subtle-foreground">
+                      <span className="text-xs font-mono text-subtle-foreground">
                         SKU: {prod.sku}
                       </span>
                     )}
                   </div>
                   <h3
                     data-testid={`product-title-${prod.id}`}
-                    className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] truncate"
+                    className="font-heading font-black text-base text-foreground truncate"
                   >
                     {prod.name}
                   </h3>
@@ -452,14 +452,14 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                 <div className="text-right flex-shrink-0">
                   <span
                     data-testid={`product-price-${prod.id}`}
-                    className="font-mono font-bold text-base text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-mono font-bold text-base text-foreground"
                   >
                     {formatMinorUnits(prod.price, prod.currency)}
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] line-clamp-2 leading-relaxed">
+              <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                 {prod.description}
               </p>
 
@@ -468,7 +468,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   {prod.variants.map((v) => (
                     <span
                       key={v.name}
-                      className="px-2 py-0.5 rounded text-[10px] bg-black/5 dark:bg-white/5 font-mono text-[#60646C] dark:text-[#D0CBC1]"
+                      className="px-2 py-0.5 rounded text-xs bg-black/5 dark:bg-white/5 font-mono text-muted-foreground"
                     >
                       {v.name}: {v.options.join(', ')}
                     </span>
@@ -483,7 +483,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   data-testid={`toggle-product-available-${prod.id}`}
                   onClick={() => handleToggleAvailable(prod.id)}
                   disabled={prod.isArchived}
-                  className={`px-2.5 py-1 rounded-xl text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer transition-colors ${
+                  className={`px-2.5 py-1 rounded-xl text-xs font-bold inline-flex items-center gap-1 cursor-pointer transition-colors ${
                     prod.isAvailable
                       ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
                       : 'bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400'
@@ -538,9 +538,9 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           data-testid="product-editor-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
         >
-          <div className="max-w-lg w-full p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-5 my-8">
+          <div className="max-w-lg w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-5 my-8">
             <div className="flex items-center justify-between">
-              <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-lg text-foreground">
                 {editingProduct ? 'Edit Retail Product' : 'Add New Product'}
               </h3>
               <button
@@ -561,7 +561,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
             <form onSubmit={handleSaveProduct} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Product Name *
                 </label>
                 <input
@@ -570,14 +570,14 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="e.g. Silk Blend Slip Dress"
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Price ({business.currencySymbol}) *
                   </label>
                   <input
@@ -587,13 +587,13 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                     value={formPrice}
                     onChange={(e) => setFormPrice(e.target.value)}
                     placeholder="25.00"
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono font-bold focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                    className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono font-bold focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     SKU (Optional)
                   </label>
                   <input
@@ -602,20 +602,20 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                     value={formSku}
                     onChange={(e) => setFormSku(e.target.value)}
                     placeholder="e.g. VV-DR-01"
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                    className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Category
                 </label>
                 <select
                   data-testid="input-product-cat"
                   value={formCategory}
                   onChange={(e) => setFormCategory(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-medium focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-medium focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                 >
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -626,7 +626,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Description
                 </label>
                 <textarea
@@ -635,12 +635,12 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   value={formDesc}
                   onChange={(e) => setFormDesc(e.target.value)}
                   placeholder="Material composition, fit details, or care instructions..."
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Variants (Format: <code>Size: XS, S, M | Color: Black, White</code>)
                 </label>
                 <input
@@ -649,7 +649,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   value={formVariants}
                   onChange={(e) => setFormVariants(e.target.value)}
                   placeholder="e.g. Size: S, M, L | Color: Cognac, Noir"
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#059669]"
                 />
               </div>
 
@@ -661,7 +661,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                   onChange={(e) => setFormAvailable(e.target.checked)}
                   className="rounded-sm accent-[#059669] cursor-pointer"
                 />
-                <label htmlFor="formAvailable" className="font-bold text-[#111318] dark:text-[#F7F3EB] cursor-pointer">
+                <label htmlFor="formAvailable" className="font-bold text-foreground cursor-pointer">
                   Available in store and on public catalogue
                 </label>
               </div>
@@ -670,7 +670,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                 <button
                   type="button"
                   onClick={() => setIsEditorOpen(false)}
-                  className="px-4 py-2 rounded-xl font-bold text-[#60646C] dark:text-[#D0CBC1] hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                  className="px-4 py-2 rounded-xl font-bold text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -693,13 +693,13 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           data-testid="record-sale-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
         >
-          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-4 my-8">
+          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-4 my-8">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold tracking-widest text-[#059669] uppercase block">
+                <span className="text-xs font-bold tracking-widest text-[#059669] uppercase block">
                   IN-STORE SALE
                 </span>
-                <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="font-heading font-black text-lg text-foreground">
                   Record In-Store Purchase
                 </h3>
               </div>
@@ -728,14 +728,14 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
 
             <form onSubmit={handleConfirmSale} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Customer Member (CRM)
                 </label>
                 <select
                   data-testid="sale-customer-select"
                   value={selectedCustomerId}
                   onChange={(e) => setSelectedCustomerId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-medium"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-medium"
                 >
                   <option value="">Guest Walk-In (No Loyalty)</option>
                   {customers.map((c) => (
@@ -749,13 +749,13 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               {/* Items List */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                  <label className="font-bold text-foreground">
                     Purchased Items ({saleItems.length})
                   </label>
                   <button
                     type="button"
                     onClick={handleAddSaleItem}
-                    className="text-[11px] font-bold text-[#059669] hover:underline cursor-pointer"
+                    className="text-xs font-bold text-[#059669] hover:underline cursor-pointer"
                   >
                     + Add Item
                   </button>
@@ -771,7 +771,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                           updated[idx].productId = e.target.value;
                           setSaleItems(updated);
                         }}
-                        className="flex-1 px-2.5 py-1.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs truncate"
+                        className="flex-1 px-2.5 py-1.5 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-xs truncate"
                       >
                         {products.map((p) => (
                           <option key={p.id} value={p.id}>
@@ -790,7 +790,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                           updated[idx].quantity = parseInt(e.target.value, 10) || 1;
                           setSaleItems(updated);
                         }}
-                        className="w-14 px-2 py-1.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-xs font-mono text-center"
+                        className="w-14 px-2 py-1.5 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-xs font-mono text-center"
                       />
 
                       {saleItems.length > 1 && (
@@ -808,18 +808,18 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               </div>
 
               {/* Subtotal & Loyalty Notice */}
-              <div className="p-3 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 space-y-1.5">
-                <div className="flex items-center justify-between text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="p-3 rounded-2xl bg-muted border border-[#E5E3DB] dark:border-white/10 space-y-1.5">
+                <div className="flex items-center justify-between text-muted-foreground">
                   <span>Total Amount</span>
                   <span
                     data-testid="sale-total-amount"
-                    className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-heading font-black text-base text-foreground"
                   >
                     {formatMinorUnits(saleSubtotal, business.currency)}
                   </span>
                 </div>
 
-                <div className="text-[11px] text-[#059669] font-medium flex items-center gap-1.5">
+                <div className="text-xs text-[#059669] font-medium flex items-center gap-1.5">
                   <Tag className="w-3.5 h-3.5" />
                   {selectedCustomerId ? (
                     saleSubtotal >= 1500 ? (
@@ -837,7 +837,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                 <button
                   type="button"
                   onClick={() => setIsRecordSaleOpen(false)}
-                  className="px-4 py-2 rounded-xl font-bold text-[#60646C] dark:text-[#D0CBC1] hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 rounded-xl font-bold text-muted-foreground hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>

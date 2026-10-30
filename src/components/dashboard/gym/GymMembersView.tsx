@@ -143,14 +143,14 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#D97706]/10 text-[#D97706] text-[10px] font-bold uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#D97706]/10 text-[#D97706] text-xs font-bold uppercase tracking-wider">
               FITNESS & WELLNESS
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB]">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
             Members & Membership Plans
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
             Manage fitness memberships, visit packages, active member statuses, and pricing tiers.
           </p>
         </div>
@@ -189,7 +189,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           className={`px-4 py-2 rounded-xl transition-colors cursor-pointer ${
             activeTab === 'members'
               ? 'bg-[#D97706] text-white shadow-xs'
-              : 'text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+              : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
           }`}
         >
           Members Roster ({members.length})
@@ -201,7 +201,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           className={`px-4 py-2 rounded-xl transition-colors cursor-pointer ${
             activeTab === 'plans'
               ? 'bg-[#D97706] text-white shadow-xs'
-              : 'text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+              : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
           }`}
         >
           Membership Plans ({plans.length})
@@ -212,7 +212,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
       {activeTab === 'members' && (
         <div className="space-y-4">
           {/* Search & Filter Bar */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="p-4 rounded-2xl bg-card border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="relative w-full sm:w-72">
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-subtle-foreground" />
               <input
@@ -221,12 +221,12 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search member name or email..."
-                className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden focus:ring-2 focus:ring-[#D97706]"
+                className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground focus:outline-hidden focus:ring-2 focus:ring-[#D97706]"
               />
             </div>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-subtle-foreground text-[10px] uppercase font-bold mr-1">Status:</span>
+              <span className="text-subtle-foreground text-xs uppercase font-bold mr-1">Status:</span>
               {(['all', 'active', 'expired', 'suspended'] as const).map((st) => (
                 <button
                   key={st}
@@ -236,7 +236,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   className={`px-2.5 py-1 rounded-lg font-bold cursor-pointer transition-colors ${
                     statusFilter === st
                       ? 'bg-[#D97706] text-white'
-                      : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] hover:bg-black/5 dark:hover:bg-white/5'
+                      : 'bg-muted text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5'
                   }`}
                 >
                   {st.charAt(0).toUpperCase() + st.slice(1)}
@@ -247,20 +247,20 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
 
           {/* Members Table */}
           {members.length === 0 ? (
-            <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-2">
+            <div className="p-12 text-center rounded-3xl bg-card border border-border space-y-2">
               <UserCheck className="w-10 h-10 mx-auto text-subtle-foreground" />
-              <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-base text-foreground">
                 No Members Found
               </h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+              <p className="text-xs text-muted-foreground">
                 Assign your first gym membership to a customer profile.
               </p>
             </div>
           ) : (
-            <div className="rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs overflow-hidden">
+            <div className="rounded-3xl bg-card border border-border shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table data-testid="gym-members-table" className="w-full text-left text-xs">
-                  <thead className="bg-[#F8F7F2] dark:bg-[#1A1916] border-b border-[#E5E3DB] dark:border-white/10 text-subtle-foreground uppercase text-[10px]">
+                  <thead className="bg-muted border-b border-[#E5E3DB] dark:border-white/10 text-subtle-foreground uppercase text-xs">
                     <tr>
                       <th className="py-3 px-4">Member</th>
                       <th className="py-3 px-4">Plan Name</th>
@@ -273,17 +273,17 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   <tbody className="divide-y divide-[#E5E3DB] dark:divide-white/10">
                     {members.map((mem) => (
                       <tr key={mem.id} data-testid={`member-row-${mem.id}`} className="hover:bg-black/2 dark:hover:bg-white/2 transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-[#111318] dark:text-[#F7F3EB]">
+                        <td className="py-3.5 px-4 font-bold text-foreground">
                           <div>{mem.customerName}</div>
                           {mem.customerEmail && (
-                            <div className="text-[11px] font-normal text-subtle-foreground">{mem.customerEmail}</div>
+                            <div className="text-xs font-normal text-subtle-foreground">{mem.customerEmail}</div>
                           )}
                         </td>
-                        <td className="py-3.5 px-4 font-medium text-[#111318] dark:text-[#F7F3EB]">
+                        <td className="py-3.5 px-4 font-medium text-foreground">
                           {mem.planName}
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 font-mono text-[10px] text-[#60646C] dark:text-[#D0CBC1]">
+                          <span className="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 font-mono text-xs text-muted-foreground">
                             {mem.planType.replace('_', ' ')}
                           </span>
                         </td>
@@ -296,13 +296,13 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                             <span className="text-subtle-foreground">Unlimited</span>
                           )}
                         </td>
-                        <td className="py-3.5 px-4 font-mono text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                        <td className="py-3.5 px-4 font-mono text-xs text-muted-foreground">
                           {mem.endDate || 'No Expiry'}
                         </td>
                         <td className="py-3.5 px-4 text-right">
                           <span
                             data-testid={`member-status-${mem.id}`}
-                            className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase font-mono ${
+                            className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase font-mono ${
                               mem.status === 'active'
                                 ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
                                 : 'bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400'
@@ -328,28 +328,28 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
             <div
               key={p.id}
               data-testid={`plan-card-${p.id}`}
-              className="p-5 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs space-y-3 flex flex-col justify-between"
+              className="p-5 rounded-3xl bg-card border border-border shadow-xs space-y-3 flex flex-col justify-between"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded-md bg-[#D97706]/10 text-[#D97706] text-[10px] font-bold uppercase">
+                  <span className="px-2 py-0.5 rounded-md bg-[#D97706]/10 text-[#D97706] text-xs font-bold uppercase">
                     {p.planType.replace('_', ' ')}
                   </span>
-                  <span className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+                  <span className="font-heading font-black text-lg text-foreground">
                     {formatMinorUnits(p.price, p.currency)}
                   </span>
                 </div>
 
-                <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="font-heading font-black text-base text-foreground">
                   {p.name}
                 </h3>
 
-                <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {p.description}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 space-y-1 text-[11px] text-subtle-foreground">
+              <div className="pt-3 border-t border-[#E5E3DB] dark:border-white/10 space-y-1 text-xs text-subtle-foreground">
                 {p.includedVisits && <div>Allowance: {p.includedVisits} total visits</div>}
                 {p.durationDays && <div>Validity: {p.durationDays} days</div>}
                 <div>Class Access: {p.hasClassAccess ? 'Included' : 'Floor Only'}</div>
@@ -365,9 +365,9 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           data-testid="assign-membership-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
         >
-          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-4">
+          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-lg text-foreground">
                 Assign Membership
               </h3>
               <button
@@ -387,14 +387,14 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
 
             <form onSubmit={handleSaveAssignment} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Customer Profile
                 </label>
                 <select
                   data-testid="assign-customer-select"
                   value={assignCustomerId}
                   onChange={(e) => setAssignCustomerId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-medium"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-medium"
                 >
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -405,14 +405,14 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Membership Plan
                 </label>
                 <select
                   data-testid="assign-plan-select"
                   value={assignPlanId}
                   onChange={(e) => setAssignPlanId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-medium"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-medium"
                 >
                   {plans.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -423,7 +423,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Start Date
                 </label>
                 <input
@@ -431,7 +431,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   data-testid="assign-start-date"
                   value={assignStartDate}
                   onChange={(e) => setAssignStartDate(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono"
                 />
               </div>
 
@@ -439,7 +439,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                 <button
                   type="button"
                   onClick={() => setIsAssignModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-[#60646C] dark:text-[#D0CBC1] hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-muted-foreground hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -462,9 +462,9 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
           data-testid="create-plan-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
         >
-          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-2xl space-y-4">
+          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+              <h3 className="font-heading font-black text-lg text-foreground">
                 New Membership Plan
               </h3>
               <button
@@ -484,7 +484,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
 
             <form onSubmit={handleSavePlan} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Plan Name *
                 </label>
                 <input
@@ -493,21 +493,21 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   value={planName}
                   onChange={(e) => setPlanName(e.target.value)}
                   placeholder="e.g. 10-Visit Punch Pass"
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Plan Type
                   </label>
                   <select
                     data-testid="input-plan-type"
                     value={planType}
                     onChange={(e) => setPlanType(e.target.value as GymPlanType)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB]"
+                    className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground"
                   >
                     <option value="recurring_monthly">Monthly Membership</option>
                     <option value="recurring_annual">Annual Membership</option>
@@ -517,7 +517,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                  <label className="font-bold text-foreground block mb-1">
                     Price ({business.currencySymbol}) *
                   </label>
                   <input
@@ -526,7 +526,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                     data-testid="input-plan-price"
                     value={planPrice}
                     onChange={(e) => setPlanPrice(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono font-bold"
+                    className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono font-bold"
                     required
                   />
                 </div>
@@ -535,7 +535,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               {(planType === 'visit_pass' || planType === 'class_pack') && (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                    <label className="font-bold text-foreground block mb-1">
                       Included Visits
                     </label>
                     <input
@@ -543,11 +543,11 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                       data-testid="input-plan-visits"
                       value={planVisits}
                       onChange={(e) => setPlanVisits(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono"
+                      className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono"
                     />
                   </div>
                   <div>
-                    <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                    <label className="font-bold text-foreground block mb-1">
                       Validity (Days)
                     </label>
                     <input
@@ -555,14 +555,14 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                       data-testid="input-plan-days"
                       value={planDays}
                       onChange={(e) => setPlanDays(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB] font-mono"
+                      className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground font-mono"
                     />
                   </div>
                 </div>
               )}
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Description
                 </label>
                 <textarea
@@ -570,7 +570,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   data-testid="input-plan-desc"
                   value={planDesc}
                   onChange={(e) => setPlanDesc(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10 text-[#111318] dark:text-[#F7F3EB]"
+                  className="w-full px-3 py-2 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10 text-foreground"
                 />
               </div>
 
@@ -582,7 +582,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                   onChange={(e) => setPlanClassAccess(e.target.checked)}
                   className="rounded-sm accent-[#D97706]"
                 />
-                <label htmlFor="classAccess" className="font-bold text-[#111318] dark:text-[#F7F3EB]">
+                <label htmlFor="classAccess" className="font-bold text-foreground">
                   Includes studio class attendance
                 </label>
               </div>
@@ -591,7 +591,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
                 <button
                   type="button"
                   onClick={() => setIsPlanModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-[#60646C] dark:text-[#D0CBC1] hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-muted-foreground hover:bg-gray-100 cursor-pointer"
                 >
                   Cancel
                 </button>

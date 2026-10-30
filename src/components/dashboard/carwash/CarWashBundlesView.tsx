@@ -189,7 +189,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary">
                     {bundle.bundleType === 'visit_pack' ? 'Punch Pass' : 'Unlimited Subscription'}
                   </span>
                   <h4 className="text-base font-bold text-foreground mt-0.5">{bundle.name}</h4>
@@ -275,9 +275,9 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
                     >
                       <td className="px-5 py-3.5">
                         <div className="font-semibold text-foreground">{pass.customerName}</div>
-                        <div className="text-[11px] text-muted-foreground flex items-center gap-2 mt-0.5">
+                        <div className="text-xs text-muted-foreground flex items-center gap-2 mt-0.5">
                           {pass.vehiclePlate && (
-                            <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-[11px] font-semibold text-foreground border border-border/40">
+                            <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-xs font-semibold text-foreground border border-border/40">
                               {pass.vehiclePlate}
                             </span>
                           )}
@@ -307,7 +307,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
                       </td>
                       <td className="px-5 py-3.5">
                         <span
-                          className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider ${
+                          className={`inline-block px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${
                             pass.status === 'active'
                               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                               : pass.status === 'exhausted'

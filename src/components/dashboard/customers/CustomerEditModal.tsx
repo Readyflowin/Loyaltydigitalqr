@@ -77,15 +77,15 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
       />
 
       {/* Dialog */}
-      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               {isEditing ? 'UPDATE RECORD' : 'NEW ENROLLMENT'}
             </span>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               {isEditing ? 'Edit Customer Profile' : 'Enroll New Member'}
             </h3>
           </div>
@@ -103,7 +103,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-foreground uppercase mb-1">
               Customer Full Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -111,13 +111,13 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Jordan Hayes"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               autoFocus
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-foreground uppercase mb-1">
               Email Address (Optional)
             </label>
             <input
@@ -125,12 +125,12 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="customer@example.com"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-foreground uppercase mb-1">
               Mobile Phone Number (Optional)
             </label>
             <input
@@ -138,13 +138,13 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="+1 (555) 000-0000"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
             />
           </div>
 
           {isEditing && (
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Account Status
               </label>
               <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+            <label className="block text-xs font-bold text-foreground uppercase mb-1">
               Internal Staff Notes (Optional)
             </label>
             <textarea
@@ -183,7 +183,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Regular counter guest, favorite table or drink preferences"
-              className="w-full px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              className="w-full px-4 py-2 rounded-xl border border-border bg-muted text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
             />
           </div>
 
@@ -199,7 +199,7 @@ const CustomerEditModalContent: React.FC<Omit<CustomerEditModalProps, 'isOpen'>>
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+              className="px-4 py-2 rounded-xl border border-border text-xs font-semibold text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
             >
               Cancel
             </button>

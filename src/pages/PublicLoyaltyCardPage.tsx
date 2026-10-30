@@ -218,7 +218,7 @@ const JoinForm: React.FC<{
         >
           {submitting ? 'Joining…' : 'Get my loyalty card'}
         </button>
-        <p className="text-[11px] text-subtle-foreground text-center">
+        <p className="text-xs text-subtle-foreground text-center">
           Your details are shared only with this business to run its loyalty program.
           {terms ? ` ${terms}` : ''}
         </p>

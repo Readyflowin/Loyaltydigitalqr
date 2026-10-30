@@ -76,15 +76,15 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-4xl rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-8">
+      <div className="relative w-full max-w-4xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-8">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               PROGRAM EDITOR
             </span>
-            <h3 className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl sm:text-2xl font-heading font-black text-foreground mt-0.5">
               Configure Loyalty Rewards
             </h3>
           </div>
@@ -106,7 +106,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
             
             {/* Program Name */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Program Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -120,7 +120,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                 className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium focus:outline-none focus:ring-2 ${
                   errors.name
                     ? 'border-red-500 bg-red-50/20 text-red-900 focus:ring-red-500'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-muted text-foreground focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
                 }`}
               />
               {errors.name && (
@@ -133,7 +133,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Program Type */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Loyalty Model
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -149,7 +149,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                     className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
                       type === item.id
                         ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]'
-                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#1A1916] text-[#60646C] dark:text-[#AAA499]'
+                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#1A1916] text-muted-foreground'
                     }`}
                   >
                     {item.label}
@@ -161,10 +161,10 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
             {/* Milestone Threshold */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-foreground uppercase">
                   Reward Milestone <span className="text-red-500">*</span>
                 </label>
-                <span className="text-[11px] font-mono text-[#3027F5] dark:text-[#E4C174] font-bold">
+                <span className="text-xs font-mono text-[#3027F5] dark:text-[#E4C174] font-bold">
                   {stampsRequired} visits to earn reward
                 </span>
               </div>
@@ -180,7 +180,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                     className={`px-3.5 py-2 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer ${
                       stampsRequired === num
                         ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] shadow-xs'
-                        : 'bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#111318] dark:text-[#F7F3EB] hover:border-[#3027F5]/40'
+                        : 'bg-muted border border-border text-foreground hover:border-[#3027F5]/40'
                     }`}
                   >
                     {num} Visits
@@ -191,7 +191,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Reward Description */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Unlocked Customer Reward <span className="text-red-500">*</span>
               </label>
               <input
@@ -205,7 +205,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                 className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium focus:outline-none focus:ring-2 ${
                   errors.rewardDescription
                     ? 'border-red-500 bg-red-50/20 text-red-900 focus:ring-red-500'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-muted text-foreground focus:ring-[#3027F5] dark:focus:ring-[#E4C174]'
                 }`}
               />
               {errors.rewardDescription && (
@@ -218,7 +218,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Color Swatches */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
                 Brand Accent Color
               </label>
               <div className="flex flex-wrap gap-2.5">
@@ -241,7 +241,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Program Status (Active / Paused) */}
             <div className="pt-2">
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Operational Status
               </label>
               <div className="flex items-center gap-3">
@@ -272,7 +272,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
 
             {/* Terms & Conditions */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Terms & Restrictions (Optional)
               </label>
               <textarea
@@ -280,15 +280,15 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                 value={terms}
                 onChange={(e) => setTerms(e.target.value)}
                 placeholder="e.g. Valid on dine-in and takeout. One stamp per counter transaction."
-                className="w-full px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-4 py-2 rounded-xl border border-border bg-muted text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
           </div>
 
           {/* Right Live Preview Column (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col items-center p-4 rounded-3xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-[#3027F5] dark:text-[#E4C174] mb-3">
+          <div className="lg:col-span-5 flex flex-col items-center p-4 rounded-3xl bg-muted border border-border">
+            <span className="text-xs uppercase tracking-wider font-bold text-[#3027F5] dark:text-[#E4C174] mb-3">
               LIVE DIGITAL PASS PREVIEW
             </span>
             <LoyaltyCardPreview
@@ -300,7 +300,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
               accentColor={accentColor}
               theme={theme}
             />
-            <p className="text-[11px] text-subtle-foreground text-center mt-3">
+            <p className="text-xs text-subtle-foreground text-center mt-3">
               Preview updates live as you customize colors, milestones, and reward copy.
             </p>
           </div>
@@ -310,7 +310,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs sm:text-sm font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-border text-xs sm:text-sm font-semibold text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
               Cancel
             </button>

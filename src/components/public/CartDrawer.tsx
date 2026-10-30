@@ -178,7 +178,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 {/* Variants & Modifiers breakdown */}
                 {(Object.keys(item.selectedVariants).length > 0 ||
                   Object.keys(item.selectedModifiers).length > 0) && (
-                  <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] space-y-0.5 bg-white dark:bg-[#141412] p-2 rounded-xl border border-[#E5E3DB] dark:border-white/5">
+                  <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-0.5 bg-white dark:bg-[#141412] p-2 rounded-xl border border-[#E5E3DB] dark:border-white/5">
                     {Object.values(item.selectedVariants).map((v) => (
                       <div key={v.id} className="flex items-center justify-between">
                         <span>• Size: {v.name}</span>
@@ -205,7 +205,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
 
                 {item.specialInstructions && (
-                  <div className="text-[11px] text-subtle-foreground italic">
+                  <div className="text-xs text-subtle-foreground italic">
                     Note: "{item.specialInstructions}"
                   </div>
                 )}
@@ -254,7 +254,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           <div className="p-5 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] space-y-4 flex-shrink-0">
             {/* Customer Name */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[#111318] dark:text-[#F7F3EB] block">
+              <label className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] block">
                 Your Name (for order callout / server)
               </label>
               <input
@@ -273,7 +273,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span>Items Subtotal ({totalItemCount})</span>
                 <span data-testid="cart-subtotal">{formatMinorUnits(subtotal, business.currency)}</span>
               </div>
-              <div className="flex items-center justify-between text-subtle-foreground text-[11px]">
+              <div className="flex items-center justify-between text-subtle-foreground text-xs">
                 <span>Taxes & Service</span>
                 <span>Included</span>
               </div>
@@ -322,7 +322,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase block">
+              <span className="text-xs font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase block">
                 ORDER RECEIVED · {createdOrder.orderNumber}
               </span>
               <h4 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -342,11 +342,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   {formatMinorUnits(createdOrder.total, createdOrder.currency)}
                 </span>
               </div>
-              <div className="flex items-center justify-between text-[#60646C] dark:text-[#D0CBC1] text-[11px]">
+              <div className="flex items-center justify-between text-[#60646C] dark:text-[#D0CBC1] text-xs">
                 <span>Payment:</span>
                 <span>Pay at Counter</span>
               </div>
-              <div className="text-[11px] text-subtle-foreground flex items-center gap-1 pt-0.5">
+              <div className="text-xs text-subtle-foreground flex items-center gap-1 pt-0.5">
                 <Clock className="w-3 h-3" />
                 <span>Estimated prep time: {createdOrder.estimatedWaitMinutes || 6} minutes</span>
               </div>

@@ -255,7 +255,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               <CheckCircle2 className="w-9 h-9 stroke-[2.5]" />
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-[11px] font-bold uppercase mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold uppercase mb-3">
               <span>SETUP COMPLETE</span>
             </div>
 
@@ -272,7 +272,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
             {/* Business Identity */}
             <div className="space-y-3">
-              <span className="text-[10px] uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
+              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
                 BUSINESS IDENTITY & REGION
               </span>
               <div className="flex items-center gap-3">
@@ -301,7 +301,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
             {/* Loyalty Card Summary */}
             <div className="space-y-3">
-              <span className="text-[10px] uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
+              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] font-bold block">
                 CONFIGURED PROGRAM
               </span>
               <div className="p-3.5 rounded-xl bg-white dark:bg-[#121211] border border-black/5 dark:border-white/5">
@@ -311,7 +311,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 <div className="text-xs text-[#3027F5] dark:text-[#E4C174] font-semibold mt-0.5">
                   {completedResult.stampsRequired} visits = {completedResult.rewardDescription}
                 </div>
-                <div className="mt-2 flex items-center gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
+                <div className="mt-2 flex items-center gap-2 text-xs text-[#60646C] dark:text-[#AAA499]">
                   <Check className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Customers join by scanning your counter QR code</span>
                 </div>
@@ -403,7 +403,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-[11px] font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
+            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-xs font-mono font-bold text-[#60646C] dark:text-[#AAA499]">
               {formData.region === 'india' ? 'India Plan · ₹299/mo' : 'US Plan · $10/mo'}
             </span>
             <Link
@@ -423,7 +423,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           />
         </div>
 
-        <div className="hidden sm:grid grid-cols-5 gap-2 mt-3 text-[11px] font-mono text-subtle-foreground dark:text-[#AAA499]">
+        <div className="hidden sm:grid grid-cols-5 gap-2 mt-3 text-xs font-mono text-subtle-foreground dark:text-[#AAA499]">
           {stepTitles.map((title, idx) => {
             const stepNum = idx + 1;
             const isDone = stepNum < formData.currentStep;
@@ -538,7 +538,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       <div className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
                         {bt.title}
                       </div>
-                      <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 leading-snug">
+                      <div className="text-xs text-[#60646C] dark:text-[#AAA499] mt-1 leading-snug">
                         {bt.subtitle}
                       </div>
                     </button>
@@ -646,11 +646,11 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
                         {/* Status Badge */}
                         {isAvailable ? (
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold uppercase">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold uppercase">
                             Available Now
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-[10px] font-bold uppercase">
+                          <span className="px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-bold uppercase">
                             Planned Module
                           </span>
                         )}
@@ -889,7 +889,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
 
             {/* Live Interactive Card Preview */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <span className="text-[11px] uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] mb-3 font-semibold">
+              <span className="text-xs uppercase tracking-wider text-[#60646C] dark:text-[#AAA499] mb-3 font-semibold">
                 LIVE CUSTOMER PASS PREVIEW
               </span>
               <LoyaltyCardPreview
@@ -901,7 +901,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                 accentColor={formData.accentColor}
                 theme={theme}
               />
-              <p className="mt-3 text-[11px] text-center text-[#60646C] dark:text-[#AAA499]">
+              <p className="mt-3 text-xs text-center text-[#60646C] dark:text-[#AAA499]">
                 Customers view this card in mobile Safari or Chrome — no app needed.
               </p>
             </div>
@@ -926,7 +926,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               {/* Section 1: Business Basics */}
               <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
                     1. BUSINESS BASICS
                   </span>
                   <div className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -952,7 +952,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               {/* Section 2: Selected Modules */}
               <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
                     2. ACTIVE & PLANNED MODULES
                   </span>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -988,7 +988,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               {/* Section 3: Contact Details */}
               <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
                     3. CONTACT & LOCATION
                   </span>
                   <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1 space-y-0.5">
@@ -1009,7 +1009,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               {/* Section 4: Loyalty Program */}
               <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
+                  <span className="text-xs uppercase text-[#60646C] dark:text-[#AAA499] font-bold block">
                     4. LOYALTY PROGRAM
                   </span>
                   <div className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB] mt-0.5">

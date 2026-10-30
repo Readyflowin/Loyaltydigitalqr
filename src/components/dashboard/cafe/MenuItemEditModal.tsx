@@ -225,14 +225,14 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
+      <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl bg-card border border-border shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
         {/* Modal Header */}
         <div className="p-6 border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between flex-shrink-0">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               {initialItem ? 'EDIT MENU ITEM' : 'ADD NEW MENU ITEM'}
             </span>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               {initialItem ? `Edit ${initialItem.name}` : 'Create Menu Item'}
             </h3>
           </div>
@@ -258,7 +258,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
           {/* Basic Item Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+              <label className="block text-xs font-bold text-foreground mb-1.5">
                 Item Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -266,21 +266,21 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Vanilla Bean Flat White"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 autoFocus
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB]">
+                <label className="block text-xs font-bold text-foreground">
                   Category <span className="text-red-500">*</span>
                 </label>
                 {onQuickCreateCategory && !showNewCatInput && (
                   <button
                     type="button"
                     onClick={() => setShowNewCatInput(true)}
-                    className="text-[11px] font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer"
+                    className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline cursor-pointer"
                   >
                     + New Category
                   </button>
@@ -294,7 +294,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                     value={newCatName}
                     onChange={(e) => setNewCatName(e.target.value)}
                     placeholder="New category name"
-                    className="flex-1 px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#111318] dark:text-[#F7F3EB]"
+                    className="flex-1 px-3 py-2 rounded-xl border border-border bg-muted text-xs text-foreground"
                   />
                   <button
                     type="button"
@@ -315,7 +315,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] cursor-pointer"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] cursor-pointer"
                 >
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -327,7 +327,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+              <label className="block text-xs font-bold text-foreground mb-1.5">
                 Base Price ({currency}) <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -341,13 +341,13 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                   value={priceInput}
                   onChange={(e) => setPriceInput(e.target.value)}
                   placeholder="0.00"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1.5">
+              <label className="block text-xs font-bold text-foreground mb-1.5">
                 Description & Tasting Notes
               </label>
               <textarea
@@ -355,19 +355,19 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 placeholder="Highlight ingredients, flavor profiles, or allergen notes..."
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
           </div>
 
           {/* Availability & Dietary Tags */}
-          <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-4">
+          <div className="p-4 rounded-2xl bg-muted border border-border space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] block">
+                <span className="text-xs font-bold text-foreground block">
                   Kitchen Availability
                 </span>
-                <span className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                <span className="text-xs text-muted-foreground">
                   Quickly mark as sold out during peak hours without deleting the item.
                 </span>
               </div>
@@ -385,7 +385,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
             </div>
 
             <div>
-              <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] block mb-2">
+              <span className="text-xs font-bold text-foreground block mb-2">
                 Dietary & Allergen Badges
               </span>
               <div className="flex flex-wrap gap-2">
@@ -399,7 +399,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                       className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                         active
                           ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
-                          : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#60646C] dark:text-[#D0CBC1]'
+                          : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-card text-muted-foreground'
                       }`}
                     >
                       {opt.label}
@@ -414,10 +414,10 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-bold text-[#111318] dark:text-[#F7F3EB]">
+                <h4 className="text-sm font-bold text-foreground">
                   Variant Groups (Size / Portion)
                 </h4>
-                <p className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                <p className="text-xs text-muted-foreground">
                   Mutually exclusive options like Small, Regular, Large.
                 </p>
               </div>
@@ -434,7 +434,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
             {variantGroups.map((group, gIdx) => (
               <div
                 key={group.id}
-                className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3 shadow-xs"
+                className="p-4 rounded-2xl bg-card border border-border space-y-3 shadow-xs"
               >
                 <div className="flex items-center justify-between gap-3">
                   <input
@@ -446,7 +446,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                       setVariantGroups(updated);
                     }}
                     placeholder="Group Name (e.g. Size)"
-                    className="font-bold text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-bold text-xs px-3 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                   />
                   <button
                     type="button"
@@ -469,10 +469,10 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                           setVariantGroups(updated);
                         }}
                         placeholder="Option name (e.g. Large)"
-                        className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                        className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                       />
                       <div className="flex items-center gap-1 w-28">
-                        <span className="text-[11px] text-subtle-foreground">+{currencySymbol}</span>
+                        <span className="text-xs text-subtle-foreground">+{currencySymbol}</span>
                         <input
                           type="number"
                           step="0.01"
@@ -483,7 +483,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                             updated[gIdx].options[oIdx].priceAdjustment = Math.round(val * 100);
                             setVariantGroups(updated);
                           }}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                         />
                       </div>
                       <button
@@ -498,7 +498,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                   <button
                     type="button"
                     onClick={() => handleAddVariantOption(gIdx)}
-                    className="text-[11px] font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline flex items-center gap-1 cursor-pointer pt-1"
                   >
                     <Plus className="w-3 h-3" />
                     <span>Add Option</span>
@@ -512,10 +512,10 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-bold text-[#111318] dark:text-[#F7F3EB]">
+                <h4 className="text-sm font-bold text-foreground">
                   Modifier & Add-on Groups
                 </h4>
-                <p className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                <p className="text-xs text-muted-foreground">
                   Milk choices, extra shots, flavor syrups, toppings.
                 </p>
               </div>
@@ -532,7 +532,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
             {modifierGroups.map((group, gIdx) => (
               <div
                 key={group.id}
-                className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-3 shadow-xs"
+                className="p-4 rounded-2xl bg-card border border-border space-y-3 shadow-xs"
               >
                 <div className="flex items-center justify-between gap-3">
                   <input
@@ -544,10 +544,10 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                       setModifierGroups(updated);
                     }}
                     placeholder="Group Name (e.g. Milk Choice)"
-                    className="font-bold text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                    className="font-bold text-xs px-3 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                   />
                   <div className="flex items-center gap-3">
-                    <label className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] flex items-center gap-1 cursor-pointer">
+                    <label className="text-xs text-muted-foreground flex items-center gap-1 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={group.required}
@@ -581,10 +581,10 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                           setModifierGroups(updated);
                         }}
                         placeholder="Option name (e.g. Oat Milk)"
-                        className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                        className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                       />
                       <div className="flex items-center gap-1 w-28">
-                        <span className="text-[11px] text-subtle-foreground">+{currencySymbol}</span>
+                        <span className="text-xs text-subtle-foreground">+{currencySymbol}</span>
                         <input
                           type="number"
                           step="0.01"
@@ -595,7 +595,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                             updated[gIdx].options[oIdx].priceAdjustment = Math.round(val * 100);
                             setModifierGroups(updated);
                           }}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                         />
                       </div>
                       <button
@@ -610,7 +610,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                   <button
                     type="button"
                     onClick={() => handleAddModifierOption(gIdx)}
-                    className="text-[11px] font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline flex items-center gap-1 cursor-pointer pt-1"
                   >
                     <Plus className="w-3 h-3" />
                     <span>Add Option</span>
@@ -625,7 +625,7 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-[#60646C] dark:text-[#D0CBC1] text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-border text-muted-foreground text-xs font-semibold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
             >
               Cancel
             </button>

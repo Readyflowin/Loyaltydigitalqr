@@ -163,14 +163,14 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
   if (!isFoodService) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Utensils className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             Café & Restaurant Module Not Active
           </h2>
-          <p className="text-sm text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto">
             The active business (<strong>{business.name}</strong>) is configured as a{' '}
             <strong>{business.businessType}</strong>. Café menu management and table QR ordering are scoped strictly to food & beverage establishments.
           </p>
@@ -186,14 +186,14 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
   if (!activeMenu) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-[#3027F5]/10 dark:bg-[#E4C174]/20 flex items-center justify-center mx-auto text-[#3027F5] dark:text-[#E4C174]">
             <Utensils className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h2 className="text-xl font-heading font-black text-foreground">
             No Menus Created Yet
           </h2>
-          <p className="text-sm text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto">
             Start by creating your first digital menu. You can add categories, customize items with variants, and generate table QR codes.
           </p>
           <button
@@ -240,11 +240,11 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               CAFÉ & RESTAURANT MENU
             </span>
             <span
-              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+              className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
                 activeMenu.status === 'published'
                   ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                   : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
@@ -253,10 +253,10 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
               {activeMenu.status.toUpperCase()}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             {activeMenu.name}
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl">
             {activeMenu.description || 'Manage menu items, categories, variants, and live kitchen availability.'}
           </p>
         </div>
@@ -267,7 +267,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             target="_blank"
             rel="noopener noreferrer"
             data-testid="preview-public-menu-btn"
-            className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Public Menu Preview</span>
@@ -276,7 +276,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           <button
             type="button"
             onClick={() => setMenuModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <Edit2 className="w-3.5 h-3.5" />
             <span>Edit Menu</span>
@@ -296,32 +296,32 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
 
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             CATEGORIES
           </span>
-          <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-xl sm:text-2xl font-heading font-black text-foreground">
             {categories.length}
           </div>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             TOTAL ITEMS
           </span>
-          <div className="text-xl sm:text-2xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <div className="text-xl sm:text-2xl font-heading font-black text-foreground">
             {items.length}
           </div>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             AVAILABLE
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-emerald-600 dark:text-emerald-400">
             {availableCount}
           </div>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
-          <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+        <div className="p-4 rounded-2xl bg-card border border-border">
+          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
             SOLD OUT
           </span>
           <div className="text-xl sm:text-2xl font-heading font-black text-amber-600 dark:text-amber-400">
@@ -333,7 +333,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
       {/* 3. Category Selector & Management */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase tracking-wider">
+          <span className="text-xs font-bold text-foreground uppercase tracking-wider">
             Menu Categories
           </span>
           <button
@@ -359,7 +359,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategoryId === 'all'
                 ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                : 'bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#60646C] dark:text-[#D0CBC1] hover:bg-[#F8F7F2]'
+                : 'bg-card border border-border text-muted-foreground hover:bg-[#F8F7F2]'
             }`}
           >
             All Items ({items.length})
@@ -378,15 +378,15 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                   className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
                     isSelected
                       ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
-                      : 'bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-[#60646C] dark:text-[#D0CBC1] hover:bg-[#F8F7F2]'
+                      : 'bg-card border border-border text-muted-foreground hover:bg-[#F8F7F2]'
                   }`}
                 >
                   <span>{cat.name}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                    className={`text-xs px-1.5 py-0.2 rounded-full ${
                       isSelected
                         ? 'bg-white/20 text-white dark:text-[#11100D]'
-                        : 'bg-[#F8F7F2] dark:bg-[#1A1916] text-subtle-foreground'
+                        : 'bg-muted text-subtle-foreground'
                     }`}
                   >
                     {catCount}
@@ -446,7 +446,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search items by title, flavor notes, ingredients..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
           />
         </div>
 
@@ -455,7 +455,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             data-testid="filter-availability"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as 'all' | 'available' | 'sold_out')}
-            className="px-3 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] text-xs font-semibold focus:outline-none cursor-pointer"
+            className="px-3 py-2.5 rounded-xl border border-border bg-card text-foreground text-xs font-semibold focus:outline-none cursor-pointer"
           >
             <option value="all">All Availability</option>
             <option value="available">Available Only</option>
@@ -466,7 +466,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             data-testid="filter-dietary"
             value={dietaryFilter}
             onChange={(e) => setDietaryFilter(e.target.value as 'all' | DietaryTag)}
-            className="px-3 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#141412] text-[#111318] dark:text-[#F7F3EB] text-xs font-semibold focus:outline-none cursor-pointer"
+            className="px-3 py-2.5 rounded-xl border border-border bg-card text-foreground text-xs font-semibold focus:outline-none cursor-pointer"
           >
             <option value="all">All Diets</option>
             <option value="veg">Vegetarian</option>
@@ -479,12 +479,12 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
 
       {/* 5. Menu Items Grid */}
       {filteredItems.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
+        <div className="p-12 text-center rounded-3xl bg-card border border-border">
           <Utensils className="w-10 h-10 mx-auto text-subtle-foreground mb-3" />
-          <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+          <h4 className="font-heading font-black text-base text-foreground">
             No Menu Items Found
           </h4>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-1 max-w-sm mx-auto">
+          <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
             {searchQuery || statusFilter !== 'all' || dietaryFilter !== 'all'
               ? 'Try adjusting your search queries or active filters to find matching dishes.'
               : 'Add delicious recipes and beverages to start serving customers through table QR codes.'}
@@ -508,7 +508,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
               <div
                 key={item.id}
                 data-testid={`menu-item-card-${item.id}`}
-                className={`flex flex-col justify-between p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all ${
+                className={`flex flex-col justify-between p-5 rounded-3xl bg-card border transition-all ${
                   isSoldOut
                     ? 'border-amber-300 dark:border-amber-800/40 opacity-80'
                     : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:shadow-md'
@@ -517,14 +517,14 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                 <div>
                   {/* Category Pill & Status Badge */}
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#3027F5] dark:text-[#E4C174]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#3027F5] dark:text-[#E4C174]">
                       {categoryName}
                     </span>
                     <button
                       type="button"
                       data-testid={`toggle-item-status-${item.id}`}
                       onClick={() => handleToggleItemStatus(item.id)}
-                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full cursor-pointer transition-colors ${
+                      className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full cursor-pointer transition-colors ${
                         isSoldOut
                           ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300'
                           : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300'
@@ -537,17 +537,17 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
 
                   {/* Title & Price */}
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="text-base font-heading font-black text-[#111318] dark:text-[#F7F3EB] leading-snug">
+                    <h3 className="text-base font-heading font-black text-foreground leading-snug">
                       {item.name}
                     </h3>
-                    <span className="text-base font-heading font-black text-[#111318] dark:text-[#F7F3EB] whitespace-nowrap">
+                    <span className="text-base font-heading font-black text-foreground whitespace-nowrap">
                       {formatMinorUnits(item.price, item.currency)}
                     </span>
                   </div>
 
                   {/* Description */}
                   {item.description && (
-                    <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] line-clamp-2 mb-3">
+                    <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
                       {item.description}
                     </p>
                   )}
@@ -557,7 +557,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     {item.dietary?.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-[#F8F7F2] dark:bg-[#1A1916] text-[#60646C] dark:text-[#D0CBC1] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)]"
+                        className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-muted text-muted-foreground border border-border"
                       >
                         {tag === 'veg'
                           ? 'Veg'
@@ -570,14 +570,14 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     ))}
 
                     {item.variantGroups && item.variantGroups.length > 0 && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174] flex items-center gap-1">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174] flex items-center gap-1">
                         <Layers className="w-3 h-3" />
                         <span>{item.variantGroups.length} sizes</span>
                       </span>
                     )}
 
                     {item.modifierGroups && item.modifierGroups.length > 0 && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174] flex items-center gap-1">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174] flex items-center gap-1">
                         <SlidersHorizontal className="w-3 h-3" />
                         <span>{item.modifierGroups.length} modifier groups</span>
                       </span>
@@ -612,7 +612,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`edit-item-${item.id}`}
                     onClick={() => handleOpenEditItem(item)}
-                    className="px-3.5 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] hover:bg-white dark:hover:bg-[#201F1B] text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                    className="px-3.5 py-1.5 rounded-xl border border-border bg-muted text-foreground hover:bg-white dark:hover:bg-[#201F1B] text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     <span>Edit Item</span>
@@ -657,13 +657,13 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/70 backdrop-blur-xs"
             onClick={() => setCategoryModalOpen(false)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150">
-            <h4 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] mb-3">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150">
+            <h4 className="font-heading font-black text-base text-foreground mb-3">
               {editingCategory ? 'Edit Category' : 'Create Menu Category'}
             </h4>
             <form onSubmit={handleCreateCategory} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1">
+                <label className="block text-xs font-bold text-foreground mb-1">
                   Category Name
                 </label>
                 <input
@@ -672,13 +672,13 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
                   placeholder="e.g. Specialty Beverages"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
                   autoFocus
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] mb-1">
+                <label className="block text-xs font-bold text-foreground mb-1">
                   Optional Description
                 </label>
                 <input
@@ -686,7 +686,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                   value={newCategoryDesc}
                   onChange={(e) => setNewCategoryDesc(e.target.value)}
                   placeholder="e.g. Handcrafted single-origin drinks"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5]"
                 />
               </div>
 

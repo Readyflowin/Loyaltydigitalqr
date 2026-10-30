@@ -177,7 +177,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
                       <td className="px-5 py-3.5">
                         <div className="font-semibold text-foreground">{job.customerName}</div>
                         {job.customerPhone && (
-                          <div className="text-[11px] text-muted-foreground">
+                          <div className="text-xs text-muted-foreground">
                             {job.customerPhone}
                           </div>
                         )}
@@ -185,7 +185,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
                       <td className="px-5 py-3.5">
                         <div className="font-medium text-foreground">{job.serviceName}</div>
                         {job.notes && (
-                          <div className="text-[11px] text-muted-foreground line-clamp-1">
+                          <div className="text-xs text-muted-foreground line-clamp-1">
                             {job.notes}
                           </div>
                         )}
@@ -203,7 +203,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
                       </td>
                       <td className="px-5 py-3.5">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider ${
+                          className={`inline-block px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${
                             job.status === 'completed'
                               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                               : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
@@ -214,7 +214,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
                       </td>
                       <td className="px-5 py-3.5">
                         {job.loyaltyIssued ? (
-                          <span className="flex items-center gap-1 text-primary font-semibold text-[11px]">
+                          <span className="flex items-center gap-1 text-primary font-semibold text-xs">
                             <Award className="w-3.5 h-3.5" />
                             <span>Stamp Issued</span>
                           </span>

@@ -113,15 +113,15 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
       />
 
       {/* Dialog */}
-      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               COUNTER STAMP TERMINAL
             </span>
-            <h3 className="text-lg sm:text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-lg sm:text-xl font-heading font-black text-foreground mt-0.5">
               Record Customer Visit
             </h3>
           </div>
@@ -153,10 +153,10 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-subtle-foreground block">
+              <span className="text-xs uppercase font-bold tracking-wider text-subtle-foreground block">
                 {resultState.rewardUnlocked ? 'MILESTONE REACHED' : 'VISIT RECORDED'}
               </span>
-              <h4 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+              <h4 className="text-xl font-heading font-black text-foreground mt-0.5">
                 {resultState.customerName}
               </h4>
               <p className="text-sm font-semibold text-[#3027F5] dark:text-[#E4C174] mt-1">
@@ -166,7 +166,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-[#60646C] dark:text-[#D0CBC1]">
+            <div className="p-3.5 rounded-2xl bg-muted border border-black/5 dark:border-white/5 text-xs text-muted-foreground">
               {resultState.rewardUnlocked ? (
                 <span>A reward voucher code is now on their loyalty card and customer profile.</span>
               ) : (
@@ -178,7 +178,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
               <button
                 type="button"
                 onClick={handleResetForNext}
-                className="flex-1 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl border border-border text-xs font-semibold text-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
               >
                 Stamp Another
               </button>
@@ -197,7 +197,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             
             {/* Customer Selector */}
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Select Enrolled Member
               </label>
               {customers.length === 0 ? (
@@ -208,7 +208,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
                 <select
                   value={selectedCustomerId}
                   onChange={(e) => setSelectedCustomerId(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 >
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -221,12 +221,12 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
 
             {/* Active Customer Status Card */}
             {activeCustomer && (
-              <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between text-xs">
+              <div className="p-3.5 rounded-2xl bg-muted border border-border flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-heading font-bold text-[#111318] dark:text-[#F7F3EB] block">
+                  <span className="font-heading font-bold text-foreground block">
                     {activeCustomer.name}
                   </span>
-                  <span className="text-[#60646C] dark:text-[#AAA499] text-[11px]">
+                  <span className="text-muted-foreground text-xs">
                     {activeCustomer.totalVisits} lifetime visits
                   </span>
                 </div>
@@ -234,7 +234,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
                   <span className="font-mono font-bold text-sm text-[#3027F5] dark:text-[#E4C174]">
                     {activeCustomer.currentStamps} / {program.stampsRequired}
                   </span>
-                  <span className="text-[10px] text-subtle-foreground block uppercase">
+                  <span className="text-xs text-subtle-foreground block uppercase">
                     Stamps Held
                   </span>
                 </div>
@@ -244,10 +244,10 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             {/* Staff PIN input */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-foreground uppercase">
                   Staff Validation PIN
                 </label>
-                <span className="text-[10px] font-mono text-subtle-foreground">
+                <span className="text-xs font-mono text-subtle-foreground">
                   Authorization Required
                 </span>
               </div>
@@ -257,7 +257,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
                 value={staffPin}
                 onChange={(e) => setStaffPin(e.target.value)}
                 placeholder="4-digit PIN"
-                className="w-full font-mono text-center text-lg font-bold tracking-widest px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full font-mono text-center text-lg font-bold tracking-widest px-4 py-2 rounded-xl border border-border bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
@@ -269,7 +269,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             )}
 
             {/* Security Notice */}
-            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <span>
                 Each stamp is recorded in the activity log with the staff member's name and time.
@@ -281,7 +281,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                className="px-4 py-2.5 rounded-xl border border-border text-xs font-semibold text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
               >
                 Cancel
               </button>

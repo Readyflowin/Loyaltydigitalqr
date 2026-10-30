@@ -68,14 +68,14 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
   if (!isSalon) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-150">
-        <div className="p-8 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-center space-y-4">
+        <div className="p-8 rounded-3xl bg-card border border-border text-center space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Users className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
+          <h3 className="text-xl font-heading font-black text-foreground">
             Staff Management Module Unavailable
           </h3>
-          <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] max-w-md mx-auto">
+          <p className="text-xs text-muted-foreground max-w-md mx-auto">
             This module is reserved for appointment-based salon and wellness businesses.
           </p>
         </div>
@@ -254,13 +254,13 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
       {/* 1. Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+          <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             STYLISTS & STAFF ROSTER
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
             Staff & Availability
           </h1>
-          <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Manage your professionals, assign services, and customize weekly working hours.
           </p>
         </div>
@@ -291,7 +291,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
             <div
               key={stf.id}
               data-testid={`staff-card-${stf.id}`}
-              className={`p-5 rounded-3xl bg-white dark:bg-[#141412] border transition-all flex flex-col justify-between ${
+              className={`p-5 rounded-3xl bg-card border transition-all flex flex-col justify-between ${
                 stf.isActive
                   ? 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] shadow-xs hover:shadow-md'
                   : 'border-amber-200 dark:border-amber-900/30 opacity-70 bg-amber-50/20'
@@ -305,17 +305,17 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                       {stf.displayName.charAt(0)}
                     </div>
                     <div>
-                      <h3 className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB] leading-tight">
+                      <h3 className="font-heading font-black text-base text-foreground leading-tight">
                         {stf.displayName}
                       </h3>
-                      <span className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                      <span className="text-xs text-muted-foreground">
                         {stf.role}
                       </span>
                     </div>
                   </div>
 
                   <span
-                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                    className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
                       stf.isActive
                         ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                         : 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
@@ -327,17 +327,17 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
                 {/* Location & Upcoming Bookings */}
                 <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-                  <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
+                  <div className="p-2.5 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10">
+                    <span className="text-xs uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <MapPin className="w-3 h-3" /> Location
                     </span>
-                    <span className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate block">
+                    <span className="font-bold text-foreground truncate block">
                       {location?.name || 'Main Studio'}
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
-                    <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
+                  <div className="p-2.5 rounded-xl bg-muted border border-[#E5E3DB] dark:border-white/10">
+                    <span className="text-xs uppercase text-subtle-foreground font-bold block mb-0.5 flex items-center gap-1">
                       <Calendar className="w-3 h-3" /> Upcoming
                     </span>
                     <span className="font-bold text-[#3027F5] dark:text-[#E4C174]">
@@ -348,20 +348,20 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
                 {/* Assigned Services */}
                 <div>
-                  <span className="text-[10px] uppercase text-subtle-foreground font-bold block mb-1">
+                  <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
                     SERVICES PROVIDED ({assignedServices.length})
                   </span>
                   <div className="flex items-center gap-1 flex-wrap">
                     {assignedServices.slice(0, 3).map((srv) => (
                       <span
                         key={srv.id}
-                        className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[#F8F7F2] dark:bg-[#1A1916] text-[#4A4D55] dark:text-[#D0CBC1]"
+                        className="text-xs font-semibold px-2 py-0.5 rounded-md bg-muted text-[#4A4D55] dark:text-[#D0CBC1]"
                       >
                         {srv.name}
                       </span>
                     ))}
                     {assignedServices.length > 3 && (
-                      <span className="text-[10px] text-subtle-foreground font-bold">
+                      <span className="text-xs text-subtle-foreground font-bold">
                         +{assignedServices.length - 3} more
                       </span>
                     )}
@@ -417,13 +417,13 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setEditorModalOpen(false)}
           />
-          <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center font-bold">
                   <Users className="w-4 h-4" />
                 </div>
-                <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB]">
+                <h3 className="font-heading font-black text-lg text-foreground">
                   {selectedStaff ? 'Edit Staff Profile' : 'Add Staff Member'}
                 </h3>
               </div>
@@ -445,7 +445,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
             <form onSubmit={handleSaveProfile} className="space-y-4 text-xs">
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Full Display Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -454,13 +454,13 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="e.g. Jordan Vance"
-                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                   required
                 />
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Role / Speciality
                 </label>
                 <input
@@ -469,18 +469,18 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                   value={formRole}
                   onChange={(e) => setFormRole(e.target.value)}
                   placeholder="e.g. Master Barber, Colour Specialist"
-                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1">
+                <label className="font-bold text-foreground block mb-1">
                   Studio Location
                 </label>
                 <select
                   value={formLocationId}
                   onChange={(e) => setFormLocationId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-hidden"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted text-foreground focus:outline-hidden"
                 >
                   {business.locations.map((loc) => (
                     <option key={loc.id} value={loc.id}>
@@ -492,11 +492,11 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
 
               {/* Services Assigned */}
               <div>
-                <label className="font-bold text-[#111318] dark:text-[#F7F3EB] block mb-1 flex items-center justify-between">
+                <label className="font-bold text-foreground block mb-1 flex items-center justify-between">
                   <span>Assigned Services</span>
-                  <span className="text-[10px] text-subtle-foreground">Select all they provide</span>
+                  <span className="text-xs text-subtle-foreground">Select all they provide</span>
                 </label>
-                <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]">
+                <div className="space-y-1.5 max-h-36 overflow-y-auto p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 bg-muted">
                   {services.map((srv) => {
                     const isChecked = formAssignedServiceIds.includes(srv.id);
                     return (
@@ -519,11 +519,11 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                             }}
                             className="rounded text-[#3027F5]"
                           />
-                          <span className="font-semibold text-[#111318] dark:text-[#F7F3EB]">
+                          <span className="font-semibold text-foreground">
                             {srv.name}
                           </span>
                         </div>
-                        <span className="text-[10px] text-subtle-foreground">{srv.durationMinutes}m</span>
+                        <span className="text-xs text-subtle-foreground">{srv.durationMinutes}m</span>
                       </label>
                     );
                   })}
@@ -531,12 +531,12 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
               </div>
 
               {/* Active Toggle */}
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-white/10">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-muted border border-[#E5E3DB] dark:border-white/10">
                 <div>
-                  <span className="font-bold text-[#111318] dark:text-[#F7F3EB] block">
+                  <span className="font-bold text-foreground block">
                     Active for Bookings
                   </span>
-                  <span className="text-[11px] text-subtle-foreground">
+                  <span className="text-xs text-subtle-foreground">
                     Disabled staff cannot accept new bookings.
                   </span>
                 </div>
@@ -580,17 +580,17 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setScheduleModalOpen(false)}
           />
-          <div className="relative w-full max-w-2xl rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-2xl rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center font-bold">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-black text-lg text-[#111318] dark:text-[#F7F3EB] leading-none">
+                  <h3 className="font-heading font-black text-lg text-foreground leading-none">
                     Working Hours & Schedule
                   </h3>
-                  <span className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+                  <span className="text-xs text-muted-foreground">
                     {selectedStaff.displayName} ({business.timeZone || 'America/New_York'})
                   </span>
                 </div>
@@ -631,7 +631,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                     data-testid={`schedule-day-${idx}`}
                     className={`p-3.5 rounded-2xl border transition-all text-xs ${
                       daySched.isOpen
-                        ? 'border-[#E5E3DB] dark:border-white/10 bg-[#F8F7F2] dark:bg-[#1A1916]'
+                        ? 'border-[#E5E3DB] dark:border-white/10 bg-muted'
                         : 'border-[#E5E3DB]/60 dark:border-white/5 bg-black/5 dark:bg-white/5 opacity-60'
                     }`}
                   >
@@ -643,11 +643,11 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                           onChange={() => handleToggleDayOpen(idx)}
                           className="w-4 h-4 rounded text-[#3027F5]"
                         />
-                        <span className="font-heading font-black text-sm text-[#111318] dark:text-[#F7F3EB] w-24">
+                        <span className="font-heading font-black text-sm text-foreground w-24">
                           {dayName}
                         </span>
                         <span
-                          className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                          className={`text-xs font-mono font-bold px-2 py-0.5 rounded-md ${
                             daySched.isOpen
                               ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                               : 'bg-black/10 text-subtle-foreground dark:bg-white/10'
@@ -663,19 +663,19 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                             type="time"
                             value={daySched.startTime}
                             onChange={(e) => handleUpdateDayTime(idx, 'startTime', e.target.value)}
-                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs font-mono font-bold"
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-card text-xs font-mono font-bold"
                           />
                           <span className="text-subtle-foreground">to</span>
                           <input
                             type="time"
                             value={daySched.endTime}
                             onChange={(e) => handleUpdateDayTime(idx, 'endTime', e.target.value)}
-                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] text-xs font-mono font-bold"
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-card text-xs font-mono font-bold"
                           />
                           <button
                             type="button"
                             onClick={() => handleAddBreak(idx)}
-                            className="px-2.5 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-white dark:bg-[#141412] hover:bg-[#F8F7F2] text-[11px] font-bold text-[#3027F5] dark:text-[#E4C174] cursor-pointer"
+                            className="px-2.5 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/10 bg-card hover:bg-[#F8F7F2] text-xs font-bold text-[#3027F5] dark:text-[#E4C174] cursor-pointer"
                           >
                             + Break
                           </button>
@@ -689,7 +689,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                         {daySched.breaks.map((brk) => (
                           <div
                             key={brk.id}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 text-[11px] text-amber-900 dark:text-amber-200"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-200"
                           >
                             <span className="font-bold">{brk.name}:</span>
                             <span className="font-mono">

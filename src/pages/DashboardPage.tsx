@@ -402,14 +402,14 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
 
       case 'kitchen':
         return (
-          <div className="p-8 text-center bg-white dark:bg-[#141412] rounded-3xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] max-w-xl mx-auto space-y-4">
+          <div className="p-8 text-center bg-card rounded-3xl border border-border max-w-xl mx-auto space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center font-bold">
               <Flame className="w-6 h-6" />
             </div>
-            <h3 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
+            <h3 className="font-heading font-black text-xl text-foreground">
               Kitchen Display System (KDS)
             </h3>
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs text-muted-foreground">
               Launch the dedicated distraction-minimized display for tablet mounts or line cook stations.
             </p>
             <div>
@@ -448,14 +448,14 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
         return (
           <div className="space-y-6 max-w-3xl mx-auto">
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+              <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
                 SUPPORT & GUIDES
               </span>
-              <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+              <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground mt-0.5">
                 Merchant Help Center
               </h1>
             </div>
-            <div className="p-6 rounded-3xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-xs text-[#60646C] dark:text-[#D0CBC1] space-y-3">
+            <div className="p-6 rounded-3xl bg-card border border-border text-xs text-muted-foreground space-y-3">
               <p>Need assistance setting up your counter stand or onboarding additional staff?</p>
               <p>Contact merchant support: <strong>support@loyaltydigitalqr.com</strong></p>
             </div>
@@ -475,7 +475,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
   };
 
   return (
-    <div className="min-h-screen flex bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+    <div className="min-h-screen flex bg-[#F8F7F2] dark:bg-[#090909] text-foreground transition-colors duration-200">
       
       {/* Desktop Sidebar (hidden on mobile) */}
       <div className="hidden lg:block h-screen sticky top-0 flex-shrink-0">
@@ -571,9 +571,9 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
             onClick={() => setPassPreviewModalOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-white dark:bg-[#141412] p-6 shadow-2xl z-10 border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card p-6 shadow-2xl z-10 border border-border animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-black/10 dark:border-white/10">
-              <span className="text-[10px] uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
+              <span className="text-xs uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
                 LIVE PASS PREVIEW
               </span>
               <button
@@ -611,11 +611,11 @@ const GateScreen: React.FC<{ title: string; message?: string; spinner?: boolean;
   spinner = true,
   children,
 }) => (
-  <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] p-4">
+  <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-foreground p-4">
     <div className="text-center max-w-md w-full">
       {spinner && <Loader2 className="w-8 h-8 mx-auto mb-4 animate-spin text-[#3027F5] dark:text-[#E4C174]" />}
       <h2 className="text-xl font-heading font-black">{title}</h2>
-      {message && <p className="text-sm text-[#60646C] dark:text-[#AAA499] mt-2">{message}</p>}
+      {message && <p className="text-sm text-muted-foreground mt-2">{message}</p>}
       {children}
     </div>
   </div>
@@ -645,10 +645,10 @@ const PendingInvitesPanel: React.FC<{ invites: BusinessInvite[]; user: AppUser }
         {invites.map((inv) => (
           <div
             key={inv.businessId}
-            className="p-4 rounded-2xl bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)]"
+            className="p-4 rounded-2xl bg-card border border-border"
           >
             <div className="font-heading font-bold">{inv.businessName}</div>
-            <div className="text-xs text-[#60646C] dark:text-[#AAA499] mt-0.5">
+            <div className="text-xs text-muted-foreground mt-0.5">
               {inv.invitedByName} invited you to join as <strong>{inv.role}</strong>.
             </div>
             <div className="mt-3 flex gap-2">
@@ -702,7 +702,7 @@ const PendingInvitesPanel: React.FC<{ invites: BusinessInvite[]; user: AppUser }
         <button
           type="button"
           onClick={() => navigate('/onboarding?own=1')}
-          className="w-full text-xs text-[#60646C] dark:text-[#AAA499] underline cursor-pointer pt-2"
+          className="w-full text-xs text-muted-foreground underline cursor-pointer pt-2"
         >
           Set up my own business instead
         </button>

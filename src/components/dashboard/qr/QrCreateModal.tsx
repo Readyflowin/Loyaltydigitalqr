@@ -153,18 +153,18 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-6">
+      <div className="relative w-full max-w-2xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-6">
         
         {/* Header with Steps */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 QR STUDIO CREATOR
               </span>
               <span className="text-xs text-subtle-foreground">· Step {step} of 4</span>
             </div>
-            <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-xl font-heading font-black text-foreground mt-0.5">
               {step === 1 && '1. Choose Destination'}
               {step === 2 && '2. Customize QR Name & Label'}
               {step === 3 && '3. Preview & Verify Scan'}
@@ -184,7 +184,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
         {/* STEP 1: CHOOSE DESTINATION */}
         {step === 1 && (
           <div className="py-6 space-y-4">
-            <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1]">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Select where customers are directed when they point their smartphone camera at this code:
             </p>
 
@@ -223,19 +223,19 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                     <div className="flex items-center justify-between mb-2">
                       <QrIcon className="w-5 h-5 text-[#3027F5] dark:text-[#E4C174]" />
                       {destinationType === dest.id && (
-                        <div className="w-4 h-4 rounded-full bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] flex items-center justify-center text-[10px]">
+                        <div className="w-4 h-4 rounded-full bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] flex items-center justify-center text-xs">
                           <Check className="w-3 h-3 stroke-[3]" />
                         </div>
                       )}
                     </div>
-                    <div className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
+                    <div className="font-heading font-bold text-sm text-foreground">
                       {dest.title}
                     </div>
-                    <p className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1 leading-snug">
+                    <p className="text-xs text-muted-foreground mt-1 leading-snug">
                       {dest.desc}
                     </p>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 font-mono text-[10px] text-subtle-foreground truncate">
+                  <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 font-mono text-xs text-subtle-foreground truncate">
                     {dest.route}
                   </div>
                 </button>
@@ -245,13 +245,13 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             {/* Location selector if multi-location */}
             {business.locations.length > 1 && (
               <div className="pt-2">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+                <label className="block text-xs font-bold text-foreground uppercase mb-1">
                   Assign Location
                 </label>
                 <select
                   value={locationId}
                   onChange={(e) => setLocationId(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm"
                 >
                   {business.locations.map((loc) => (
                     <option key={loc.id} value={loc.id}>
@@ -268,7 +268,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
         {step === 2 && (
           <div className="py-6 space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Display Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -276,12 +276,12 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Counter Acrylic Standee"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Instructional Label (Printed Under QR)
               </label>
               <input
@@ -289,24 +289,24 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 value={displayLabel}
                 onChange={(e) => setDisplayLabel(e.target.value)}
                 placeholder="e.g. Point smartphone camera at code to join"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
                 Target Route Path
               </label>
               <input
                 type="text"
                 value={targetUrl}
                 onChange={(e) => setTargetUrl(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] font-mono text-xs"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground font-mono text-xs"
               />
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] text-xs text-[#60646C] dark:text-[#AAA499]">
-              Destination will be encoded as: <strong className="font-mono text-[#111318] dark:text-[#F7F3EB]">{fullDestinationUrl}</strong>
+            <div className="p-3.5 rounded-2xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] text-xs text-muted-foreground">
+              Destination will be encoded as: <strong className="font-mono text-foreground">{fullDestinationUrl}</strong>
             </div>
           </div>
         )}
@@ -317,8 +317,8 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
               
               {/* Genuine QR Code Card (Left) */}
-              <div className="sm:col-span-6 flex flex-col items-center p-6 rounded-3xl bg-white dark:bg-[#181816] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] shadow-md text-center">
-                <span className="text-[10px] uppercase font-bold text-subtle-foreground mb-2">
+              <div className="sm:col-span-6 flex flex-col items-center p-6 rounded-3xl bg-white dark:bg-[#181816] border border-border shadow-md text-center">
+                <span className="text-xs uppercase font-bold text-subtle-foreground mb-2">
                   {business.name}
                 </span>
 
@@ -337,10 +337,10 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                   )}
                 </div>
 
-                <div className="mt-3 font-heading font-bold text-xs text-[#111318] dark:text-[#F7F3EB]">
+                <div className="mt-3 font-heading font-bold text-xs text-foreground">
                   {displayLabel || 'Scan to Open'}
                 </div>
-                <span className="text-[11px] text-subtle-foreground uppercase mt-0.5">
+                <span className="text-xs text-subtle-foreground uppercase mt-0.5">
                   High Contrast · Margin 2 · EC-M
                 </span>
               </div>
@@ -352,14 +352,14 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                     <Check className="w-4 h-4 text-emerald-600" />
                     <span>Scannable Destination Verified</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed">
+                  <p className="text-xs leading-relaxed">
                     Camera matrix contains complete URL. Compatible with standard iOS Camera and Android Lens without special apps.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-xs space-y-2">
+                <div className="p-4 rounded-2xl bg-muted border border-border text-xs space-y-2">
                   <div>
-                    <span className="text-[10px] uppercase text-subtle-foreground block">
+                    <span className="text-xs uppercase text-subtle-foreground block">
                       DECODED DESTINATION URL:
                     </span>
                     <a
@@ -373,9 +373,9 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                     </a>
                   </div>
 
-                  <div className="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px]">
+                  <div className="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
                     <span className="text-subtle-foreground">Format Output:</span>
-                    <strong className="text-[#111318] dark:text-[#F7F3EB]">PNG 512px + Vector SVG</strong>
+                    <strong className="text-foreground">PNG 512px + Vector SVG</strong>
                   </div>
                 </div>
 
@@ -396,10 +396,10 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               <div className="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
                 <Check className="w-6 h-6 stroke-[3]" />
               </div>
-              <h4 className="font-heading font-black text-xl text-[#111318] dark:text-[#F7F3EB]">
+              <h4 className="font-heading font-black text-xl text-foreground">
                 {name} Ready
               </h4>
-              <p className="text-xs text-[#60646C] dark:text-[#AAA499]">
+              <p className="text-xs text-muted-foreground">
                 Download high-resolution print files or save this definition to your business QR collection.
               </p>
             </div>
@@ -418,14 +418,14 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               <button
                 type="button"
                 onClick={handleDownloadSvg}
-                className="p-3.5 rounded-2xl border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-white dark:bg-[#1A1916] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center gap-2 text-xs font-bold text-[#111318] dark:text-[#F7F3EB] cursor-pointer shadow-xs transition-all"
+                className="p-3.5 rounded-2xl border border-border bg-white dark:bg-[#1A1916] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center gap-2 text-xs font-bold text-foreground cursor-pointer shadow-xs transition-all"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Vector SVG</span>
               </button>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-center text-[11px] text-subtle-foreground max-w-md mx-auto">
+            <div className="p-3 rounded-xl bg-muted text-center text-xs text-subtle-foreground max-w-md mx-auto">
               Saved QR codes remain active and can be downloaded again from your QR Studio library anytime.
             </div>
           </div>
@@ -437,7 +437,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
             <button
               type="button"
               onClick={() => setStep((prev) => (prev - 1) as 1 | 2 | 3)}
-              className="px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl border border-border text-xs font-semibold text-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>

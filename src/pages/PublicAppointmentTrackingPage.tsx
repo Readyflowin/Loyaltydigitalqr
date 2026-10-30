@@ -137,7 +137,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               APPOINTMENT TRACKER
             </span>
             <span
@@ -239,7 +239,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                         } ${isCurrent ? 'ring-2 ring-[#3027F5]/30 dark:ring-[#E4C174]/40' : ''}`}
                       />
                       <span
-                        className={`text-[10px] font-bold block truncate ${
+                        className={`text-xs font-bold block truncate ${
                           isCurrent
                             ? 'text-[#3027F5] dark:text-[#E4C174]'
                             : isDone
@@ -277,7 +277,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
                 >
                   {appointment.serviceSnapshot.name}
                 </div>
-                <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+                <div className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
                   Duration: {appointment.serviceSnapshot.durationMinutes} minutes
                 </div>
               </div>
@@ -306,7 +306,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             </div>
 
             {appointment.customerNotes && (
-              <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-[11px] text-[#60646C] dark:text-[#D0CBC1]">
+              <div className="p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] text-xs text-[#60646C] dark:text-[#D0CBC1]">
                 <span className="font-bold text-[#111318] dark:text-[#F7F3EB]">Client Note: </span>
                 <span>{appointment.customerNotes}</span>
               </div>
@@ -331,7 +331,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
               <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
                 Need to cancel or change plans?
               </div>
-              <div className="text-[11px] text-subtle-foreground mt-0.5">
+              <div className="text-xs text-subtle-foreground mt-0.5">
                 {appointment.cancellationPolicyNotice || 'Free cancellation up to 2 hours prior to scheduled appointment.'}
               </div>
             </div>

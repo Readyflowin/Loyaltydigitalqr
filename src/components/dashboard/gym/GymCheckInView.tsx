@@ -397,7 +397,7 @@ export const GymCheckInView: React.FC<GymCheckInViewProps> = ({ businessId }) =>
                     </div>
 
                     {item.remainingVisitsAfter !== undefined && (
-                      <div className="text-[11px] text-muted-foreground font-medium pt-0.5">
+                      <div className="text-xs text-muted-foreground font-medium pt-0.5">
                         {item.remainingVisitsAfter === 0 ? (
                           <span className="text-rose-500 font-semibold">0 visits left (Pass expired)</span>
                         ) : (

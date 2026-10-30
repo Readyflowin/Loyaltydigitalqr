@@ -88,15 +88,15 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
       />
 
       {/* Dialog */}
-      <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/10 dark:border-white/10">
           <div>
-            <span className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
+            <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
               REWARD REDEMPTION WORKFLOW
             </span>
-            <h3 className="text-lg sm:text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+            <h3 className="text-lg sm:text-xl font-heading font-black text-foreground mt-0.5">
               Redeem Customer Reward
             </h3>
           </div>
@@ -118,18 +118,18 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             </div>
 
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400 block">
+              <span className="text-xs uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400 block">
                 REDEMPTION CONFIRMED
               </span>
-              <h4 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB] mt-0.5">
+              <h4 className="text-xl font-heading font-black text-foreground mt-0.5">
                 {customer.name}
               </h4>
-              <p className="text-xs sm:text-sm text-[#60646C] dark:text-[#D0CBC1] mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Voucher <strong>#{targetReward?.voucherCode}</strong> has been marked as redeemed and cannot be reused.
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-3.5 rounded-2xl bg-muted border border-black/5 dark:border-white/5 text-xs text-muted-foreground">
               The audit event has been logged and the program redemption metrics have been updated.
             </div>
 
@@ -145,16 +145,16 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
           /* Empty / No Available Reward State */
           <div className="text-center py-6 space-y-3">
             <AlertCircle className="w-12 h-12 text-amber-500 mx-auto" />
-            <h4 className="font-heading font-bold text-base text-[#111318] dark:text-[#F7F3EB]">
+            <h4 className="font-heading font-bold text-base text-foreground">
               No Available Unlocked Rewards
             </h4>
-            <p className="text-xs text-[#60646C] dark:text-[#AAA499]">
+            <p className="text-xs text-muted-foreground">
               {customer.name} has no pending rewards ready for redemption. Record more visits to reach the reward milestone.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#111318] dark:text-[#F7F3EB]"
+              className="px-4 py-2 rounded-xl border border-border text-xs font-semibold text-foreground"
             >
               Close
             </button>
@@ -167,30 +167,30 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
               <Gift className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-bold text-amber-700 dark:text-amber-300 block">
+                <span className="text-xs uppercase tracking-wider font-bold text-amber-700 dark:text-amber-300 block">
                   VOUCHER #{targetReward.voucherCode}
                 </span>
-                <div className="font-heading font-black text-base text-[#111318] dark:text-[#F7F3EB]">
+                <div className="font-heading font-black text-base text-foreground">
                   {targetReward.rewardDescription}
                 </div>
-                <div className="text-[11px] text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Unlocked by: <strong>{customer.name}</strong> on {new Date(targetReward.unlockedAt).toLocaleDateString()}
                 </div>
               </div>
             </div>
 
             {/* Confirmation Alert */}
-            <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Confirm that the customer is present and receiving this benefit at the counter. Once confirmed, this voucher cannot be redeemed a second time.
             </p>
 
             {/* Staff PIN input */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-bold text-[#111318] dark:text-[#F7F3EB] uppercase">
+                <label className="block text-xs font-bold text-foreground uppercase">
                   Staff Confirmation PIN
                 </label>
-                <span className="text-[10px] font-mono text-subtle-foreground">
+                <span className="text-xs font-mono text-subtle-foreground">
                   Authorization Required
                 </span>
               </div>
@@ -200,7 +200,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
                 value={staffPin}
                 onChange={(e) => setStaffPin(e.target.value)}
                 placeholder="4-digit PIN"
-                className="w-full font-mono text-center text-lg font-bold tracking-widest px-4 py-2 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+                className="w-full font-mono text-center text-lg font-bold tracking-widest px-4 py-2 rounded-xl border border-border bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
             </div>
 
@@ -211,7 +211,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
               </div>
             )}
 
-            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-[11px] text-[#60646C] dark:text-[#AAA499]">
+            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <span>
                 Each voucher can be redeemed only once, and every redemption is logged.
@@ -223,7 +223,7 @@ export const RewardRedemptionModal: React.FC<RewardRedemptionModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] text-xs font-semibold text-[#60646C] dark:text-[#AAA499] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                className="px-4 py-2.5 rounded-xl border border-border text-xs font-semibold text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
               >
                 Cancel
               </button>

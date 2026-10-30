@@ -27,7 +27,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
-              <span className="text-[11px] font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
+              <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
                 TAILORED FOR LOCAL COMMERCE
               </span>
             </div>
@@ -92,7 +92,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 
                 <div className="absolute top-4 right-4">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-white/90 dark:bg-[#1A1916]/90 border border-transparent dark:border-[rgba(228,193,116,0.3)] backdrop-blur-md text-[#111318] dark:text-[#E4C174]">
+                  <span className="px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-white/90 dark:bg-[#1A1916]/90 border border-transparent dark:border-[rgba(228,193,116,0.3)] backdrop-blur-md text-[#111318] dark:text-[#E4C174]">
                     {ind.badge}
                   </span>
                 </div>
@@ -115,7 +115,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                   </p>
 
                   <div className="mt-4 p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-black/5 dark:border-[rgba(228,193,116,0.2)]">
-                    <div className="text-[10px] font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
+                    <div className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                       SAMPLE REWARD
                     </div>
                     <div className="text-xs font-semibold text-[#111318] dark:text-[#F7F3EB] mt-0.5">
@@ -129,7 +129,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                     {ind.tags.slice(0, 2).map((tag, i) => (
                       <span
                         key={i}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]"
+                        className="text-xs font-mono px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-[#60646C] dark:text-[#AAA499]"
                       >
                         {tag}
                       </span>

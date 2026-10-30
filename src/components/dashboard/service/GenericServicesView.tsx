@@ -158,7 +158,7 @@ export const GenericServicesView: React.FC<GenericServicesViewProps> = ({ busine
             >
               <div>
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
+                  <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
                     {svc.category}
                   </span>
                   <button
