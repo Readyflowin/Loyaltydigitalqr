@@ -4,7 +4,11 @@ import {
   Search,
   Plus,
   ChevronRight,
+  Gift,
+  QrCode,
+  Award,
 } from 'lucide-react';
+import { StatCard, Badge } from '../../ui';
 import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { CustomerRecord, LoyaltyProgramConfig } from '../../../types/loyalty';
@@ -133,53 +137,25 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
 
       {/* 2. Top Summary Metrics Banner */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
-          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
-            ENROLLED MEMBERS
-          </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-foreground">
-            {activeCount}
-          </div>
-          <div className="text-xs text-muted-foreground mt-0.5">
-            Active digital passes
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
-          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
-            REWARDS UNLOCKED
-          </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-amber-600 dark:text-amber-400">
-            {rewardReadyCount}
-          </div>
-          <div className="text-xs text-muted-foreground mt-0.5">
-            Ready for counter redemption
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
-          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
-            RECORDED VISITS
-          </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-[#3027F5] dark:text-[#E4C174]">
-            {customers.reduce((acc, c) => acc + c.totalVisits, 0)}
-          </div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">
-            Verified visits across counters
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-card border border-border shadow-xs">
-          <span className="text-xs uppercase text-subtle-foreground font-bold block mb-1">
-            ACTIVE STAMPS HELD
-          </span>
-          <div className="text-2xl sm:text-3xl font-heading font-black text-foreground">
-            {customers.reduce((acc, c) => acc + c.currentStamps, 0)}
-          </div>
-          <div className="text-xs text-muted-foreground mt-0.5">
-            In customer wallet cards
-          </div>
-        </div>
+        <StatCard label="Enrolled members" value={activeCount} meta="Active digital passes" icon={<Users />} />
+        <StatCard
+          label="Rewards unlocked"
+          value={rewardReadyCount}
+          meta="Ready for counter redemption"
+          icon={<Gift />}
+        />
+        <StatCard
+          label="Recorded visits"
+          value={customers.reduce((acc, c) => acc + c.totalVisits, 0)}
+          meta="Confirmed with a staff PIN"
+          icon={<QrCode />}
+        />
+        <StatCard
+          label="Active stamps held"
+          value={customers.reduce((acc, c) => acc + c.currentStamps, 0)}
+          meta="On customer loyalty cards"
+          icon={<Award />}
+        />
       </div>
 
       {/* 3. Search, Filter & Sort Controls */}
@@ -294,15 +270,13 @@ export const CustomerCrmView: React.FC<CustomerCrmViewProps> = ({
                       {/* Loyalty Progress Bar & Counter */}
                       <div className="col-span-3 space-y-1">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-mono font-bold text-foreground">
+                          <span className="font-semibold text-foreground tabular-nums">
                             {c.currentStamps} / {program.stampsRequired} visits
                           </span>
                           {hasUnlocked ? (
-                            <span className="px-1.5 py-0.5 rounded text-xs uppercase font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
-                              Reward Ready
-                            </span>
+                            <Badge tone="reward">Reward ready</Badge>
                           ) : (
-                            <span className="text-xs text-subtle-foreground">
+                            <span className="text-caption text-muted-foreground">
                               {program.stampsRequired - c.currentStamps} to reward
                             </span>
                           )}
