@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-handwriting: "Caveat", cursive, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-cobalt: #3027F5;
+  --color-cobalt-hover: #2319D8;
+  --color-lime: #D6FF38;
+  --color-warm-cream: #F8F7F2;
+  --color-ink: #111318;
+  --color-neutral-subtle: #E7E5DE;
+
+  --color-gold: #E4C174;
+  --color-gold-antique: #B58B42;
+  --color-gold-muted: rgba(228, 193, 116, 0.35);
+  --color-dark-base: #090909;
+  --color-dark-card: #121211;
+  --color-dark-surface: #1A1916;
+  --color-dark-ivory: #F7F3EB;
+  --color-dark-muted: #B8B2A6;
+
+  --color-dark-canvas: #090909;
+  --color-dark-surface-raised: #1A1916;
+  --color-dark-text-primary: #F7F3EB;
+  --color-dark-text-secondary: #D0CBC1;
+  --color-dark-text-muted: #AAA499;
+  --color-dark-text-subtle: #898477;
+  --color-dark-accent: #E4C174;
+  --color-dark-accent-hover: #EBD294;
+  --color-dark-accent-deep: #B58B42;
+  --color-dark-border: rgba(228, 193, 116, 0.25);
+  --color-dark-divider: rgba(228, 193, 116, 0.18);
+}
+
+:root {
+  color-scheme: light;
+  --hero-scale: 1;
+}
+
+/* Fluid responsive hero collage scale */
+@media (max-width: 639px) {
+  :root {
+    --hero-scale: clamp(0.58, calc(0.58 + (100vw - 360px) / 550), 0.78);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root {
+    --hero-scale: clamp(0.80, calc(0.80 + (100vw - 640px) / 1800), 0.96);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --hero-scale: clamp(1, calc(1 + (100vw - 1024px) / 1650), 1.34);
+  }
+}
+
+.dark {
+  color-scheme: dark;
+  --dark-canvas: #090909;
+  --dark-surface: #121211;
+  --dark-surface-raised: #1A1916;
+
+  --dark-text-primary: #F7F3EB;
+  --dark-text-secondary: #D0CBC1;
+  --dark-text-muted: #AAA499;
+  --dark-text-subtle: #898477;
+
+  --dark-accent: #E4C174;
+  --dark-accent-hover: #EBD294;
+  --dark-accent-deep: #B58B42;
+
+  --dark-border: rgba(228, 193, 116, 0.25);
+  --dark-divider: rgba(228, 193, 116, 0.18);
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-color: #F8F7F2;
+}
+
+.dark body {
+  background-color: #090909;
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting);
+}
+
+/* Clean custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.45);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
