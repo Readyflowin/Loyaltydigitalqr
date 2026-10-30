@@ -7,9 +7,11 @@ import type {
   CarWashTier,
   CarWashBundleType,
 } from '../types/carwash';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId } from '../lib/ids';
+import { actorLabel } from '../lib/actor';
+import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
-
-const STORAGE_KEY = 'loyalty_mock_carwash_v1';
 
 interface CarWashStoreBundle {
   services: CarWashService[];
@@ -59,200 +61,43 @@ export interface RecordWashVisitInput {
   idempotencyKey?: string;
 }
 
+/**
+ * Car wash services, prepaid bundles, customer passes and wash visits
+ * (members only), persisted per business:
+ *   businesses/{id}/carwashServices, carwashBundles, carwashPasses, carwashVisits
+ */
+export const CARWASH_SPEC: ModuleSpec<CarWashStoreBundle> = {
+  name: 'carwash',
+  arrays: [
+    { key: 'services', collection: 'carwashServices' },
+    { key: 'bundles', collection: 'carwashBundles' },
+    { key: 'passes', collection: 'carwashPasses' },
+    {
+      key: 'visits',
+      collection: 'carwashVisits',
+      recent: { orderBy: 'timestamp', max: 1000 },
+      sort: (a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')),
+    },
+  ],
+  empty: () => ({ services: [], bundles: [], passes: [], visits: [] }),
+};
+bizStore.register(CARWASH_SPEC);
+
 class CarWashOperationsService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
   constructor() {
-    this.initSeedData();
-  }
-
-  private initSeedData() {
-    const data = this.loadData();
-    const bizId = 'biz_carwash_demo';
-
-    if (data[bizId]) return;
-
-    const now = new Date().toISOString();
-    const today = new Date();
-
-    const services: CarWashService[] = [
-      {
-        id: 'cws_express',
-        businessId: bizId,
-        name: 'Express Exterior Wash',
-        description: 'High-pressure soft foam wash, spot-free rinse, wheel blast, and turbo blow dry.',
-        price: 1800, // $18.00
-        durationMinutes: 15,
-        tier: 'express',
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'cws_deluxe',
-        businessId: bizId,
-        name: 'Deluxe Wash & Underbody Shield',
-        description: 'Complete foam wash, rust-inhibiting underbody spray, triple shine wax, and tire dressing.',
-        price: 3200, // $32.00
-        durationMinutes: 25,
-        tier: 'deluxe',
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'cws_ultimate',
-        businessId: bizId,
-        name: 'Ultimate Ceramic Glaze',
-        description: 'Full exterior detail, hydrophobic ceramic wax coat, micro-scratch sealing, and rim polish.',
-        price: 5500, // $55.00
-        durationMinutes: 40,
-        tier: 'ultimate',
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'cws_detail',
-        businessId: bizId,
-        name: 'Interior Steam Detail & Sanitize',
-        description: 'Cabin vacuuming, leather conditioning, dashboard steam extraction, and anti-allergen fog.',
-        price: 12000, // $120.00
-        durationMinutes: 75,
-        tier: 'detailing',
-        isActive: true,
-        createdAt: now,
-      },
-    ];
-
-    const bundles: CarWashBundle[] = [
-      {
-        id: 'bun_5_express',
-        businessId: bizId,
-        name: '5-Wash Express Punch Pass',
-        description: 'Save 20% on five fast express washes. Shareable with multiple vehicles in household.',
-        price: 7500, // $75.00 ($15 per wash)
-        bundleType: 'visit_pack',
-        totalVisits: 5,
-        validityDays: 90,
-        includedServices: ['cws_express'],
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'bun_unlimited_deluxe',
-        businessId: bizId,
-        name: 'Unlimited Deluxe Monthly Pass',
-        description: 'Wash your vehicle as often as you want. Includes unlimited deluxe clean & underbody wash.',
-        price: 8900, // $89.00/mo
-        bundleType: 'monthly_pass',
-        validityDays: 30,
-        includedServices: ['cws_express', 'cws_deluxe'],
-        isActive: true,
-        createdAt: now,
-      },
-    ];
-
-    const passes: CarWashCustomerPass[] = [
-      {
-        id: 'pass_david',
-        businessId: bizId,
-        locationId: 'loc_wash_main',
-        customerId: 'cust_david_cw',
-        customerName: 'David Miller',
-        customerPhone: '+1 555-0391',
-        vehiclePlate: 'CA-7X9821',
-        vehicleMakeModel: 'Honda CR-V',
-        bundleId: 'bun_5_express',
-        bundleName: '5-Wash Express Punch Pass',
-        bundleType: 'visit_pack',
-        startDate: new Date(today.getTime() - 86400000 * 10).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 80).toISOString().split('T')[0],
-        totalVisits: 5,
-        remainingVisits: 3,
-        status: 'active',
-        lastRedeemedAt: new Date(today.getTime() - 3600000 * 3).toISOString(),
-        createdAt: now,
-      },
-      {
-        id: 'pass_amanda',
-        businessId: bizId,
-        locationId: 'loc_wash_main',
-        customerId: 'cust_amanda_cw',
-        customerName: 'Amanda Hughes',
-        customerPhone: '+1 555-0982',
-        vehiclePlate: 'TX-WSH90',
-        vehicleMakeModel: 'BMW 330i',
-        bundleId: 'bun_unlimited_deluxe',
-        bundleName: 'Unlimited Deluxe Monthly Pass',
-        bundleType: 'monthly_pass',
-        startDate: new Date(today.getTime() - 86400000 * 5).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 25).toISOString().split('T')[0],
-        status: 'active',
-        lastRedeemedAt: new Date(today.getTime() - 3600000 * 24).toISOString(),
-        createdAt: now,
-      },
-      {
-        id: 'pass_kevin',
-        businessId: bizId,
-        locationId: 'loc_wash_main',
-        customerId: 'cust_kevin_cw',
-        customerName: 'Kevin Vance',
-        customerPhone: '+1 555-0774',
-        vehiclePlate: 'NY-99K21',
-        vehicleMakeModel: 'Ford F-150',
-        bundleId: 'bun_5_express',
-        bundleName: '5-Wash Express Punch Pass',
-        bundleType: 'visit_pack',
-        startDate: new Date(today.getTime() - 86400000 * 40).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 50).toISOString().split('T')[0],
-        totalVisits: 5,
-        remainingVisits: 0,
-        status: 'exhausted',
-        lastRedeemedAt: new Date(today.getTime() - 86400000 * 2).toISOString(),
-        createdAt: now,
-      },
-    ];
-
-    const visits: CarWashVisitEvent[] = [
-      {
-        id: 'cwv_seed_01',
-        businessId: bizId,
-        locationId: 'loc_wash_main',
-        locationName: 'Bay #1 - Automatic Tunnel',
-        passId: 'pass_david',
-        customerId: 'cust_david_cw',
-        customerName: 'David Miller',
-        vehiclePlate: 'CA-7X9821',
-        serviceOrBundleName: '5-Wash Express Punch Pass',
-        timestamp: new Date(today.getTime() - 3600000 * 3).toISOString(),
-        washType: 'pass_redemption',
-        remainingVisitsAfter: 3,
-        staffActor: 'Tunnel Attendant',
-        loyaltyIssued: true,
-        idempotencyKey: 'cwv_seed_david_today',
-      },
-    ];
-
-    data[bizId] = { services, bundles, passes, visits };
-    this.saveData(data);
+    bizStore.subscribe(() => this.notify());
   }
 
   private loadData(): Record<string, CarWashStoreBundle> {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {
-      console.warn('Failed to parse car wash store:', e);
-    }
-    return {};
+    return bizStore.getAll(CARWASH_SPEC);
   }
 
   private saveData(data: Record<string, CarWashStoreBundle>) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      this.notify();
-    } catch (e) {
-      console.warn('Failed to save car wash store:', e);
-    }
+    bizStore.saveAll(CARWASH_SPEC, data);
+    this.notify();
   }
 
   public subscribe(cb: () => void): () => void {
@@ -267,17 +112,7 @@ class CarWashOperationsService {
   }
 
   private getBundle(businessId: string): CarWashStoreBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = {
-        services: [],
-        bundles: [],
-        passes: [],
-        visits: [],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return bizStore.getBundle(CARWASH_SPEC, businessId);
   }
 
   // =========================================================================
@@ -304,7 +139,7 @@ class CarWashOperationsService {
     const bundle = data[input.businessId] || this.getBundle(input.businessId);
 
     const newService: CarWashService = {
-      id: `cws_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `cws_${newId()}`,
       businessId: input.businessId,
       name: input.name.trim(),
       description: input.description.trim(),
@@ -367,7 +202,7 @@ class CarWashOperationsService {
     const bundleStore = data[input.businessId] || this.getBundle(input.businessId);
 
     const newBundle: CarWashBundle = {
-      id: `bun_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `bun_${newId()}`,
       businessId: input.businessId,
       name: input.name.trim(),
       description: input.description.trim(),
@@ -422,7 +257,7 @@ class CarWashOperationsService {
       .split('T')[0];
 
     const newPass: CarWashCustomerPass = {
-      id: `pass_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `pass_${newId()}`,
       businessId: input.businessId,
       locationId: input.locationId || 'loc_wash_main',
       customerId: input.customerId,
@@ -462,6 +297,10 @@ class CarWashOperationsService {
     remainingVisits?: number;
     error?: string;
   } {
+    if (input.staffPin && !businessService.verifyStaffPin(businessId, input.staffPin)) {
+      return { success: false, error: 'Invalid staff PIN.' };
+    }
+
     // Determine whether pass-based or single service
     let pass: CarWashCustomerPass | undefined;
     if (input.passId) {
@@ -564,7 +403,6 @@ class CarWashOperationsService {
             businessId,
             customerId,
             locationId: 'loc_wash_main',
-            staffPin: input.staffPin || '8831',
             idempotencyKey,
           });
           loyaltyIssued = res.success;
@@ -574,7 +412,7 @@ class CarWashOperationsService {
       }
 
       const visitEvent: CarWashVisitEvent = {
-        id: `cwv_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        id: `cwv_${newId()}`,
         businessId,
         locationId: 'loc_wash_main',
         locationName: 'Wash Tunnel #1',
@@ -586,7 +424,7 @@ class CarWashOperationsService {
         timestamp: now,
         washType: pass ? 'pass_redemption' : 'single_service',
         remainingVisitsAfter,
-        staffActor: input.staffPin ? `Staff PIN: ${input.staffPin}` : 'Tunnel Attendant',
+        staffActor: actorLabel('Tunnel Attendant'),
         loyaltyIssued,
         idempotencyKey,
       };

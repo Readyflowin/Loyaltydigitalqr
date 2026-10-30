@@ -1,165 +1,245 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Building2,
   MapPin,
   Users,
   Award,
   CreditCard,
-  Sliders,
   Check,
   Save,
   ExternalLink,
   X,
   UserPlus,
+  Plus,
+  Trash2,
+  AlertCircle,
+  Copy,
+  Upload,
 } from 'lucide-react';
-import type { Business } from '../../types/business';
+import type { Business, BusinessInvite, BusinessLocation } from '../../types/business';
 import type { ThemeMode } from '../../types';
-import type { TeamMember, TeamRole, TeamPermission } from '../../types/growth';
+import type { TeamRole, TeamPermission } from '../../types/growth';
 import { CARD_COLORS } from '../../data/onboardingData';
 import { growthService } from '../../services/growthService';
+import { businessService } from '../../services/businessService';
+import { loyaltyService } from '../../services/loyaltyService';
+import { authService } from '../../services/authService';
+import { getPublicAppOrigin } from '../../lib/firebase';
+import { randomString } from '../../lib/ids';
+import { isUploadConfigured, uploadImage } from '../../lib/uploads';
 
 interface SettingsViewProps {
   business: Business;
   theme: ThemeMode;
-  onUpdateBusiness: (updated: Partial<Business>) => void;
+  onUpdateBusiness?: (updated: Partial<Business>) => void;
 }
 
-type SettingsTab =
-  | 'profile'
-  | 'locations'
-  | 'loyalty'
-  | 'team'
-  | 'billing'
-  | 'preferences';
+type SettingsTab = 'profile' | 'locations' | 'loyalty' | 'team' | 'billing';
 
-export const SettingsView: React.FC<SettingsViewProps> = ({
-  business,
-  theme: _theme,
-  onUpdateBusiness,
-}) => {
+const inputClass =
+  'w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174] disabled:opacity-60';
+const labelClass = 'block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1';
+const primaryButton =
+  'px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm disabled:opacity-60 disabled:cursor-not-allowed';
+
+const SUPPORT_EMAIL = (import.meta.env.VITE_SUPPORT_EMAIL || '').trim();
+
+export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
-  const [savedFeedback, setSavedFeedback] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
+  const [saving, setSaving] = useState(false);
 
-  // Editable local state
+  const myRole = businessService.getMyRole(business.id);
+  const canManage = myRole === 'owner' || myRole === 'manager';
+  const currentUser = authService.getCurrentUser();
+
+  // Profile
   const [name, setName] = useState(business.name);
   const [contactEmail, setContactEmail] = useState(business.contactEmail);
   const [phoneNumber, setPhoneNumber] = useState(business.phoneNumber || '');
-  const [programName, setProgramName] = useState(business.programName);
-  const [stampsRequired, setStampsRequired] = useState(business.stampsRequired);
-  const [rewardDescription, setRewardDescription] = useState(business.rewardDescription);
-  const [accentColor, setAccentColor] = useState(business.accentColor);
-  const [staffPin, setStaffPin] = useState(business.locations[0]?.staffPin || '4821');
+  const [logoUrl, setLogoUrl] = useState<string | null>((business as Business & { logoUrl?: string }).logoUrl || null);
+  const [logoUploading, setLogoUploading] = useState(false);
 
-  // Team state
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  // Locations (including staff PINs)
+  const [locations, setLocations] = useState<BusinessLocation[]>(() => business.locations.map((l) => ({ ...l })));
+
+  // Loyalty program (source of truth: config/loyaltyProgram)
+  const program = loyaltyService.getProgram(business.id);
+  const [programName, setProgramName] = useState(program.name);
+  const [stampsRequired, setStampsRequired] = useState(program.stampsRequired);
+  const [rewardDescription, setRewardDescription] = useState(program.rewardDescription);
+  const [accentColor, setAccentColor] = useState(program.accentColor || business.accentColor);
+
+  // Team
+  const [invites, setInvites] = useState<BusinessInvite[]>([]);
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
-  const [inviteName, setInviteName] = useState('');
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState<TeamRole>('staff');
+  const members = businessService.getMembers(business.id);
 
-  const refreshTeam = () => {
-    setTeamMembers(growthService.getTeamMembers(business.id));
+  const flash = (type: 'ok' | 'error', text: string) => {
+    setFeedback({ type, text });
+    setTimeout(() => setFeedback(null), 4000);
   };
+
+  const refreshInvites = useCallback(async () => {
+    if (!canManage) return;
+    try {
+      setInvites(await businessService.listInvites(business.id));
+    } catch {
+      setInvites([]);
+    }
+  }, [business.id, canManage]);
 
   useEffect(() => {
-    refreshTeam();
-    const unsub = growthService.subscribe(() => {
-      refreshTeam();
-    });
-    return unsub;
-  }, [business.id]);
+    void refreshInvites();
+  }, [refreshInvites]);
 
-  const handleSave = (section: string) => {
-    onUpdateBusiness({
-      name,
-      contactEmail,
-      phoneNumber,
-      programName,
-      stampsRequired,
-      rewardDescription,
-      accentColor,
-    });
-    setSavedFeedback(`Saved changes to ${section} in local session.`);
-    setTimeout(() => setSavedFeedback(null), 3000);
+  const run = async (label: string, fn: () => Promise<void>) => {
+    if (!canManage) {
+      flash('error', 'Only owners and managers can change settings.');
+      return;
+    }
+    setSaving(true);
+    try {
+      await fn();
+      flash('ok', `${label} saved.`);
+    } catch (err) {
+      flash('error', err instanceof Error ? err.message : 'Could not save changes.');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleInviteStaff = (e: React.FormEvent) => {
+  const saveProfile = () =>
+    run('Business profile', async () => {
+      if (name.trim().length < 2) throw new Error('Business name must be at least 2 characters.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) throw new Error('Please enter a valid contact email.');
+      await businessService.updateBusiness(business.id, {
+        name: name.trim(),
+        contactEmail: contactEmail.trim(),
+        phoneNumber: phoneNumber.trim(),
+        logoUrl,
+      });
+    });
+
+  const saveLocations = () =>
+    run('Locations', async () => {
+      if (locations.length === 0) throw new Error('At least one location is required.');
+      await businessService.updateBusiness(business.id, {
+        locations: locations.map((l, i) => ({ ...l, name: l.name.trim(), address: l.address.trim(), isPrimary: i === 0 })),
+      });
+    });
+
+  const saveLoyalty = () =>
+    run('Loyalty program', async () => {
+      if (!programName.trim()) throw new Error('Program name is required.');
+      if (!rewardDescription.trim()) throw new Error('Reward description is required.');
+      loyaltyService.saveProgram(business.id, {
+        name: programName.trim(),
+        stampsRequired,
+        rewardDescription: rewardDescription.trim(),
+        accentColor,
+      });
+      await businessService.updateBusiness(business.id, {
+        programName: programName.trim(),
+        stampsRequired,
+        rewardDescription: rewardDescription.trim(),
+        accentColor,
+      });
+    });
+
+  const handleLogoFile = async (file: File | undefined) => {
+    if (!file) return;
+    setLogoUploading(true);
+    try {
+      const { url } = await uploadImage(business.id, 'logo', file);
+      setLogoUrl(url);
+      flash('ok', 'Logo uploaded. Click "Save profile" to apply it.');
+    } catch (err) {
+      flash('error', err instanceof Error ? err.message : 'Upload failed.');
+    } finally {
+      setLogoUploading(false);
+    }
+  };
+
+  const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inviteName.trim() || !inviteEmail.trim()) return;
-
-    growthService.inviteTeamMember({
-      businessId: business.id,
-      name: inviteName.trim(),
-      email: inviteEmail.trim(),
-      role: inviteRole,
+    await run('Invite', async () => {
+      await businessService.inviteMember(business.id, inviteEmail, inviteRole);
+      setInviteModalOpen(false);
+      setInviteEmail('');
+      setInviteRole('staff');
+      await refreshInvites();
     });
-
-    setSavedFeedback(`Invitation created for ${inviteName} (${inviteRole}). Simulated mode.`);
-    setInviteModalOpen(false);
-    setInviteName('');
-    setInviteEmail('');
-    setInviteRole('staff');
-    setTimeout(() => setSavedFeedback(null), 3000);
   };
 
-  const tabs = [
+  const tabs: { id: SettingsTab; label: string; icon: typeof Building2 }[] = [
     { id: 'profile', label: 'Business Profile', icon: Building2 },
-    { id: 'locations', label: 'Locations & Counters', icon: MapPin },
+    { id: 'locations', label: 'Locations & Staff PINs', icon: MapPin },
     { id: 'loyalty', label: 'Loyalty Program', icon: Award },
-    { id: 'team', label: 'Team & Staff PIN', icon: Users },
+    { id: 'team', label: 'Team', icon: Users },
     { id: 'billing', label: 'Plan & Billing', icon: CreditCard },
-    { id: 'preferences', label: 'Preferences', icon: Sliders },
   ];
 
   const permissionsList: { key: TeamPermission; label: string }[] = [
     { key: 'view_analytics', label: 'View Analytics & Performance' },
     { key: 'manage_offers', label: 'Create & Manage Offers' },
-    { key: 'issue_loyalty', label: 'Verify Counter Stamps & Redemptions' },
-    { key: 'manage_team', label: 'Configure Team Members & Roles' },
+    { key: 'issue_loyalty', label: 'Issue Stamps & Redeem Rewards' },
+    { key: 'manage_team', label: 'Manage Team Members & Roles' },
     { key: 'manage_settings', label: 'Edit Workspace Settings' },
     { key: 'operate_orders', label: 'Manage Orders & Appointments' },
   ];
-
   const rolesList: TeamRole[] = ['owner', 'manager', 'staff', 'receptionist'];
 
-  const regionalPricing =
-    business.region === 'india'
-      ? { price: '₹299/month', link: '/pricing', currency: 'INR', flag: '🇮🇳' }
-      : { price: '$10/month', link: '/usa', currency: 'USD', flag: '🇺🇸' };
+  const trialEnds = business.trialEndsAt ? new Date(business.trialEndsAt) : null;
+  const trialDaysLeft = trialEnds ? Math.ceil((trialEnds.getTime() - Date.now()) / 86400000) : null;
+  const regionalPrice = business.region === 'india' ? '₹299/month' : '$10/month';
+  const publicOrigin = getPublicAppOrigin();
 
   return (
     <div data-testid="settings-view" className="space-y-6 animate-in fade-in duration-150">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
             WORKSPACE CONFIGURATION
           </span>
           <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-[#111318] dark:text-[#F7F3EB] mt-0.5">
-            Settings & Permissions
+            Settings
           </h1>
         </div>
 
-        {savedFeedback && (
-          <div className="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5 animate-in fade-in">
-            <Check className="w-3.5 h-3.5" />
-            <span>{savedFeedback}</span>
+        {feedback && (
+          <div
+            role="status"
+            className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 animate-in fade-in ${
+              feedback.type === 'ok'
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
+                : 'bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300'
+            }`}
+          >
+            {feedback.type === 'ok' ? <Check className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
+            <span>{feedback.text}</span>
           </div>
         )}
       </div>
 
-      {/* Tabs Row */}
+      {!canManage && (
+        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-900 dark:text-amber-200">
+          You are signed in as <strong>{myRole || 'team member'}</strong>. Only owners and managers can change these settings.
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2 border-b border-black/10 dark:border-white/10 pb-3">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
-
           return (
             <button
               key={tab.id}
               type="button"
               data-testid={`settings-tab-${tab.id}`}
-              onClick={() => setActiveTab(tab.id as SettingsTab)}
+              onClick={() => setActiveTab(tab.id)}
               className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-all cursor-pointer ${
                 isActive
                   ? 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D] shadow-xs'
@@ -173,168 +253,214 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         })}
       </div>
 
-      {/* Tab Panels */}
       <div className="rounded-3xl bg-white dark:bg-[#141412] border-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.25)] p-6 sm:p-8 shadow-sm">
-        {/* TAB 1: Business Profile */}
+        {/* PROFILE */}
         {activeTab === 'profile' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                Business Profile Information
-              </h3>
+              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Business Profile</h3>
               <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                Configures how your business appears on counter displays and customer passes.
+                Shown on your public menu, booking page, catalogue and customer loyalty card.
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                Business Name
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-              />
+              <label className={labelClass}>Business Name</label>
+              <input type="text" value={name} disabled={!canManage} onChange={(e) => setName(e.target.value)} className={inputClass} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Contact Email
-                </label>
-                <input
-                  type="email"
-                  value={contactEmail}
-                  onChange={(e) => setContactEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-                />
+                <label className={labelClass}>Contact Email</label>
+                <input type="email" value={contactEmail} disabled={!canManage} onChange={(e) => setContactEmail(e.target.value)} className={inputClass} />
               </div>
-
               <div>
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-                />
+                <label className={labelClass}>Phone Number (shown publicly)</label>
+                <input type="tel" value={phoneNumber} disabled={!canManage} onChange={(e) => setPhoneNumber(e.target.value)} className={inputClass} />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                Industry Category & Operating Region
-              </label>
-              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs text-[#60646C] dark:text-[#AAA499] flex items-center justify-between">
-                <span>
-                  {business.businessType.toUpperCase()} ·{' '}
-                  {business.region === 'india' ? 'India Region' : 'United States'}
-                </span>
-                <span className="font-mono text-[11px] font-bold text-[#3027F5] dark:text-[#E4C174]">
-                  Active
-                </span>
+              <label className={labelClass}>Logo</label>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-heading font-black text-xl overflow-hidden"
+                  style={{ backgroundColor: business.accentColor }}
+                >
+                  {logoUrl ? <img src={logoUrl} alt="" className="w-full h-full object-cover" /> : business.logoInitial}
+                </div>
+                {isUploadConfigured() ? (
+                  <div className="flex items-center gap-2">
+                    <label className={`${primaryButton} ${!canManage || logoUploading ? 'opacity-60 pointer-events-none' : ''}`}>
+                      <Upload className="w-4 h-4" />
+                      <span>{logoUploading ? 'Uploading…' : 'Upload logo'}</span>
+                      <input
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/gif"
+                        className="hidden"
+                        onChange={(e) => void handleLogoFile(e.target.files?.[0])}
+                      />
+                    </label>
+                    {logoUrl && canManage && (
+                      <button type="button" onClick={() => setLogoUrl(null)} className="text-xs text-rose-600 hover:underline cursor-pointer">
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs text-[#60646C] dark:text-[#AAA499]">Logo upload becomes available once image storage is connected.</p>
+                )}
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => handleSave('Business Profile')}
-              className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm"
-            >
+            <div>
+              <label className={labelClass}>Industry & Region</label>
+              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs text-[#60646C] dark:text-[#AAA499]">
+                {business.businessType.toUpperCase()} · {business.region === 'india' ? 'India (INR)' : 'United States (USD)'} · {business.timeZone}
+              </div>
+            </div>
+
+            <div>
+              <label className={labelClass}>Your public link name</label>
+              <div className="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs font-mono text-[#111318] dark:text-[#F7F3EB] flex items-center justify-between gap-2">
+                <span className="truncate">{publicOrigin}/card/{business.slug}</span>
+                <button
+                  type="button"
+                  onClick={() => navigator.clipboard?.writeText(`${publicOrigin}/card/${business.slug}`).then(() => flash('ok', 'Link copied'))}
+                  className="p-1 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                  aria-label="Copy loyalty card link"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            <button type="button" disabled={!canManage || saving} onClick={saveProfile} className={primaryButton}>
               <Save className="w-4 h-4" />
-              <span>Save Profile Changes</span>
+              <span>{saving ? 'Saving…' : 'Save profile'}</span>
             </button>
           </div>
         )}
 
-        {/* TAB 2: Locations & Counters */}
+        {/* LOCATIONS */}
         {activeTab === 'locations' && (
-          <div className="space-y-6 max-w-xl">
+          <div className="space-y-6 max-w-2xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                Configured Counters & Venues
-              </h3>
+              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Locations & Staff PINs</h3>
               <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                Each counter has a unique QR code stand and individual staff stamp validation PIN.
+                Staff enter a location's PIN to issue stamps and redeem rewards. Keep PINs private to your team.
               </p>
             </div>
 
             <div className="space-y-3">
-              {business.locations.map((loc) => (
+              {locations.map((loc, idx) => (
                 <div
                   key={loc.id}
-                  className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] flex items-start justify-between gap-4"
+                  className="p-4 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] space-y-3"
                 >
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
-                        {loc.name}
-                      </h4>
-                      {loc.isPrimary && (
-                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] font-bold">
-                          Primary
-                        </span>
-                      )}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono font-bold uppercase text-[#3027F5] dark:text-[#E4C174]">
+                      {idx === 0 ? 'Primary location' : `Location ${idx + 1}`}
+                    </span>
+                    {idx > 0 && canManage && (
+                      <button
+                        type="button"
+                        onClick={() => setLocations((prev) => prev.filter((l) => l.id !== loc.id))}
+                        className="text-xs text-rose-600 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" /> Remove
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_120px] gap-3">
+                    <div>
+                      <label className={labelClass}>Name</label>
+                      <input
+                        type="text"
+                        value={loc.name}
+                        disabled={!canManage}
+                        onChange={(e) => setLocations((prev) => prev.map((l) => (l.id === loc.id ? { ...l, name: e.target.value } : l)))}
+                        className={inputClass}
+                      />
                     </div>
-                    <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                      {loc.address}
-                    </p>
-                    <div className="text-[11px] font-mono text-[#868A94] mt-1.5">
-                      Counter PIN:{' '}
-                      <strong className="text-[#111318] dark:text-[#F7F3EB]">{loc.staffPin}</strong>
+                    <div>
+                      <label className={labelClass}>Address</label>
+                      <input
+                        type="text"
+                        value={loc.address}
+                        disabled={!canManage}
+                        onChange={(e) => setLocations((prev) => prev.map((l) => (l.id === loc.id ? { ...l, address: e.target.value } : l)))}
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Staff PIN</label>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={loc.staffPin}
+                        disabled={!canManage}
+                        onChange={(e) =>
+                          setLocations((prev) =>
+                            prev.map((l) => (l.id === loc.id ? { ...l, staffPin: e.target.value.replace(/\D/g, '') } : l))
+                          )
+                        }
+                        className={`${inputClass} font-mono text-center tracking-widest`}
+                      />
                     </div>
                   </div>
-
-                  <span className="text-xs text-[#3027F5] dark:text-[#E4C174] font-bold">
-                    Active
-                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-[#60646C] dark:text-[#AAA499]">
-              Multi-counter real-time synchronization is scheduled for Task 10 Firebase Cloud Firestore.
+            {canManage && (
+              <button
+                type="button"
+                onClick={() =>
+                  setLocations((prev) => [
+                    ...prev,
+                    { id: `loc_${randomString(8)}`, name: '', address: '', isPrimary: false, staffPin: randomString(4, '0123456789') },
+                  ])
+                }
+                className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] inline-flex items-center gap-1 cursor-pointer"
+              >
+                <Plus className="w-4 h-4" /> Add location
+              </button>
+            )}
+
+            <div>
+              <button type="button" disabled={!canManage || saving} onClick={saveLocations} className={primaryButton}>
+                <Save className="w-4 h-4" />
+                <span>{saving ? 'Saving…' : 'Save locations'}</span>
+              </button>
             </div>
           </div>
         )}
 
-        {/* TAB 3: Loyalty Program */}
+        {/* LOYALTY */}
         {activeTab === 'loyalty' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                Loyalty Reward Rules
-              </h3>
+              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Loyalty Reward Rules</h3>
               <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                Set customer visit thresholds and custom rewards.
+                Changes apply to new stamps immediately. Customers' existing progress is kept.
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                Program Title
-              </label>
-              <input
-                type="text"
-                value={programName}
-                onChange={(e) => setProgramName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-              />
+              <label className={labelClass}>Program Title</label>
+              <input type="text" value={programName} disabled={!canManage} onChange={(e) => setProgramName(e.target.value)} className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                Visits Required: {stampsRequired} stamps
-              </label>
-              <div className="flex gap-2">
+              <label className={labelClass}>Visits Required: {stampsRequired} stamps</label>
+              <div className="flex gap-2 flex-wrap">
                 {[5, 6, 8, 10, 12].map((num) => (
                   <button
                     key={num}
                     type="button"
+                    disabled={!canManage}
                     onClick={() => setStampsRequired(num)}
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold cursor-pointer transition-all ${
                       stampsRequired === num
@@ -349,31 +475,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                Reward Description
-              </label>
-              <input
-                type="text"
-                value={rewardDescription}
-                onChange={(e) => setRewardDescription(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-              />
+              <label className={labelClass}>Reward Description</label>
+              <input type="text" value={rewardDescription} disabled={!canManage} onChange={(e) => setRewardDescription(e.target.value)} className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1.5">
-                Pass Accent Color
-              </label>
-              <div className="flex items-center gap-3">
+              <label className={labelClass}>Card Accent Color</label>
+              <div className="flex items-center gap-3 flex-wrap">
                 {CARD_COLORS.map((c) => (
                   <button
                     key={c.id}
                     type="button"
+                    disabled={!canManage}
                     onClick={() => setAccentColor(c.hex)}
+                    aria-label={c.name}
                     className={`w-8 h-8 rounded-full flex items-center justify-center transition-transform cursor-pointer ${
-                      accentColor === c.hex
-                        ? 'scale-110 ring-2 ring-offset-2 ring-[#111318] dark:ring-[#F7F3EB]'
-                        : ''
+                      accentColor === c.hex ? 'scale-110 ring-2 ring-offset-2 ring-[#111318] dark:ring-[#F7F3EB]' : ''
                     }`}
                     style={{ backgroundColor: c.hex }}
                   >
@@ -383,72 +500,24 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => handleSave('Loyalty Program')}
-              className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm"
-            >
+            <button type="button" disabled={!canManage || saving} onClick={saveLoyalty} className={primaryButton}>
               <Save className="w-4 h-4" />
-              <span>Save Reward Settings</span>
+              <span>{saving ? 'Saving…' : 'Save reward settings'}</span>
             </button>
           </div>
         )}
 
-        {/* TAB 4: Team, Roles & Staff PIN */}
+        {/* TEAM */}
         {activeTab === 'team' && (
           <div className="space-y-8">
-            {/* Staff PIN Section */}
-            <div className="max-w-xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                  Counter Staff PIN Verification
-                </h3>
+                <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Team Members ({members.length})</h3>
                 <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                  Staff members type this 4-digit code on the customer's phone to validate visits securely.
+                  Everyone listed here can sign in to this workspace with their own account.
                 </p>
               </div>
-
-              <div>
-                <label className="block text-xs font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Active Counter Staff PIN
-                </label>
-                <input
-                  type="text"
-                  maxLength={4}
-                  value={staffPin}
-                  onChange={(e) => setStaffPin(e.target.value)}
-                  className="w-40 font-mono text-center text-xl font-bold tracking-widest px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB] focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
-                />
-                <p className="text-[11px] text-[#60646C] dark:text-[#AAA499] mt-1">
-                  Keep this code confidential among counter staff.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => handleSave('Staff PIN')}
-                className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm"
-              >
-                <Save className="w-4 h-4" />
-                <span>Update Staff PIN</span>
-              </button>
-            </div>
-
-            {/* Role-to-Permissions Matrix */}
-            <div className="pt-6 border-t border-black/10 dark:border-white/10 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase block">
-                    ACCESS GOVERNANCE
-                  </span>
-                  <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                    Role-to-Permission Matrix
-                  </h3>
-                  <p className="text-xs text-[#60646C] dark:text-[#D0CBC1]">
-                    Permissions enforce operational security across counter and administrative workflows.
-                  </p>
-                </div>
-
+              {canManage && (
                 <button
                   type="button"
                   data-testid="invite-staff-btn"
@@ -456,16 +525,103 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   className="px-4 py-2 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs cursor-pointer shadow-xs inline-flex items-center gap-2"
                 >
                   <UserPlus className="w-4 h-4" />
-                  <span>Invite Team Member</span>
+                  <span>Invite team member</span>
                 </button>
-              </div>
+              )}
+            </div>
 
-              {/* Matrix Table */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {members.map((member) => {
+                const isOwner = member.uid === business.ownerUid;
+                const isMe = member.uid === currentUser?.id;
+                return (
+                  <div
+                    key={member.uid}
+                    className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center justify-between gap-3 text-xs"
+                  >
+                    <div className="min-w-0">
+                      <div className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate">
+                        {member.displayName || member.email} {isMe && <span className="text-[#868A94] font-normal">(you)</span>}
+                      </div>
+                      <div className="text-[11px] text-[#60646C] dark:text-[#AAA499] truncate">{member.email}</div>
+                      <div className="mt-1">
+                        {canManage && !isOwner && !isMe ? (
+                          <select
+                            value={member.role}
+                            onChange={(e) =>
+                              void run('Role', () => businessService.updateMemberRole(business.id, member.uid, e.target.value as TeamRole))
+                            }
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-[11px] font-mono uppercase"
+                          >
+                            <option value="manager">Manager</option>
+                            <option value="staff">Staff</option>
+                            <option value="receptionist">Receptionist</option>
+                          </select>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
+                            {member.role}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {canManage && !isOwner && !isMe && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (window.confirm(`Remove ${member.email} from ${business.name}?`)) {
+                            void run('Team', () => businessService.removeMember(business.id, member.uid));
+                          }
+                        }}
+                        className="text-[11px] text-rose-600 hover:underline cursor-pointer flex-shrink-0"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {canManage && invites.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">Pending invites ({invites.length})</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {invites.map((inv) => (
+                    <div
+                      key={inv.email}
+                      className="p-3.5 rounded-2xl border border-dashed border-[#E5E3DB] dark:border-white/15 flex items-center justify-between gap-3 text-xs"
+                    >
+                      <div className="min-w-0">
+                        <div className="font-bold text-[#111318] dark:text-[#F7F3EB] truncate">{inv.email}</div>
+                        <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
+                          Invited as {inv.role} · {new Date(inv.invitedAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          void run('Invite', async () => {
+                            await businessService.revokeInvite(business.id, inv.email);
+                            await refreshInvites();
+                          })
+                        }
+                        className="text-[11px] text-rose-600 hover:underline cursor-pointer flex-shrink-0"
+                      >
+                        Revoke
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="pt-6 border-t border-black/10 dark:border-white/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">What each role can do</h4>
               <div className="overflow-x-auto rounded-2xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]">
                 <table className="w-full text-xs text-left">
                   <thead className="bg-[#F8F7F2] dark:bg-[#181816] border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] font-mono uppercase text-[10px] text-[#868A94]">
                     <tr>
-                      <th className="p-3.5">Capability / Permission</th>
+                      <th className="p-3.5">Permission</th>
                       {rolesList.map((r) => (
                         <th key={r} className="p-3.5 text-center">
                           {r}
@@ -475,253 +631,143 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   </thead>
                   <tbody className="divide-y divide-[#E5E3DB] dark:divide-[rgba(228,193,116,0.1)]">
                     {permissionsList.map((perm) => (
-                      <tr key={perm.key} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                        <td className="p-3.5 font-medium text-[#111318] dark:text-[#F7F3EB]">
-                          {perm.label}
-                        </td>
-                        {rolesList.map((r) => {
-                          const hasIt = growthService.hasPermission(r, perm.key);
-                          return (
-                            <td key={r} className="p-3.5 text-center">
-                              {hasIt ? (
-                                <span className="inline-flex p-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
-                                  <Check className="w-3.5 h-3.5" />
-                                </span>
-                              ) : (
-                                <span className="inline-block w-2 h-0.5 bg-black/20 dark:bg-white/20 rounded-full" />
-                              )}
-                            </td>
-                          );
-                        })}
+                      <tr key={perm.key}>
+                        <td className="p-3.5 font-medium text-[#111318] dark:text-[#F7F3EB]">{perm.label}</td>
+                        {rolesList.map((r) => (
+                          <td key={r} className="p-3.5 text-center">
+                            {growthService.hasPermission(r, perm.key) ? (
+                              <span className="inline-flex p-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+                                <Check className="w-3.5 h-3.5" />
+                              </span>
+                            ) : (
+                              <span className="inline-block w-2 h-0.5 bg-black/20 dark:bg-white/20 rounded-full" />
+                            )}
+                          </td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-
-              {/* Team Members List */}
-              <div className="space-y-3 pt-4">
-                <h4 className="font-heading font-bold text-sm text-[#111318] dark:text-[#F7F3EB]">
-                  Assigned Team Members ({teamMembers.length})
-                </h4>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {teamMembers.map((member) => (
-                    <div
-                      key={member.id}
-                      className="p-3.5 rounded-2xl bg-[#F8F7F2] dark:bg-[#181816] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] flex items-center justify-between text-xs"
-                    >
-                      <div>
-                        <div className="font-bold text-[#111318] dark:text-[#F7F3EB]">
-                          {member.name}
-                        </div>
-                        <div className="text-[11px] text-[#60646C] dark:text-[#AAA499]">
-                          {member.email}
-                        </div>
-                        <div className="mt-1 flex items-center gap-1.5">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]">
-                            {member.role}
-                          </span>
-                          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
-                            {member.status}
-                          </span>
-                        </div>
-                      </div>
-
-                      {member.role !== 'owner' && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            growthService.removeTeamMember(business.id, member.id);
-                            refreshTeam();
-                          }}
-                          className="text-[11px] text-rose-600 hover:underline cursor-pointer"
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         )}
 
-        {/* TAB 5: Plan & Billing */}
+        {/* BILLING */}
         {activeTab === 'billing' && (
           <div className="space-y-6 max-w-xl">
             <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                Subscription Plan & Billing Status
-              </h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                Preserves transparent regional pricing model established in Task 1.
-              </p>
+              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">Plan & Billing</h3>
             </div>
 
             <div className="p-5 rounded-2xl bg-[#F8F7F2] dark:bg-[#1A1916] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
-                    ACTIVE SUBSCRIPTION
-                  </span>
+                  <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">CURRENT PLAN</span>
                   <div className="font-heading font-black text-2xl text-[#111318] dark:text-[#F7F3EB]">
-                    {regionalPricing.price}
-                  </div>
-                  <div className="text-xs text-[#60646C] dark:text-[#AAA499] mt-0.5">
-                    Tier: {business.planName}
+                    {business.planName || 'Starter'} · {regionalPrice}
                   </div>
                 </div>
-                <span className="px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 font-mono text-xs font-bold">
-                  Active Subscription
+                <span
+                  className={`px-3 py-1.5 rounded-full font-mono text-xs font-bold ${
+                    trialDaysLeft !== null && trialDaysLeft > 0
+                      ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300'
+                  }`}
+                >
+                  {trialDaysLeft !== null && trialDaysLeft > 0 ? 'Free trial' : 'Trial ended'}
                 </span>
               </div>
 
               <div className="text-xs text-[#60646C] dark:text-[#D0CBC1] pt-3 border-t border-black/5 dark:border-white/5 space-y-1.5">
                 <div className="flex justify-between">
-                  <span>Operating Region:</span>
+                  <span>Workspace created:</span>
                   <strong className="text-[#111318] dark:text-[#F7F3EB]">
-                    {business.region === 'india' ? 'India (INR)' : 'United States (USD)'}
+                    {business.createdAt ? new Date(business.createdAt).toLocaleDateString() : '—'}
                   </strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>Billing Cycle:</span>
-                  <strong className="text-[#111318] dark:text-[#F7F3EB]">Monthly (No Lock-In Contract)</strong>
-                </div>
-                <div className="flex justify-between">
-                  <span>Next Renewal:</span>
-                  <strong className="text-[#111318] dark:text-[#F7F3EB]">
-                    {new Date(Date.now() + 25 * 86400000).toLocaleDateString()}
-                  </strong>
+                  <span>Free trial {trialDaysLeft !== null && trialDaysLeft > 0 ? 'ends' : 'ended'}:</span>
+                  <strong className="text-[#111318] dark:text-[#F7F3EB]">{trialEnds ? trialEnds.toLocaleDateString() : '—'}</strong>
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-between">
-                <a
-                  href={regionalPricing.link}
-                  className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline flex items-center gap-1"
-                >
-                  <span>Review Public Regional Plans</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
+              <a
+                href={business.region === 'india' ? '/india' : '/usa'}
+                className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline inline-flex items-center gap-1"
+              >
+                <span>View plan details</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-900 dark:text-blue-200">
-              <strong>Simulated Billing:</strong> Production payment gateway (Stripe / Razorpay) will be integrated in Task 10.
-            </div>
-          </div>
-        )}
-
-        {/* TAB 6: Preferences */}
-        {activeTab === 'preferences' && (
-          <div className="space-y-6 max-w-xl">
-            <div>
-              <h3 className="font-heading font-bold text-lg text-[#111318] dark:text-[#F7F3EB]">
-                Account & Workspace Preferences
-              </h3>
-              <p className="text-xs text-[#60646C] dark:text-[#D0CBC1] mt-0.5">
-                Display preferences and simulated notifications.
-              </p>
-            </div>
-
-            <div className="space-y-3 text-xs">
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#3027F5]" />
-                <span className="font-medium text-[#111318] dark:text-[#F7F3EB]">
-                  Play soft sound on staff PIN stamp verification
-                </span>
-              </label>
-
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#3027F5]" />
-                <span className="font-medium text-[#111318] dark:text-[#F7F3EB]">
-                  Show celebratory animation when customer unlocks reward
-                </span>
-              </label>
-
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F2] dark:bg-[#1A1916] cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#3027F5]" />
-                <span className="font-medium text-[#111318] dark:text-[#F7F3EB]">
-                  Send weekly summary email of counter activity
-                </span>
-              </label>
+            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-[#60646C] dark:text-[#AAA499]">
+              Online card payments are not available in the dashboard yet. No payment details are stored and you will not be
+              charged automatically.
+              {SUPPORT_EMAIL ? (
+                <>
+                  {' '}To continue after your trial, email{' '}
+                  <a className="font-bold underline" href={`mailto:${SUPPORT_EMAIL}`}>
+                    {SUPPORT_EMAIL}
+                  </a>
+                  .
+                </>
+              ) : null}
             </div>
           </div>
         )}
       </div>
 
-      {/* MODAL: Invite Staff Member (Simulated) */}
+      {/* Invite modal */}
       {inviteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white dark:bg-[#141412] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
-                  TEAM INVITATION
-                </span>
-                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">
-                  Invite Staff Member
-                </h3>
+                <span className="text-[10px] font-mono uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">TEAM INVITATION</span>
+                <h3 className="text-xl font-heading font-black text-[#111318] dark:text-[#F7F3EB]">Invite a team member</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setInviteModalOpen(false)}
                 className="p-1 rounded-lg text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200">
-              <strong>Mock Environment:</strong> No actual email or SMS invitation is dispatched. A pending team record is added immediately.
+            <div className="p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] text-xs text-[#60646C] dark:text-[#AAA499]">
+              No email is sent automatically. After you create the invite, ask them to sign in at{' '}
+              <strong className="text-[#111318] dark:text-[#F7F3EB]">{publicOrigin}/login</strong> using this exact email address.
+              The invite will be waiting for them.
             </div>
 
-            <form onSubmit={handleInviteStaff} className="space-y-4 text-xs">
+            <form onSubmit={handleInvite} className="space-y-4 text-xs">
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  data-testid="invite-name-input"
-                  placeholder="e.g. David Vance"
-                  value={inviteName}
-                  onChange={(e) => setInviteName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
-                />
-              </div>
-
-              <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Email Address
-                </label>
+                <label className={labelClass}>Email Address</label>
                 <input
                   type="email"
                   required
                   data-testid="invite-email-input"
-                  placeholder="e.g. david@example.com"
+                  placeholder="name@example.com"
                   value={inviteEmail}
                   onChange={(e) => setInviteEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label className="block font-mono font-bold text-[#111318] dark:text-[#F7F3EB] uppercase mb-1">
-                  Assigned Role
-                </label>
+                <label className={labelClass}>Role</label>
                 <select
                   data-testid="invite-role-select"
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value as TeamRole)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.3)] bg-[#F8F7F2] dark:bg-[#1A1916] text-[#111318] dark:text-[#F7F3EB]"
+                  className={inputClass}
                 >
-                  <option value="manager">Manager (High Permissions)</option>
-                  <option value="staff">Staff (Counter Verification & Orders)</option>
-                  <option value="receptionist">Receptionist (Appointments & Check-Ins)</option>
+                  <option value="manager">Manager (settings, team, offers, analytics)</option>
+                  <option value="staff">Staff (stamps, customers, orders)</option>
+                  <option value="receptionist">Receptionist (appointments, check-ins)</option>
                 </select>
               </div>
 
@@ -729,16 +775,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setInviteModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-[#868A94] hover:text-[#111318] dark:hover:text-[#F7F3EB] cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl border border-[#E5E3DB] dark:border-white/15 font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  data-testid="submit-invite-btn"
-                  className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] font-bold text-xs cursor-pointer shadow-sm"
-                >
-                  Send Invitation (Simulated)
+                <button type="submit" disabled={saving} className={primaryButton}>
+                  {saving ? 'Creating…' : 'Create invite'}
                 </button>
               </div>
             </form>

@@ -6,7 +6,6 @@ import { Footer } from './components/common/Footer';
 import { CardBuilderModal } from './components/modals/CardBuilderModal';
 import { VideoDemoModal } from './components/modals/VideoDemoModal';
 import { RewardDetailModal } from './components/modals/RewardDetailModal';
-import { LoginModal } from './components/modals/LoginModal';
 import { INITIAL_STORES } from './data/storesData';
 import { INDUSTRIES_DATA } from './data/industriesData';
 
@@ -27,9 +26,26 @@ import { PublicBookingPage } from './pages/PublicBookingPage';
 import { PublicAppointmentTrackingPage } from './pages/PublicAppointmentTrackingPage';
 import { PublicCatalogPage } from './pages/PublicCatalogPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { PublicLoyaltyCardPage } from './pages/PublicLoyaltyCardPage';
+import { PublicBusinessGate } from './components/public/PublicBusinessGate';
+import { parseOrderTrackingToken } from './services/orderService';
+import { parseAppointmentToken } from './services/salonService';
+
+function orderWatch(token: string) {
+  const parsed = parseOrderTrackingToken(token);
+  return parsed ? { collection: 'orders' as const, id: parsed.orderId } : undefined;
+}
+
+function appointmentWatch(token: string) {
+  const parsed = parseAppointmentToken(token);
+  return parsed ? { collection: 'appointments' as const, id: parsed.appointmentId } : undefined;
+}
 
 function AppContent() {
-  const { currentPath } = useRouter();
+  const { currentPath, navigate } = useRouter();
+
+  /** First path segment after a prefix, e.g. pathSegment('/menu/') on /menu/abc -> "abc". */
+  const pathSegment = (prefix: string) => decodeURIComponent(currentPath.slice(prefix.length).split('/')[0] || '');
 
   // Theme state: initialized from localStorage or system preference
   const [theme, setTheme] = useState<ThemeMode>(() => {
@@ -47,7 +63,6 @@ function AppContent() {
   const [cardBuilderOpen, setCardBuilderOpen] = useState(false);
   const [initialBuilderIndustry, setInitialBuilderIndustry] = useState('coffee');
   const [videoDemoOpen, setVideoDemoOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [rewardModalOpen, setRewardModalOpen] = useState(false);
   const [selectedRewardStore, setSelectedRewardStore] = useState<StoreItem | null>(null);
 
@@ -88,6 +103,11 @@ function AppContent() {
 
     if (currentPath.startsWith('/catalog/')) {
       document.title = 'Digital Lookbook & Product Catalogue — Loyaltydigitalqr';
+    if (currentPath.startsWith('/card/')) {
+      document.title = 'Loyalty Card — Loyaltydigitalqr';
+      return;
+    }
+
       return;
     }
 
@@ -220,11 +240,24 @@ function AppContent() {
     }
   };
 
+  // Customer loyalty card: join via QR, then view stamps (/card/:slug or /card/:slug/:memberId)
+  if (currentPath.startsWith('/card/')) {
+    return (
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+        <PublicBusinessGate slugOrId={pathSegment('/card/')}>
+          <PublicLoyaltyCardPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
+      </div>
+    );
+  }
+
   // If on customer digital menu, render public mobile-first layout without marketing header/footer
   if (currentPath.startsWith('/menu/')) {
     return (
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
-        <PublicMenuPage theme={theme} onThemeToggle={handleThemeToggle} />
+        <PublicBusinessGate slugOrId={pathSegment('/menu/')}>
+          <PublicMenuPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
       </div>
     );
   }
@@ -233,7 +266,12 @@ function AppContent() {
   if (currentPath.startsWith('/order/')) {
     return (
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
-        <PublicOrderTrackingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        <PublicBusinessGate
+          slugOrId={parseOrderTrackingToken(pathSegment('/order/'))?.businessId || '-'}
+          watch={orderWatch(pathSegment('/order/'))}
+        >
+          <PublicOrderTrackingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
       </div>
     );
   }
@@ -242,7 +280,9 @@ function AppContent() {
   if (currentPath.startsWith('/book/')) {
     return (
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
-        <PublicBookingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        <PublicBusinessGate slugOrId={pathSegment('/book/')}>
+          <PublicBookingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
       </div>
     );
   }
@@ -251,7 +291,12 @@ function AppContent() {
   if (currentPath.startsWith('/appointment/')) {
     return (
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
-        <PublicAppointmentTrackingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        <PublicBusinessGate
+          slugOrId={parseAppointmentToken(pathSegment('/appointment/'))?.businessId || '-'}
+          watch={appointmentWatch(pathSegment('/appointment/'))}
+        >
+          <PublicAppointmentTrackingPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
       </div>
     );
   }
@@ -260,7 +305,9 @@ function AppContent() {
   if (currentPath.startsWith('/catalog/')) {
     return (
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
-        <PublicCatalogPage theme={theme} onThemeToggle={handleThemeToggle} />
+        <PublicBusinessGate slugOrId={pathSegment('/catalog/')}>
+          <PublicCatalogPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
       </div>
     );
   }
@@ -292,7 +339,7 @@ function AppContent() {
         onThemeToggle={handleThemeToggle}
         onOpenCardBuilder={() => handleOpenCardBuilder()}
         onOpenVideoDemo={() => setVideoDemoOpen(true)}
-        onOpenLogin={() => setLoginOpen(true)}
+        onOpenLogin={() => navigate('/login')}
       />
 
       {/* Main Content Route */}
@@ -306,7 +353,7 @@ function AppContent() {
         onThemeToggle={handleThemeToggle}
         onOpenCardBuilder={() => handleOpenCardBuilder()}
         onOpenVideoDemo={() => setVideoDemoOpen(true)}
-        onOpenLogin={() => setLoginOpen(true)}
+        onOpenLogin={() => navigate('/login')}
       />
 
       {/* Interactive Modals */}
@@ -330,11 +377,6 @@ function AppContent() {
         store={selectedRewardStore}
       />
 
-      <LoginModal
-        isOpen={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        theme={theme}
-      />
 
     </div>
   );

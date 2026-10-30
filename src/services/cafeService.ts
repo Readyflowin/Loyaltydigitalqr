@@ -1,3 +1,10 @@
+/**
+ * Café / restaurant digital menus, categories, items and tables.
+ * Persisted per business in Firestore via bizStore (all publicly readable,
+ * because the customer-facing QR menu shows them):
+ *   businesses/{id}/menus, menuCategories, menuItems, tables
+ */
+
 import type {
   Menu,
   MenuCategory,
@@ -6,10 +13,9 @@ import type {
   PublicBusinessProfile,
   PublicTableProfile,
 } from '../types/cafe';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId } from '../lib/ids';
 import { businessService } from './businessService';
-import { generateBusinessSlug } from '../utils/qrUrlBuilder';
-
-const STORAGE_KEY = 'loyalty_mock_cafe_data_v1';
 
 export interface BusinessCafeBundle {
   menus: Menu[];
@@ -22,438 +28,39 @@ type CafeStorageSchema = {
   [businessId: string]: BusinessCafeBundle;
 };
 
+const byCreated = (a: Record<string, unknown>, b: Record<string, unknown>) =>
+  String(a.createdAt || '').localeCompare(String(b.createdAt || ''));
+
+export const CAFE_SPEC: ModuleSpec<BusinessCafeBundle> = {
+  name: 'cafe',
+  arrays: [
+    { key: 'menus', collection: 'menus', public: true, sort: byCreated },
+    { key: 'categories', collection: 'menuCategories', public: true, sort: byCreated },
+    { key: 'items', collection: 'menuItems', public: true, sort: byCreated },
+    { key: 'tables', collection: 'tables', public: true, sort: byCreated },
+  ],
+  empty: () => ({ menus: [], categories: [], items: [], tables: [] }),
+};
+bizStore.register(CAFE_SPEC);
+
 class CafeService {
   private listeners: (() => void)[] = [];
 
   constructor() {
-    this.ensureInitialized();
-  }
-
-  private ensureInitialized() {
-    if (typeof window === 'undefined') return;
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      const initial = this.getSeedData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-    }
+    bizStore.subscribe(() => this.notifyListeners());
   }
 
   private loadData(): CafeStorageSchema {
-    if (typeof window === 'undefined') {
-      return this.getSeedData();
-    }
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const initial = this.getSeedData();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-        return initial;
-      }
-      return JSON.parse(raw) as CafeStorageSchema;
-    } catch {
-      const fallback = this.getSeedData();
-      return fallback;
-    }
+    return bizStore.getAll(CAFE_SPEC);
   }
 
   private saveData(data: CafeStorageSchema): void {
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      } catch (err) {
-        console.warn('Failed to save café mock data to localStorage:', err);
-      }
-    }
+    bizStore.saveAll(CAFE_SPEC, data);
     this.notifyListeners();
   }
 
   private getBundle(businessId: string): BusinessCafeBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = {
-        menus: [],
-        categories: [],
-        items: [],
-        tables: [],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
-  }
-
-  /**
-   * Seed Data Generator
-   */
-  private getSeedData(): CafeStorageSchema {
-    const primaryMenuId = 'menu_primary_coffee';
-    const primaryCatCoffee = 'cat_c1';
-    const primaryCatTea = 'cat_c2';
-    const primaryCatCold = 'cat_c3';
-    const primaryCatBakery = 'cat_c4';
-    const primaryCatFood = 'cat_c5';
-
-    // 1. Primary US Business (Good Day Specialty Coffee)
-    const primaryBundle: BusinessCafeBundle = {
-      menus: [
-        {
-          id: primaryMenuId,
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          name: 'All-Day Café & Roastery Menu',
-          description: 'Specialty seasonal roasts, cold brews, house-baked pastries, and artisan lunch sandwiches.',
-          currency: 'USD',
-          currencySymbol: '$',
-          status: 'published',
-          categoryIds: [primaryCatCoffee, primaryCatTea, primaryCatCold, primaryCatBakery, primaryCatFood],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-      ],
-      categories: [
-        {
-          id: primaryCatCoffee,
-          menuId: primaryMenuId,
-          name: 'Coffee',
-          description: 'Espresso beverages made with single-origin beans',
-          displayOrder: 1,
-          isEnabled: true,
-        },
-        {
-          id: primaryCatTea,
-          menuId: primaryMenuId,
-          name: 'Tea',
-          description: 'Artisan whole-leaf teas and spiced lattes',
-          displayOrder: 2,
-          isEnabled: true,
-        },
-        {
-          id: primaryCatCold,
-          menuId: primaryMenuId,
-          name: 'Cold Drinks',
-          description: 'Nitro cold brews and iced infusions',
-          displayOrder: 3,
-          isEnabled: true,
-        },
-        {
-          id: primaryCatBakery,
-          menuId: primaryMenuId,
-          name: 'Bakery',
-          description: 'Baked fresh daily in our roastery kitchen',
-          displayOrder: 4,
-          isEnabled: true,
-        },
-        {
-          id: primaryCatFood,
-          menuId: primaryMenuId,
-          name: 'Food',
-          description: 'Warm paninis and counter toasts',
-          displayOrder: 5,
-          isEnabled: true,
-        },
-      ],
-      items: [
-        {
-          id: 'item_c1',
-          menuId: primaryMenuId,
-          categoryId: primaryCatCoffee,
-          name: 'Cappuccino',
-          description: 'Velvety micro-foamed milk poured over a rich double espresso shot with dark chocolate notes.',
-          price: 425, // $4.25
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'available',
-          displayOrder: 1,
-          variantGroups: [
-            {
-              id: 'vg_size',
-              name: 'Cup Size',
-              required: true,
-              options: [
-                { id: 'opt_s_small', name: 'Small (8 oz)', priceAdjustment: -50 },
-                { id: 'opt_s_reg', name: 'Regular (12 oz)', priceAdjustment: 0, isDefault: true },
-                { id: 'opt_s_large', name: 'Large (16 oz)', priceAdjustment: 70 },
-              ],
-            },
-          ],
-          modifierGroups: [
-            {
-              id: 'mg_milk',
-              name: 'Milk Choice',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_whole', name: 'Whole Milk', priceAdjustment: 0, isDefault: true },
-                { id: 'mod_oat', name: 'Oat Milk (Barista Blend)', priceAdjustment: 60 },
-                { id: 'mod_almond', name: 'Almond Milk', priceAdjustment: 60 },
-              ],
-            },
-            {
-              id: 'mg_boosters',
-              name: 'Add-ons',
-              required: false,
-              minSelections: 0,
-              maxSelections: 2,
-              options: [
-                { id: 'mod_extra_shot', name: 'Extra Espresso Shot', priceAdjustment: 80 },
-                { id: 'mod_vanilla_syrup', name: 'Vanilla Bean Syrup', priceAdjustment: 65 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c2',
-          menuId: primaryMenuId,
-          categoryId: primaryCatCoffee,
-          name: 'Vanilla Bean Latte',
-          description: 'Espresso balanced with steamed milk and Madagascar vanilla syrup.',
-          price: 475, // $4.75
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'available',
-          displayOrder: 2,
-          variantGroups: [
-            {
-              id: 'vg_latte_size',
-              name: 'Size',
-              required: true,
-              options: [
-                { id: 'opt_l_reg', name: 'Regular (12 oz)', priceAdjustment: 0, isDefault: true },
-                { id: 'opt_l_large', name: 'Large (16 oz)', priceAdjustment: 75 },
-              ],
-            },
-          ],
-          modifierGroups: [
-            {
-              id: 'mg_latte_milk',
-              name: 'Milk Preference',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_l_whole', name: 'Whole Milk', priceAdjustment: 0, isDefault: true },
-                { id: 'mod_l_oat', name: 'Oat Milk', priceAdjustment: 60 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c3',
-          menuId: primaryMenuId,
-          categoryId: primaryCatCoffee,
-          name: 'Caffè Americano',
-          description: 'Bold espresso diluted with hot filtered water for a clean, aromatic cup.',
-          price: 375, // $3.75
-          currency: 'USD',
-          dietary: ['vegan', 'gluten_free'],
-          status: 'available',
-          displayOrder: 3,
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c4',
-          menuId: primaryMenuId,
-          categoryId: primaryCatCold,
-          name: 'Nitro Cold Brew',
-          description: 'Slow-steeped for 20 hours and nitrogen-infused for a creamy cascading head.',
-          price: 495, // $4.95
-          currency: 'USD',
-          dietary: ['vegan', 'gluten_free'],
-          status: 'available',
-          displayOrder: 1,
-          modifierGroups: [
-            {
-              id: 'mg_nitro_cream',
-              name: 'Sweet Cream Top',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_sweet_cream', name: 'House Vanilla Sweet Cream', priceAdjustment: 75 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c5',
-          menuId: primaryMenuId,
-          categoryId: primaryCatTea,
-          name: 'Artisan Masala Chai',
-          description: 'Brewed Assam black tea simmered with ginger, crushed green cardamom, and cinnamon.',
-          price: 395, // $3.95
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'available',
-          displayOrder: 1,
-          modifierGroups: [
-            {
-              id: 'mg_chai_milk',
-              name: 'Milk Choice',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_c_whole', name: 'Steamed Whole Milk', priceAdjustment: 0, isDefault: true },
-                { id: 'mod_c_oat', name: 'Steamed Oat Milk', priceAdjustment: 60 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c6',
-          menuId: primaryMenuId,
-          categoryId: primaryCatBakery,
-          name: 'Butter Almond Croissant',
-          description: 'Flaky twice-baked French croissant filled with almond cream and sliced almonds.',
-          price: 395, // $3.95
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'available',
-          displayOrder: 1,
-          modifierGroups: [
-            {
-              id: 'mg_temp',
-              name: 'Serving Temperature',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_warm', name: 'Warmed in Oven', priceAdjustment: 0, isDefault: true },
-                { id: 'mod_room', name: 'Room Temperature', priceAdjustment: 0 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c7',
-          menuId: primaryMenuId,
-          categoryId: primaryCatBakery,
-          name: 'Fudge Chocolate Brownie',
-          description: 'Decadent 70% dark chocolate brownie with a crinkly top and gooey center.',
-          price: 350, // $3.50
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'sold_out', // Seeded as sold out for immediate testing
-          displayOrder: 2,
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'item_c8',
-          menuId: primaryMenuId,
-          categoryId: primaryCatFood,
-          name: 'Grilled Mozzarella & Pesto Panini',
-          description: 'Fresh fior di latte mozzarella, vine-ripened tomatoes, and basil pesto on toasted sourdough.',
-          price: 850, // $8.50
-          currency: 'USD',
-          dietary: ['veg'],
-          status: 'available',
-          displayOrder: 1,
-          modifierGroups: [
-            {
-              id: 'mg_bread',
-              name: 'Bread Choice',
-              required: false,
-              minSelections: 0,
-              maxSelections: 1,
-              options: [
-                { id: 'mod_sourdough', name: 'Rustic Sourdough', priceAdjustment: 0, isDefault: true },
-                { id: 'mod_gf', name: 'Gluten-Free Bread', priceAdjustment: 100 },
-              ],
-            },
-          ],
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-      ],
-      tables: [
-        {
-          id: 'tbl_main_01',
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          tableNumber: '01',
-          displayName: 'Table 01',
-          menuId: primaryMenuId,
-          instruction: 'Point phone camera at code to open menu & order',
-          status: 'active',
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'tbl_main_02',
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          tableNumber: '02',
-          displayName: 'Table 02',
-          menuId: primaryMenuId,
-          instruction: 'Point phone camera at code to open menu & order',
-          status: 'active',
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'tbl_main_03',
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          tableNumber: '03',
-          displayName: 'Table 03',
-          menuId: primaryMenuId,
-          instruction: 'Point phone camera at code to open menu & order',
-          status: 'active',
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'tbl_main_p01',
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          tableNumber: 'P1',
-          displayName: 'Patio 01',
-          menuId: primaryMenuId,
-          instruction: 'Outdoor garden seating — server will deliver to patio',
-          status: 'active',
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-        {
-          id: 'tbl_main_pickup',
-          businessId: 'biz_user_primary',
-          locationId: 'loc_main',
-          tableNumber: 'PK',
-          displayName: 'Counter Pickup',
-          menuId: primaryMenuId,
-          instruction: 'Pickup at counter station',
-          status: 'active',
-          createdAt: '2026-03-01T10:00:00Z',
-          updatedAt: '2026-03-01T10:00:00Z',
-        },
-      ],
-    };
-
-    // 2. Barbershop / Salon Business has NO café menus or tables (Empty Isolation)
-    const salonBundle: BusinessCafeBundle = {
-      menus: [],
-      categories: [],
-      items: [],
-      tables: [],
-    };
-
-    return {
-      biz_user_primary: primaryBundle,
-      biz_salon_demo: salonBundle,
-      biz_retail_demo: { menus: [], categories: [], items: [], tables: [] },
-    };
+    return bizStore.getBundle(CAFE_SPEC, businessId);
   }
 
   // =========================================================================
@@ -486,12 +93,12 @@ class CafeService {
     const storageData = this.loadData();
     const bundle = storageData[businessId] || this.getBundle(businessId);
 
-    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getBusinessById(businessId);
     const currency = data.currency || (business?.currency as 'USD' | 'INR') || 'USD';
     const currencySymbol = currency === 'INR' ? '₹' : '$';
 
     const newMenu: Menu = {
-      id: `menu_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `menu_${newId()}`,
       businessId,
       locationId: data.locationId,
       name: data.name.trim(),
@@ -564,7 +171,7 @@ class CafeService {
     const existing = bundle.categories.filter((c) => c.menuId === menuId);
 
     const newCategory: MenuCategory = {
-      id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `cat_${newId()}`,
       menuId,
       name: data.name.trim(),
       description: data.description?.trim(),
@@ -680,7 +287,7 @@ class CafeService {
 
     const newItem: MenuItem = {
       ...data,
-      id: `item_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `item_${newId()}`,
       menuId,
       displayOrder: categoryItems.length + 1,
       createdAt: new Date().toISOString(),
@@ -798,7 +405,7 @@ class CafeService {
 
     const tableId =
       data.customTableId?.trim() ||
-      `tbl_${data.locationId}_${data.tableNumber.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Date.now().toString(36).substring(4)}`;
+      `tbl_${data.locationId}_${data.tableNumber.toLowerCase().replace(/[^a-z0-9]/g, '')}_${newId().slice(0, 8)}`;
 
     const newTable: CafeTable = {
       id: tableId,
@@ -867,15 +474,8 @@ class CafeService {
     table?: PublicTableProfile;
     allTables: PublicTableProfile[];
   } | null {
-    const businesses = businessService.getAllBusinesses();
-    const targetSlug = slugOrId.toLowerCase().trim();
-
-    // Match by slug or business ID
-    const business = businesses.find(
-      (b) =>
-        b.id === slugOrId ||
-        generateBusinessSlug(b.name) === targetSlug
-    );
+    // Match by slug or business ID (loaded via businessService.loadPublicBusiness)
+    const business = businessService.findBusinessBySlug(slugOrId);
 
     if (!business) return null;
 
@@ -903,7 +503,7 @@ class CafeService {
 
     const publicBusiness: PublicBusinessProfile = {
       id: business.id,
-      slug: generateBusinessSlug(business.name),
+      slug: business.slug,
       name: business.name,
       businessType: business.businessType,
       currency: publishedMenu.currency,

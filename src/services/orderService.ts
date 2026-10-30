@@ -1,6 +1,10 @@
 /**
- * Shared Mock Order Service for Loyaltydigitalqr
- * Source of truth for café and restaurant customer orders, KDS queue, and status tracking.
+ * Café and restaurant customer orders, KDS queue and status tracking.
+ * Persisted per business in Firestore via bizStore: businesses/{id}/orders.
+ *
+ * Customers (visitors) can create an order and read only their own order by
+ * its unguessable id; listing orders is restricted to business members.
+ * Tracking links look like /order/{businessId}.{orderId}.
  */
 
 import type {
@@ -14,308 +18,75 @@ import type {
   OrderStatusHistoryEntry,
 } from '../types/order';
 import { VALID_STATUS_TRANSITIONS } from '../types/order';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId, shortCode } from '../lib/ids';
 import { businessService } from './businessService';
 import { cafeService } from './cafeService';
-import { generateBusinessSlug } from '../utils/qrUrlBuilder';
 
-const STORAGE_KEY = 'loyalty_mock_orders_v1';
-const IDEMPOTENCY_KEY = 'loyalty_mock_order_idempotency_v1';
+const IDEMPOTENCY_KEY = 'loyalty_order_idempotency_v1';
 
 type OrderStorageSchema = {
   [businessId: string]: Order[];
 };
 
+interface OrderBundle {
+  orders: Order[];
+}
+
+export const ORDER_SPEC: ModuleSpec<OrderBundle> = {
+  name: 'orders',
+  arrays: [
+    {
+      key: 'orders',
+      collection: 'orders',
+      recent: { orderBy: 'createdAt', max: 500 },
+      sort: (a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')),
+    },
+  ],
+  empty: () => ({ orders: [] }),
+};
+bizStore.register(ORDER_SPEC);
+
+/** Split a tracking token into business id and order document id. */
+export function parseOrderTrackingToken(token: string): { businessId: string; orderId: string } | null {
+  const clean = (token || '').trim();
+  const dot = clean.indexOf('.');
+  if (dot <= 0 || dot === clean.length - 1) return null;
+  const businessId = clean.slice(0, dot);
+  const orderId = clean.slice(dot + 1);
+  if (!/^[a-z0-9]{8,64}$/i.test(businessId) || !/^[a-z0-9_]{16,64}$/i.test(orderId)) return null;
+  return { businessId, orderId };
+}
+
 class OrderService {
   private listeners: (() => void)[] = [];
 
   constructor() {
-    this.ensureInitialized();
-  }
-
-  private ensureInitialized() {
-    if (typeof window === 'undefined') return;
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      const initial = this.getSeedOrders();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-    }
+    bizStore.subscribe(() => this.notifyListeners());
   }
 
   private loadData(): OrderStorageSchema {
-    if (typeof window === 'undefined') {
-      return this.getSeedOrders();
-    }
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const initial = this.getSeedOrders();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-        return initial;
-      }
-      return JSON.parse(raw) as OrderStorageSchema;
-    } catch {
-      return this.getSeedOrders();
-    }
+    const all = bizStore.getAll(ORDER_SPEC);
+    const out: OrderStorageSchema = {};
+    for (const [bizId, bundle] of Object.entries(all)) out[bizId] = bundle.orders;
+    return out;
   }
 
   private saveData(data: OrderStorageSchema): void {
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      } catch (err) {
-        console.warn('Failed to save mock order data to localStorage:', err);
-      }
-    }
+    const bundles: Record<string, OrderBundle> = {};
+    for (const [bizId, orders] of Object.entries(data)) bundles[bizId] = { orders };
+    bizStore.saveAll(ORDER_SPEC, bundles);
     this.notifyListeners();
   }
 
-  /**
-   * Seed Data Generator
-   * Seeds realistic demo orders for Good Day Specialty Coffee (biz_user_primary)
-   * across different lifecycle stages (preparing, ready, completed, new)
-   */
-  private getSeedOrders(): OrderStorageSchema {
-    const now = Date.now();
-    const primaryBizId = 'biz_user_primary';
-    const primaryLocId = 'loc_main';
-
-    const sampleOrders: Order[] = [
-      {
-        id: 'ord_1041_c9f1',
-        orderNumber: '#1041',
-        businessId: primaryBizId,
-        businessName: 'Good Day Specialty Coffee',
-        businessSlug: 'good-day-specialty-coffee',
-        locationId: primaryLocId,
-        locationName: 'Main Counter (Downtown)',
-        orderType: 'dine_in',
-        tableId: 'tbl_main_02',
-        tableName: 'Table 02',
-        customerName: 'Marcus T.',
-        items: [
-          {
-            itemId: 'item_c1',
-            name: 'Cappuccino',
-            basePrice: 425,
-            unitPrice: 485,
-            quantity: 2,
-            lineTotal: 970,
-            variants: [
-              {
-                id: 'opt_s_large',
-                groupName: 'Cup Size',
-                name: 'Large (16 oz)',
-                priceAdjustment: 70,
-              },
-            ],
-            modifiers: [
-              {
-                id: 'mod_oat',
-                name: 'Oat Milk (Barista Blend)',
-                priceAdjustment: 60,
-              },
-            ],
-            specialInstructions: 'Extra hot micro-foam',
-            dietary: ['veg'],
-          },
-          {
-            itemId: 'item_c6',
-            name: 'Butter Almond Croissant',
-            basePrice: 395,
-            unitPrice: 395,
-            quantity: 1,
-            lineTotal: 395,
-            variants: [],
-            modifiers: [
-              {
-                id: 'mod_warm',
-                name: 'Warmed in Oven',
-                priceAdjustment: 0,
-              },
-            ],
-            dietary: ['veg'],
-          },
-        ],
-        subtotal: 1365,
-        total: 1365,
-        currency: 'USD',
-        currencySymbol: '$',
-        status: 'preparing',
-        statusHistory: [
-          {
-            status: 'new',
-            timestamp: new Date(now - 14 * 60000).toISOString(),
-            actor: 'Customer (Table 02)',
-            note: 'Order submitted via QR menu',
-          },
-          {
-            status: 'accepted',
-            timestamp: new Date(now - 12 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-            note: 'Accepted by Barista Station',
-          },
-          {
-            status: 'preparing',
-            timestamp: new Date(now - 8 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-            note: 'Steaming oat milk & warming pastry',
-          },
-        ],
-        paymentStatus: 'paid_at_counter',
-        estimatedWaitMinutes: 6,
-        trackingToken: 'trk_goodday_1041_c9f1',
-        createdAt: new Date(now - 14 * 60000).toISOString(),
-        updatedAt: new Date(now - 8 * 60000).toISOString(),
-      },
-      {
-        id: 'ord_1042_a2e8',
-        orderNumber: '#1042',
-        businessId: primaryBizId,
-        businessName: 'Good Day Specialty Coffee',
-        businessSlug: 'good-day-specialty-coffee',
-        locationId: primaryLocId,
-        locationName: 'Main Counter (Downtown)',
-        orderType: 'dine_in',
-        tableId: 'tbl_main_01',
-        tableName: 'Table 01',
-        customerName: 'Sarah M.',
-        items: [
-          {
-            itemId: 'item_c2',
-            name: 'Vanilla Bean Latte',
-            basePrice: 475,
-            unitPrice: 535,
-            quantity: 1,
-            lineTotal: 535,
-            variants: [
-              {
-                id: 'opt_l_reg',
-                groupName: 'Size',
-                name: 'Regular (12 oz)',
-                priceAdjustment: 0,
-              },
-            ],
-            modifiers: [
-              {
-                id: 'mod_l_oat',
-                name: 'Oat Milk',
-                priceAdjustment: 60,
-              },
-            ],
-            dietary: ['veg'],
-          },
-        ],
-        subtotal: 535,
-        total: 535,
-        currency: 'USD',
-        currencySymbol: '$',
-        status: 'ready',
-        statusHistory: [
-          {
-            status: 'new',
-            timestamp: new Date(now - 20 * 60000).toISOString(),
-            actor: 'Customer (Table 01)',
-          },
-          {
-            status: 'accepted',
-            timestamp: new Date(now - 18 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-          },
-          {
-            status: 'preparing',
-            timestamp: new Date(now - 15 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-          },
-          {
-            status: 'ready',
-            timestamp: new Date(now - 3 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-            note: 'Order plated & placed on pickup counter',
-          },
-        ],
-        paymentStatus: 'paid_at_counter',
-        estimatedWaitMinutes: 5,
-        trackingToken: 'trk_goodday_1042_a2e8',
-        createdAt: new Date(now - 20 * 60000).toISOString(),
-        updatedAt: new Date(now - 3 * 60000).toISOString(),
-      },
-      {
-        id: 'ord_1040_f88b',
-        orderNumber: '#1040',
-        businessId: primaryBizId,
-        businessName: 'Good Day Specialty Coffee',
-        businessSlug: 'good-day-specialty-coffee',
-        locationId: primaryLocId,
-        locationName: 'Main Counter (Downtown)',
-        orderType: 'pickup',
-        pickupLabel: 'Counter Pickup Station',
-        customerName: 'David K.',
-        items: [
-          {
-            itemId: 'item_c4',
-            name: 'Nitro Cold Brew',
-            basePrice: 495,
-            unitPrice: 570,
-            quantity: 1,
-            lineTotal: 570,
-            variants: [],
-            modifiers: [
-              {
-                id: 'mod_sweet_cream',
-                name: 'House Vanilla Sweet Cream',
-                priceAdjustment: 75,
-              },
-            ],
-            specialInstructions: 'No ice please',
-            dietary: ['vegan', 'gluten_free'],
-          },
-        ],
-        subtotal: 570,
-        total: 570,
-        currency: 'USD',
-        currencySymbol: '$',
-        status: 'completed',
-        statusHistory: [
-          {
-            status: 'new',
-            timestamp: new Date(now - 45 * 60000).toISOString(),
-            actor: 'Customer (Pickup)',
-          },
-          {
-            status: 'accepted',
-            timestamp: new Date(now - 42 * 60000).toISOString(),
-            actor: 'Staff',
-          },
-          {
-            status: 'preparing',
-            timestamp: new Date(now - 38 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-          },
-          {
-            status: 'ready',
-            timestamp: new Date(now - 30 * 60000).toISOString(),
-            actor: 'Kitchen Staff',
-          },
-          {
-            status: 'completed',
-            timestamp: new Date(now - 15 * 60000).toISOString(),
-            actor: 'Counter Staff',
-            note: 'Handed off to guest',
-          },
-        ],
-        paymentStatus: 'paid',
-        trackingToken: 'trk_goodday_1040_f88b',
-        createdAt: new Date(now - 45 * 60000).toISOString(),
-        updatedAt: new Date(now - 15 * 60000).toISOString(),
-      },
-    ];
-
-    return {
-      [primaryBizId]: sampleOrders,
-      biz_salon_demo: [], // Barbershop has no cafe orders (isolated)
-      biz_retail_demo: [],
-    };
+  /** Visitor tracking page: start watching one order by its tracking token. */
+  watchOrder(token: string): boolean {
+    const parsed = parseOrderTrackingToken(token);
+    if (!parsed || !bizStore.getMode(parsed.businessId)) return false;
+    bizStore.pinDoc(parsed.businessId, 'orders', parsed.orderId);
+    return true;
   }
+
 
   // =========================================================================
   // QUERY METHODS
@@ -385,6 +156,15 @@ class OrderService {
       .filter((o) => o.status === 'completed')
       .reduce((sum, o) => sum + o.total, 0);
 
+    // Average minutes from order placed to "ready", over today's orders that reached ready.
+    const waits = ordersToday
+      .map((o) => {
+        const readyAt = o.statusHistory.find((h) => h.status === 'ready')?.timestamp;
+        return readyAt ? (new Date(readyAt).getTime() - new Date(o.createdAt).getTime()) / 60000 : null;
+      })
+      .filter((m): m is number => m !== null && m >= 0);
+    const averageWaitMinutes = waits.length ? Math.round(waits.reduce((s, m) => s + m, 0) / waits.length) : 0;
+
     return {
       ordersToday: ordersToday.length,
       newOrders,
@@ -393,7 +173,7 @@ class OrderService {
       completedOrders,
       cancelledOrders,
       totalRevenue,
-      averageWaitMinutes: 7,
+      averageWaitMinutes,
     };
   }
 
@@ -420,7 +200,7 @@ class OrderService {
     }
 
     // 2. Validate Business
-    const business = businessService.getAllBusinesses().find((b) => b.id === input.businessId);
+    const business = businessService.getBusinessById(input.businessId);
     if (!business) {
       return { success: false, error: 'Business establishment not found.' };
     }
@@ -517,25 +297,12 @@ class OrderService {
       });
     }
 
-    // 6. Generate Sequential Order Number & Cryptographically Unpredictable Tracking Token
+    // 6. Short counter code for staff + unguessable document id for tracking
     const storageData = this.loadData();
-    const existingOrders = storageData[input.businessId] || [];
-    const nextSeq = 1040 + existingOrders.length + 1;
-    const orderNumber = `#${nextSeq}`;
-    
-    // Cryptographically strong random token suffix
-    let randSuffix: string;
-    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-      const bytes = new Uint8Array(8);
-      crypto.getRandomValues(bytes);
-      randSuffix = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
-    } else {
-      randSuffix = Math.random().toString(36).substring(2, 10);
-    }
-
-    const orderId = `ord_${nextSeq}_${randSuffix.slice(0, 4)}`;
-    const businessSlug = generateBusinessSlug(business.name);
-    const trackingToken = `trk_${businessSlug}_${nextSeq}_${randSuffix}`;
+    const orderNumber = `#${shortCode(4)}`;
+    const orderId = `${newId()}${newId()}`;
+    const businessSlug = business.slug;
+    const trackingToken = `${input.businessId}.${orderId}`;
 
     const locationId = input.locationId || table?.locationId || business.locations[0]?.id || 'loc_main';
     const location = business.locations.find((l) => l.id === locationId) || business.locations[0];

@@ -11,7 +11,7 @@ import type {
   FeedbackConfig,
   TeamRole,
   TeamPermission,
-  TeamMember,
+
   GrowthAnalyticsSummary,
 } from '../types/growth';
 import type { CustomerRecord } from '../types/loyalty';
@@ -24,7 +24,8 @@ import { carWashService } from './carWashService';
 import { genericService } from './genericService';
 import { businessService } from './businessService';
 
-const STORAGE_KEY = 'loyalty_mock_growth_v1';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId } from '../lib/ids';
 
 export const ROLE_PERMISSIONS: Record<TeamRole, TeamPermission[]> = {
   owner: [
@@ -59,7 +60,7 @@ interface BusinessGrowthStore {
   campaignRuns: CampaignRunRecord[];
   feedbacks: CustomerFeedback[];
   feedbackConfig: FeedbackConfig;
-  teamMembers: TeamMember[];
+
 }
 
 export interface CreateOfferInput {
@@ -106,256 +107,93 @@ export interface InviteTeamMemberInput {
   assignedLocationId?: string;
 }
 
+/** Built-in audience segments (computed live from customer records). */
+function systemSegments(businessId: string): CustomerSegment[] {
+  const createdAt = '2026-01-01T00:00:00.000Z';
+  return [
+    {
+      id: 'seg_all',
+      businessId,
+      name: 'All Registered Customers',
+      description: 'Every customer profile registered in your CRM directory.',
+      criteriaType: 'all',
+      isSystemDefault: true,
+      createdAt,
+    },
+    {
+      id: 'seg_recent',
+      businessId,
+      name: 'Recently Active (Past 14 Days)',
+      description: 'Customers who visited within the last 2 weeks.',
+      criteriaType: 'recent_active',
+      inactivityDays: 14,
+      isSystemDefault: true,
+      createdAt,
+    },
+    {
+      id: 'seg_dormant',
+      businessId,
+      name: 'Dormant Guests (30+ Days)',
+      description: 'Registered customers who have not visited in the past month.',
+      criteriaType: 'inactive_dormant',
+      inactivityDays: 30,
+      isSystemDefault: true,
+      createdAt,
+    },
+  ];
+}
+
+const newestBy = (field: string) => (a: Record<string, unknown>, b: Record<string, unknown>) =>
+  String(b[field] || '').localeCompare(String(a[field] || ''));
+
+/**
+ * Offers, redemptions, segments, campaign records and customer feedback
+ * (members only), persisted per business:
+ *   businesses/{id}/offers, offerRedemptions, segments, campaignRuns, feedback
+ *   businesses/{id}/config/feedbackConfig
+ */
+export const GROWTH_SPEC: ModuleSpec<BusinessGrowthStore> = {
+  name: 'growth',
+  arrays: [
+    { key: 'offers', collection: 'offers', sort: newestBy('createdAt') },
+    { key: 'redemptions', collection: 'offerRedemptions', sort: newestBy('redeemedAt') },
+    { key: 'segments', collection: 'segments' },
+    { key: 'campaignRuns', collection: 'campaignRuns', sort: newestBy('simulatedAt') },
+    { key: 'feedbacks', collection: 'feedback', sort: newestBy('createdAt') },
+  ],
+  singles: [{ key: 'feedbackConfig', docId: 'feedbackConfig' }],
+  empty: (businessId) => ({
+    offers: [],
+    redemptions: [],
+    segments: [],
+    campaignRuns: [],
+    feedbacks: [],
+    feedbackConfig: {
+      businessId,
+      enabled: true,
+      promptMessage: 'How was your experience today?',
+    },
+  }),
+};
+bizStore.register(GROWTH_SPEC);
+
 class GrowthService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
   constructor() {
-    this.initSeedData();
-  }
-
-  private initSeedData() {
-    const data = this.loadData();
-    const primaryBizId = 'biz_user_primary';
-
-    if (data[primaryBizId]) return;
-
-    const now = new Date().toISOString();
-    const futureDateStr = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-    const pastDateStr = new Date(Date.now() - 30 * 86400000).toISOString().split('T')[0];
-
-    // Seed for primary business (Good Day Specialty Coffee)
-    data[primaryBizId] = {
-      offers: [
-        {
-          id: 'off_welcome_15',
-          businessId: primaryBizId,
-          name: 'Spring Welcome Perk',
-          description: '15% off any handcrafted espresso beverage or specialty cold brew.',
-          code: 'SPRING15',
-          offerType: 'percentage',
-          discountValue: 15,
-          minimumSpendMinor: 400, // $4.00 min spend
-          startDate: pastDateStr,
-          endDate: futureDateStr,
-          perCustomerLimit: 1,
-          totalRedemptionLimit: 100,
-          redemptionCount: 4,
-          status: 'active',
-          createdAt: now,
-          updatedAt: now,
-        },
-        {
-          id: 'off_winback_3',
-          businessId: primaryBizId,
-          name: 'We Miss You! Return Reward',
-          description: '$3.00 off your next handcrafted brew when you return this week.',
-          code: 'COMEBACK3',
-          offerType: 'winback',
-          discountValue: 300, // $3.00 in cents
-          minimumSpendMinor: 600,
-          startDate: pastDateStr,
-          endDate: futureDateStr,
-          perCustomerLimit: 1,
-          totalRedemptionLimit: 50,
-          redemptionCount: 1,
-          status: 'active',
-          createdAt: now,
-          updatedAt: now,
-        },
-        {
-          id: 'off_loyalty_boost',
-          businessId: primaryBizId,
-          name: 'Double Stamp Thursday',
-          description: 'Earn 2 loyalty visit stamps on all pour-over coffee orders.',
-          code: 'DOUBLETHURS',
-          offerType: 'loyalty_bonus',
-          discountValue: 2,
-          startDate: pastDateStr,
-          endDate: futureDateStr,
-          perCustomerLimit: 1,
-          redemptionCount: 2,
-          status: 'active',
-          createdAt: now,
-          updatedAt: now,
-        },
-      ],
-      redemptions: [
-        {
-          id: 'red_seed_01',
-          businessId: primaryBizId,
-          offerId: 'off_welcome_15',
-          offerCode: 'SPRING15',
-          offerName: 'Spring Welcome Perk',
-          customerId: 'cust_c1',
-          customerName: 'Sarah Miller',
-          amountSavedMinor: 120, // $1.20
-          redeemedAt: new Date(Date.now() - 3 * 3600000).toISOString(),
-          orderOrTransactionId: '#1041',
-        },
-      ],
-      segments: [
-        {
-          id: 'seg_all',
-          businessId: primaryBizId,
-          name: 'All Registered Customers',
-          description: 'Every customer profile registered in your CRM directory.',
-          criteriaType: 'all',
-          isSystemDefault: true,
-          createdAt: now,
-        },
-        {
-          id: 'seg_recent',
-          businessId: primaryBizId,
-          name: 'Recently Active (Past 14 Days)',
-          description: 'Engaged patrons who visited or ordered within the last 2 weeks.',
-          criteriaType: 'recent_active',
-          inactivityDays: 14,
-          isSystemDefault: true,
-          createdAt: now,
-        },
-        {
-          id: 'seg_dormant_30',
-          businessId: primaryBizId,
-          name: 'Dormant Guests (30+ Days)',
-          description: 'Registered customers who have not visited in the past month.',
-          criteriaType: 'inactive_dormant',
-          inactivityDays: 30,
-          isSystemDefault: true,
-          createdAt: now,
-        },
-        {
-          id: 'seg_repeat',
-          businessId: primaryBizId,
-          name: 'Loyal Repeat Guests (3+ Visits)',
-          description: 'High-frequency patrons with 3 or more recorded visits.',
-          criteriaType: 'repeat_loyal',
-          minVisits: 3,
-          isSystemDefault: true,
-          createdAt: now,
-        },
-        {
-          id: 'seg_consent_email',
-          businessId: primaryBizId,
-          name: 'Email Marketing Consented',
-          description: 'Patrons who have explicitly opted in to receive email promotions.',
-          criteriaType: 'consent_email',
-          requiresEmailConsent: true,
-          isSystemDefault: true,
-          createdAt: now,
-        },
-      ],
-      campaignRuns: [
-        {
-          id: 'cmp_run_seed_01',
-          businessId: primaryBizId,
-          name: 'Autumn Dormant Guest Outreach',
-          campaignType: 'win_back',
-          channel: 'email',
-          offerId: 'off_winback_3',
-          offerName: 'We Miss You! Return Reward',
-          segmentId: 'seg_dormant_30',
-          segmentName: 'Dormant Guests (30+ Days)',
-          inactivityThresholdDays: 30,
-          targetAudienceCount: 1,
-          simulatedSentCount: 1,
-          simulatedAt: new Date(Date.now() - 48 * 3600000).toISOString(),
-          status: 'simulated',
-          simulationNotice: 'Simulated Campaign Run — No real email was transmitted.',
-        },
-      ],
-      feedbacks: [
-        {
-          id: 'fb_seed_01',
-          businessId: primaryBizId,
-          locationId: 'loc_main',
-          customerId: 'cust_c1',
-          customerName: 'Sarah Miller',
-          customerEmail: 'sarah.m@example.com',
-          rating: 5,
-          comment: 'The oat milk cortado is consistently top-tier and the barista knew my order immediately!',
-          serviceType: 'cafe',
-          referenceId: '#1041',
-          status: 'reviewed',
-          createdAt: new Date(Date.now() - 4 * 3600000).toISOString(),
-        },
-        {
-          id: 'fb_seed_02',
-          businessId: primaryBizId,
-          locationId: 'loc_main',
-          customerId: 'cust_c2',
-          customerName: 'David Kim',
-          customerEmail: 'david.kim@example.com',
-          rating: 4,
-          comment: 'Fast table ordering via QR standee. Loved the pistachio croissant, just wished it was warmed up a bit more.',
-          serviceType: 'cafe',
-          referenceId: '#1042',
-          status: 'new',
-          createdAt: new Date(Date.now() - 24 * 3600000).toISOString(),
-        },
-      ],
-      feedbackConfig: {
-        businessId: primaryBizId,
-        enabled: true,
-        publicReviewUrl: 'https://maps.google.com/?cid=10492817291',
-        promptMessage: 'How was your coffee & service today? Let us know!',
-      },
-      teamMembers: [
-        {
-          id: 'tm_owner',
-          businessId: primaryBizId,
-          name: 'Demo Merchant (You)',
-          email: 'merchant@loyaltydigitalqr.com',
-          role: 'owner',
-          status: 'active',
-          lastActiveAt: now,
-          createdAt: pastDateStr,
-        },
-        {
-          id: 'tm_mgr',
-          businessId: primaryBizId,
-          name: 'Alex Chen',
-          email: 'alex.chen@gooddaycoffee.com',
-          role: 'manager',
-          assignedLocationId: 'loc_main',
-          status: 'active',
-          lastActiveAt: new Date(Date.now() - 3600000).toISOString(),
-          createdAt: pastDateStr,
-        },
-        {
-          id: 'tm_staff',
-          businessId: primaryBizId,
-          name: 'Jamie Rivera',
-          email: 'jamie.r@gooddaycoffee.com',
-          role: 'staff',
-          assignedLocationId: 'loc_main',
-          status: 'active',
-          lastActiveAt: new Date(Date.now() - 7200000).toISOString(),
-          createdAt: pastDateStr,
-        },
-      ],
-    };
-
-    this.saveData(data);
+    bizStore.subscribe(() => this.notify());
   }
 
   private loadData(): Record<string, BusinessGrowthStore> {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {
-      console.warn('Failed to parse growth store from localStorage:', e);
-    }
-    return {};
+    const all = bizStore.getAll(GROWTH_SPEC);
+    for (const [bizId, store] of Object.entries(all)) this.withSystemSegments(bizId, store);
+    return all;
   }
 
   private saveData(data: Record<string, BusinessGrowthStore>) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      this.notify();
-    } catch (e) {
-      console.warn('Failed to save growth store:', e);
-    }
+    bizStore.saveAll(GROWTH_SPEC, data);
+    this.notify();
   }
 
   public subscribe(cb: () => void): () => void {
@@ -369,67 +207,14 @@ class GrowthService {
     this.subscribers.forEach((s) => s());
   }
 
+  private withSystemSegments(businessId: string, store: BusinessGrowthStore): BusinessGrowthStore {
+    const missing = systemSegments(businessId).filter((s) => !store.segments.some((x) => x.id === s.id));
+    if (missing.length) store.segments.unshift(...missing);
+    return store;
+  }
+
   private getStore(businessId: string): BusinessGrowthStore {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      const now = new Date().toISOString();
-      data[businessId] = {
-        offers: [],
-        redemptions: [],
-        segments: [
-          {
-            id: `seg_${Date.now()}_all`,
-            businessId,
-            name: 'All Registered Customers',
-            description: 'Every customer profile registered in your CRM directory.',
-            criteriaType: 'all',
-            isSystemDefault: true,
-            createdAt: now,
-          },
-          {
-            id: `seg_${Date.now()}_recent`,
-            businessId,
-            name: 'Recently Active (Past 14 Days)',
-            description: 'Engaged patrons who visited or ordered within the last 2 weeks.',
-            criteriaType: 'recent_active',
-            inactivityDays: 14,
-            isSystemDefault: true,
-            createdAt: now,
-          },
-          {
-            id: `seg_${Date.now()}_dormant`,
-            businessId,
-            name: 'Dormant Guests (30+ Days)',
-            description: 'Registered customers who have not visited in the past month.',
-            criteriaType: 'inactive_dormant',
-            inactivityDays: 30,
-            isSystemDefault: true,
-            createdAt: now,
-          },
-        ],
-        campaignRuns: [],
-        feedbacks: [],
-        feedbackConfig: {
-          businessId,
-          enabled: true,
-          promptMessage: 'How was your experience today?',
-        },
-        teamMembers: [
-          {
-            id: `tm_${Date.now()}_owner`,
-            businessId,
-            name: 'Demo Owner',
-            email: 'owner@business.com',
-            role: 'owner',
-            status: 'active',
-            lastActiveAt: now,
-            createdAt: now,
-          },
-        ],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return this.withSystemSegments(businessId, bizStore.getBundle(GROWTH_SPEC, businessId));
   }
 
   // =========================================================================
@@ -476,7 +261,7 @@ class GrowthService {
 
     const now = new Date().toISOString();
     const newOffer: Offer = {
-      id: `off_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `off_${newId()}`,
       businessId: input.businessId,
       locationId: input.locationId || 'all',
       name: input.name.trim(),
@@ -598,7 +383,7 @@ class GrowthService {
       const amountSaved = offer.offerType === 'fixed_amount' ? offer.discountValue : 350; // default estimated $3.50 savings
 
       const redemption: OfferRedemption = {
-        id: `red_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        id: `red_${newId()}`,
         businessId,
         offerId: offer.id,
         offerCode: offer.code,
@@ -644,7 +429,7 @@ class GrowthService {
     const store = data[businessId] || this.getStore(businessId);
 
     const newSegment: CustomerSegment = {
-      id: `seg_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `seg_${newId()}`,
       businessId,
       ...segment,
       createdAt: new Date().toISOString(),
@@ -760,7 +545,7 @@ class GrowthService {
     const now = new Date().toISOString();
 
     const campaignRun: CampaignRunRecord = {
-      id: `cmp_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `cmp_${newId()}`,
       businessId,
       name: config.name.trim(),
       campaignType: 'win_back',
@@ -813,7 +598,7 @@ class GrowthService {
     const store = data[input.businessId] || this.getStore(input.businessId);
 
     const newFeedback: CustomerFeedback = {
-      id: `fb_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `fb_${newId()}`,
       businessId: input.businessId,
       locationId: input.locationId,
       customerId: input.customerId,
@@ -858,64 +643,8 @@ class GrowthService {
   }
 
   // =========================================================================
-  // TEAM ROLES & SIMULATED PERMISSIONS
+  // TEAM ROLE PERMISSIONS (membership itself lives on the business document)
   // =========================================================================
-
-  getTeamMembers(businessId: string): TeamMember[] {
-    return this.getStore(businessId).teamMembers;
-  }
-
-  inviteTeamMember(input: InviteTeamMemberInput): { success: boolean; member?: TeamMember; error?: string } {
-    if (!input.name.trim() || !input.email.trim()) {
-      return { success: false, error: 'Name and email are required.' };
-    }
-
-    const data = this.loadData();
-    const store = data[input.businessId] || this.getStore(input.businessId);
-
-    const newMember: TeamMember = {
-      id: `tm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      businessId: input.businessId,
-      name: input.name.trim(),
-      email: input.email.trim().toLowerCase(),
-      role: input.role,
-      assignedLocationId: input.assignedLocationId,
-      status: 'invited_simulated',
-      createdAt: new Date().toISOString(),
-    };
-
-    store.teamMembers.push(newMember);
-    data[input.businessId] = store;
-    this.saveData(data);
-
-    return { success: true, member: newMember };
-  }
-
-  updateTeamMemberRole(businessId: string, memberId: string, role: TeamRole): boolean {
-    const data = this.loadData();
-    const store = data[businessId] || this.getStore(businessId);
-    const m = store.teamMembers.find((tm) => tm.id === memberId);
-    if (m) {
-      m.role = role;
-      data[businessId] = store;
-      this.saveData(data);
-      return true;
-    }
-    return false;
-  }
-
-  removeTeamMember(businessId: string, memberId: string): boolean {
-    const data = this.loadData();
-    const store = data[businessId] || this.getStore(businessId);
-    const initial = store.teamMembers.length;
-    store.teamMembers = store.teamMembers.filter((m) => m.id !== memberId);
-    if (store.teamMembers.length !== initial) {
-      data[businessId] = store;
-      this.saveData(data);
-      return true;
-    }
-    return false;
-  }
 
   hasPermission(role: TeamRole, permission: TeamPermission): boolean {
     return ROLE_PERMISSIONS[role]?.includes(permission) ?? false;

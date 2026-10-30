@@ -3,6 +3,8 @@
  * Ensures no local IP addresses (127.0.0.1, localhost) are hardcoded into production-ready QR codes.
  */
 
+import { getPublicAppOrigin } from '../lib/firebase';
+
 export type QrEnvironmentMode = 'production' | 'development';
 
 export const CONFIG = {
@@ -55,7 +57,7 @@ export function getProductionDomain(): string {
       return custom.trim().replace(/\/+$/, '');
     }
   }
-  return CONFIG.DEFAULT_PUBLIC_DOMAIN;
+  return getPublicAppOrigin() || CONFIG.DEFAULT_PUBLIC_DOMAIN;
 }
 
 /**

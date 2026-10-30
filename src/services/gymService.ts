@@ -9,10 +9,11 @@ import type {
   RecordCheckInInput,
   CreateClassInput,
 } from '../types/gym';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId } from '../lib/ids';
+import { actorLabel } from '../lib/actor';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
-
-const STORAGE_KEY = 'loyalty_mock_gym_v1';
 
 interface GymBundle {
   plans: GymMembershipPlan[];
@@ -21,259 +22,48 @@ interface GymBundle {
   classes: GymClass[];
 }
 
+/**
+ * Gym plans, members, check-ins and classes (members only), persisted per business:
+ *   businesses/{id}/gymPlans, gymMembers, gymCheckIns, gymClasses
+ */
+export const GYM_SPEC: ModuleSpec<GymBundle> = {
+  name: 'gym',
+  arrays: [
+    { key: 'plans', collection: 'gymPlans' },
+    { key: 'members', collection: 'gymMembers' },
+    {
+      key: 'checkIns',
+      collection: 'gymCheckIns',
+      recent: { orderBy: 'timestamp', max: 1000 },
+      sort: (a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')),
+    },
+    { key: 'classes', collection: 'gymClasses' },
+  ],
+  empty: () => ({ plans: [], members: [], checkIns: [], classes: [] }),
+};
+bizStore.register(GYM_SPEC);
+
 class GymService {
   private listeners: (() => void)[] = [];
   private inFlightOperations = new Set<string>();
 
+  constructor() {
+    bizStore.subscribe(() => this.notifyListeners());
+  }
+
   private loadData(): Record<string, GymBundle> {
-    if (typeof window === 'undefined') return this.getInitialData();
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const init = this.getInitialData();
-        this.saveData(init);
-        return init;
-      }
-      return JSON.parse(raw);
-    } catch {
-      return this.getInitialData();
-    }
+    return bizStore.getAll(GYM_SPEC);
   }
 
   private saveData(data: Record<string, GymBundle>): void {
-    if (typeof window === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      this.notifyListeners();
-    } catch (e) {
-      console.warn('Failed to save gym store to localStorage:', e);
-    }
-  }
-
-  private getInitialData(): Record<string, GymBundle> {
-    const bizId = 'biz_gym_demo';
-    const now = new Date().toISOString();
-    const today = new Date();
-
-    // Seeded Plans
-    const plans: GymMembershipPlan[] = [
-      {
-        id: 'plan_monthly',
-        businessId: bizId,
-        name: 'Monthly Unlimited Access',
-        description: 'Full cardio, strength floor, locker rooms, and sauna. 30 days recurring membership.',
-        planType: 'recurring_monthly',
-        durationDays: 30,
-        price: 6500, // $65.00
-        currency: 'USD',
-        hasClassAccess: true,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'plan_punch',
-        businessId: bizId,
-        name: '10-Visit Punch Pass',
-        description: 'Prepaid 10 gym floor entries with 6-month validity. Great for traveling fitness regulars.',
-        planType: 'visit_pass',
-        includedVisits: 10,
-        price: 9000, // $90.00
-        currency: 'USD',
-        hasClassAccess: false,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'plan_class_pack',
-        businessId: bizId,
-        name: 'Studio Class 8-Pack',
-        description: 'Admission to any 8 instructor-led boutique classes (Yoga, HIIT, Spin, Strength).',
-        planType: 'class_pack',
-        includedVisits: 8,
-        price: 12000, // $120.00
-        currency: 'USD',
-        hasClassAccess: true,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'plan_annual',
-        businessId: bizId,
-        name: 'Annual VIP All-Access',
-        description: 'Full facility and all-studio class access for 365 days with guest passes included.',
-        planType: 'recurring_annual',
-        durationDays: 365,
-        price: 65000, // $650.00
-        currency: 'USD',
-        hasClassAccess: true,
-        isActive: true,
-        createdAt: now,
-      },
-    ];
-
-    // Seeded Members
-    const members: GymMemberRecord[] = [
-      {
-        id: 'mem_sarah',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        customerId: 'cust_sarah_01',
-        customerName: 'Sarah Miller',
-        customerEmail: 'sarah.m@example.com',
-        customerPhone: '+1 (555) 234-5678',
-        planId: 'plan_monthly',
-        planName: 'Monthly Unlimited Access',
-        planType: 'recurring_monthly',
-        startDate: new Date(today.getTime() - 86400000 * 10).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 20).toISOString().split('T')[0],
-        status: 'active',
-        lastCheckInAt: new Date(today.getTime() - 86400000 * 1).toISOString(),
-        createdAt: now,
-      },
-      {
-        id: 'mem_david',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        customerId: 'cust_david_02',
-        customerName: 'David Kim',
-        customerEmail: 'david.k@example.com',
-        customerPhone: '+1 (555) 567-8901',
-        planId: 'plan_punch',
-        planName: '10-Visit Punch Pass',
-        planType: 'visit_pass',
-        startDate: new Date(today.getTime() - 86400000 * 14).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 160).toISOString().split('T')[0],
-        totalVisitsAllowed: 10,
-        remainingVisits: 7,
-        status: 'active',
-        lastCheckInAt: new Date(today.getTime() - 86400000 * 2).toISOString(),
-        createdAt: now,
-      },
-      {
-        id: 'mem_chloe',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        customerId: 'cust_chloe_03',
-        customerName: 'Chloe Bennett',
-        customerEmail: 'chloe.b@example.com',
-        customerPhone: '+1 (555) 456-7890',
-        planId: 'plan_class_pack',
-        planName: 'Studio Class 8-Pack',
-        planType: 'class_pack',
-        startDate: new Date(today.getTime() - 86400000 * 5).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() + 86400000 * 90).toISOString().split('T')[0],
-        totalVisitsAllowed: 8,
-        remainingVisits: 6,
-        status: 'active',
-        lastCheckInAt: new Date(today.getTime() - 86400000 * 3).toISOString(),
-        createdAt: now,
-      },
-      {
-        id: 'mem_marcus',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        customerId: 'cust_marcus_09',
-        customerName: 'Marcus Lee',
-        customerEmail: 'marcus.l@example.com',
-        planId: 'plan_monthly',
-        planName: 'Monthly Unlimited Access',
-        planType: 'recurring_monthly',
-        startDate: new Date(today.getTime() - 86400000 * 45).toISOString().split('T')[0],
-        endDate: new Date(today.getTime() - 86400000 * 15).toISOString().split('T')[0],
-        status: 'expired',
-        lastCheckInAt: new Date(today.getTime() - 86400000 * 16).toISOString(),
-        createdAt: now,
-      },
-    ];
-
-    // Seeded Classes
-    const classes: GymClass[] = [
-      {
-        id: 'cls_hiit',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        name: 'HIIT Power Surge',
-        description: 'High-intensity interval training focusing on functional athleticism and endurance.',
-        instructorName: 'Coach Alex',
-        room: 'Studio A (Main Turf)',
-        startTime: '08:00 AM',
-        endTime: '09:00 AM',
-        dayOfWeek: today.getDay(),
-        capacity: 12,
-        enrolledMemberIds: ['mem_sarah'],
-        enrolledMembers: [
-          { memberId: 'mem_sarah', memberName: 'Sarah Miller', enrolledAt: now },
-        ],
-        status: 'published',
-        createdAt: now,
-      },
-      {
-        id: 'cls_yoga',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        name: 'Sunset Vinyasa Yoga',
-        description: 'Dynamic flow synchronizing breath with movement. Deep hip and shoulder openers.',
-        instructorName: 'Maya Lin',
-        room: 'Zen Studio 2',
-        startTime: '06:30 PM',
-        endTime: '07:30 PM',
-        dayOfWeek: today.getDay(),
-        capacity: 15,
-        enrolledMemberIds: ['mem_chloe'],
-        enrolledMembers: [
-          { memberId: 'mem_chloe', memberName: 'Chloe Bennett', enrolledAt: now },
-        ],
-        status: 'published',
-        createdAt: now,
-      },
-    ];
-
-    // Seeded Check-In
-    const checkIns: GymCheckInEvent[] = [
-      {
-        id: 'chk_seed_101',
-        businessId: bizId,
-        locationId: 'loc_gym_main',
-        locationName: 'Downtown Training Center',
-        memberId: 'mem_sarah',
-        customerId: 'cust_sarah_01',
-        memberName: 'Sarah Miller',
-        membershipId: 'mem_sarah',
-        planName: 'Monthly Unlimited Access',
-        timestamp: new Date(today.getTime() - 3600000 * 2).toISOString(),
-        staffActor: 'Front Desk',
-        checkInSource: 'front_desk',
-        loyaltyIssued: true,
-        idempotencyKey: 'chk_seed_sarah_today',
-      },
-    ];
-
-    return {
-      [bizId]: {
-        plans,
-        members,
-        checkIns,
-        classes,
-      },
-      biz_user_primary: { plans: [], members: [], checkIns: [], classes: [] },
-      biz_salon_demo: { plans: [], members: [], checkIns: [], classes: [] },
-      biz_retail_demo: { plans: [], members: [], checkIns: [], classes: [] },
-    };
+    bizStore.saveAll(GYM_SPEC, data);
+    this.notifyListeners();
   }
 
   private getBundle(businessId: string): GymBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = {
-        plans: [],
-        members: [],
-        checkIns: [],
-        classes: [],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return bizStore.getBundle(GYM_SPEC, businessId);
   }
+
 
   // =========================================================================
   // MEMBERSHIP PLANS
@@ -299,7 +89,7 @@ class GymService {
     const bundle = data[input.businessId] || this.getBundle(input.businessId);
 
     const newPlan: GymMembershipPlan = {
-      id: `plan_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `plan_${newId()}`,
       businessId: input.businessId,
       name: input.name.trim(),
       description: input.description.trim(),
@@ -366,7 +156,7 @@ class GymService {
       return { success: false, error: 'Membership plan not found.' };
     }
 
-    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getBusinessById(businessId);
     const locationId = input.locationId || business?.activeLocationId || 'loc_gym_main';
 
     const startDate = input.startDate || new Date().toISOString().split('T')[0];
@@ -384,7 +174,7 @@ class GymService {
     }
 
     const newMember: GymMemberRecord = {
-      id: `mem_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `mem_${newId()}`,
       businessId,
       locationId,
       customerId: input.customerId,
@@ -422,6 +212,10 @@ class GymService {
     remainingVisits?: number;
     error?: string;
   } {
+    if (input.staffPin && !businessService.verifyStaffPin(businessId, input.staffPin)) {
+      return { success: false, error: 'Invalid staff PIN.' };
+    }
+
     const member = this.getMember(businessId, input.memberId);
     if (!member) {
       return { success: false, error: 'Member record not found.' };
@@ -506,7 +300,6 @@ class GymService {
           businessId,
           customerId: member.customerId,
           locationId: member.locationId,
-          staffPin: input.staffPin || '8831',
           idempotencyKey,
         });
         loyaltyIssued = res.success;
@@ -515,7 +308,7 @@ class GymService {
       }
 
       const checkInEvent: GymCheckInEvent = {
-        id: `chk_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        id: `chk_${newId()}`,
         businessId,
         locationId: member.locationId,
         locationName: 'Downtown Training Center',
@@ -525,7 +318,7 @@ class GymService {
         membershipId: member.id,
         planName: member.planName,
         timestamp: now,
-        staffActor: input.staffPin ? `Staff PIN: ${input.staffPin}` : 'Front Desk',
+        staffActor: actorLabel('Front Desk'),
         checkInSource: input.checkInSource || 'front_desk',
         remainingVisitsAfter,
         loyaltyIssued,
@@ -570,7 +363,7 @@ class GymService {
     const bundle = data[input.businessId] || this.getBundle(input.businessId);
 
     const newClass: GymClass = {
-      id: `cls_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `cls_${newId()}`,
       businessId: input.businessId,
       locationId: input.locationId || 'loc_gym_main',
       name: input.name.trim(),

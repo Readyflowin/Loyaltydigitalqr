@@ -3,9 +3,10 @@ import type {
   GenericServiceJobEvent,
   GenericServiceMetrics,
 } from '../types/serviceBusiness';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId } from '../lib/ids';
+import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
-
-const STORAGE_KEY = 'loyalty_mock_generic_service_v1';
 
 interface GenericServiceBundle {
   services: GenericServiceItem[];
@@ -34,109 +35,40 @@ export interface RecordJobInput {
   idempotencyKey?: string;
 }
 
+/**
+ * Generic service businesses: service catalogue and job log (members only):
+ *   businesses/{id}/serviceItems, serviceJobs
+ */
+export const GENERIC_SPEC: ModuleSpec<GenericServiceBundle> = {
+  name: 'generic',
+  arrays: [
+    { key: 'services', collection: 'serviceItems' },
+    {
+      key: 'jobs',
+      collection: 'serviceJobs',
+      recent: { orderBy: 'timestamp', max: 1000 },
+      sort: (a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')),
+    },
+  ],
+  empty: () => ({ services: [], jobs: [] }),
+};
+bizStore.register(GENERIC_SPEC);
+
 class GenericService {
   private subscribers: Array<() => void> = [];
   private inFlightOperations = new Set<string>();
 
   constructor() {
-    this.initSeedData();
-  }
-
-  private initSeedData() {
-    const data = this.loadData();
-    const bizId = 'biz_service_demo';
-
-    if (data[bizId]) return;
-
-    const now = new Date().toISOString();
-    const today = new Date();
-
-    const services: GenericServiceItem[] = [
-      {
-        id: 'svc_screen_repair',
-        businessId: bizId,
-        name: 'OLED Display & Glass Replacement',
-        description: 'Complete front digitizer and panel replacement with OEM grade calibration.',
-        price: 8900, // $89.00
-        category: 'Repairs',
-        estimatedMinutes: 45,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'svc_diagnostics',
-        businessId: bizId,
-        name: 'Comprehensive Hardware Diagnostic',
-        description: 'Full motherboard, battery cycle health, logic board, and charging port audit.',
-        price: 3500, // $35.00
-        category: 'Diagnostics',
-        estimatedMinutes: 30,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'svc_battery',
-        businessId: bizId,
-        name: 'High-Capacity Battery Replacement',
-        description: 'Fresh certified cell installation with waterproof adhesive gasket re-seal.',
-        price: 5500, // $55.00
-        category: 'Repairs',
-        estimatedMinutes: 30,
-        isActive: true,
-        createdAt: now,
-      },
-      {
-        id: 'svc_data_backup',
-        businessId: bizId,
-        name: 'Secure Data Transfer & Board Recovery',
-        description: 'Bit-level recovery from corrupted sectors, NAND extraction, and cloud mirroring.',
-        price: 11500, // $115.00
-        category: 'Data Services',
-        estimatedMinutes: 60,
-        isActive: true,
-        createdAt: now,
-      },
-    ];
-
-    const jobs: GenericServiceJobEvent[] = [
-      {
-        id: 'job_seed_01',
-        businessId: bizId,
-        serviceId: 'svc_screen_repair',
-        serviceName: 'OLED Display & Glass Replacement',
-        customerId: 'cust_seed_apex_01',
-        customerName: 'Marcus Vance',
-        customerPhone: '+1 555-0819',
-        amountCharged: 8900,
-        notes: 'Repaired front glass on Pixel 8 Pro. Tested touch response 100%.',
-        timestamp: new Date(today.getTime() - 3600000 * 2).toISOString(),
-        status: 'completed',
-        loyaltyIssued: true,
-        idempotencyKey: 'job_seed_apex_01',
-      },
-    ];
-
-    data[bizId] = { services, jobs };
-    this.saveData(data);
+    bizStore.subscribe(() => this.notify());
   }
 
   private loadData(): Record<string, GenericServiceBundle> {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {
-      console.warn('Failed to parse generic service data:', e);
-    }
-    return {};
+    return bizStore.getAll(GENERIC_SPEC);
   }
 
   private saveData(data: Record<string, GenericServiceBundle>) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      this.notify();
-    } catch (e) {
-      console.warn('Failed to save generic service data:', e);
-    }
+    bizStore.saveAll(GENERIC_SPEC, data);
+    this.notify();
   }
 
   public subscribe(cb: () => void): () => void {
@@ -151,12 +83,7 @@ class GenericService {
   }
 
   private getBundle(businessId: string): GenericServiceBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = { services: [], jobs: [] };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return bizStore.getBundle(GENERIC_SPEC, businessId);
   }
 
   // =========================================================================
@@ -183,7 +110,7 @@ class GenericService {
     const bundle = data[input.businessId] || this.getBundle(input.businessId);
 
     const newService: GenericServiceItem = {
-      id: `svc_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `svc_${newId()}`,
       businessId: input.businessId,
       name: input.name.trim(),
       description: input.description.trim(),
@@ -235,6 +162,9 @@ class GenericService {
     job?: GenericServiceJobEvent;
     error?: string;
   } {
+    if (input.staffPin && !businessService.verifyStaffPin(input.businessId, input.staffPin)) {
+      return { success: false, error: 'Invalid staff PIN.' };
+    }
     if (!input.serviceId) {
       return { success: false, error: 'Service must be selected.' };
     }
@@ -278,7 +208,6 @@ class GenericService {
           businessId: input.businessId,
           customerId: input.customerId,
           locationId: 'loc_service_main',
-          staffPin: input.staffPin || '8831',
           idempotencyKey,
         });
         loyaltyIssued = res.success;
@@ -287,7 +216,7 @@ class GenericService {
       }
 
       const newJob: GenericServiceJobEvent = {
-        id: `job_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        id: `job_${newId()}`,
         businessId: input.businessId,
         serviceId: input.serviceId,
         serviceName,

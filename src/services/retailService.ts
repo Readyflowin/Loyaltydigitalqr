@@ -7,11 +7,11 @@ import type {
   RecordPurchaseInput,
   PublicCatalogProfile,
 } from '../types/retail';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId, shortCode } from '../lib/ids';
+import { actorLabel } from '../lib/actor';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
-import { generateBusinessSlug } from '../utils/qrUrlBuilder';
-
-const STORAGE_KEY = 'loyalty_mock_retail_v1';
 
 interface RetailBundle {
   categories: RetailProductCategory[];
@@ -19,229 +19,47 @@ interface RetailBundle {
   purchases: RetailPurchase[];
 }
 
+/**
+ * Retail catalogue and in-store purchases, persisted per business:
+ *   businesses/{id}/retailCategories, retailProducts (public: lookbook page)
+ *   businesses/{id}/retailPurchases (members only)
+ */
+export const RETAIL_SPEC: ModuleSpec<RetailBundle> = {
+  name: 'retail',
+  arrays: [
+    { key: 'categories', collection: 'retailCategories', public: true },
+    { key: 'products', collection: 'retailProducts', public: true },
+    {
+      key: 'purchases',
+      collection: 'retailPurchases',
+      recent: { orderBy: 'timestamp', max: 1000 },
+      sort: (a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')),
+    },
+  ],
+  empty: () => ({ categories: [], products: [], purchases: [] }),
+};
+bizStore.register(RETAIL_SPEC);
+
 class RetailService {
   private listeners: (() => void)[] = [];
   private inFlightOperations = new Set<string>();
 
+  constructor() {
+    bizStore.subscribe(() => this.notifyListeners());
+  }
+
   private loadData(): Record<string, RetailBundle> {
-    if (typeof window === 'undefined') return this.getInitialData();
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const init = this.getInitialData();
-        this.saveData(init);
-        return init;
-      }
-      return JSON.parse(raw);
-    } catch {
-      return this.getInitialData();
-    }
+    return bizStore.getAll(RETAIL_SPEC);
   }
 
   private saveData(data: Record<string, RetailBundle>): void {
-    if (typeof window === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      this.notifyListeners();
-    } catch (e) {
-      console.warn('Failed to save retail store to localStorage:', e);
-    }
-  }
-
-  private getInitialData(): Record<string, RetailBundle> {
-    const bizId = 'biz_retail_demo';
-    const now = new Date().toISOString();
-
-    const categories: RetailProductCategory[] = [
-      {
-        id: 'cat_apparel',
-        businessId: bizId,
-        name: 'Apparel & Knitwear',
-        description: 'Modern silhouettes, premium natural fabrics, and relaxed tailoring.',
-        displayOrder: 1,
-        isEnabled: true,
-        createdAt: now,
-      },
-      {
-        id: 'cat_acc',
-        businessId: bizId,
-        name: 'Accessories & Leather',
-        description: 'Handcrafted bags, scarves, and curated leather essentials.',
-        displayOrder: 2,
-        isEnabled: true,
-        createdAt: now,
-      },
-      {
-        id: 'cat_fragrance',
-        businessId: bizId,
-        name: 'Fragrance & Candles',
-        description: 'Artisanal soy wax candles, botanic scents, and home aromas.',
-        displayOrder: 3,
-        isEnabled: true,
-        createdAt: now,
-      },
-      {
-        id: 'cat_home',
-        businessId: bizId,
-        name: 'Home Decor & Gifts',
-        description: 'Unique tabletop accents, ceramics, and thoughtful host gifts.',
-        displayOrder: 4,
-        isEnabled: true,
-        createdAt: now,
-      },
-    ];
-
-    const products: RetailProduct[] = [
-      {
-        id: 'prod_silk_dress',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        name: 'Silk Blend Slip Dress',
-        description: 'Bias-cut midi slip dress crafted from fluid mulberry silk blend. Features delicate adjustable straps.',
-        categoryId: 'cat_apparel',
-        categoryName: 'Apparel & Knitwear',
-        sku: 'VV-DR-01',
-        price: 12000, // $120.00
-        currency: 'USD',
-        isAvailable: true,
-        isArchived: false,
-        variants: [
-          { id: 'v_size', name: 'Size', options: ['XS', 'S', 'M', 'L'] },
-        ],
-        createdAt: now,
-        updatedAt: now,
-      },
-      {
-        id: 'prod_linen_blazer',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        name: 'Linen Relaxed Blazer',
-        description: 'Single-breasted unstructured blazer made with 100% European flax linen. Perfect warm-weather layer.',
-        categoryId: 'cat_apparel',
-        categoryName: 'Apparel & Knitwear',
-        sku: 'VV-BL-04',
-        price: 16500, // $165.00
-        currency: 'USD',
-        isAvailable: true,
-        isArchived: false,
-        variants: [
-          { id: 'v_size', name: 'Size', options: ['S', 'M', 'L'] },
-        ],
-        createdAt: now,
-        updatedAt: now,
-      },
-      {
-        id: 'prod_leather_bag',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        name: 'Leather Saddle Crossbody Bag',
-        description: 'Vegetable-tanned saddle leather crossbody with brushed brass hardware and interior suede slip pocket.',
-        categoryId: 'cat_acc',
-        categoryName: 'Accessories & Leather',
-        sku: 'VV-BG-12',
-        price: 14500, // $145.00
-        currency: 'USD',
-        isAvailable: true,
-        isArchived: false,
-        variants: [
-          { id: 'v_color', name: 'Color', options: ['Cognac', 'Noir', 'Olive'] },
-        ],
-        createdAt: now,
-        updatedAt: now,
-      },
-      {
-        id: 'prod_amber_candle',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        name: 'Amber & Fig Soy Candle',
-        description: 'Hand-poured 10oz natural soy candle with wooden wick. Notes of ripe fig, amber woods, and cedar.',
-        categoryId: 'cat_fragrance',
-        categoryName: 'Fragrance & Candles',
-        sku: 'VV-CN-09',
-        price: 3200, // $32.00
-        currency: 'USD',
-        isAvailable: true,
-        isArchived: false,
-        variants: [],
-        createdAt: now,
-        updatedAt: now,
-      },
-      {
-        id: 'prod_cashmere_scarf',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        name: 'Cashmere Fringe Scarf',
-        description: 'Ultra-soft featherweight Mongolian cashmere with delicate eyelash fringe edges.',
-        categoryId: 'cat_acc',
-        categoryName: 'Accessories & Leather',
-        sku: 'VV-SC-03',
-        price: 8500, // $85.00
-        currency: 'USD',
-        isAvailable: true,
-        isArchived: false,
-        variants: [
-          { id: 'v_color', name: 'Color', options: ['Oatmeal', 'Charcoal', 'Blush'] },
-        ],
-        createdAt: now,
-        updatedAt: now,
-      },
-    ];
-
-    const purchases: RetailPurchase[] = [
-      {
-        id: 'tx_1001',
-        transactionNumber: '#TX-1001',
-        businessId: bizId,
-        locationId: 'loc_retail_main',
-        locationName: 'Galleria Storefront',
-        customerId: 'cust_sarah_01',
-        customerName: 'Sarah Miller',
-        customerEmail: 'sarah.m@example.com',
-        items: [
-          {
-            productId: 'prod_amber_candle',
-            productName: 'Amber & Fig Soy Candle',
-            sku: 'VV-CN-09',
-            quantity: 2,
-            unitPrice: 3200,
-            lineTotal: 6400,
-          },
-        ],
-        subtotal: 6400,
-        total: 6400,
-        currency: 'USD',
-        timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
-        staffActor: 'Counter Staff',
-        qualifiesForLoyalty: true,
-        loyaltyIssued: true,
-        idempotencyKey: 'tx_seed_1001',
-      },
-    ];
-
-    return {
-      [bizId]: {
-        categories,
-        products,
-        purchases,
-      },
-      biz_user_primary: { categories: [], products: [], purchases: [] },
-      biz_salon_demo: { categories: [], products: [], purchases: [] },
-    };
+    bizStore.saveAll(RETAIL_SPEC, data);
+    this.notifyListeners();
   }
 
   private getBundle(businessId: string): RetailBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = {
-        categories: [],
-        products: [],
-        purchases: [],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return bizStore.getBundle(RETAIL_SPEC, businessId);
   }
-
   // =========================================================================
   // CATEGORIES
   // =========================================================================
@@ -254,7 +72,7 @@ class RetailService {
     const data = this.loadData();
     const bundle = data[businessId] || this.getBundle(businessId);
     const newCat: RetailProductCategory = {
-      id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `cat_${newId()}`,
       businessId,
       name: name.trim(),
       description: description?.trim() || undefined,
@@ -323,7 +141,7 @@ class RetailService {
     const now = new Date().toISOString();
 
     const newProduct: RetailProduct = {
-      id: `prod_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `prod_${newId()}`,
       businessId: input.businessId,
       locationId: input.locationId || 'loc_retail_main',
       name: input.name.trim(),
@@ -427,7 +245,7 @@ class RetailService {
       return { success: false, error: 'At least one product item is required.' };
     }
 
-    const idempotencyKey = input.idempotencyKey || `tx_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const idempotencyKey = input.idempotencyKey || `tx_${newId()}`;
     const lockKey = `${input.businessId}_${idempotencyKey}`;
 
     if (this.inFlightOperations.has(lockKey)) {
@@ -444,7 +262,7 @@ class RetailService {
         return { success: false, error: 'Duplicate transaction detected. Purchase was already recorded.' };
       }
 
-      const business = businessService.getAllBusinesses().find((b) => b.id === input.businessId);
+      const business = businessService.getBusinessById(input.businessId);
       const currency = business?.currency || 'USD';
       const locationId = input.locationId || business?.activeLocationId || 'loc_retail_main';
       const locationName = business?.locations.find((l) => l.id === locationId)?.name || 'Main Storefront';
@@ -466,7 +284,7 @@ class RetailService {
         };
       });
 
-      const txNumber = `#TX-${1000 + bundle.purchases.length + 1}`;
+      const txNumber = `#TX-${shortCode(5)}`;
       const now = new Date().toISOString();
 
       // Check loyalty qualification: purchases >= 1500 minor units ($15 / ₹150) qualify for loyalty stamp
@@ -479,7 +297,6 @@ class RetailService {
             businessId: input.businessId,
             customerId: input.customerId,
             locationId,
-            staffPin: input.staffPin || '2049',
             idempotencyKey,
           });
           loyaltyIssued = res.success;
@@ -489,7 +306,7 @@ class RetailService {
       }
 
       const newPurchase: RetailPurchase = {
-        id: `tx_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        id: `tx_${newId()}`,
         transactionNumber: txNumber,
         businessId: input.businessId,
         locationId,
@@ -502,7 +319,7 @@ class RetailService {
         total: subtotal,
         currency,
         timestamp: now,
-        staffActor: input.staffPin ? `Staff PIN: ${input.staffPin}` : 'Floor Staff',
+        staffActor: actorLabel('Floor Staff'),
         qualifiesForLoyalty,
         loyaltyIssued,
         idempotencyKey,
@@ -544,37 +361,22 @@ class RetailService {
   // =========================================================================
 
   getPublicCatalogProfile(slugOrId: string): PublicCatalogProfile | null {
-    const businesses = businessService.getAllBusinesses();
-    const target = slugOrId.toLowerCase().trim();
-
-    const business = businesses.find((b) => {
-      const slug = generateBusinessSlug(b.name).toLowerCase();
-      const normTarget = target.replace(/-and-/g, '-');
-      const normSlug = slug.replace(/-and-/g, '-');
-      return (
-        b.id === slugOrId ||
-        slug === target ||
-        normSlug === normTarget ||
-        slug.replace(/-/g, '') === target.replace(/-/g, '') ||
-        normTarget.includes(normSlug) ||
-        normSlug.includes(normTarget)
-      );
-    });
+    const business = businessService.findBusinessBySlug(slugOrId);
 
     if (!business || business.businessType !== 'retail') {
       return null;
     }
 
     const bundle = this.getBundle(business.id);
-    const primaryLoc = business.locations[0] || { address: 'Retail Storefront' };
+    const primaryLoc = business.locations[0] || { address: '' };
 
     return {
       business: {
         id: business.id,
         name: business.name,
-        slug: generateBusinessSlug(business.name),
+        slug: business.slug,
         accentColor: business.accentColor || '#059669',
-        logoInitial: business.logoInitial || 'V',
+        logoInitial: business.logoInitial || business.name.charAt(0).toUpperCase(),
         currency: business.currency || 'USD',
         currencySymbol: business.currencySymbol || '$',
         address: primaryLoc.address,

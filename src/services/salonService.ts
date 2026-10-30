@@ -1,3 +1,13 @@
+/**
+ * Salon services, staff schedules and appointments.
+ * Persisted per business in Firestore via bizStore:
+ *   businesses/{id}/salonServices, salonStaff      (public: booking page)
+ *   businesses/{id}/appointments                   (members; visitors create / read own by id)
+ *   businesses/{id}/appointmentSlots               (public projection: times only, no customer data)
+ *
+ * Tracking links look like /appointment/{businessId}.{appointmentId}.
+ */
+
 import type {
   SalonService,
   StaffProfile,
@@ -7,7 +17,6 @@ import type {
   SalonMetrics,
   PublicAppointmentView,
   TimeSlot,
-  StaffWorkingHours,
 } from '../types/salon';
 import { VALID_APPOINTMENT_TRANSITIONS } from '../types/salon';
 import {
@@ -17,11 +26,11 @@ import {
   minutesToTime,
   timeToMinutes,
 } from '../utils/salonScheduling';
+import { bizStore, type ModuleSpec } from '../lib/bizStore';
+import { newId, shortCode } from '../lib/ids';
 import { businessService } from './businessService';
 import { loyaltyService } from './loyaltyService';
-import { generateBusinessSlug } from '../utils/qrUrlBuilder';
-
-const STORAGE_KEY = 'loyalty_mock_salon_v1';
+import type { DocumentData } from 'firebase/firestore';
 
 export interface BusinessSalonBundle {
   services: SalonService[];
@@ -33,47 +42,68 @@ type SalonStorageSchema = {
   [businessId: string]: BusinessSalonBundle;
 };
 
+/** Public projection used by the booking page to compute free slots. */
+function toAppointmentSlot(apt: DocumentData): DocumentData | null {
+  if (!apt) return null;
+  return {
+    id: apt.id,
+    staffId: apt.staffId,
+    locationId: apt.locationId || null,
+    status: apt.status,
+    startIso: apt.startIso,
+    endIso: apt.endIso,
+    serviceSnapshot: {
+      name: apt.serviceSnapshot?.name || 'Appointment',
+      bufferBeforeMinutes: apt.serviceSnapshot?.bufferBeforeMinutes || 0,
+      bufferAfterMinutes: apt.serviceSnapshot?.bufferAfterMinutes || 0,
+    },
+  };
+}
+
+const byCreated = (a: Record<string, unknown>, b: Record<string, unknown>) =>
+  String(a.createdAt || '').localeCompare(String(b.createdAt || ''));
+
+export const SALON_SPEC: ModuleSpec<BusinessSalonBundle> = {
+  name: 'salon',
+  arrays: [
+    { key: 'services', collection: 'salonServices', public: true, sort: byCreated },
+    { key: 'staff', collection: 'salonStaff', public: true, sort: byCreated },
+    {
+      key: 'appointments',
+      collection: 'appointments',
+      publicSource: 'appointmentSlots',
+      mirror: { collection: 'appointmentSlots', project: toAppointmentSlot },
+      sort: (a, b) => String(a.startIso || '').localeCompare(String(b.startIso || '')),
+    },
+  ],
+  empty: () => ({ services: [], staff: [], appointments: [] }),
+};
+bizStore.register(SALON_SPEC);
+
+/** Split an appointment tracking token into business id and appointment id. */
+export function parseAppointmentToken(token: string): { businessId: string; appointmentId: string } | null {
+  const clean = (token || '').trim();
+  const dot = clean.indexOf('.');
+  if (dot <= 0 || dot === clean.length - 1) return null;
+  const businessId = clean.slice(0, dot);
+  const appointmentId = clean.slice(dot + 1);
+  if (!/^[a-z0-9]{8,64}$/i.test(businessId) || !/^[a-z0-9_]{16,64}$/i.test(appointmentId)) return null;
+  return { businessId, appointmentId };
+}
+
 class SalonBookingService {
   private listeners: (() => void)[] = [];
 
   constructor() {
-    this.ensureInitialized();
-  }
-
-  private ensureInitialized() {
-    if (typeof window === 'undefined') return;
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      const initial = this.getSeedData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-    }
+    bizStore.subscribe(() => this.notifyListeners());
   }
 
   private loadData(): SalonStorageSchema {
-    if (typeof window === 'undefined') {
-      return this.getSeedData();
-    }
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const initial = this.getSeedData();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-        return initial;
-      }
-      return JSON.parse(raw) as SalonStorageSchema;
-    } catch {
-      return this.getSeedData();
-    }
+    return bizStore.getAll(SALON_SPEC);
   }
 
   private saveData(data: SalonStorageSchema): void {
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      } catch (err) {
-        console.warn('Failed to save salon mock data to localStorage:', err);
-      }
-    }
+    bizStore.saveAll(SALON_SPEC, data);
     this.notifyListeners();
   }
 
@@ -88,383 +118,15 @@ class SalonBookingService {
   }
 
   private getBundle(businessId: string): BusinessSalonBundle {
-    const data = this.loadData();
-    if (!data[businessId]) {
-      data[businessId] = {
-        services: [],
-        staff: [],
-        appointments: [],
-      };
-      this.saveData(data);
-    }
-    return data[businessId];
+    return bizStore.getBundle(SALON_SPEC, businessId);
   }
 
-  // =========================================================================
-  // SEED DATA GENERATOR
-  // =========================================================================
-
-  private getSeedData(): SalonStorageSchema {
-    const bizId = 'biz_salon_demo';
-    const locFlagship = 'loc_salon_flagship';
-    const locWestEnd = 'loc_salon_sub';
-
-    const defaultSchedule: StaffWorkingHours[] = [
-      { dayOfWeek: 0, isOpen: false, startTime: '10:00', endTime: '16:00', breaks: [] },
-      {
-        dayOfWeek: 1,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '18:00',
-        breaks: [{ id: 'brk_1', name: 'Lunch Break', startTime: '13:00', endTime: '14:00' }],
-      },
-      {
-        dayOfWeek: 2,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '18:00',
-        breaks: [{ id: 'brk_2', name: 'Lunch Break', startTime: '13:00', endTime: '14:00' }],
-      },
-      {
-        dayOfWeek: 3,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '18:00',
-        breaks: [{ id: 'brk_3', name: 'Lunch Break', startTime: '13:00', endTime: '14:00' }],
-      },
-      {
-        dayOfWeek: 4,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '18:00',
-        breaks: [{ id: 'brk_4', name: 'Lunch Break', startTime: '13:00', endTime: '14:00' }],
-      },
-      {
-        dayOfWeek: 5,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '18:00',
-        breaks: [{ id: 'brk_5', name: 'Lunch Break', startTime: '13:00', endTime: '14:00' }],
-      },
-      {
-        dayOfWeek: 6,
-        isOpen: true,
-        startTime: '09:00',
-        endTime: '17:00',
-        breaks: [{ id: 'brk_6', name: 'Midday Rest', startTime: '12:30', endTime: '13:30' }],
-      },
-    ];
-
-    // Seeded Staff Profiles
-    const staff: StaffProfile[] = [
-      {
-        id: 'stf_marcus',
-        businessId: bizId,
-        locationId: locFlagship,
-        displayName: 'Marcus Vance',
-        role: 'Master Barber & Founder',
-        isActive: true,
-        assignedServiceIds: ['srv_classic_cut', 'srv_beard_sculpt', 'srv_combo_deluxe', 'srv_royal_treatment'],
-        schedule: defaultSchedule,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'stf_elena',
-        businessId: bizId,
-        locationId: locFlagship,
-        displayName: 'Elena Rostova',
-        role: 'Senior Stylist & Grooming Specialist',
-        isActive: true,
-        assignedServiceIds: ['srv_classic_cut', 'srv_scalp_therapy', 'srv_royal_treatment', 'srv_combo_deluxe'],
-        schedule: defaultSchedule,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'stf_damon',
-        businessId: bizId,
-        locationId: locWestEnd,
-        displayName: 'Damon Reed',
-        role: 'Precision Fade & Texture Specialist',
-        isActive: true,
-        assignedServiceIds: ['srv_classic_cut', 'srv_beard_sculpt', 'srv_combo_deluxe'],
-        schedule: defaultSchedule,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-    ];
-
-    // Seeded Services
-    const services: SalonService[] = [
-      {
-        id: 'srv_classic_cut',
-        businessId: bizId,
-        locationId: locFlagship,
-        name: 'Signature Haircut & Style',
-        description: 'Precision scissor and clipper cut, hot lather neck shave, and custom pomade finish.',
-        durationMinutes: 45,
-        price: 4500, // $45.00
-        currency: 'USD',
-        isEnabled: true,
-        assignedStaffIds: ['stf_marcus', 'stf_elena', 'stf_damon'],
-        bufferAfterMinutes: 5,
-        category: 'Haircuts',
-        displayOrder: 1,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'srv_beard_sculpt',
-        businessId: bizId,
-        locationId: locFlagship,
-        name: 'Beard Trim & Razor Lineup',
-        description: 'Detailed beard shaping, straight razor edge lining, and soothing sandalwood oil treatment.',
-        durationMinutes: 30,
-        price: 3000, // $30.00
-        currency: 'USD',
-        isEnabled: true,
-        assignedStaffIds: ['stf_marcus', 'stf_damon'],
-        bufferAfterMinutes: 5,
-        category: 'Beard & Shave',
-        displayOrder: 2,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'srv_royal_treatment',
-        businessId: bizId,
-        locationId: locFlagship,
-        name: 'The Royal Shave & Hot Towel',
-        description: 'Multi-step traditional hot towel treatment, pre-shave aromatic oil, badger brush lather, and straight-razor glide.',
-        durationMinutes: 45,
-        price: 5000, // $50.00
-        currency: 'USD',
-        isEnabled: true,
-        assignedStaffIds: ['stf_marcus', 'stf_elena'],
-        bufferAfterMinutes: 10,
-        category: 'Beard & Shave',
-        displayOrder: 3,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'srv_combo_deluxe',
-        businessId: bizId,
-        locationId: locFlagship,
-        name: 'Haircut & Beard Sculpt Combo',
-        description: 'Full signature haircut styling paired with complete beard grooming and steam towel finish.',
-        durationMinutes: 60,
-        price: 7000, // $70.00
-        currency: 'USD',
-        isEnabled: true,
-        assignedStaffIds: ['stf_marcus', 'stf_elena', 'stf_damon'],
-        bufferAfterMinutes: 10,
-        category: 'Packages',
-        displayOrder: 4,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-      {
-        id: 'srv_scalp_therapy',
-        businessId: bizId,
-        locationId: locFlagship,
-        name: 'Revitalizing Scalp Treatment',
-        description: 'Invigorating tea tree scalp massage, deep follicle cleanse, and therapeutic steam therapy.',
-        durationMinutes: 30,
-        price: 3500, // $35.00
-        currency: 'USD',
-        isEnabled: true,
-        assignedStaffIds: ['stf_elena'],
-        bufferAfterMinutes: 5,
-        category: 'Treatments',
-        displayOrder: 5,
-        isDemoSample: true,
-        createdAt: '2026-03-01T10:00:00Z',
-        updatedAt: '2026-03-01T10:00:00Z',
-      },
-    ];
-
-    // Build today's date for realistic appointment seeds
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
-    const tomorrow = new Date(today.getTime() + 86400000);
-    const tomorrowStr = tomorrow.toISOString().split('T')[0];
-    const yesterday = new Date(today.getTime() - 86400000);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-    // Seeded Appointments
-    const appointments: SalonAppointment[] = [
-      {
-        id: 'apt_1001_s9a1',
-        appointmentNumber: '#APT-1001',
-        businessId: bizId,
-        locationId: locFlagship,
-        locationName: 'Flagship Studio (Uptown)',
-        bookingToken: 'trk_apex_1001_s9a1',
-        customerName: 'Sarah Miller',
-        customerEmail: 'sarah.m@example.com',
-        customerPhone: '+1 (555) 234-5678',
-        customerId: 'cust_sarah_01',
-        serviceId: 'srv_classic_cut',
-        serviceSnapshot: {
-          serviceId: 'srv_classic_cut',
-          name: 'Signature Haircut & Style',
-          durationMinutes: 45,
-          price: 4500,
-          currency: 'USD',
-          bufferAfterMinutes: 5,
-        },
-        staffId: 'stf_marcus',
-        staffName: 'Marcus Vance',
-        startIso: `${todayStr}T10:00:00`,
-        endIso: `${todayStr}T10:45:00`,
-        businessTimeZone: 'America/New_York',
-        price: 4500,
-        currency: 'USD',
-        bookingSource: 'public_web',
-        status: 'confirmed',
-        customerNotes: 'Please trim sides slightly shorter than usual',
-        internalNotes: 'Client prefers matte pomade. VIP regular.',
-        statusHistory: [
-          { status: 'requested', timestamp: new Date(Date.now() - 3600000 * 5).toISOString(), actor: 'Customer' },
-          { status: 'confirmed', timestamp: new Date(Date.now() - 3600000 * 4).toISOString(), actor: 'Staff' },
-        ],
-        createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
-        updatedAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-      },
-      {
-        id: 'apt_1002_d8f2',
-        appointmentNumber: '#APT-1002',
-        businessId: bizId,
-        locationId: locFlagship,
-        locationName: 'Flagship Studio (Uptown)',
-        bookingToken: 'trk_apex_1002_d8f2',
-        customerName: 'Liam Chen',
-        customerEmail: 'liam.c@example.com',
-        customerPhone: '+1 (555) 345-6789',
-        customerId: 'cust_liam_04',
-        serviceId: 'srv_beard_sculpt',
-        serviceSnapshot: {
-          serviceId: 'srv_beard_sculpt',
-          name: 'Beard Trim & Razor Lineup',
-          durationMinutes: 30,
-          price: 3000,
-          currency: 'USD',
-          bufferAfterMinutes: 5,
-        },
-        staffId: 'stf_damon',
-        staffName: 'Damon Reed',
-        startIso: `${todayStr}T11:00:00`,
-        endIso: `${todayStr}T11:30:00`,
-        businessTimeZone: 'America/New_York',
-        price: 3000,
-        currency: 'USD',
-        bookingSource: 'walk_in',
-        status: 'checked_in',
-        customerNotes: 'Walk-in guest, waiting in reception chair 2',
-        statusHistory: [
-          { status: 'requested', timestamp: new Date(Date.now() - 3600000 * 2).toISOString(), actor: 'Front Desk' },
-          { status: 'confirmed', timestamp: new Date(Date.now() - 3600000 * 2).toISOString(), actor: 'Front Desk' },
-          { status: 'checked_in', timestamp: new Date(Date.now() - 1800000).toISOString(), actor: 'Front Desk' },
-        ],
-        createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-        updatedAt: new Date(Date.now() - 1800000).toISOString(),
-      },
-      {
-        id: 'apt_1003_c4b9',
-        appointmentNumber: '#APT-1003',
-        businessId: bizId,
-        locationId: locFlagship,
-        locationName: 'Flagship Studio (Uptown)',
-        bookingToken: 'trk_apex_1003_c4b9',
-        customerName: 'Chloe Bennett',
-        customerEmail: 'chloe.b@example.com',
-        customerPhone: '+1 (555) 456-7890',
-        customerId: 'cust_chloe_03',
-        serviceId: 'srv_scalp_therapy',
-        serviceSnapshot: {
-          serviceId: 'srv_scalp_therapy',
-          name: 'Revitalizing Scalp Treatment',
-          durationMinutes: 30,
-          price: 3500,
-          currency: 'USD',
-          bufferAfterMinutes: 5,
-        },
-        staffId: 'stf_elena',
-        staffName: 'Elena Rostova',
-        startIso: `${yesterdayStr}T14:00:00`,
-        endIso: `${yesterdayStr}T14:30:00`,
-        businessTimeZone: 'America/New_York',
-        price: 3500,
-        currency: 'USD',
-        bookingSource: 'public_web',
-        status: 'completed',
-        loyaltyIssued: true,
-        statusHistory: [
-          { status: 'requested', timestamp: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Customer' },
-          { status: 'confirmed', timestamp: new Date(Date.now() - 86400000 * 2).toISOString(), actor: 'Staff' },
-          { status: 'checked_in', timestamp: `${yesterdayStr}T13:55:00.000Z`, actor: 'Staff' },
-          { status: 'in_service', timestamp: `${yesterdayStr}T14:00:00.000Z`, actor: 'Elena Rostova' },
-          { status: 'completed', timestamp: `${yesterdayStr}T14:30:00.000Z`, actor: 'Elena Rostova', note: 'Service finished. Scalp feeling revitalized.' },
-        ],
-        createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-        updatedAt: `${yesterdayStr}T14:30:00.000Z`,
-      },
-      {
-        id: 'apt_1004_m7k3',
-        appointmentNumber: '#APT-1004',
-        businessId: bizId,
-        locationId: locFlagship,
-        locationName: 'Flagship Studio (Uptown)',
-        bookingToken: 'trk_apex_1004_m7k3',
-        customerName: 'David Kim',
-        customerEmail: 'david.k@example.com',
-        customerPhone: '+1 (555) 567-8901',
-        customerId: 'cust_david_02',
-        serviceId: 'srv_royal_treatment',
-        serviceSnapshot: {
-          serviceId: 'srv_royal_treatment',
-          name: 'The Royal Shave & Hot Towel',
-          durationMinutes: 45,
-          price: 5000,
-          currency: 'USD',
-          bufferAfterMinutes: 10,
-        },
-        staffId: 'stf_marcus',
-        staffName: 'Marcus Vance',
-        startIso: `${tomorrowStr}T14:00:00`,
-        endIso: `${tomorrowStr}T14:45:00`,
-        businessTimeZone: 'America/New_York',
-        price: 5000,
-        currency: 'USD',
-        bookingSource: 'public_web',
-        status: 'requested',
-        customerNotes: 'First time visiting Apex, preparing for wedding anniversary',
-        statusHistory: [
-          { status: 'requested', timestamp: new Date().toISOString(), actor: 'Customer' },
-        ],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ];
-
-    return {
-      [bizId]: {
-        services,
-        staff,
-        appointments,
-      },
-      biz_user_primary: { services: [], staff: [], appointments: [] }, // Strict café isolation
-      biz_retail_demo: { services: [], staff: [], appointments: [] },
-    };
+  /** Visitor tracking page: watch one appointment by its tracking token. */
+  watchAppointment(token: string): boolean {
+    const parsed = parseAppointmentToken(token);
+    if (!parsed || !bizStore.getMode(parsed.businessId)) return false;
+    bizStore.pinDoc(parsed.businessId, 'appointments', parsed.appointmentId);
+    return true;
   }
 
   // =========================================================================
@@ -492,12 +154,12 @@ class SalonBookingService {
     const data = this.loadData();
     const bundle = this.getBundle(businessId);
 
-    const newId = `srv_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const serviceId = `srv_${newId()}`;
     const now = new Date().toISOString();
 
     const newService: SalonService = {
       ...input,
-      id: newId,
+      id: serviceId,
       businessId,
       displayOrder: bundle.services.length + 1,
       createdAt: now,
@@ -509,8 +171,8 @@ class SalonBookingService {
     // Also update assigned staff profiles if staff IDs were provided
     if (input.assignedStaffIds && input.assignedStaffIds.length > 0) {
       bundle.staff.forEach((stf) => {
-        if (input.assignedStaffIds.includes(stf.id) && !stf.assignedServiceIds.includes(newId)) {
-          stf.assignedServiceIds.push(newId);
+        if (input.assignedStaffIds.includes(stf.id) && !stf.assignedServiceIds.includes(serviceId)) {
+          stf.assignedServiceIds.push(serviceId);
           stf.updatedAt = now;
         }
       });
@@ -613,12 +275,12 @@ class SalonBookingService {
     const data = this.loadData();
     const bundle = this.getBundle(businessId);
 
-    const newId = `stf_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const staffId = `stf_${newId()}`;
     const now = new Date().toISOString();
 
     const newStaff: StaffProfile = {
       ...input,
-      id: newId,
+      id: staffId,
       businessId,
       createdAt: now,
       updatedAt: now,
@@ -629,8 +291,8 @@ class SalonBookingService {
     // Synchronize with services
     if (input.assignedServiceIds && input.assignedServiceIds.length > 0) {
       bundle.services.forEach((srv) => {
-        if (input.assignedServiceIds.includes(srv.id) && !srv.assignedStaffIds.includes(newId)) {
-          srv.assignedStaffIds.push(newId);
+        if (input.assignedServiceIds.includes(srv.id) && !srv.assignedStaffIds.includes(staffId)) {
+          srv.assignedStaffIds.push(staffId);
           srv.updatedAt = now;
         }
       });
@@ -786,15 +448,15 @@ class SalonBookingService {
    */
   getAppointmentByToken(bookingToken: string): PublicAppointmentView | null {
     const data = this.loadData();
-    const businesses = businessService.getAllBusinesses();
+
 
     for (const bizId of Object.keys(data)) {
       const apt = data[bizId].appointments.find((a) => a.bookingToken === bookingToken);
       if (apt) {
-        const business = businesses.find((b) => b.id === bizId);
+        const business = businessService.getBusinessById(bizId);
         const loc = business?.locations.find((l) => l.id === apt.locationId) || {
           name: apt.locationName,
-          address: 'Main Salon Floor',
+          address: '',
         };
 
         const isTerminal = apt.status === 'completed' || apt.status === 'cancelled' || apt.status === 'no_show';
@@ -802,8 +464,8 @@ class SalonBookingService {
         return {
           id: apt.id,
           appointmentNumber: apt.appointmentNumber,
-          businessName: business?.name || 'Salon & Grooming Studio',
-          businessSlug: generateBusinessSlug(business?.name || 'salon'),
+          businessName: business?.name || '',
+          businessSlug: business?.slug || '',
           locationName: loc.name,
           locationAddress: loc.address,
           bookingToken: apt.bookingToken,
@@ -818,7 +480,7 @@ class SalonBookingService {
           status: apt.status,
           customerNotes: apt.customerNotes,
           cancellationReason: apt.cancellationReason,
-          cancellationPolicyNotice: 'Free cancellation up to 2 hours prior to scheduled appointment time.',
+          cancellationPolicyNotice: 'To cancel, use the button below or contact the business before your appointment time.',
           canCancelOrReschedule: !isTerminal,
           createdAt: apt.createdAt,
           updatedAt: apt.updatedAt,
@@ -841,7 +503,7 @@ class SalonBookingService {
       return { success: false, error: 'The requested service is currently disabled or unavailable.' };
     }
 
-    const business = businessService.getAllBusinesses().find((b) => b.id === businessId);
+    const business = businessService.getBusinessById(businessId);
     const locationId =
       input.locationId ||
       service.locationId ||
@@ -849,7 +511,7 @@ class SalonBookingService {
       business?.locations[0]?.id ||
       'loc_main';
     const locationName =
-      business?.locations.find((l) => l.id === locationId)?.name || 'Main Salon Floor';
+      business?.locations.find((l) => l.id === locationId)?.name || 'Main Location';
 
     // Normalize start time to HH:mm
     const timeHhmm = startTime.includes('T')
@@ -904,10 +566,9 @@ class SalonBookingService {
     const startIso = combineDateAndTimeToIso(date, timeHhmm);
     const endIso = combineDateAndTimeToIso(date, minutesToTime(endMins));
 
-    const randomSuffix = Math.random().toString(36).substring(2, 6);
-    const aptCounter = 1000 + bundle.appointments.length + 1;
-    const aptNumber = `#APT-${aptCounter}`;
-    const token = `trk_${generateBusinessSlug(business?.name || 'salon')}_${aptCounter}_${randomSuffix}`;
+    const appointmentId = `${newId()}${newId()}`;
+    const aptNumber = `#${shortCode(5)}`;
+    const token = `${businessId}.${appointmentId}`;
     const now = new Date().toISOString();
 
     // Check if customer exists in customer CRM
@@ -923,7 +584,7 @@ class SalonBookingService {
     }
 
     const newAppointment: SalonAppointment = {
-      id: `apt_${Date.now()}_${randomSuffix}`,
+      id: appointmentId,
       appointmentNumber: aptNumber,
       businessId,
       locationId,
@@ -1025,8 +686,8 @@ class SalonBookingService {
             if (!customer) {
               const res = loyaltyService.addCustomer(bizId, {
                 name: apt.customerName,
-                email: apt.customerEmail || 'client@example.com',
-                phoneNumber: apt.customerPhone || '+1 (555) 000-0000',
+                email: apt.customerEmail || undefined,
+                phoneNumber: apt.customerPhone || undefined,
               });
               if (res.success && res.customer) {
                 customer = res.customer;
@@ -1036,7 +697,6 @@ class SalonBookingService {
               loyaltyService.issueStamp({
                 businessId: bizId,
                 customerId: customer.id,
-                staffPin: '7392',
               });
             }
           } catch (e) {
@@ -1170,23 +830,7 @@ class SalonBookingService {
     services: SalonService[];
     staff: StaffProfile[];
   } | null {
-    const businesses = businessService.getAllBusinesses();
-    const target = slugOrId.toLowerCase().trim();
-
-    const business = businesses.find((b) => {
-      const slug = generateBusinessSlug(b.name).toLowerCase();
-      const normTarget = target.replace(/-and-/g, '-');
-      const normSlug = slug.replace(/-and-/g, '-');
-      // Match exact ID or generated slug or variations (e.g. apex-barbershop-grooming or apex-barbershop-and-grooming)
-      return (
-        b.id === slugOrId ||
-        slug === target ||
-        normSlug === normTarget ||
-        slug.replace(/-/g, '') === target.replace(/-/g, '') ||
-        normTarget.includes(normSlug) ||
-        normSlug.includes(normTarget)
-      );
-    });
+    const business = businessService.findBusinessBySlug(slugOrId);
 
     if (!business || business.businessType !== 'salon') {
       return null;
@@ -1195,7 +839,7 @@ class SalonBookingService {
     const enabledServices = this.getServices(business.id).filter((s) => s.isEnabled);
     const activeStaff = this.getStaff(business.id).filter((stf) => stf.isActive);
     const primaryLoc = business.locations[0] || {
-      address: 'Downtown Studio',
+      address: '',
       phoneNumber: business.phoneNumber,
     };
 
@@ -1203,15 +847,15 @@ class SalonBookingService {
       business: {
         id: business.id,
         name: business.name,
-        slug: generateBusinessSlug(business.name),
+        slug: business.slug,
         accentColor: business.accentColor || '#E4C174',
         logoInitial: business.logoInitial || business.name.charAt(0).toUpperCase(),
         currency: business.currency || 'USD',
         currencySymbol: business.currencySymbol || '$',
         timeZone: business.timeZone || 'America/New_York',
         address: primaryLoc.address,
-        phoneNumber: business.phoneNumber || '(555) 345-6789',
-        cancellationPolicy: 'Appointments may be cancelled or rescheduled up to 2 hours in advance.',
+        phoneNumber: business.phoneNumber || '',
+        cancellationPolicy: 'To cancel, use your booking link or contact us before your appointment time.',
       },
       services: enabledServices,
       staff: activeStaff,

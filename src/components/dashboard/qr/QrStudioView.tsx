@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getPublicAppOrigin } from '../../../lib/firebase';
 import {
   QrCode as QrIcon,
   Plus,
@@ -43,7 +44,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
     return unsub;
   }, [business.id]);
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://loyaltydigitalqr.com';
+  const origin = getPublicAppOrigin();
 
   // Filtered QR codes
   const filtered = qrCodes.filter((qr) => {

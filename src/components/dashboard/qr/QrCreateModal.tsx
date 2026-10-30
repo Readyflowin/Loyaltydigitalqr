@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getPublicAppOrigin } from '../../../lib/firebase';
 import { X, ArrowRight, ArrowLeft, Check, Download, ExternalLink, QrCode as QrIcon, Smartphone } from 'lucide-react';
 import QRCode from 'qrcode';
 import type { Business } from '../../../types/business';
@@ -23,7 +24,16 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
   const [destinationType, setDestinationType] = useState<QrDestinationType>('counter_display');
   const [name, setName] = useState('Counter Display Standee');
   const [displayLabel, setDisplayLabel] = useState('Scan to Join & Earn Stamps');
-  const [targetUrl, setTargetUrl] = useState('/signup?ref=counter_stand');
+  const loyaltyCardPath = `/card/${business.slug}`;
+  const businessPagePath =
+    business.businessType === 'cafe' || business.businessType === 'restaurant'
+      ? `/menu/${business.slug}`
+      : business.businessType === 'salon'
+        ? `/book/${business.slug}`
+        : business.businessType === 'retail'
+          ? `/catalog/${business.slug}`
+          : loyaltyCardPath;
+  const [targetUrl, setTargetUrl] = useState(loyaltyCardPath);
   const [locationId, setLocationId] = useState(business.locations[0]?.id || 'loc_main');
 
   // Generated QR output
@@ -37,22 +47,22 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
     if (type === 'counter_display') {
       setName('Counter Display Standee');
       setDisplayLabel('Point camera at code to join');
-      setTargetUrl('/signup?ref=counter_display');
+      setTargetUrl(loyaltyCardPath);
     } else if (type === 'loyalty_enrollment') {
       setName('Customer Digital Pass Enrollment');
-      setDisplayLabel('Add card to Apple & Google Wallet');
-      setTargetUrl('/signup?ref=digital_pass');
+      setDisplayLabel('Join our loyalty card');
+      setTargetUrl(loyaltyCardPath);
     } else {
       setName('Storefront Web Specials & Menu');
       setDisplayLabel('Explore our offerings & hours');
-      setTargetUrl(business.businessType === 'salon' ? '/industries/salons' : '/industries/cafes');
+      setTargetUrl(businessPagePath);
     }
   };
 
   // Generate QR code whenever targetUrl changes
   useEffect(() => {
     let isCancelled = false;
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://loyaltydigitalqr.com';
+    const origin = getPublicAppOrigin();
     const cleanUrl = targetUrl.startsWith('/') ? `${origin}${targetUrl}` : targetUrl;
 
     Promise.all([
@@ -92,7 +102,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
     };
   }, [targetUrl]);
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://loyaltydigitalqr.com';
+  const origin = getPublicAppOrigin();
   const fullDestinationUrl = targetUrl.startsWith('/') ? `${origin}${targetUrl}` : targetUrl;
 
   const handleDownloadPng = () => {
@@ -184,19 +194,19 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                   id: 'counter_display' as QrDestinationType,
                   title: 'Counter Standee',
                   desc: 'Table tent or acrylic checkout display with instant tap to join.',
-                  route: '/signup?ref=counter_display',
+                  route: loyaltyCardPath,
                 },
                 {
                   id: 'loyalty_enrollment' as QrDestinationType,
                   title: 'Digital Pass Enrollment',
-                  desc: 'Direct mobile wallet signup link for Apple Wallet & Google Wallet pass.',
-                  route: '/signup?ref=digital_pass',
+                  desc: 'Direct link to your customer loyalty card sign-up page.',
+                  route: loyaltyCardPath,
                 },
                 {
                   id: 'business_landing' as QrDestinationType,
                   title: 'Storefront Web Menu',
                   desc: 'Public landing page showing business specials, hours, and catalog.',
-                  route: business.businessType === 'salon' ? '/industries/salons' : '/industries/cafes',
+                  route: businessPagePath,
                 },
               ].map((dest) => (
                 <button
