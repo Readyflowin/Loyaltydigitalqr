@@ -1,0 +1,15 @@
+# Cloudflare Worker that accepts authenticated image uploads and stores them in R2.
+# Deploy:  cd worker && npm install && npx wrangler login && npx wrangler deploy
+name = "loyaltydigitalqr-uploads"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+[vars]
+FIREBASE_PROJECT_ID = "loyaltydigitalqr"
+PUBLIC_BASE_URL = "https://pub-2dfcf8b99fc24f2e936e2826ab666474.r2.dev"
+# Comma-separated list of sites allowed to upload (add your custom domain here)
+ALLOWED_ORIGINS = "https://loyaltydigitalqr.web.app,https://loyaltydigitalqr.firebaseapp.com,http://localhost:3000,http://127.0.0.1:3000"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "paypertap-assets"
