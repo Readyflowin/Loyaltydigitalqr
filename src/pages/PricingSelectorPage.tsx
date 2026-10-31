@@ -37,7 +37,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
 
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
             <Globe className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
             <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SELECT YOUR REGION
@@ -198,7 +198,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
         </div>
 
         {/* Feature Comparison Guarantee */}
-        <div className="mt-16 sm:mt-24 max-w-4xl mx-auto rounded-3xl bg-[#F0EEE6] dark:bg-[#121211] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] p-8 sm:p-10">
+        <div className="mt-16 sm:mt-24 max-w-4xl mx-auto rounded-3xl bg-[#F0EEE6] dark:bg-[#242424] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] p-8 sm:p-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div>
               <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">

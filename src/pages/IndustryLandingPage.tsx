@@ -115,7 +115,7 @@ export const IndustryLandingPage: React.FC<IndustryLandingPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBE9E1] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)] shadow-xs">
               <Icon className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
               <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
                 {data.badge} INDUSTRY SOLUTION

@@ -111,14 +111,14 @@
   --color-gold: #E4C174;
   --color-gold-antique: #B58B42;
   --color-gold-muted: rgba(228, 193, 116, 0.35);
-  --color-dark-base: #090909;
-  --color-dark-card: #121211;
-  --color-dark-surface: #1A1916;
+  --color-dark-base: #1C1C1C;
+  --color-dark-card: #242424;
+  --color-dark-surface: #2D2D2D;
   --color-dark-ivory: #F7F3EB;
   --color-dark-muted: #B8B2A6;
 
-  --color-dark-canvas: #090909;
-  --color-dark-surface-raised: #1A1916;
+  --color-dark-canvas: #1C1C1C;
+  --color-dark-surface-raised: #2D2D2D;
   --color-dark-text-primary: #F7F3EB;
   --color-dark-text-secondary: #D0CBC1;
   --color-dark-text-muted: #AAA499;
@@ -178,9 +178,9 @@
 
 .dark {
   color-scheme: dark;
-  --dark-canvas: #090909;
-  --dark-surface: #121211;
-  --dark-surface-raised: #1A1916;
+  --dark-canvas: #1C1C1C;
+  --dark-surface: #242424;
+  --dark-surface-raised: #2D2D2D;
 
   --dark-text-primary: #F7F3EB;
   --dark-text-secondary: #D0CBC1;
@@ -197,14 +197,14 @@
   /* Semantic colours: dark theme.
      --primary stays gold for now to match the existing dark dashboard; switch it
      here (e.g. #7A73FF) when the brand colour is unified across themes. */
-  --background: #0B0B0C;
+  --background: #1C1C1C;
   --foreground: #F5F3EE;
-  --card: #141416;
-  --muted: #1C1C1F;
+  --card: #242424;
+  --muted: #2D2D2D;
   --muted-foreground: #B3AFA6;
   --subtle-foreground: #9A968D;
-  --border: #2A2A2F;
-  --border-strong: #3A3A41;
+  --border: #3A3A3A;
+  --border-strong: #4A4A4A;
   --primary: #E4C174;
   --primary-hover: #EBD294;
   --primary-soft: rgba(228, 193, 116, 0.14);
@@ -232,7 +232,7 @@ body {
 }
 
 .dark body {
-  background-color: #090909;
+  background-color: #1C1C1C;
 }
 
 .font-handwriting {

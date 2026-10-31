@@ -403,7 +403,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-xs font-mono font-bold text-muted-foreground">
+            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#2D2D2D] text-xs font-mono font-bold text-muted-foreground">
               {formData.region === 'india' ? 'India Plan · ₹299/mo' : 'US Plan · $10/mo'}
             </span>
             <Link
@@ -516,7 +516,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                       className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
                           ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                          : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#1A1916] hover:border-[#3027F5]/40 dark:hover:border-[#E4C174]/40'
+                          : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#2D2D2D] hover:border-[#3027F5]/40 dark:hover:border-[#E4C174]/40'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
@@ -624,7 +624,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
                     className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-start gap-4 ${
                       isChecked
                         ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#1A1916] hover:border-[#3027F5]/40 dark:hover:border-[#E4C174]/40'
+                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#2D2D2D] hover:border-[#3027F5]/40 dark:hover:border-[#E4C174]/40'
                     }`}
                   >
                     {/* Checkbox button */}

@@ -35,7 +35,7 @@ interface MemberCard {
 const MEMBER_KEY = (businessId: string) => `loyalty_member_${businessId}`;
 
 const inputClass =
-  'w-full px-4 py-3 rounded-xl border border-border bg-white dark:bg-[#1A1916] text-foreground text-base focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]';
+  'w-full px-4 py-3 rounded-xl border border-border bg-white dark:bg-[#2D2D2D] text-foreground text-base focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]';
 
 /**
  * Customer-facing loyalty card.

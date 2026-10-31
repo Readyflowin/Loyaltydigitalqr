@@ -64,7 +64,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground">
         <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Utensils className="w-7 h-7" />
@@ -141,7 +141,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-24 transition-colors duration-200">
+    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground pb-24 transition-colors duration-200">
       {/* 1. Mobile-First Sticky Top Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
@@ -192,7 +192,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
                       className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer transition-colors ${
                         table?.id === t.id
                           ? 'bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]'
-                          : 'text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916]'
+                          : 'text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D]'
                       }`}
                     >
                       <span>{t.displayName}</span>
@@ -208,7 +208,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               type="button"
               data-testid="public-theme-toggle"
               onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -219,7 +219,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
       {/* 2. Menu Banner & Description */}
       <div className="max-w-4xl mx-auto px-4 pt-6 pb-4">
-        <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#1A1916] border border-border shadow-xs space-y-2">
+        <div className="p-6 rounded-3xl bg-gradient-to-br from-white to-[#F8F7F2] dark:from-[#141412] dark:to-[#2D2D2D] border border-border shadow-xs space-y-2">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
               DIGITAL MENU & INSTANT ORDERING
@@ -235,7 +235,7 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
       </div>
 
       {/* 3. Search & Category Filters */}
-      <div className="sticky top-[61px] z-20 bg-[#F8F7F2]/95 dark:bg-[#090909]/95 backdrop-blur-md pt-2 pb-3 px-4 border-b border-[#E5E3DB]/60 dark:border-white/5">
+      <div className="sticky top-[61px] z-20 bg-[#F8F7F2]/95 dark:bg-[#1C1C1C]/95 backdrop-blur-md pt-2 pb-3 px-4 border-b border-[#E5E3DB]/60 dark:border-white/5">
         <div className="max-w-4xl mx-auto space-y-3">
           {/* Search bar */}
           <div className="relative">

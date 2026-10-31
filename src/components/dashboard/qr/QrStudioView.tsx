@@ -381,7 +381,7 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
       className={`rounded-3xl border-2 transition-all p-5 flex flex-col justify-between shadow-xs ${
         qr.status === 'active'
           ? 'bg-card border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)]'
-          : 'bg-[#F8F7F2]/60 dark:bg-[#121211]/80 border-dashed border-[#DDD9CE] dark:border-white/10 opacity-75'
+          : 'bg-[#F8F7F2]/60 dark:bg-[#242424]/80 border-dashed border-[#DDD9CE] dark:border-white/10 opacity-75'
       }`}
     >
       <div>

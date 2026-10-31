@@ -311,7 +311,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
               type="button"
               data-testid="date-prev-btn"
               onClick={() => handleShiftDate(-1)}
-              className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+              className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
               title="Previous Day"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -321,7 +321,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
               type="button"
               data-testid="date-today-btn"
               onClick={handleSetToday}
-              className="px-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 text-xs font-bold hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-[#E5E3DB] dark:border-white/10 text-xs font-bold hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
             >
               Today
             </button>
@@ -330,7 +330,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
               type="button"
               data-testid="date-next-btn"
               onClick={() => handleShiftDate(1)}
-              className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+              className="p-2 rounded-xl border border-[#E5E3DB] dark:border-white/10 hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
               title="Next Day"
             >
               <ChevronRight className="w-4 h-4" />
@@ -505,7 +505,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
                     type="button"
                     data-testid={`view-appointment-${apt.id}`}
                     onClick={() => setSelectedAppointment(apt)}
-                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                   >
                     View Details
                   </button>

@@ -127,7 +127,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             type="button"
             data-testid="close-cart-drawer"
             onClick={onClose}
-            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
             aria-label="Close Order"
           >
             <X className="w-5 h-5" />
@@ -217,7 +217,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       type="button"
                       data-testid={`cart-decrease-qty-${item.cartItemId}`}
                       onClick={() => onUpdateQuantity(item.cartItemId, item.quantity - 1)}
-                      className="p-1 rounded text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                      className="p-1 rounded text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
@@ -228,7 +228,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       type="button"
                       data-testid={`cart-increase-qty-${item.cartItemId}`}
                       onClick={() => onUpdateQuantity(item.cartItemId, item.quantity + 1)}
-                      className="p-1 rounded text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                      className="p-1 rounded text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>

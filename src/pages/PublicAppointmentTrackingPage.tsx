@@ -59,7 +59,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
 
   if (!appointment) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground">
         <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400">
             <Scissors className="w-7 h-7" />
@@ -122,7 +122,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-16 transition-colors duration-200">
+    <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground pb-16 transition-colors duration-200">
       {/* 1. Top Header Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
@@ -130,7 +130,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             type="button"
             data-testid="back-to-booking-btn"
             onClick={() => navigate(`/book/${appointment.businessSlug}`)}
-            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Book Another</span>
@@ -152,7 +152,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
             type="button"
             data-testid="theme-toggle-tracking"
             onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

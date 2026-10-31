@@ -85,7 +85,7 @@ export const BusinessSwitcherModal: React.FC<BusinessSwitcherModalProps> = ({
                 className={`p-4 rounded-2xl border-2 transition-all ${
                   isCurrent
                     ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#1A1916]'
+                    : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#2D2D2D]'
                 }`}
               >
                 {/* Business Header Row */}

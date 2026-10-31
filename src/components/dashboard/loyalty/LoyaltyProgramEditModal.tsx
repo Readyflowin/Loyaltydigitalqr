@@ -149,7 +149,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                     className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
                       type === item.id
                         ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174]'
-                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#1A1916] text-muted-foreground'
+                        : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] bg-white dark:bg-[#2D2D2D] text-muted-foreground'
                     }`}
                   >
                     {item.label}

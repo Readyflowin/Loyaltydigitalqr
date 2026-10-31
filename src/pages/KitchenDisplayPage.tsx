@@ -86,7 +86,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
   };
 
   return (
-    <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#0A0A0A] text-foreground flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#1C1C1C] text-foreground flex flex-col font-sans transition-colors duration-200">
       {/* 1. KDS Top Bar */}
       <header className="bg-card border-b-2 border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3 flex items-center justify-between gap-3 shadow-xs flex-shrink-0">
         <div className="flex items-center gap-4">
@@ -123,7 +123,7 @@ const KitchenDisplayBoard: React.FC<KitchenDisplayPageProps & { activeBusiness: 
                     className="bg-transparent text-xs text-muted-foreground outline-hidden cursor-pointer"
                   >
                     {activeBusiness.locations.map((loc) => (
-                      <option key={loc.id} value={loc.id} className="bg-white dark:bg-[#1A1916]">
+                      <option key={loc.id} value={loc.id} className="bg-white dark:bg-[#2D2D2D]">
                         {loc.name}
                       </option>
                     ))}

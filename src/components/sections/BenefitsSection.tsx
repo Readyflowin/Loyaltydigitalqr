@@ -59,7 +59,7 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = () => {
         
         {/* Section Header */}
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAE8E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAE8E1] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
             <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               WHY SMALL BUSINESSES CHOOSE US
             </span>

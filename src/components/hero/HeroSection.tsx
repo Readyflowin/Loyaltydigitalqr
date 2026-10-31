@@ -25,7 +25,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onViewReward,
 }) => {
   return (
-    <section className="relative pt-2 sm:pt-4 xl:pt-6 dark:xl:pt-11 pb-6 overflow-hidden bg-[#F8F7F2] dark:bg-[#090909] w-full">
+    <section className="relative pt-2 sm:pt-4 xl:pt-6 dark:xl:pt-11 pb-6 overflow-hidden bg-[#F8F7F2] dark:bg-[#1C1C1C] w-full">
       {/* Responsive page container spanning 90-92% width on desktop (~5% side gutters) */}
       <div className="w-full max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-[4.5%] xl:px-[5%]">
         
@@ -36,7 +36,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-5 flex flex-col items-start z-10 pt-2 sm:pt-4 xl:pt-6">
             
             {/* Eyebrow Label */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ECEAE3] dark:bg-[#1A1916] dark:border dark:border-[rgba(228,193,116,0.3)] shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ECEAE3] dark:bg-[#2D2D2D] dark:border dark:border-[rgba(228,193,116,0.3)] shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
               <span className="text-xs xl:text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
                 LOYALTY, WITHOUT THE FRICTION

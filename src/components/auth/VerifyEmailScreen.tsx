@@ -73,7 +73,7 @@ export const VerifyEmailScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground">
       <div className="w-full max-w-md rounded-3xl bg-card border border-border p-8 shadow-xl text-center">
         <div className="w-14 h-14 rounded-2xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center mx-auto mb-4">
           <MailCheck className="w-7 h-7" />

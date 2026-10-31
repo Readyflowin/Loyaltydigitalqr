@@ -230,7 +230,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
                 />
 
                 {/* Counter QR Standee Badge */}
-                <div className="mt-4 flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-[#1A1916] border border-black/5 dark:border-white/5 text-xs text-foreground">
+                <div className="mt-4 flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-[#2D2D2D] border border-black/5 dark:border-white/5 text-xs text-foreground">
                   <QrCode className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174]" />
                   <span>Generates your counter QR standee PDF</span>
                 </div>

@@ -267,7 +267,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
             target="_blank"
             rel="noopener noreferrer"
             data-testid="preview-public-menu-btn"
-            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Public Menu Preview</span>
@@ -276,7 +276,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           <button
             type="button"
             onClick={() => setMenuModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <Edit2 className="w-3.5 h-3.5" />
             <span>Edit Menu</span>
@@ -592,7 +592,7 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
                       type="button"
                       data-testid={`duplicate-item-${item.id}`}
                       onClick={() => handleDuplicateItem(item.id)}
-                      className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                       title="Duplicate Item"
                     >
                       <Copy className="w-4 h-4" />

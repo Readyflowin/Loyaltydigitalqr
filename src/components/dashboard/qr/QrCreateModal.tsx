@@ -216,7 +216,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                   className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                     destinationType === dest.id
                       ? 'border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 shadow-xs'
-                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#1A1916] hover:border-[#3027F5]/40'
+                      : 'border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white dark:bg-[#2D2D2D] hover:border-[#3027F5]/40'
                   }`}
                 >
                   <div>
@@ -305,7 +305,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               />
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] text-xs text-muted-foreground">
+            <div className="p-3.5 rounded-2xl bg-[#F0EEE6] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] text-xs text-muted-foreground">
               Destination will be encoded as: <strong className="font-mono text-foreground">{fullDestinationUrl}</strong>
             </div>
           </div>
@@ -418,7 +418,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
               <button
                 type="button"
                 onClick={handleDownloadSvg}
-                className="p-3.5 rounded-2xl border border-border bg-white dark:bg-[#1A1916] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center gap-2 text-xs font-bold text-foreground cursor-pointer shadow-xs transition-all"
+                className="p-3.5 rounded-2xl border border-border bg-white dark:bg-[#2D2D2D] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center gap-2 text-xs font-bold text-foreground cursor-pointer shadow-xs transition-all"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Vector SVG</span>

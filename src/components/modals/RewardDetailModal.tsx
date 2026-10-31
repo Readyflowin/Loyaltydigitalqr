@@ -57,7 +57,7 @@ export const RewardDetailModal: React.FC<RewardDetailModalProps> = ({
         </div>
 
         {/* Crisp White Voucher Pass Shell */}
-        <div className="rounded-2xl bg-[#FAFAF8] dark:bg-[#1A1916] text-foreground p-5 shadow-sm border border-[#E2E0D8] dark:border-white/10 relative overflow-hidden">
+        <div className="rounded-2xl bg-[#FAFAF8] dark:bg-[#2D2D2D] text-foreground p-5 shadow-sm border border-[#E2E0D8] dark:border-white/10 relative overflow-hidden">
           
           {/* Top Pass Details */}
           <div className="flex items-center justify-between pb-3.5 border-b border-[#ECEAE3] dark:border-white/10">

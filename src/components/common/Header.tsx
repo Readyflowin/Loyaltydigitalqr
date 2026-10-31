@@ -84,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               {businessesDropdownOpen && (
                 <div className="absolute top-full left-0 w-60 pt-2 z-50">
-                  <div className="p-2.5 bg-white dark:bg-[#1A1916] rounded-2xl shadow-xl border border-[#E7E5DE] dark:border-[rgba(228,193,116,0.25)] animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="p-2.5 bg-white dark:bg-[#2D2D2D] rounded-2xl shadow-xl border border-[#E7E5DE] dark:border-[rgba(228,193,116,0.25)] animate-in fade-in slide-in-from-top-1 duration-150">
                     <Link
                       href="/industries/cafes"
                       className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-white/5 transition-colors text-xs font-semibold text-foreground"
@@ -146,7 +146,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               {resourcesDropdownOpen && (
                 <div className="absolute top-full left-0 w-56 pt-2 z-50">
-                  <div className="p-2.5 bg-white dark:bg-[#1A1916] rounded-2xl shadow-xl border border-[#E7E5DE] dark:border-[rgba(228,193,116,0.25)] animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="p-2.5 bg-white dark:bg-[#2D2D2D] rounded-2xl shadow-xl border border-[#E7E5DE] dark:border-[rgba(228,193,116,0.25)] animate-in fade-in slide-in-from-top-1 duration-150">
                     <button
                       type="button"
                       onClick={() => {
@@ -210,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#F8F7F2] dark:bg-[#121211] border-b border-[#E7E5DE] dark:border-[rgba(228,193,116,0.2)] px-6 py-6 shadow-xl">
+        <div className="lg:hidden bg-[#F8F7F2] dark:bg-[#242424] border-b border-[#E7E5DE] dark:border-[rgba(228,193,116,0.2)] px-6 py-6 shadow-xl">
           <div className="flex flex-col gap-4 text-sm font-semibold text-foreground">
             <button
               type="button"

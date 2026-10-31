@@ -267,7 +267,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
             type="button"
             data-testid="preview-catalog-btn"
             onClick={() => navigate(`/catalog/${businessSlug}`)}
-            className="px-3.5 py-2 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-foreground text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+            className="px-3.5 py-2 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-foreground text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Online Catalogue</span>
@@ -498,7 +498,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                     type="button"
                     data-testid={`edit-product-btn-${prod.id}`}
                     onClick={() => handleOpenEditProduct(prod)}
-                    className="p-1.5 rounded-lg text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                    className="p-1.5 rounded-lg text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
                     title="Edit Product"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
@@ -508,7 +508,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
                     type="button"
                     data-testid={`duplicate-product-btn-${prod.id}`}
                     onClick={() => handleDuplicate(prod.id)}
-                    className="p-1.5 rounded-lg text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                    className="p-1.5 rounded-lg text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
                     title="Duplicate Product"
                   >
                     <Copy className="w-3.5 h-3.5" />
@@ -546,7 +546,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               <button
                 type="button"
                 onClick={() => setIsEditorOpen(false)}
-                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-subtle-foreground cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-subtle-foreground cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -706,7 +706,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
               <button
                 type="button"
                 onClick={() => setIsRecordSaleOpen(false)}
-                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-subtle-foreground cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-subtle-foreground cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

@@ -373,7 +373,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setIsAssignModalOpen(false)}
-                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -470,7 +470,7 @@ export const GymMembersView: React.FC<GymMembersViewProps> = ({ business }) => {
               <button
                 type="button"
                 onClick={() => setIsPlanModalOpen(false)}
-                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] cursor-pointer"
+                className="p-1 rounded-lg text-subtle-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

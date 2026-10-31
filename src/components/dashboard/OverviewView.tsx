@@ -131,7 +131,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       <div className="rounded-3xl bg-card border border-border p-6 sm:p-8 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] text-xs font-bold text-[#3027F5] dark:text-[#E4C174] uppercase">
+            <span className="px-2.5 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#2D2D2D] text-xs font-bold text-[#3027F5] dark:text-[#E4C174] uppercase">
               {business.businessType.toUpperCase()} WORKSPACE
             </span>
             <span className="px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 text-xs font-mono font-medium text-muted-foreground">

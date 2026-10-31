@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="pt-16 pb-12 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] bg-[#F8F7F2] dark:bg-[#090909]">
+    <footer className="pt-16 pb-12 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)] bg-[#F8F7F2] dark:bg-[#1C1C1C]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Columns */}

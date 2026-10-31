@@ -320,7 +320,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
     <div
       data-testid={`table-card-${table.id}`} className="p-5 rounded-3xl bg-card border border-border shadow-xs hover:shadow-md transition-all flex flex-col justify-between" > <div> {/* Header Badge */} <div className="flex items-center justify-between mb-3"> <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#3027F5]/10 dark:bg-[#E4C174]/20 text-[#3027F5] dark:text-[#E4C174]"> Table {table.tableNumber} </span> <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300"> ACTIVE </span> </div> {/* Table info with QR thumbnail */} <div className="flex items-start gap-4 mb-4"> <div onClick={onPrint} className="w-16 h-16 rounded-2xl bg-white border border-[#E5E3DB] p-1 shadow-inner flex-shrink-0 cursor-pointer hover:border-[#3027F5] transition-colors" title="Click to preview & print standee" > {thumbUrl ? ( <img src={thumbUrl} alt="QR Thumbnail" className="w-full h-full object-contain" /> ) : ( <div className="w-full h-full flex items-center justify-center text-xs text-subtle-foreground"> QR </div> )} </div> <div className="flex-1 min-w-0"> <h3 className="text-lg font-heading font-black text-foreground truncate"> {table.displayName} </h3> <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5"> <MapPin className="w-3 h-3 flex-shrink-0" /> <span className="truncate">{locationName}</span> </div> <div className="flex items-center gap-1.5 text-xs text-subtle-foreground mt-0.5"> <Utensils className="w-3 h-3 flex-shrink-0" /> <span className="truncate">{menuName}</span> </div> </div> </div> {/* Public Path Preview */} <div className="p-2.5 rounded-xl bg-muted border border-border mb-4"> <div className="text-xs text-subtle-foreground uppercase tracking-wider mb-0.5"> Table Scannable URL </div> <div className="text-xs text-[#3027F5] dark:text-[#E4C174] truncate"> {menuPath} </div> </div> </div> {/* Bottom Actions */} <div className="pt-3 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] flex items-center justify-between gap-2"> <div className="flex items-center gap-1"> <button type="button" data-testid={`edit-table-${table.id}`}
             onClick={onEdit}
-            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
             title="Edit Table"
           >
             <Edit2 className="w-4 h-4" />
@@ -339,7 +339,7 @@ const TableCardItem: React.FC<TableCardItemProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             data-testid={`open-table-menu-${table.id}`}
-            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-subtle-foreground hover:text-[#3027F5] dark:hover:text-[#E4C174] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
             title="Test Menu URL"
           >
             <ExternalLink className="w-4 h-4" />

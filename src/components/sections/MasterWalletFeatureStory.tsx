@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ThemeMode, StoreItem } from '../../types';
-import { MasterLoyaltyWallet } from '../hero/MasterLoyaltyWallet';
+import { CardCarousel } from './CardCarousel';
 
 interface MasterWalletFeatureStoryProps {
   theme: ThemeMode;
@@ -10,7 +10,7 @@ interface MasterWalletFeatureStoryProps {
 
 export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> = ({
   theme: _theme,
-  onViewReward,
+  onViewReward: _onViewReward,
   onOpenCardBuilder: _onOpenCardBuilder,
 }) => {
   const pillars = [
@@ -37,7 +37,7 @@ export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> =
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAE8E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAE8E1] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
             <span className="w-2 h-2 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
             <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               THE UNIFIED WALLET EXPERIENCE
@@ -77,20 +77,15 @@ export const MasterWalletFeatureStory: React.FC<MasterWalletFeatureStoryProps> =
           ))}
         </div>
 
-        {/* Interactive Showcase Box */}
+        {/* Card design carousel */}
         <div className="mt-16 pt-12 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.18)]">
           <div className="text-center mb-8">
             <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-              INTERACTIVE PREVIEW · CLICK TO TEST SWITCHING STORES
+              A DESIGN FOR EVERY BUSINESS 
             </span>
           </div>
 
-          <div className="flex justify-center">
-            <MasterLoyaltyWallet
-              onViewReward={onViewReward}
-              isStandaloneSection={true}
-            />
-          </div>
+          <CardCarousel />
         </div>
 
       </div>

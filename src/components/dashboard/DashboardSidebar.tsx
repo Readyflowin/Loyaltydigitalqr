@@ -288,7 +288,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       </div>
 
       {/* User Profile & Sign Out Footer */}
-      <div className="p-3.5 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white/40 dark:bg-[#121211]/50 flex-shrink-0">
+      <div className="p-3.5 border-t border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] bg-white/40 dark:bg-[#242424]/50 flex-shrink-0">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 truncate">
             <div className="w-8 h-8 rounded-full bg-[#3027F5]/10 dark:bg-[#E4C174]/15 flex items-center justify-center font-heading font-black text-xs text-[#3027F5] dark:text-[#E4C174] flex-shrink-0">

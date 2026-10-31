@@ -62,7 +62,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           <button
             type="button"
             onClick={onQuickAction}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-white dark:bg-[#1A1916] text-xs font-semibold text-foreground hover:border-[#3027F5] dark:hover:border-[#E4C174] shadow-xs transition-all cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-white dark:bg-[#2D2D2D] text-xs font-semibold text-foreground hover:border-[#3027F5] dark:hover:border-[#E4C174] shadow-xs transition-all cursor-pointer"
           >
             <QrCode className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174]" />
             <span>Counter Display Kit</span>
@@ -86,7 +86,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </button>
 
           {notificationsOpen && (
-            <div className="absolute right-0 top-full mt-2 w-80 p-3 bg-white dark:bg-[#1A1916] rounded-2xl shadow-2xl border border-border z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+            <div className="absolute right-0 top-full mt-2 w-80 p-3 bg-white dark:bg-[#2D2D2D] rounded-2xl shadow-2xl border border-border z-50 animate-in fade-in slide-in-from-top-1 duration-150">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-black/5 dark:border-white/5">
                 <span className="text-xs font-bold uppercase text-foreground">
                   Activity Notifications

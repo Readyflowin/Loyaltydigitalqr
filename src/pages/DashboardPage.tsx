@@ -475,7 +475,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
   };
 
   return (
-    <div className="min-h-screen flex bg-[#F8F7F2] dark:bg-[#090909] text-foreground transition-colors duration-200">
+    <div className="min-h-screen flex bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground transition-colors duration-200">
       
       {/* Desktop Sidebar (hidden on mobile) */}
       <div className="hidden lg:block h-screen sticky top-0 flex-shrink-0">
@@ -611,7 +611,7 @@ const GateScreen: React.FC<{ title: string; message?: string; spinner?: boolean;
   spinner = true,
   children,
 }) => (
-  <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#090909] text-foreground p-4">
+  <div className="min-h-screen flex items-center justify-center bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground p-4">
     <div className="text-center max-w-md w-full">
       {spinner && <Loader2 className="w-8 h-8 mx-auto mb-4 animate-spin text-[#3027F5] dark:text-[#E4C174]" />}
       <h2 className="text-xl font-heading font-black">{title}</h2>

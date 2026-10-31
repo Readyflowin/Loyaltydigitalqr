@@ -351,7 +351,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`view-order-${order.id}`}
                     onClick={() => setSelectedOrder(order)}
-                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                   >
                     View Ticket
                   </button>
@@ -486,7 +486,7 @@ export const CafeOrdersView: React.FC<CafeOrdersViewProps> = ({ business }) => {
                 type="button"
                 data-testid="close-order-detail-btn"
                 onClick={() => setSelectedOrder(null)}
-                className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />

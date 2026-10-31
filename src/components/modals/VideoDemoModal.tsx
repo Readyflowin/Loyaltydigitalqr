@@ -69,7 +69,7 @@ export const VideoDemoModal: React.FC<VideoDemoModalProps> = ({
             {['•', '•', '•', '•'].map((dot, i) => (
               <div
                 key={i}
-                className="w-8 h-10 rounded-lg bg-[#F8F7F2] dark:bg-[#121211] border border-black/10 dark:border-white/10 flex items-center justify-center font-bold text-lg text-[#3027F5] dark:text-[#E4C174]"
+                className="w-8 h-10 rounded-lg bg-[#F8F7F2] dark:bg-[#242424] border border-black/10 dark:border-white/10 flex items-center justify-center font-bold text-lg text-[#3027F5] dark:text-[#E4C174]"
               >
                 {dot}
               </div>

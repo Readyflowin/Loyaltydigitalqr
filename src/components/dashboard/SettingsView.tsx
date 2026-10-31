@@ -554,7 +554,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
                             onChange={(e) =>
                               void run('Role', () => businessService.updateMemberRole(business.id, member.uid, e.target.value as TeamRole))
                             }
-                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#1A1916] text-xs uppercase"
+                            className="px-2 py-1 rounded-lg border border-[#E5E3DB] dark:border-white/15 bg-white dark:bg-[#2D2D2D] text-xs uppercase"
                           >
                             <option value="manager">Manager</option>
                             <option value="staff">Staff</option>
@@ -704,7 +704,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               </a>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-muted-foreground">
+            <div className="p-3.5 rounded-xl bg-[#F0EEE6] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.2)] text-xs text-muted-foreground">
               Online card payments are not available in the dashboard yet. No payment details are stored and you will not be
               charged automatically.
               {SUPPORT_EMAIL ? (
@@ -740,7 +740,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
               </button>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] text-xs text-muted-foreground">
+            <div className="p-3 rounded-xl bg-[#F0EEE6] dark:bg-[#2D2D2D] text-xs text-muted-foreground">
               No email is sent automatically. After you create the invite, ask them to sign in at{' '}
               <strong className="text-foreground">{publicOrigin}/login</strong> using this exact email address.
               The invite will be waiting for them.

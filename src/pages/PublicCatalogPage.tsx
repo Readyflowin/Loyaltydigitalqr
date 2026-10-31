@@ -29,7 +29,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#090909] text-foreground">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground">
         <div className="max-w-md w-full p-8 rounded-3xl bg-card border border-border text-center space-y-4 shadow-xl">
           <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/40 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
             <ShoppingBag className="w-7 h-7" />
@@ -73,7 +73,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
   return (
     <div
       data-testid="public-catalog-page"
-      className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-foreground pb-16 transition-colors duration-200"
+      className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-foreground pb-16 transition-colors duration-200"
     >
       {/* 1. Top Navigation Bar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#141412]/95 backdrop-blur-md border-b border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] px-4 py-3">
@@ -108,7 +108,7 @@ export const PublicCatalogPage: React.FC<PublicCatalogPageProps> = ({ theme, onT
               type="button"
               data-testid="theme-toggle-catalog"
               onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#60646C] hover:text-[#111318] dark:text-[#D0CBC1] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

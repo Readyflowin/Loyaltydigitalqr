@@ -210,7 +210,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
             type="button"
             data-testid="preview-booking-flow-btn"
             onClick={() => navigate(`/book/${publicBookingSlug}`)}
-            className="px-4 py-2.5 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] text-foreground text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-border bg-card hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] text-foreground text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Preview Booking Page</span>
@@ -415,7 +415,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                     type="button"
                     data-testid={`edit-service-btn-${service.id}`}
                     onClick={() => handleOpenEditModal(service)}
-                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer inline-flex items-center gap-1"
+                    className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-foreground hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer inline-flex items-center gap-1"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     <span>Edit</span>
@@ -426,7 +426,7 @@ export const SalonServicesView: React.FC<SalonServicesViewProps> = ({ business }
                       type="button"
                       data-testid={`duplicate-service-btn-${service.id}`}
                       onClick={() => handleDuplicate(service.id)}
-                      className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                      className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                       title="Duplicate service"
                     >
                       <Copy className="w-4 h-4" />

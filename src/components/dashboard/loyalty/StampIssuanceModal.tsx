@@ -269,7 +269,7 @@ export const StampIssuanceModal: React.FC<StampIssuanceModalProps> = ({
             )}
 
             {/* Security Notice */}
-            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-xs text-muted-foreground">
+            <div className="p-2.5 rounded-xl bg-[#F0EEE6] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.15)] flex items-start gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="w-3.5 h-3.5 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0 mt-0.5" />
               <span>
                 Each stamp is recorded in the activity log with the staff member's name and time.

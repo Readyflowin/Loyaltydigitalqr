@@ -243,7 +243,7 @@ function AppContent() {
   // Customer loyalty card: join via QR, then view stamps (/card/:slug or /card/:slug/:memberId)
   if (currentPath.startsWith('/card/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate slugOrId={pathSegment('/card/')}>
           <PublicLoyaltyCardPage theme={theme} onThemeToggle={handleThemeToggle} />
         </PublicBusinessGate>
@@ -254,7 +254,7 @@ function AppContent() {
   // If on customer digital menu, render public mobile-first layout without marketing header/footer
   if (currentPath.startsWith('/menu/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate slugOrId={pathSegment('/menu/')}>
           <PublicMenuPage theme={theme} onThemeToggle={handleThemeToggle} />
         </PublicBusinessGate>
@@ -265,7 +265,7 @@ function AppContent() {
   // If on customer live order tracking, render public mobile-first tracking page
   if (currentPath.startsWith('/order/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate
           slugOrId={parseOrderTrackingToken(pathSegment('/order/'))?.businessId || '-'}
           watch={orderWatch(pathSegment('/order/'))}
@@ -279,7 +279,7 @@ function AppContent() {
   // If on customer public booking wizard, render public mobile-first layout without marketing header/footer
   if (currentPath.startsWith('/book/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate slugOrId={pathSegment('/book/')}>
           <PublicBookingPage theme={theme} onThemeToggle={handleThemeToggle} />
         </PublicBusinessGate>
@@ -290,7 +290,7 @@ function AppContent() {
   // If on customer live appointment tracking, render public mobile-first tracking page
   if (currentPath.startsWith('/appointment/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate
           slugOrId={parseAppointmentToken(pathSegment('/appointment/'))?.businessId || '-'}
           watch={appointmentWatch(pathSegment('/appointment/'))}
@@ -304,7 +304,7 @@ function AppContent() {
   // If on customer public digital catalogue, render public mobile-first lookbook
   if (currentPath.startsWith('/catalog/')) {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate slugOrId={pathSegment('/catalog/')}>
           <PublicCatalogPage theme={theme} onThemeToggle={handleThemeToggle} />
         </PublicBusinessGate>
@@ -315,7 +315,7 @@ function AppContent() {
   // If on Kitchen Display System (KDS), render dedicated fullscreen view
   if (currentPath === '/dashboard/kitchen') {
     return (
-      <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#0A0A0A] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F0EEE6] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <KitchenDisplayPage theme={theme} onThemeToggle={handleThemeToggle} />
       </div>
     );
@@ -324,14 +324,14 @@ function AppContent() {
   // If on authenticated business dashboard, render workspace layout without marketing header/footer
   if (currentPath === '/dashboard') {
     return (
-      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <DashboardPage theme={theme} onThemeToggle={handleThemeToggle} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F7F2] dark:bg-[#090909] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+    <div className="min-h-screen flex flex-col bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
       
       {/* Shared Navigation Header */}
       <Header

@@ -386,7 +386,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
                     type="button"
                     data-testid={`edit-staff-btn-${stf.id}`}
                     onClick={() => handleOpenEditProfile(stf)}
-                    className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#1A1916] transition-colors cursor-pointer"
+                    className="p-1.5 rounded-xl text-subtle-foreground hover:text-[#111318] dark:hover:text-[#F7F3EB] hover:bg-[#F8F7F2] dark:hover:bg-[#2D2D2D] transition-colors cursor-pointer"
                     title="Edit profile"
                   >
                     <Edit2 className="w-4 h-4" />

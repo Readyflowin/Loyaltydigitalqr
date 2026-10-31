@@ -46,7 +46,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         
         {/* Section Header */}
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#1A1916] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE9E1] dark:bg-[#2D2D2D] border border-[#DDD9CE] dark:border-[rgba(228,193,116,0.3)]">
             <span className="text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
               SEAMLESS 3-STEP SETUP
             </span>
@@ -75,7 +75,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                       ? theme === 'light'
                         ? 'bg-white border-[#3027F5] shadow-lg shadow-[#3027F5]/5 ring-1 ring-[#3027F5]'
                         : 'bg-[#141412] border-[#E4C174] shadow-lg shadow-[rgba(228,193,116,0.05)] ring-1 ring-[#E4C174]'
-                      : 'bg-transparent border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] hover:bg-white/50 dark:hover:bg-[#121211]'
+                      : 'bg-transparent border-[#E5E3DB] dark:border-[rgba(228,193,116,0.15)] hover:bg-white/50 dark:hover:bg-[#242424]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -132,11 +132,11 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
 
           {/* Step Visual Preview Column (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl p-8 bg-[#EFECE6] dark:bg-[#121211] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-xl min-h-[420px] flex items-center justify-center overflow-hidden">
+            <div className="relative rounded-3xl p-8 bg-[#EFECE6] dark:bg-[#242424] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] shadow-xl min-h-[420px] flex items-center justify-center overflow-hidden">
               
               {/* Step 01 Preview: Card Design Workshop */}
               {activeStep === 0 && (
-                <div className="w-full max-w-md bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg animate-in zoom-in-95 duration-200">
+                <div className="w-full max-w-md bg-white dark:bg-[#2D2D2D] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-lg animate-in zoom-in-95 duration-200">
                   <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5 text-xs font-mono text-muted-foreground">
                     <span>STEP 1: CARD BUILDER</span>
                     <span className="text-[#3027F5] dark:text-[#E4C174] font-bold">READY</span>
@@ -188,7 +188,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
 
               {/* Step 02 Preview: Counter QR Standee Printout */}
               {activeStep === 1 && (
-                <div className="w-full max-w-sm bg-white dark:bg-[#1A1916] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-2xl text-center animate-in zoom-in-95 duration-200">
+                <div className="w-full max-w-sm bg-white dark:bg-[#2D2D2D] rounded-2xl p-6 border border-black/10 dark:border-[rgba(228,193,116,0.3)] shadow-2xl text-center animate-in zoom-in-95 duration-200">
                   <div className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
                     PRINTABLE COUNTER STANDEE
                   </div>
