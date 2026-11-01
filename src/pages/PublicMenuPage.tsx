@@ -9,9 +9,11 @@ import {
   Plus,
   Check,
   ArrowRight,
+  Receipt,
 } from 'lucide-react';
 import { useRouter } from '../router';
 import { cafeService } from '../services/cafeService';
+import { getRecentOrders, type RecentOrder } from '../utils/recentOrders';
 import type { ThemeMode } from '../types';
 import type {
   MenuItem,
@@ -61,6 +63,19 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
 
   // Table switcher dropdown
   const [tablePickerOpen, setTablePickerOpen] = useState(false);
+
+  // Orders this customer placed from the menu on this device — lets them re-open
+  // live tracking any time, not just from the one-time confirmation.
+  const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
+  const businessId = data?.business.id;
+  useEffect(() => {
+    if (!businessId) return;
+    const refresh = () => setRecentOrders(getRecentOrders(businessId));
+    refresh();
+    window.addEventListener('focus', refresh);
+    return () => window.removeEventListener('focus', refresh);
+    // Re-read when the cart drawer closes, so a just-placed order shows up here.
+  }, [businessId, cartDrawerOpen]);
 
   if (!data) {
     return (
@@ -450,6 +465,35 @@ export const PublicMenuPage: React.FC<PublicMenuPageProps> = ({ theme, onThemeTo
               <span data-testid="cart-bar-total">{formatMinorUnits(cartTotalMinor, business.currency)}</span>
               <ArrowRight className="w-4 h-4" />
             </div>
+          </button>
+        </div>
+      )}
+
+      {/* Persistent "Track your order" bar — shown when the cart is empty and the
+          customer has a recent order on this device. (The cart bar takes the spot
+          while they're building a new order.) */}
+      {cart.length === 0 && recentOrders.length > 0 && (
+        <div className="fixed bottom-4 inset-x-4 z-40 max-w-lg mx-auto">
+          <button
+            type="button"
+            data-testid="track-recent-order-btn"
+            onClick={() => navigate(`/order/${recentOrders[0].token}`)}
+            className="w-full p-4 rounded-2xl bg-card border-2 border-[#3027F5] dark:border-[#E4C174] shadow-2xl flex items-center justify-between gap-3 cursor-pointer transition-transform hover:scale-[1.01] active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center flex-shrink-0">
+                <Receipt className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 text-left">
+                <div className="font-heading font-black text-sm text-foreground truncate">
+                  Track your order {recentOrders[0].orderNumber}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {recentOrders.length > 1 ? `${recentOrders.length} recent orders · ` : ''}See live kitchen progress
+                </div>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-[#3027F5] dark:text-[#E4C174] flex-shrink-0" />
           </button>
         </div>
       )}

@@ -16,6 +16,7 @@ import { formatMinorUnits } from '../../types/cafe';
 import { orderService } from '../../services/orderService';
 import type { Order } from '../../types/order';
 import { useRouter } from '../../router';
+import { addRecentOrder } from '../../utils/recentOrders';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -82,6 +83,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setCreatedOrder(res.order);
+    // Remember this order so the customer can re-open live tracking from the
+    // menu page later, not only from this one-time confirmation.
+    addRecentOrder(business.id, { token: res.order.trackingToken, orderNumber: res.order.orderNumber });
     onClearCart();
   };
 
