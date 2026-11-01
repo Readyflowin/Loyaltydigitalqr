@@ -8,10 +8,12 @@ interface LoyaltyCardPreviewProps {
   programName: string;
   stampsRequired: number;
   rewardDescription: string;
+  rewardExpiry?: string;
   accentColor: string;
-  theme: ThemeMode;
+  theme?: ThemeMode;
   businessType?: BusinessType;
   currentStamps?: number;
+  logoUrl?: string | null;
 }
 
 /**
@@ -23,9 +25,11 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
   programName,
   stampsRequired,
   rewardDescription,
+  rewardExpiry,
   accentColor,
   businessType,
   currentStamps,
+  logoUrl,
 }) => (
   <LoyaltyCard
     businessType={businessType}
@@ -33,7 +37,9 @@ export const LoyaltyCardPreview: React.FC<LoyaltyCardPreviewProps> = ({
     programName={programName}
     stampsRequired={stampsRequired}
     rewardDescription={rewardDescription}
+    rewardExpiry={rewardExpiry}
     accentColor={accentColor}
     currentStamps={currentStamps}
+    logoUrl={logoUrl}
   />
 );

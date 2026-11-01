@@ -28,6 +28,7 @@ import { GenericServicesView } from '../components/dashboard/service/GenericServ
 import { GenericVisitView } from '../components/dashboard/service/GenericVisitView';
 import { CampaignsAndOffersView } from '../components/dashboard/growth/CampaignsAndOffersView';
 import { AnalyticsView } from '../components/dashboard/growth/AnalyticsView';
+import { ReviewsSocialView } from '../components/dashboard/growth/ReviewsSocialView';
 import { LoyaltyCardPreview } from '../components/onboarding/LoyaltyCardPreview';
 import { authService } from '../services/authService';
 import { businessService } from '../services/businessService';
@@ -113,6 +114,8 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
     'kitchen',
     'offers',
     'analytics',
+    'reviews-social',
+    'growth',
   ]);
 
   // UI state initialized from URL query param (?view=...) to survive page refresh
@@ -161,6 +164,9 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
         return 'Promotions & Offers';
       case 'analytics':
         return 'Visit Analytics';
+      case 'reviews-social':
+      case 'growth':
+        return 'Reviews & Social Links';
       case 'settings':
         return 'Workspace Settings';
       case 'help':
@@ -441,6 +447,15 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
             key={activeBusiness.id}
             business={activeBusiness}
             theme={theme}
+          />
+        );
+
+      case 'reviews-social':
+      case 'growth':
+        return (
+          <ReviewsSocialView
+            key={activeBusiness.id}
+            business={activeBusiness}
           />
         );
 

@@ -29,6 +29,7 @@ export interface LoyaltyProgramConfig {
   type: LoyaltyProgramType;
   stampsRequired: number; // 5, 6, 8, 10, or 12
   rewardDescription: string;
+  rewardExpiry?: string; // e.g. "Never expires"
   terms?: string;
   accentColor: string;
   status: LoyaltyProgramStatus;

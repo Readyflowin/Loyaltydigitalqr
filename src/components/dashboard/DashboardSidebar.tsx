@@ -26,6 +26,7 @@ import {
   Droplets,
   Briefcase,
   CheckSquare,
+  Megaphone,
 } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import type { Business } from '../../types/business';
@@ -80,6 +81,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     { id: 'customers', label: 'Customers', icon: Users },
     { id: 'offers', label: 'Offers & Promos', icon: Tag },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'reviews-social', label: 'Reviews & social', icon: Megaphone },
   ];
 
   // Industry-specific module items based on active business type

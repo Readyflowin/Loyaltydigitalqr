@@ -28,6 +28,7 @@ import {
   arrayRemove,
   arrayUnion,
   deleteField,
+  increment,
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -44,6 +45,7 @@ import type {
   BusinessNotification,
   BusinessInvite,
   BusinessMemberInfo,
+  SocialLinksConfig,
 } from '../types/business';
 import type { OnboardingData } from '../types/onboarding';
 import type { TeamRole } from '../types/growth';
@@ -63,11 +65,25 @@ function toPublicProfile(biz: Business): Record<string, unknown> {
     name: biz.name,
     businessType: biz.businessType,
     region: biz.region,
+    country: biz.country || (biz.region === 'india' ? 'India' : 'United States'),
     currency: biz.currency,
     currencySymbol: biz.currencySymbol,
     accentColor: biz.accentColor,
     logoInitial: biz.logoInitial,
     logoUrl: (biz as Business & { logoUrl?: string }).logoUrl || null,
+    rewardExpiry: biz.rewardExpiry || 'Never expires',
+    socialLinks: biz.socialLinks || {
+      googleReviewEnabled: false,
+      googleReviewUrl: '',
+      instagramEnabled: false,
+      instagramHandleOrUrl: '',
+      tiktokEnabled: false,
+      tiktokHandleOrUrl: '',
+      thankYouScreensCount: 0,
+      googleTaps: 0,
+      instagramTaps: 0,
+      tiktokTaps: 0,
+    },
     timeZone: biz.timeZone,
     phoneNumber: biz.phoneNumber || null,
     locations: biz.locations.map((l) => ({ id: l.id, name: l.name, address: l.address, isPrimary: l.isPrimary })),
@@ -288,7 +304,10 @@ class BusinessService {
     await authService.ensureFreshToken();
     const businessId = newId();
     const name = data.businessName.trim();
-    const isIndia = data.region === 'india';
+    const isIndia = data.region === 'india' || data.country?.toLowerCase() === 'india';
+    const currency = data.currency || (isIndia ? 'INR' : 'USD');
+    const currencySymbol = data.currencySymbol || (currency === 'INR' ? '₹' : currency === 'EUR' ? '€' : currency === 'GBP' ? '£' : '$');
+    const country = data.country || (isIndia ? 'India' : 'United States');
     const now = new Date();
     const createdAt = now.toISOString();
     const trialEndsAt = new Date(now.getTime() + TRIAL_DAYS * 86400000).toISOString();
@@ -302,18 +321,35 @@ class BusinessService {
       joinedAt: createdAt,
     };
 
+    const initialSocialLinks: SocialLinksConfig = {
+      googleReviewEnabled: false,
+      googleReviewUrl: '',
+      instagramEnabled: false,
+      instagramHandleOrUrl: '',
+      tiktokEnabled: false,
+      tiktokHandleOrUrl: '',
+      thankYouScreensCount: 0,
+      googleTaps: 0,
+      instagramTaps: 0,
+      tiktokTaps: 0,
+    };
+
     const business: Business = {
       id: businessId,
       name,
       slug: slugPlaceholder,
       businessType: data.businessType,
       region: data.region,
-      currency: isIndia ? 'INR' : 'USD',
-      currencySymbol: isIndia ? '₹' : '$',
+      country,
+      currency,
+      currencySymbol,
       planName: 'Starter',
       planPrice: isIndia ? '₹299/mo' : '$10/mo',
       accentColor: data.accentColor || '#3027F5',
       logoInitial: name.charAt(0).toUpperCase() || 'B',
+      logoUrl: data.logoUrl || null,
+      rewardExpiry: data.rewardExpiry || 'Never expires',
+      socialLinks: initialSocialLinks,
       timeZone: data.timeZone,
       contactEmail: data.contactEmail.trim(),
       phoneNumber: data.phoneNumber?.trim() || undefined,
@@ -354,6 +390,7 @@ class BusinessService {
       type: 'stamp_card',
       stampsRequired: business.stampsRequired,
       rewardDescription: business.rewardDescription,
+      rewardExpiry: business.rewardExpiry || 'Never expires',
       terms: 'Not redeemable for cash. One stamp per qualifying visit.',
       accentColor: business.accentColor,
       status: 'active',
@@ -389,7 +426,9 @@ class BusinessService {
         | 'stampsRequired'
         | 'rewardDescription'
         | 'selectedModules'
-      > & { logoUrl: string | null }
+        | 'rewardExpiry'
+        | 'socialLinks'
+      > & { logoUrl?: string | null }
     >
   ): Promise<void> {
     const current = this.memberBusinesses.find((b) => b.id === businessId);
@@ -406,6 +445,99 @@ class BusinessService {
 
     const next = { ...current, ...patch, ...(update.logoInitial ? { logoInitial: update.logoInitial as string } : {}) } as Business;
     await setDoc(doc(db, 'publicProfiles', businessId), toPublicProfile(next));
+  }
+
+  // ---------------------------------------------------------------------------
+  // Social links & click tracking
+  // ---------------------------------------------------------------------------
+
+  getSocialLinks(businessId: string): SocialLinksConfig {
+    const biz = this.getBusinessById(businessId) || this.findBusinessBySlug(businessId);
+    if (biz?.socialLinks) return biz.socialLinks;
+    const key = `social_links_${businessId}`;
+    try {
+      const stored = localStorage.getItem(key);
+      if (stored) return JSON.parse(stored);
+    } catch {
+      // ignore
+    }
+    return {
+      googleReviewEnabled: false,
+      googleReviewUrl: '',
+      instagramEnabled: false,
+      instagramHandleOrUrl: '',
+      tiktokEnabled: false,
+      tiktokHandleOrUrl: '',
+      thankYouScreensCount: 0,
+      googleTaps: 0,
+      instagramTaps: 0,
+      tiktokTaps: 0,
+    };
+  }
+
+  async updateSocialLinks(businessId: string, patch: Partial<SocialLinksConfig>): Promise<void> {
+    const current = this.getSocialLinks(businessId);
+    const updated: SocialLinksConfig = { ...current, ...patch };
+    const key = `social_links_${businessId}`;
+    try {
+      localStorage.setItem(key, JSON.stringify(updated));
+    } catch {
+      // ignore
+    }
+    const biz = this.memberBusinesses.find((b) => b.id === businessId) || this.getBusinessById(businessId);
+    if (biz) {
+      biz.socialLinks = updated;
+      try {
+        await updateDoc(doc(db, 'businesses', businessId), { socialLinks: updated });
+        await setDoc(doc(db, 'publicProfiles', businessId), toPublicProfile(biz));
+      } catch {
+        // offline or mock
+      }
+      this.notifyListeners();
+    }
+  }
+
+  /**
+   * Record one tap on a social/review button, or one thank-you screen view.
+   *
+   * Counts live in per-platform counter documents
+   * (businesses/{id}/socialTaps/{platform}) because the people who generate
+   * these taps are signed-out customers on the public loyalty card — they are
+   * not members of the business, so Firestore rules reject any write to the
+   * business or public-profile document. The rules do allow a public +1 on
+   * these counter docs only. FieldValue.increment is also atomic, so two
+   * simultaneous taps are never lost (a full-object overwrite would clobber one).
+   */
+  async recordSocialTap(businessId: string, platform: 'google' | 'instagram' | 'tiktok' | 'thank_you'): Promise<void> {
+    const docId = platform === 'thank_you' ? 'thankYou' : platform;
+    try {
+      await setDoc(
+        doc(db, 'businesses', businessId, 'socialTaps', docId),
+        { count: increment(1) },
+        { merge: true }
+      );
+    } catch {
+      // Offline or blocked — taps are best-effort analytics, never block the UI.
+    }
+  }
+
+  /** Live per-platform tap counters (lifetime totals). */
+  watchSocialTaps(
+    businessId: string,
+    cb: (counts: { google: number; instagram: number; tiktok: number; thankYou: number }) => void
+  ): Unsubscribe {
+    return onSnapshot(
+      collection(db, 'businesses', businessId, 'socialTaps'),
+      (snap) => {
+        const counts = { google: 0, instagram: 0, tiktok: 0, thankYou: 0 };
+        snap.forEach((d) => {
+          const n = (d.data() as { count?: number }).count || 0;
+          if (d.id in counts) counts[d.id as keyof typeof counts] = n;
+        });
+        cb(counts);
+      },
+      () => cb({ google: 0, instagram: 0, tiktok: 0, thankYou: 0 })
+    );
   }
 
   // ---------------------------------------------------------------------------

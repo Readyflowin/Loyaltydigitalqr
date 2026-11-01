@@ -68,6 +68,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
   const [programName, setProgramName] = useState(program.name);
   const [stampsRequired, setStampsRequired] = useState(program.stampsRequired);
   const [rewardDescription, setRewardDescription] = useState(program.rewardDescription);
+  const [rewardExpiry, setRewardExpiry] = useState(program.rewardExpiry || business.rewardExpiry || 'Never expires');
   const [accentColor, setAccentColor] = useState(program.accentColor || business.accentColor);
 
   // Team
@@ -139,12 +140,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
         name: programName.trim(),
         stampsRequired,
         rewardDescription: rewardDescription.trim(),
+        rewardExpiry,
         accentColor,
       });
       await businessService.updateBusiness(business.id, {
         programName: programName.trim(),
         stampsRequired,
         rewardDescription: rewardDescription.trim(),
+        rewardExpiry,
         accentColor,
       });
     });
@@ -480,6 +483,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
             <div>
               <label className={labelClass}>Reward Description</label>
               <input type="text" value={rewardDescription} disabled={!canManage} onChange={(e) => setRewardDescription(e.target.value)} className={inputClass} />
+            </div>
+
+            <div>
+              <label className={labelClass}>Reward Expiration Policy</label>
+              <select
+                value={rewardExpiry}
+                disabled={!canManage}
+                onChange={(e) => setRewardExpiry(e.target.value)}
+                className={inputClass}
+              >
+                <option value="Never expires">Never expires</option>
+                <option value="Expires in 30 days">Expires in 30 days</option>
+                <option value="Expires in 60 days">Expires in 60 days</option>
+                <option value="Expires in 90 days">Expires in 90 days</option>
+                <option value="Expires in 6 months">Expires in 6 months</option>
+                <option value="Expires in 1 year">Expires in 1 year</option>
+              </select>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Displayed on loyalty pass: 1 stamp per visit · {rewardExpiry}
+              </p>
             </div>
 
             <div>

@@ -172,6 +172,22 @@ service cloud.firestore {
         allow write: if isManager(bizId);
       }
 
+      // ---------------------------------- social / review tap counters
+      // One document per channel holding a single `count`. The taps come from
+      // signed-out customers on the public loyalty card, so anyone may create
+      // the counter (count == 1) or bump it by exactly one (increment()). No
+      // other field is allowed and the count can only ever go up by one.
+      match /socialTaps/{platform} {
+        allow get, list: if true;
+        allow create: if platform in ['google', 'instagram', 'tiktok', 'thankYou']
+          && request.resource.data.keys().hasOnly(['count'])
+          && request.resource.data.count == 1;
+        allow update: if platform in ['google', 'instagram', 'tiktok', 'thankYou']
+          && request.resource.data.keys().hasOnly(['count'])
+          && request.resource.data.count == resource.data.count + 1;
+        allow delete: if false;
+      }
+
       // ------------------------- public catalogue data (read by everyone)
       match /menus/{id}            { allow read: if true; allow write: if isManager(bizId); }
       match /menuCategories/{id}   { allow read: if true; allow write: if isManager(bizId); }

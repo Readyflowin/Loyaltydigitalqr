@@ -30,6 +30,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
   const [type, setType] = useState<LoyaltyProgramType>(program.type);
   const [stampsRequired, setStampsRequired] = useState(program.stampsRequired);
   const [rewardDescription, setRewardDescription] = useState(program.rewardDescription);
+  const [rewardExpiry, setRewardExpiry] = useState(program.rewardExpiry || 'Never expires');
   const [terms, setTerms] = useState(program.terms || '');
   const [accentColor, setAccentColor] = useState(program.accentColor);
   const [status, setStatus] = useState(program.status);
@@ -63,6 +64,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
       type,
       stampsRequired,
       rewardDescription: rewardDescription.trim(),
+      rewardExpiry,
       terms: terms.trim() || undefined,
       accentColor,
       status,
@@ -222,6 +224,33 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
               )}
             </div>
 
+            {/* Reward Expiry Selector */}
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-bold text-foreground uppercase">
+                  Reward Expiration Policy
+                </label>
+                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+                  Default: Never expires
+                </span>
+              </div>
+              <select
+                value={rewardExpiry}
+                onChange={(e) => setRewardExpiry(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
+              >
+                <option value="Never expires">Never expires</option>
+                <option value="Expires in 30 days">Expires in 30 days</option>
+                <option value="Expires in 60 days">Expires in 60 days</option>
+                <option value="Expires in 90 days">Expires in 90 days</option>
+                <option value="Expires in 6 months">Expires in 6 months</option>
+                <option value="Expires in 1 year">Expires in 1 year</option>
+              </select>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Displayed on pass: 1 stamp per visit · {rewardExpiry}
+              </p>
+            </div>
+
             {/* Color Swatches */}
             <div>
               <label className="block text-xs font-bold text-foreground uppercase mb-1.5">
@@ -355,6 +384,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
               programName={name || 'Loyalty Card'}
               stampsRequired={stampsRequired}
               rewardDescription={rewardDescription || 'Your Reward'}
+              rewardExpiry={rewardExpiry}
               accentColor={accentColor}
               theme={theme}
             />

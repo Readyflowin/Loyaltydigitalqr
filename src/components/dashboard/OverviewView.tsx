@@ -19,6 +19,9 @@ import {
   UserCheck,
   Tag,
   Star,
+  Megaphone,
+  Stamp,
+  MapPin,
 } from 'lucide-react';
 import type { Business, BusinessMetrics, BusinessActivity, ChecklistItem } from '../../types/business';
 import type { ThemeMode } from '../../types';
@@ -190,6 +193,117 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           meta="2+ recorded counter visits"
           icon={<TrendingUp />}
         />
+      </div>
+
+      {/* Next steps Section (Matching Image 1) */}
+      <div className="space-y-4">
+        <h2 className="text-base sm:text-lg font-heading font-black text-foreground">
+          Next steps
+        </h2>
+
+        <div className="rounded-3xl bg-card border border-border divide-y divide-border overflow-hidden shadow-xs">
+          {/* Step 1: Create your first offer */}
+          <div
+            onClick={() => onNavigate('offers')}
+            className="p-4 sm:p-5 flex items-center justify-between gap-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group"
+          >
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center flex-shrink-0">
+                <Tag className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-heading font-bold text-sm sm:text-base text-foreground group-hover:text-[#3027F5] dark:group-hover:text-[#E4C174] transition-colors">
+                  Create your first offer
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Bring customers back with a deal only they can see.
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform flex-shrink-0" />
+          </div>
+
+          {/* Step 2: Add your Google review, Instagram & TikTok */}
+          <div
+            onClick={() => onNavigate('reviews-social')}
+            className="p-4 sm:p-5 flex items-center justify-between gap-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group"
+          >
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-pink-50 dark:bg-pink-950/40 text-pink-600 dark:text-pink-400 flex items-center justify-center flex-shrink-0">
+                <Megaphone className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-heading font-bold text-sm sm:text-base text-foreground group-hover:text-[#3027F5] dark:group-hover:text-[#E4C174] transition-colors">
+                  Add your Google review, Instagram & TikTok
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Customers see these buttons after a visit — always their choice.
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform flex-shrink-0" />
+          </div>
+        </div>
+
+        {/* 2-Card Row: Your Loyalty Card & Main Location (Matching Image 1) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+          {/* Card 1: Your loyalty card */}
+          <div className="p-6 rounded-3xl bg-card border border-border shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center">
+                  <Stamp className="w-4 h-4" />
+                </div>
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                  Active
+                </span>
+              </div>
+              <span className="text-xs text-muted-foreground font-semibold block">
+                Your loyalty card
+              </span>
+              <div className="text-xl sm:text-2xl font-heading font-black text-foreground mt-1">
+                {business.stampsRequired} visits = {business.rewardDescription}
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                1 stamp per visit · <strong className="text-foreground">{business.rewardExpiry || 'Never expires'}</strong>
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => onNavigate('loyalty')}
+              className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline self-start cursor-pointer pt-2"
+            >
+              Edit loyalty card →
+            </button>
+          </div>
+
+          {/* Card 2: Main location */}
+          <div className="p-6 rounded-3xl bg-card border border-border shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+              <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center mb-3">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <span className="text-xs text-muted-foreground font-semibold block">
+                Main location
+              </span>
+              <div className="text-xl sm:text-2xl font-heading font-black text-foreground mt-1">
+                {activeLocation.name}
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                {activeLocation.address || 'Counter QR & Staff Terminal'}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => onNavigate('settings')}
+              className="text-xs font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline self-start cursor-pointer pt-2"
+            >
+              Manage locations & PINs →
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Restaurant Live Order Operations (Café & Restaurant workspaces only) */}

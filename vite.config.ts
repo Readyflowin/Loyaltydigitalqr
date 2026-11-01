@@ -1,11 +1,54 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+// Serves POST /api/upload during `vite dev` so logo/image uploads to Cloudflare
+// R2 work locally, exactly like the Vercel function does in production. Reads
+// the R2 credentials from .env (all vars, not just VITE_ ones) on the server
+// side only — they never reach the browser bundle.
+function r2UploadDevPlugin(env: Record<string, string>): Plugin {
+  return {
+    name: 'r2-upload-dev',
+    configureServer(server) {
+      server.middlewares.use('/api/upload', async (req, res) => {
+        const send = (status: number, body: Record<string, unknown>) => {
+          res.statusCode = status
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify(body))
+        }
+        if (req.method !== 'POST') {
+          send(405, { error: 'Method not allowed' })
+          return
+        }
+        try {
+          const { processUpload, readR2Env } = await import('./api/_r2-upload.ts')
+          const url = new URL(req.url || '', 'http://localhost')
+          const chunks: Buffer[] = []
+          for await (const chunk of req) chunks.push(chunk as Buffer)
+          const result = await processUpload({
+            env: readR2Env(env),
+            authHeader: (req.headers['authorization'] as string) || '',
+            businessId: url.searchParams.get('businessId') || '',
+            kind: url.searchParams.get('kind') || '',
+            contentType: ((req.headers['content-type'] as string) || '').split(';')[0].trim(),
+            body: new Uint8Array(Buffer.concat(chunks)),
+          })
+          send(result.status, result.body)
+        } catch (err) {
+          send(500, { error: 'Upload failed', detail: String(err) })
+        }
+      })
+    },
+  }
+}
+
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    port: 3000,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  return {
+    plugins: [react(), tailwindcss(), r2UploadDevPlugin(env)],
+    server: {
+      port: 3000,
+    },
   }
 })

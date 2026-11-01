@@ -29,27 +29,34 @@ export interface BusinessTypeConfig {
 }
 
 export interface OnboardingData {
-  // Step 1: Business Basics
+  // Business Basics & Details
   businessName: string;
   businessType: BusinessType;
   region: OperatingRegion;
+  country?: string;
+  currency?: string;
+  currencySymbol?: string;
   timeZone: string;
   logoInitial: string;
+  logoUrl?: string | null;
 
-  // Step 2: Selected Modules
+  // Selected Modules
   selectedModules: string[];
 
-  // Step 3: Business Details
+  // Contact Details
   contactEmail: string;
   address?: string;
   phoneNumber?: string;
   displayName?: string;
   locationType: 'first' | 'additional';
 
-  // Step 4: Loyalty Program Configuration
+  // Loyalty Program Configuration
   programName: string;
   stampsRequired: number;
   rewardDescription: string;
+  rewardCategory?: 'item' | 'percent' | 'amount' | 'custom';
+  rewardValue?: string;
+  rewardExpiry?: string; // e.g. "Never expires"
   accentColor: string;
 
   // Workflow State

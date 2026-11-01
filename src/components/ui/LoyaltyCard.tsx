@@ -19,6 +19,7 @@ export interface LoyaltyCardProps {
   businessName: string;
   programName: string;
   rewardDescription: string;
+  rewardExpiry?: string;
   stampsRequired: number;
   /** Earned stamps. Omit to show the preview default (2). */
   currentStamps?: number;
@@ -53,6 +54,7 @@ export const LoyaltyCard: React.FC<LoyaltyCardProps> = ({
   businessName,
   programName,
   rewardDescription,
+  rewardExpiry,
   stampsRequired,
   currentStamps,
   accentColor,
@@ -165,9 +167,14 @@ export const LoyaltyCard: React.FC<LoyaltyCardProps> = ({
           >
             <Gift className="w-4 h-4" />
           </span>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.inkMuted }}>
-              Reward at {stampsRequired} {theme.noun}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide" style={{ color: theme.inkMuted }}>
+              <span>Reward at {stampsRequired} {theme.noun}</span>
+              {rewardExpiry && (
+                <span className="font-medium normal-case tracking-normal text-[11px] opacity-80">
+                  {rewardExpiry}
+                </span>
+              )}
             </div>
             <div className={cx('font-heading font-semibold leading-snug', full ? 'text-[15px]' : 'text-sm')}>{reward}</div>
           </div>

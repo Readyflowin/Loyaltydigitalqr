@@ -11,12 +11,21 @@ export type UploadKind = 'menu-item' | 'product' | 'service' | 'staff' | 'logo';
 const MAX_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 
+/**
+ * Uploads are served by the app's own /api/upload endpoint (the Vercel function
+ * in api/upload.ts, or the Vite dev middleware locally), so they are always
+ * available. An external upload worker can still be used by setting
+ * VITE_UPLOAD_API_URL. Whether R2 is actually reachable depends on the server's
+ * environment variables; failures surface as a clear error at upload time.
+ */
 export function isUploadConfigured(): boolean {
-  return !!(import.meta.env.VITE_UPLOAD_API_URL || '').trim();
+  return true;
 }
 
 function endpoint(): string {
-  return (import.meta.env.VITE_UPLOAD_API_URL || '').trim().replace(/\/+$/, '') + '/upload';
+  const configured = (import.meta.env.VITE_UPLOAD_API_URL || '').trim().replace(/\/+$/, '');
+  if (configured) return `${configured}/upload`;
+  return '/api/upload';
 }
 
 export async function uploadImage(

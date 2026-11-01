@@ -83,6 +83,7 @@ function defaultProgram(businessId: string): LoyaltyProgramConfig {
     type: 'stamp_card',
     stampsRequired: biz?.stampsRequired || 8,
     rewardDescription: biz?.rewardDescription || '1 free item',
+    rewardExpiry: biz?.rewardExpiry || 'Never expires',
     terms: 'Not redeemable for cash. One stamp per qualifying visit.',
     accentColor: biz?.accentColor || '#3027F5',
     enrollment: { ...DEFAULT_ENROLLMENT },

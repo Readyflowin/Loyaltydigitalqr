@@ -1,6 +1,19 @@
 import type { BusinessType, OperatingRegion } from './onboarding';
 import type { TeamRole } from './growth';
 
+export interface SocialLinksConfig {
+  googleReviewEnabled: boolean;
+  googleReviewUrl: string;
+  instagramEnabled: boolean;
+  instagramHandleOrUrl: string;
+  tiktokEnabled: boolean;
+  tiktokHandleOrUrl: string;
+  thankYouScreensCount: number;
+  googleTaps: number;
+  instagramTaps: number;
+  tiktokTaps: number;
+}
+
 export interface BusinessLocation {
   id: string;
   name: string;
@@ -14,12 +27,16 @@ export interface Business {
   name: string;
   businessType: BusinessType;
   region: OperatingRegion;
-  currency: 'USD' | 'INR';
-  currencySymbol: '$' | '₹';
+  country?: string;
+  currency: 'USD' | 'INR' | string;
+  currencySymbol: '$' | '₹' | string;
   planName: string;
   planPrice: string;
   accentColor: string;
   logoInitial: string;
+  logoUrl?: string | null;
+  rewardExpiry?: string; // e.g. "Never expires", "Expires in 30 days"
+  socialLinks?: SocialLinksConfig;
   timeZone: string;
   contactEmail: string;
   phoneNumber?: string;
