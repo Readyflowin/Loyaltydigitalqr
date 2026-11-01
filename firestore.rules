@@ -184,10 +184,11 @@ service cloud.firestore {
 
       // ----------------------------------- manager-maintained private data
       match /qrCodes/{id}          { allow read: if isMember(bizId); allow write: if isManager(bizId); }
-      match /gymPlans/{id}         { allow read: if isMember(bizId); allow write: if isManager(bizId); }
-      match /carwashServices/{id}  { allow read: if isMember(bizId); allow write: if isManager(bizId); }
-      match /carwashBundles/{id}   { allow read: if isMember(bizId); allow write: if isManager(bizId); }
-      match /serviceItems/{id}     { allow read: if isMember(bizId); allow write: if isManager(bizId); }
+      // Shown on the public storefront/services page, so readable by everyone.
+      match /gymPlans/{id}         { allow read: if true; allow write: if isManager(bizId); }
+      match /carwashServices/{id}  { allow read: if true; allow write: if isManager(bizId); }
+      match /carwashBundles/{id}   { allow read: if true; allow write: if isManager(bizId); }
+      match /serviceItems/{id}     { allow read: if true; allow write: if isManager(bizId); }
       match /offers/{id}           { allow read: if isMember(bizId); allow write: if isManager(bizId); }
       match /segments/{id}         { allow read: if isMember(bizId); allow write: if isManager(bizId); }
       match /campaignRuns/{id}     { allow read: if isMember(bizId); allow write: if isManager(bizId); }
@@ -195,7 +196,7 @@ service cloud.firestore {
       // -------------------------------- day-to-day operations (any member)
       match /gymMembers/{id}       { allow read, write: if isMember(bizId); }
       match /gymCheckIns/{id}      { allow read, write: if isMember(bizId); }
-      match /gymClasses/{id}       { allow read, write: if isMember(bizId); }
+      match /gymClasses/{id}       { allow read: if true; allow write: if isMember(bizId); }
       match /carwashPasses/{id}    { allow read, write: if isMember(bizId); }
       match /carwashVisits/{id}    { allow read, write: if isMember(bizId); }
       match /serviceJobs/{id}      { allow read, write: if isMember(bizId); }

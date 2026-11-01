@@ -30,7 +30,8 @@ interface GymBundle {
 export const GYM_SPEC: ModuleSpec<GymBundle> = {
   name: 'gym',
   arrays: [
-    { key: 'plans', collection: 'gymPlans' },
+    // Plans & classes are shown on the public storefront page (/services/:slug).
+    { key: 'plans', collection: 'gymPlans', public: true },
     { key: 'members', collection: 'gymMembers' },
     {
       key: 'checkIns',
@@ -38,7 +39,7 @@ export const GYM_SPEC: ModuleSpec<GymBundle> = {
       recent: { orderBy: 'timestamp', max: 1000 },
       sort: (a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')),
     },
-    { key: 'classes', collection: 'gymClasses' },
+    { key: 'classes', collection: 'gymClasses', public: true },
   ],
   empty: () => ({ plans: [], members: [], checkIns: [], classes: [] }),
 };

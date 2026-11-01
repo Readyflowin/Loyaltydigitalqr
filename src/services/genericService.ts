@@ -43,7 +43,8 @@ export interface RecordJobInput {
 export const GENERIC_SPEC: ModuleSpec<GenericServiceBundle> = {
   name: 'generic',
   arrays: [
-    { key: 'services', collection: 'serviceItems' },
+    // Services are shown on the public storefront page (/services/:slug).
+    { key: 'services', collection: 'serviceItems', public: true },
     {
       key: 'jobs',
       collection: 'serviceJobs',

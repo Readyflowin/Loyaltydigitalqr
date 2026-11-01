@@ -70,8 +70,9 @@ export interface RecordWashVisitInput {
 export const CARWASH_SPEC: ModuleSpec<CarWashStoreBundle> = {
   name: 'carwash',
   arrays: [
-    { key: 'services', collection: 'carwashServices' },
-    { key: 'bundles', collection: 'carwashBundles' },
+    // Services & bundles are shown on the public storefront page (/services/:slug).
+    { key: 'services', collection: 'carwashServices', public: true },
+    { key: 'bundles', collection: 'carwashBundles', public: true },
     { key: 'passes', collection: 'carwashPasses' },
     {
       key: 'visits',

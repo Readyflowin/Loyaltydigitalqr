@@ -27,6 +27,7 @@ import { PublicAppointmentTrackingPage } from './pages/PublicAppointmentTracking
 import { PublicCatalogPage } from './pages/PublicCatalogPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { PublicLoyaltyCardPage } from './pages/PublicLoyaltyCardPage';
+import { PublicServicesPage } from './pages/PublicServicesPage';
 import { PublicBusinessGate } from './components/public/PublicBusinessGate';
 import { parseOrderTrackingToken } from './services/orderService';
 import { parseAppointmentToken } from './services/salonService';
@@ -98,6 +99,11 @@ function AppContent() {
 
     if (currentPath.startsWith('/appointment/')) {
       document.title = 'Track Appointment — Loyaltydigitalqr';
+      return;
+    }
+
+    if (currentPath.startsWith('/services/')) {
+      document.title = 'Our Services — Loyaltydigitalqr';
       return;
     }
 
@@ -307,6 +313,17 @@ function AppContent() {
       <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
         <PublicBusinessGate slugOrId={pathSegment('/catalog/')}>
           <PublicCatalogPage theme={theme} onThemeToggle={handleThemeToggle} />
+        </PublicBusinessGate>
+      </div>
+    );
+  }
+
+  // Public storefront / services page for car washes, gyms and service businesses
+  if (currentPath.startsWith('/services/')) {
+    return (
+      <div className="min-h-screen bg-[#F8F7F2] dark:bg-[#1C1C1C] text-[#111318] dark:text-[#F7F3EB] transition-colors duration-200">
+        <PublicBusinessGate slugOrId={pathSegment('/services/')}>
+          <PublicServicesPage theme={theme} onThemeToggle={handleThemeToggle} />
         </PublicBusinessGate>
       </div>
     );

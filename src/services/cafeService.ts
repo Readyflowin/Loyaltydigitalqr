@@ -105,7 +105,9 @@ class CafeService {
       description: data.description?.trim(),
       currency,
       currencySymbol,
-      status: 'draft',
+      // Published by default so a freshly created menu is immediately visible when
+      // customers scan the table QR. Owners can still unpublish from the menu editor.
+      status: 'published',
       categoryIds: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

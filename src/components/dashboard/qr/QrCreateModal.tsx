@@ -25,6 +25,10 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
   const [name, setName] = useState('Counter Display Standee');
   const [displayLabel, setDisplayLabel] = useState('Scan to Join & Earn Stamps');
   const loyaltyCardPath = `/card/${business.slug}`;
+  // The "storefront" destination points to each business type's own public page.
+  // cafe/restaurant → menu, salon → booking, retail → catalogue, and
+  // carwash/gym/service → the public services storefront. Never the loyalty card,
+  // so this destination is always distinct from the two loyalty options.
   const businessPagePath =
     business.businessType === 'cafe' || business.businessType === 'restaurant'
       ? `/menu/${business.slug}`
@@ -32,7 +36,18 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
         ? `/book/${business.slug}`
         : business.businessType === 'retail'
           ? `/catalog/${business.slug}`
-          : loyaltyCardPath;
+          : `/services/${business.slug}`;
+
+  // Business-type-aware label for the storefront destination so it reads
+  // correctly for every vertical (a car wash isn't a "web menu").
+  const storefront =
+    business.businessType === 'cafe' || business.businessType === 'restaurant'
+      ? { title: 'Storefront Menu', desc: 'Public digital menu customers browse and order from.' }
+      : business.businessType === 'salon'
+        ? { title: 'Online Booking', desc: 'Public page where customers book appointments.' }
+        : business.businessType === 'retail'
+          ? { title: 'Product Catalogue', desc: 'Public lookbook of your products and specials.' }
+          : { title: 'Services & Storefront', desc: 'Public page showing your services, plans and prices.' };
   const [targetUrl, setTargetUrl] = useState(loyaltyCardPath);
   const [locationId, setLocationId] = useState(business.locations[0]?.id || 'loc_main');
 
@@ -53,7 +68,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
       setDisplayLabel('Join our loyalty card');
       setTargetUrl(loyaltyCardPath);
     } else {
-      setName('Storefront Web Specials & Menu');
+      setName(storefront.title);
       setDisplayLabel('Explore our offerings & hours');
       setTargetUrl(businessPagePath);
     }
@@ -204,8 +219,8 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 },
                 {
                   id: 'business_landing' as QrDestinationType,
-                  title: 'Storefront Web Menu',
-                  desc: 'Public landing page showing business specials, hours, and catalog.',
+                  title: storefront.title,
+                  desc: storefront.desc,
                   route: businessPagePath,
                 },
               ].map((dest) => (
