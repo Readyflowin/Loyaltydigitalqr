@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { X, Plus, Trash2, AlertCircle } from 'lucide-react';
 import type {
   MenuItem,
@@ -7,6 +7,52 @@ import type {
   MenuItemVariantGroup,
   MenuItemModifierGroup,
 } from '../../../types/cafe';
+
+/**
+ * Price-adjustment field for variant / modifier options. Kept as a free-text
+ * draft so the owner can type the amount (e.g. "2.50") instead of only using
+ * spinner arrows. Commits the parsed value in minor units (cents) on every edit
+ * and normalises the display to two decimals on blur.
+ */
+const PriceAdjustmentInput: React.FC<{
+  cents: number;
+  onCommit: (cents: number) => void;
+}> = ({ cents, onCommit }) => {
+  const [draft, setDraft] = useState<string>((cents / 100).toFixed(2));
+  const focused = useRef(false);
+
+  // Reflect external changes (e.g. initial load) unless the user is typing.
+  useEffect(() => {
+    if (!focused.current) setDraft((cents / 100).toFixed(2));
+  }, [cents]);
+
+  return (
+    <input
+      type="text"
+      inputMode="decimal"
+      value={draft}
+      onFocus={() => {
+        focused.current = true;
+      }}
+      onChange={(e) => {
+        const raw = e.target.value;
+        // Allow only digits and a single decimal point while typing.
+        if (!/^\d*\.?\d*$/.test(raw)) return;
+        setDraft(raw);
+        const val = parseFloat(raw);
+        onCommit(Number.isFinite(val) ? Math.round(val * 100) : 0);
+      }}
+      onBlur={() => {
+        focused.current = false;
+        const val = parseFloat(draft);
+        const normalized = Number.isFinite(val) && val > 0 ? val : 0;
+        setDraft(normalized.toFixed(2));
+        onCommit(Math.round(normalized * 100));
+      }}
+      className="w-full text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground"
+    />
+  );
+};
 
 interface MenuItemEditModalProps {
   isOpen: boolean;
@@ -473,17 +519,13 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                       />
                       <div className="flex items-center gap-1 w-28">
                         <span className="text-xs text-subtle-foreground">+{currencySymbol}</span>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={(opt.priceAdjustment / 100).toFixed(2)}
-                          onChange={(e) => {
+                        <PriceAdjustmentInput
+                          cents={opt.priceAdjustment}
+                          onCommit={(c) => {
                             const updated = [...variantGroups];
-                            const val = parseFloat(e.target.value) || 0;
-                            updated[gIdx].options[oIdx].priceAdjustment = Math.round(val * 100);
+                            updated[gIdx].options[oIdx].priceAdjustment = c;
                             setVariantGroups(updated);
                           }}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                         />
                       </div>
                       <button
@@ -585,17 +627,13 @@ const MenuItemEditModalForm: React.FC<InnerFormProps> = ({
                       />
                       <div className="flex items-center gap-1 w-28">
                         <span className="text-xs text-subtle-foreground">+{currencySymbol}</span>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={(opt.priceAdjustment / 100).toFixed(2)}
-                          onChange={(e) => {
+                        <PriceAdjustmentInput
+                          cents={opt.priceAdjustment}
+                          onCommit={(c) => {
                             const updated = [...modifierGroups];
-                            const val = parseFloat(e.target.value) || 0;
-                            updated[gIdx].options[oIdx].priceAdjustment = Math.round(val * 100);
+                            updated[gIdx].options[oIdx].priceAdjustment = c;
                             setModifierGroups(updated);
                           }}
-                          className="w-full text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground"
                         />
                       </div>
                       <button

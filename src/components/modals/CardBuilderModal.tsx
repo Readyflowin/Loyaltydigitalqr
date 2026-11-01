@@ -48,7 +48,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
@@ -57,7 +57,7 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-3xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl rounded-3xl bg-card border border-border shadow-2xl p-5 sm:p-8 z-10 my-4 sm:my-8 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Close Button */}
         <button
@@ -99,19 +99,19 @@ export const CardBuilderModal: React.FC<CardBuilderModalProps> = ({
         ) : (
           /* Card Builder Interactive Form */
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pr-10">
               <span className="text-xs font-bold tracking-widest text-[#3027F5] dark:text-[#E4C174] uppercase">
                 INTERACTIVE CARD BUILDER
               </span>
             </div>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-heading font-black text-foreground">
+            <h2 className="mt-1 text-xl sm:text-3xl font-heading font-black text-foreground pr-10 sm:pr-0">
               Build your digital loyalty card
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground">
               Customize your reward, test how it looks on mobile, and claim your 30-day trial.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
               
               {/* Form Controls Column */}
               <form onSubmit={handleSubmit} className="space-y-4">
