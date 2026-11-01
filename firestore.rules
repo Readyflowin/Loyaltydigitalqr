@@ -76,12 +76,14 @@ service cloud.firestore {
       return v is string && v.size() > 0 && v.size() <= max;
     }
 
+    // Guard key presence first: accessing an absent field errors out the whole
+    // rule, which would wrongly deny a phone-only (no email) or email-only sign-up.
     function hasPhone(d) {
-      return d.phoneNumber is string && d.phoneNumber.size() > 0;
+      return d.keys().hasAny(['phoneNumber']) && d.phoneNumber is string && d.phoneNumber.size() > 0;
     }
 
     function hasEmail(d) {
-      return d.email is string && d.email.size() > 0;
+      return d.keys().hasAny(['email']) && d.email is string && d.email.size() > 0;
     }
 
     // ------------------------------------------------------------------ users

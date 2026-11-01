@@ -11,6 +11,9 @@ import {
   ChevronDown,
   Layers,
   SlidersHorizontal,
+  Send,
+  CheckCircle2,
+  EyeOff,
 } from 'lucide-react';
 import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
@@ -159,6 +162,14 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
     }
   };
 
+  // Publish / unpublish the active menu. A menu is only visible on the public
+  // /menu/:slug page (what the table QR opens) once it is published.
+  const handleTogglePublish = () => {
+    if (!activeMenu) return;
+    const next = activeMenu.status === 'published' ? 'draft' : 'published';
+    cafeService.updateMenu(business.id, activeMenu.id, { status: next });
+  };
+
   // If business is not cafe / restaurant
   if (!isFoodService) {
     return (
@@ -284,6 +295,30 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
 
           <button
             type="button"
+            data-testid="toggle-publish-btn"
+            onClick={handleTogglePublish}
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              activeMenu.status === 'published'
+                ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/50'
+                : 'border-transparent bg-emerald-600 hover:bg-emerald-700 text-white shadow-md'
+            }`}
+            title={activeMenu.status === 'published' ? 'Customers can see this menu. Click to unpublish.' : 'Make this menu visible to table QR scanners.'}
+          >
+            {activeMenu.status === 'published' ? (
+              <>
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Published</span>
+              </>
+            ) : (
+              <>
+                <Send className="w-3.5 h-3.5" />
+                <span>Publish Menu</span>
+              </>
+            )}
+          </button>
+
+          <button
+            type="button"
             data-testid="add-item-btn"
             onClick={handleOpenCreateItem}
             className="px-5 py-2.5 rounded-xl bg-[#3027F5] hover:bg-[#2319D8] text-white dark:bg-[#E4C174] dark:hover:bg-[#EBD294] dark:text-[#11100D] text-xs font-bold shadow-md inline-flex items-center gap-1.5 transition-all cursor-pointer"
@@ -293,6 +328,31 @@ export const CafeMenuView: React.FC<CafeMenuViewProps> = ({ business }) => {
           </button>
         </div>
       </div>
+
+      {/* Draft notice: the public QR menu is hidden until the menu is published */}
+      {activeMenu.status === 'draft' && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50">
+          <div className="flex items-start gap-2.5">
+            <EyeOff className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <div className="font-heading font-bold text-sm text-amber-800 dark:text-amber-300">
+                This menu is a draft — customers can't see it yet
+              </div>
+              <div className="text-xs text-amber-700/80 dark:text-amber-300/80 mt-0.5">
+                Scanning the table QR shows "menu unavailable" until you publish it.
+              </div>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleTogglePublish}
+            className="self-start sm:self-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md cursor-pointer inline-flex items-center gap-1.5 flex-shrink-0"
+          >
+            <Send className="w-3.5 h-3.5" />
+            <span>Publish Menu Now</span>
+          </button>
+        </div>
+      )}
 
       {/* 2. Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

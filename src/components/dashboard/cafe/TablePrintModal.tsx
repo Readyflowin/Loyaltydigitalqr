@@ -74,7 +74,40 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
   };
 
   const handlePrint = () => {
-    window.print();
+    // Print the standee from a clean, isolated window containing only the card,
+    // with the app's stylesheets copied in. This avoids the modal's overflow /
+    // max-height / entry-animation transform clipping the QR across the page.
+    const node = document.getElementById('standee-printable-card');
+    const printWindow = node ? window.open('', '_blank', 'width=480,height=680') : null;
+    if (!node || !printWindow) {
+      // Popup blocked or node missing: fall back to the in-page @media print rules.
+      window.print();
+      return;
+    }
+    const headStyles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+      .map((n) => n.outerHTML)
+      .join('\n');
+    printWindow.document.open();
+    printWindow.document.write(
+      `<!doctype html><html><head><meta charset="utf-8" />` +
+        `<base href="${window.location.origin}/" />` +
+        `<title>${business.name} — ${table.displayName} Standee</title>` +
+        headStyles +
+        `<style>` +
+        `@page { margin: 14mm; }` +
+        `html, body { background:#fff; margin:0; padding:0; }` +
+        `body { display:flex; justify-content:center; align-items:flex-start; padding:24px; }` +
+        `#standee-printable-card { box-shadow:none !important; width:340px !important; max-width:none !important; }` +
+        `</style></head><body>` +
+        node.outerHTML +
+        `<` + `script>window.onload=function(){var i=[].slice.call(document.images),n=i.length;` +
+        `function g(){try{window.focus();window.print();}catch(e){}}` +
+        `if(!n){g();return;}i.forEach(function(m){if(m.complete){if(--n===0)g();}` +
+        `else{m.addEventListener('load',function(){if(--n===0)g();});` +
+        `m.addEventListener('error',function(){if(--n===0)g();});}});};<` + `/script>` +
+        `</body></html>`
+    );
+    printWindow.document.close();
   };
 
   const handleDownloadPng = async () => {
@@ -127,21 +160,30 @@ export const TablePrintModal: React.FC<TablePrintModalProps> = ({
       {/* Print-specific style injection to hide backdrop & print ONLY the standee */}
       <style>{`
         @media print {
+          @page { margin: 12mm; }
+          html, body {
+            background: #fff !important;
+            height: auto !important;
+            overflow: visible !important;
+          }
           body * {
             visibility: hidden !important;
           }
           #standee-printable-card, #standee-printable-card * {
             visibility: visible !important;
           }
+          /* Pin to the page itself (not the clipped modal) and lay out in full. */
           #standee-printable-card {
-            position: absolute !important;
-            left: 50% !important;
-            top: 50% !important;
-            transform: translate(-50%, -50%) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            margin: 0 auto !important;
+            transform: none !important;
             box-shadow: none !important;
             border: 2px solid #000 !important;
-            width: 380px !important;
-            margin: 0 !important;
+            width: 340px !important;
+            max-width: 340px !important;
             page-break-inside: avoid !important;
           }
         }
