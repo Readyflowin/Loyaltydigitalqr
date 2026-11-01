@@ -14,7 +14,7 @@ import type {
   EnrollmentConfig,
 } from '../types/loyalty';
 import { DEFAULT_ENROLLMENT } from '../types/loyalty';
-import { doc, setDoc, writeBatch, type DocumentData } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, writeBatch, type DocumentData } from 'firebase/firestore';
 import { bizStore, type ModuleSpec } from '../lib/bizStore';
 import { db, getPublicAppOrigin } from '../lib/firebase';
 import { newId, shortCode } from '../lib/ids';
@@ -423,7 +423,22 @@ class LoyaltyService {
   }
 
   archiveCustomer(businessId: string, customerId: string): boolean {
+    const customer = this.getCustomer(businessId, customerId);
     const res = this.updateCustomer(businessId, customerId, { status: 'archived' });
+    // Release the customer's contact reservations so the number/email can be
+    // used again (and never lingers as an orphan that blocks a fresh sign-up).
+    if (res.success && customer) {
+      if (customer.phoneNumber) {
+        deleteDoc(doc(db, 'businesses', businessId, 'customerPhones', normalizePhone(customer.phoneNumber))).catch(
+          (err) => console.warn('Could not release customer phone reservation', err)
+        );
+      }
+      if (customer.email) {
+        deleteDoc(doc(db, 'businesses', businessId, 'customerEmails', normalizeEmail(customer.email))).catch(
+          (err) => console.warn('Could not release customer email reservation', err)
+        );
+      }
+    }
     return res.success;
   }
 

@@ -16,7 +16,10 @@ export const VerifyEmailScreen: React.FC = () => {
   const [checking, setChecking] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [cooldown, setCooldown] = useState(RESEND_COOLDOWN_SECONDS);
+  // Start enabled: signing in lands here without sending an email this session,
+  // so the customer must be able to resend straight away. The cooldown applies
+  // after each resend to respect Firebase's rate limits.
+  const [cooldown, setCooldown] = useState(0);
 
   // Poll for verification (stops once verified: the parent re-renders without this screen).
   useEffect(() => {

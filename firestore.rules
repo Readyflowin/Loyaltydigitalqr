@@ -227,10 +227,21 @@ service cloud.firestore {
         );
       }
 
-      // Phone-number uniqueness index. Visitors can only create (never read or
-      // overwrite), so a second sign-up with the same number fails.
+      // Phone-number uniqueness index. A visitor may create a reservation, or
+      // reclaim one that is stale — the customer it pointed to was deleted or
+      // archived — so an orphaned reservation can never permanently block a
+      // number. A reservation pointing at a live customer still blocks re-use.
       match /customerPhones/{phoneKey} {
-        allow read, update, delete: if isMember(bizId);
+        allow read, delete: if isMember(bizId);
+        allow update: if isMember(bizId) || (
+          phoneKey.matches('^[0-9]{7,15}$')
+          && request.resource.data.keys().hasOnly(['customerId'])
+          && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+          && (
+               !exists(docPath(bizId, 'customers', resource.data.customerId))
+               || get(docPath(bizId, 'customers', resource.data.customerId)).data.status == 'archived'
+             )
+        );
         allow create: if isMember(bizId) || (
           phoneKey.matches('^[0-9]{7,15}$')
           && request.resource.data.keys().hasOnly(['customerId'])
@@ -238,10 +249,19 @@ service cloud.firestore {
         );
       }
 
-      // Email uniqueness index. Same create-only rule, so an email-only sign-up
-      // cannot reuse an address already on file.
+      // Email uniqueness index. Same create / reclaim rules as phones above.
       match /customerEmails/{emailKey} {
-        allow read, update, delete: if isMember(bizId);
+        allow read, delete: if isMember(bizId);
+        allow update: if isMember(bizId) || (
+          emailKey.matches('^[^@/]+@[^@/]+$')
+          && emailKey.size() >= 3 && emailKey.size() <= 120
+          && request.resource.data.keys().hasOnly(['customerId'])
+          && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+          && (
+               !exists(docPath(bizId, 'customers', resource.data.customerId))
+               || get(docPath(bizId, 'customers', resource.data.customerId)).data.status == 'archived'
+             )
+        );
         allow create: if isMember(bizId) || (
           emailKey.matches('^[^@/]+@[^@/]+$')
           && emailKey.size() >= 3 && emailKey.size() <= 120

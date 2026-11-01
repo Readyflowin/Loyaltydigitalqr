@@ -175,7 +175,7 @@ class AuthService {
       await updateProfile(cred.user, { displayName: displayName.trim() });
     }
     try {
-      await sendEmailVerification(cred.user, verificationSettings());
+      await this.sendVerification(cred.user);
     } catch (err) {
       console.warn('Could not send verification email', err);
     }
@@ -184,9 +184,32 @@ class AuthService {
     return this.user;
   }
 
+  /**
+   * Send the verification email. Tries with a continue URL back to the app, but
+   * if that URL's domain is not an authorised continue URI (a common setup gap
+   * that otherwise makes the email silently fail), falls back to Firebase's
+   * default hosted handler so the email still goes out.
+   */
+  private async sendVerification(user: User): Promise<void> {
+    try {
+      await sendEmailVerification(user, verificationSettings());
+    } catch (err) {
+      const code = (err as { code?: string })?.code || '';
+      if (
+        code === 'auth/unauthorized-continue-uri' ||
+        code === 'auth/invalid-continue-uri' ||
+        code === 'auth/missing-continue-uri'
+      ) {
+        await sendEmailVerification(user);
+      } else {
+        throw err;
+      }
+    }
+  }
+
   async resendVerificationEmail(): Promise<void> {
     if (!auth.currentUser) throw new Error('Please sign in first.');
-    await sendEmailVerification(auth.currentUser, verificationSettings());
+    await this.sendVerification(auth.currentUser);
   }
 
   /**
