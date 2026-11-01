@@ -76,6 +76,14 @@ service cloud.firestore {
       return v is string && v.size() > 0 && v.size() <= max;
     }
 
+    function hasPhone(d) {
+      return d.phoneNumber is string && d.phoneNumber.size() > 0;
+    }
+
+    function hasEmail(d) {
+      return d.email is string && d.email.size() > 0;
+    }
+
     // ------------------------------------------------------------------ users
 
     match /users/{uid} {
@@ -195,7 +203,8 @@ service cloud.firestore {
 
       // ------------------------------------------------- loyalty customers
       // Full customer records: members only. Visitors may only create a brand
-      // new, zero-balance record while reserving its phone number in the same batch.
+      // new, zero-balance record while reserving, in the same batch, each contact
+      // identifier it carries (mobile and/or email, per the program's settings).
       match /customers/{id} {
         allow read, update, delete: if isMember(bizId);
         allow create: if isMember(bizId) || (
@@ -208,9 +217,13 @@ service cloud.firestore {
           && request.resource.data.status == 'active'
           && isShortString(request.resource.data.name, 80)
           && !request.resource.data.keys().hasAny(['notes'])
-          && request.resource.data.phoneNumber is string
-          && getAfter(docPath(bizId, 'customerPhones',
-               request.resource.data.phoneNumber.replace('[^0-9]', ''))).data.customerId == id
+          && (hasPhone(request.resource.data) || hasEmail(request.resource.data))
+          && (!hasPhone(request.resource.data)
+               || getAfter(docPath(bizId, 'customerPhones',
+                    request.resource.data.phoneNumber.replace('[^0-9]', ''))).data.customerId == id)
+          && (!hasEmail(request.resource.data)
+               || getAfter(docPath(bizId, 'customerEmails',
+                    request.resource.data.email.lower())).data.customerId == id)
         );
       }
 
@@ -222,6 +235,37 @@ service cloud.firestore {
           phoneKey.matches('^[0-9]{7,15}$')
           && request.resource.data.keys().hasOnly(['customerId'])
           && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+        );
+      }
+
+      // Email uniqueness index. Same create-only rule, so an email-only sign-up
+      // cannot reuse an address already on file.
+      match /customerEmails/{emailKey} {
+        allow read, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          emailKey.matches('^[^@/]+@[^@/]+$')
+          && emailKey.size() >= 3 && emailKey.size() <= 120
+          && request.resource.data.keys().hasOnly(['customerId'])
+          && existsAfter(docPath(bizId, 'customers', request.resource.data.customerId))
+        );
+      }
+
+      // Counter stamp-approval requests. A visitor may only create a brand new
+      // PENDING request that points at a real member card of this business; staff
+      // read the queue and resolve it (approve/decline).
+      match /stampRequests/{reqId} {
+        allow get: if true;
+        allow list, update, delete: if isMember(bizId);
+        allow create: if isMember(bizId) || (
+          reqId.matches('^[a-z0-9]{32}$')
+          && request.resource.data.id == reqId
+          && request.resource.data.businessId == bizId
+          && request.resource.data.status == 'pending'
+          && request.resource.data.memberId is string
+          && isShortString(request.resource.data.customerName, 80)
+          && request.resource.data.source in ['qr_scan', 'button']
+          && !request.resource.data.keys().hasAny(['resolvedAt', 'resolvedBy', 'resultBalance', 'rewardUnlocked'])
+          && exists(docPath(bizId, 'memberCards', request.resource.data.memberId))
         );
       }
 

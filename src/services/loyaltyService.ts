@@ -11,7 +11,9 @@ import type {
   CustomerReward,
   LoyaltyEvent,
   QrCodeDefinition,
+  EnrollmentConfig,
 } from '../types/loyalty';
+import { DEFAULT_ENROLLMENT } from '../types/loyalty';
 import { doc, setDoc, writeBatch, type DocumentData } from 'firebase/firestore';
 import { bizStore, type ModuleSpec } from '../lib/bizStore';
 import { db, getPublicAppOrigin } from '../lib/firebase';
@@ -31,6 +33,16 @@ type StorageSchema = Record<string, BusinessLoyaltyBundle>;
 /** Digits only, used as the per-business phone uniqueness key. */
 export function normalizePhone(phone: string): string {
   return phone.replace(/\D/g, '');
+}
+
+/** Trimmed + lowercased, used as the per-business email uniqueness key. */
+export function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+/** The configured enrollment rules for a program, with the legacy default applied. */
+export function enrollmentRules(program: LoyaltyProgramConfig): EnrollmentConfig {
+  return program.enrollment || DEFAULT_ENROLLMENT;
 }
 
 /**
@@ -73,6 +85,7 @@ function defaultProgram(businessId: string): LoyaltyProgramConfig {
     rewardDescription: biz?.rewardDescription || '1 free item',
     terms: 'Not redeemable for cash. One stamp per qualifying visit.',
     accentColor: biz?.accentColor || '#3027F5',
+    enrollment: { ...DEFAULT_ENROLLMENT },
     status: 'active',
     createdAt: biz?.createdAt || new Date().toISOString(),
     updatedAt: biz?.createdAt || new Date().toISOString(),
@@ -257,6 +270,12 @@ class LoyaltyService {
         customerId: newCustomer.id,
       }).catch((err) => console.warn('Could not index customer phone', err));
     }
+    if (newCustomer.email) {
+      // Likewise reserve the email, so an email-only sign-up cannot duplicate it.
+      setDoc(doc(db, 'businesses', businessId, 'customerEmails', normalizeEmail(newCustomer.email)), {
+        customerId: newCustomer.id,
+      }).catch((err) => console.warn('Could not index customer email', err));
+    }
     return { success: true, customer: newCustomer };
   }
 
@@ -267,21 +286,39 @@ class LoyaltyService {
    */
   async selfEnroll(
     businessId: string,
-    input: { name: string; phoneNumber: string; email?: string; marketingConsent: boolean }
+    input: { name: string; phoneNumber?: string; email?: string; marketingConsent: boolean }
   ): Promise<{ success: true; memberId: string } | { success: false; error: string; alreadyMember?: boolean }> {
-    const name = input.name.trim();
-    const phone = input.phoneNumber.trim();
-    const phoneKey = normalizePhone(phone);
-    if (name.length < 2) return { success: false, error: 'Please enter your name.' };
-    if (phoneKey.length < 7 || phoneKey.length > 15) return { success: false, error: 'Please enter a valid phone number.' };
-    const email = input.email?.trim().toLowerCase() || undefined;
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return { success: false, error: 'Please enter a valid email address or leave it blank.' };
-    }
-
     const program = this.getProgram(businessId);
     if (program.status !== 'active') {
       return { success: false, error: 'This loyalty program is paused right now. Please ask at the counter.' };
+    }
+    const rules = enrollmentRules(program);
+
+    const name = input.name.trim();
+    if (name.length < 2) return { success: false, error: 'Please enter your name.' };
+
+    // Phone — validated when the owner collects it; mandatory when required.
+    const phone = input.phoneNumber?.trim() || '';
+    const phoneKey = phone ? normalizePhone(phone) : '';
+    if (rules.mobile === 'required' && !phone) {
+      return { success: false, error: 'Please enter your mobile number.' };
+    }
+    if (phone && (phoneKey.length < 7 || phoneKey.length > 15)) {
+      return { success: false, error: 'Please enter a valid mobile number.' };
+    }
+
+    // Email — same, per the owner's choice.
+    const email = input.email ? normalizeEmail(input.email) : '';
+    if (rules.email === 'required' && !email) {
+      return { success: false, error: 'Please enter your email address.' };
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return { success: false, error: 'Please enter a valid email address.' };
+    }
+
+    // Guard against a misconfiguration that leaves no way to identify the member.
+    if (!phone && !email) {
+      return { success: false, error: 'Please enter your mobile number or email to join.' };
     }
 
     const now = new Date().toISOString();
@@ -289,8 +326,8 @@ class LoyaltyService {
       id: `cust_${newId()}`,
       businessId,
       name,
-      email,
-      phoneNumber: phone,
+      email: email || undefined,
+      phoneNumber: phone || undefined,
       enrolledAt: now,
       totalVisits: 0,
       currentStamps: 0,
@@ -299,7 +336,7 @@ class LoyaltyService {
       status: 'active',
       marketingConsent: {
         email: input.marketingConsent && !!email,
-        sms: input.marketingConsent,
+        sms: input.marketingConsent && !!phone,
         consentDate: input.marketingConsent ? now : undefined,
       },
     };
@@ -317,7 +354,9 @@ class LoyaltyService {
 
     const clean = <T,>(v: T) => JSON.parse(JSON.stringify(v));
     const batch = writeBatch(db);
-    batch.set(doc(db, 'businesses', businessId, 'customerPhones', phoneKey), { customerId: customer.id });
+    // Reserve every identifier the member provided so a repeat sign-up fails.
+    if (phoneKey) batch.set(doc(db, 'businesses', businessId, 'customerPhones', phoneKey), { customerId: customer.id });
+    if (email) batch.set(doc(db, 'businesses', businessId, 'customerEmails', email), { customerId: customer.id });
     batch.set(doc(db, 'businesses', businessId, 'customers', customer.id), clean(customer));
     batch.set(doc(db, 'businesses', businessId, 'memberCards', customer.id), toMemberCard(clean(customer)));
     batch.set(doc(db, 'businesses', businessId, 'loyaltyEvents', event.id), clean(event));
@@ -327,10 +366,11 @@ class LoyaltyService {
     } catch (err) {
       const code = (err as { code?: string })?.code;
       if (code === 'permission-denied') {
+        const label = phone && email ? 'mobile number or email' : email ? 'email' : 'mobile number';
         return {
           success: false,
           alreadyMember: true,
-          error: 'This phone number is already registered. Show your number at the counter to collect stamps.',
+          error: `This ${label} is already registered. Show your ${label} at the counter to collect stamps.`,
         };
       }
       return { success: false, error: 'Could not complete sign-up. Please check your connection and try again.' };

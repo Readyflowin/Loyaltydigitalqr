@@ -2,6 +2,17 @@ import type { IndustryItem } from '../types';
 
 export const INDUSTRIES_DATA: IndustryItem[] = [
   {
+    id: 'wine',
+    title: 'Wine & Bottle Shops',
+    subtitle: 'Turn weekend browsers into regulars who stock their cellar with you.',
+    badge: 'High Margin',
+    image: 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?auto=format&fit=crop&w=800&q=80',
+    stampsRequired: 8,
+    sampleReward: 'Buy 8 bottles, get your 9th on the house',
+    benefit: 'Rewards repeat purchases without discounting every sale — perfect for curated cellars.',
+    tags: ['Repeat Purchases', 'Higher Basket Size', 'Tasting Invites'],
+  },
+  {
     id: 'cafes',
     title: 'Cafés & Coffee Shops',
     subtitle: 'Turn morning grab-and-go commuters into loyal daily regulars.',

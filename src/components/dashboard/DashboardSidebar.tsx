@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { stampRequestService } from '../../services/stampRequestService';
 import {
   LayoutDashboard,
   Award,
@@ -57,10 +58,24 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   onSignOut,
   onCloseMobile,
 }) => {
+  // Live count of customers waiting for a stamp approval, shown as a nav badge.
+  const [pendingStampRequests, setPendingStampRequests] = useState(0);
+  useEffect(() => {
+    const unsub = stampRequestService.subscribePending(activeBusiness.id, (rows) =>
+      setPendingStampRequests(rows.length)
+    );
+    return unsub;
+  }, [activeBusiness.id]);
+
   // Core navigation items common across all business workspaces
   const coreNavItems: NavItem[] = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'loyalty', label: 'Loyalty Program', icon: Award },
+    {
+      id: 'loyalty',
+      label: 'Loyalty Program',
+      icon: Award,
+      badge: pendingStampRequests > 0 ? String(pendingStampRequests) : undefined,
+    },
     { id: 'qr-studio', label: 'QR Studio', icon: QrCode },
     { id: 'customers', label: 'Customers', icon: Users },
     { id: 'offers', label: 'Offers & Promos', icon: Tag },
@@ -193,6 +208,17 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                     <Icon className="w-4 h-4 flex-shrink-0" />
                     <span>{item.label}</span>
                   </div>
+                  {item.badge && (
+                    <span
+                      className={`min-w-[18px] h-[18px] px-1.5 rounded-full text-xs font-bold flex items-center justify-center ${
+                        isActive
+                          ? 'bg-white/25 text-white dark:bg-black/20 dark:text-[#11100D]'
+                          : 'bg-[#3027F5] text-white dark:bg-[#E4C174] dark:text-[#11100D]'
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
               );
             })}

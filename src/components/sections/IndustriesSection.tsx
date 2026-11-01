@@ -35,7 +35,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
               Built for businesses that rely on repeat visits
             </h2>
             <p className="mt-3 text-base sm:text-lg text-muted-foreground">
-              From neighborhood espresso bars to auto detailers, Loyaltydigitalqr replaces paper punch cards with zero friction.
+              From corner wine shops and neighborhood cafés to auto detailers, Loyaltydigitalqr replaces paper punch cards with zero friction.
             </p>
           </div>
 

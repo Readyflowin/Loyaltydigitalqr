@@ -11,7 +11,7 @@ export interface StoreItem {
   rewardTitle: string;
   rewardSubtitle: string;
   rewardCode: string;
-  iconName: 'Flame' | 'Scissors' | 'Coffee' | 'Utensils' | 'Car' | 'Fuel' | 'Dumbbell';
+  iconName: 'Flame' | 'Scissors' | 'Coffee' | 'Wine' | 'Utensils' | 'Car' | 'Fuel' | 'Dumbbell';
   accentColor?: string;
 }
 

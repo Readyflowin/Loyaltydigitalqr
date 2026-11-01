@@ -1,5 +1,5 @@
 import React from 'react';
-import { Coffee, Gift, Wallet, Flower2, Zap } from 'lucide-react';
+import { Coffee, Wine, Gift, Wallet, Flower2 } from 'lucide-react';
 
 interface HeroLightCompositionProps {
   onViewReward: () => void;
@@ -79,7 +79,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
             </div>
           </div>
 
-          {/* LAYER 3B: Background Peeking Card 2: Fitness (Charcoal, Rotated -5.5deg) */}
+          {/* LAYER 3B: Background Peeking Card 2: Café (Charcoal, Rotated -5.5deg) */}
           <div
             className="absolute top-[70px] left-[22px] w-[210px] h-[320px] rounded-[24px] bg-[#1C1E24] text-white p-4 z-4 shadow-lg border border-black/10"
             style={{
@@ -88,14 +88,14 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
             aria-hidden="true"
           >
             <div className="flex items-center gap-2 text-white/90">
-              <Zap className="w-3.5 h-3.5 fill-current text-white/90" />
+              <Coffee className="w-3.5 h-3.5 text-white/90" />
               <span className="font-heading font-black text-xs tracking-wider">
-                FITNESS
+                CAFÉ
               </span>
             </div>
           </div>
 
-          {/* LAYER 4: GOODDAY COFFEE Main Card (296px x 438px, Rotated -3.5deg) */}
+          {/* LAYER 4: VINE & CO Wine Shop Main Card (296px x 438px, Rotated -3.5deg) */}
           <div
             className="absolute top-[30px] left-[52px] w-[296px] h-[438px] rounded-[26px] bg-white border border-black/10 overflow-hidden z-10 flex flex-col justify-between"
             style={{
@@ -107,16 +107,16 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
               {/* Card Dark Header Bar */}
               <div className="bg-[#18191E] text-white px-5 py-3.5 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  {/* Coffee Cup Icon */}
+                  {/* Wine Glass Icon */}
                   <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Coffee className="w-4 h-4 text-white" />
+                    <Wine className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <div className="font-heading font-black tracking-wider text-[13px] leading-tight">
-                      GOODDAY
+                      VINE &amp; CO
                     </div>
                     <div className="text-xs tracking-widest text-[#A0A2A8] font-bold">
-                      COFFEE
+                      WINE SHOP
                     </div>
                   </div>
                 </div>
@@ -131,11 +131,11 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
                 </div>
               </div>
 
-              {/* Coffee Photo Banner (Classic cappuccino latte art on rustic wood table) */}
+              {/* Wine Photo Banner (Red wine poured into glasses beside bottles) */}
               <div className="relative h-[126px] overflow-hidden bg-[#2C241D]">
                 <img
-                  src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80"
-                  alt="Cappuccino latte art in ceramic cup on café table"
+                  src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80"
+                  alt="Glasses of red wine beside bottles on a wine shop counter"
                   className="w-full h-full object-cover object-center filter brightness-95"
                   loading="eager"
                 />
@@ -145,32 +145,32 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
               {/* White Card Body */}
               <div className="px-5 pt-3.5 pb-2">
                 <h3 className="font-heading font-black text-[16.5px] leading-[1.22] text-[#111318]">
-                  Collect 8 visits,
+                  Buy 8 bottles,
                   <br />
-                  get 1 free coffee.
+                  get 1 on the house.
                 </h3>
 
                 {/* EXACTLY 8 STAMPS IN ONE SINGLE HORIZONTAL ROW */}
                 <div className="flex items-center justify-between gap-1.5 my-3.5">
                   {/* Stamp 1: Filled */}
                   <div className="w-[26px] h-[26px] rounded-full bg-[#3027F5] flex items-center justify-center text-white shadow-xs">
-                    <Coffee className="w-3.5 h-3.5 text-white" />
+                    <Wine className="w-3.5 h-3.5 text-white" />
                   </div>
                   {/* Stamp 2: Filled */}
                   <div className="w-[26px] h-[26px] rounded-full bg-[#3027F5] flex items-center justify-center text-white shadow-xs">
-                    <Coffee className="w-3.5 h-3.5 text-white" />
+                    <Wine className="w-3.5 h-3.5 text-white" />
                   </div>
                   {/* Stamp 3: Filled */}
                   <div className="w-[26px] h-[26px] rounded-full bg-[#3027F5] flex items-center justify-center text-white shadow-xs">
-                    <Coffee className="w-3.5 h-3.5 text-white" />
+                    <Wine className="w-3.5 h-3.5 text-white" />
                   </div>
                   {/* Stamp 4: Filled */}
                   <div className="w-[26px] h-[26px] rounded-full bg-[#3027F5] flex items-center justify-center text-white shadow-xs">
-                    <Coffee className="w-3.5 h-3.5 text-white" />
+                    <Wine className="w-3.5 h-3.5 text-white" />
                   </div>
                   {/* Stamp 5: Filled */}
                   <div className="w-[26px] h-[26px] rounded-full bg-[#3027F5] flex items-center justify-center text-white shadow-xs">
-                    <Coffee className="w-3.5 h-3.5 text-white" />
+                    <Wine className="w-3.5 h-3.5 text-white" />
                   </div>
                   {/* Stamp 6: Unfilled Dashed */}
                   <div className="w-[26px] h-[26px] rounded-full border-2 border-dashed border-[#D0CECA] bg-transparent" />
@@ -305,7 +305,7 @@ export const HeroLightComposition: React.FC<HeroLightCompositionProps> = ({
                   <span>Reward Unlocked!</span>
                 </div>
                 <div className="text-xs text-[#60646C] whitespace-nowrap mt-0.5">
-                  1 free coffee is ready to redeem.
+                  1 free bottle is ready to redeem.
                 </div>
               </div>
             </div>

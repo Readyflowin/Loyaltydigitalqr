@@ -2,17 +2,17 @@ import type { StoreItem } from '../types';
 
 export const INITIAL_STORES: StoreItem[] = [
   {
-    id: 'smoke',
-    initial: 'S',
-    name: 'Smoke & Vapor Lounge',
-    category: 'Smoke',
-    currentStamps: 3,
+    id: 'wine',
+    initial: 'V',
+    name: 'Wine & Bottle Shop',
+    category: 'Wine',
+    currentStamps: 6,
     maxStamps: 10,
-    rewardRule: '10 VISITS = FREE GIFT',
-    rewardTitle: 'Free Premium Blend & Access Pass',
-    rewardSubtitle: 'Redeem at counter for choice of premium house blend or accessory',
-    rewardCode: 'SMK-10X-FREE',
-    iconName: 'Flame',
+    rewardRule: '10 BOTTLES = FREE GIFT',
+    rewardTitle: 'Free Bottle from the Curated Cellar',
+    rewardSubtitle: 'Redeem at counter for a house-selected bottle or tasting flight',
+    rewardCode: 'VINE-10X-FREE',
+    iconName: 'Wine',
     accentColor: '#E4C174',
   },
   {

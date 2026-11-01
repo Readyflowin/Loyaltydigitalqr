@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Check, AlertCircle } from 'lucide-react';
-import type { LoyaltyProgramConfig, LoyaltyProgramType } from '../../../types/loyalty';
+import type { LoyaltyProgramConfig, LoyaltyProgramType, EnrollmentConfig, EnrollmentFieldRule } from '../../../types/loyalty';
+import { DEFAULT_ENROLLMENT } from '../../../types/loyalty';
 import type { ThemeMode } from '../../../types';
 import type { BusinessType } from '../../../types/onboarding';
 import { LoyaltyCardPreview } from '../../onboarding/LoyaltyCardPreview';
@@ -32,6 +33,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
   const [terms, setTerms] = useState(program.terms || '');
   const [accentColor, setAccentColor] = useState(program.accentColor);
   const [status, setStatus] = useState(program.status);
+  const [enrollment, setEnrollment] = useState<EnrollmentConfig>(program.enrollment || DEFAULT_ENROLLMENT);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -47,6 +49,9 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
     if (stampsRequired < 3 || stampsRequired > 24) {
       newErrors.stampsRequired = 'Milestone must be between 3 and 24 visits.';
     }
+    if (enrollment.mobile !== 'required' && enrollment.email !== 'required') {
+      newErrors.enrollment = 'Make at least one of mobile or email required, so members can be identified at the counter.';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -61,6 +66,7 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
       terms: terms.trim() || undefined,
       accentColor,
       status,
+      enrollment,
     });
 
     onClose();
@@ -282,6 +288,58 @@ const LoyaltyProgramEditModalContent: React.FC<Omit<LoyaltyProgramEditModalProps
                 placeholder="e.g. Valid on dine-in and takeout. One stamp per counter transaction."
                 className="w-full px-4 py-2 rounded-xl border border-border bg-muted text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
               />
+            </div>
+
+            {/* Sign-up fields the customer fills in when they scan the QR */}
+            <div className="pt-2">
+              <label className="block text-xs font-bold text-foreground uppercase mb-1">
+                Sign-up Details to Collect
+              </label>
+              <p className="text-xs text-muted-foreground mb-2.5">
+                Choose what customers enter when they join from the counter QR. Name is always asked.
+              </p>
+              <div className="space-y-2">
+                {([
+                  { key: 'mobile', label: 'Mobile number' },
+                  { key: 'email', label: 'Email address' },
+                ] as const).map((field) => (
+                  <div
+                    key={field.key}
+                    className="flex items-center justify-between gap-3 p-2.5 rounded-xl border border-border bg-muted"
+                  >
+                    <span className="text-xs font-bold text-foreground">{field.label}</span>
+                    <div className="flex items-center gap-1">
+                      {([
+                        { id: 'required', label: 'Required' },
+                        { id: 'optional', label: 'Optional' },
+                        { id: 'off', label: 'Off' },
+                      ] as const).map((opt) => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => {
+                            setEnrollment((prev) => ({ ...prev, [field.key]: opt.id as EnrollmentFieldRule }));
+                            if (errors.enrollment) setErrors((prev) => ({ ...prev, enrollment: '' }));
+                          }}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                            enrollment[field.key] === opt.id
+                              ? 'bg-[#3027F5] dark:bg-[#E4C174] text-white dark:text-[#11100D] shadow-xs'
+                              : 'bg-white dark:bg-[#2D2D2D] border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.2)] text-muted-foreground'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {errors.enrollment && (
+                <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{errors.enrollment}</span>
+                </p>
+              )}
             </div>
 
           </div>

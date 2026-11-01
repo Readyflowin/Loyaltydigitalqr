@@ -4,6 +4,7 @@ import {
   Flame,
   Scissors,
   Coffee,
+  Wine,
   UtensilsCrossed,
   CarFront,
   Fuel,
@@ -32,10 +33,10 @@ export const MasterLoyaltyWallet: React.FC<MasterLoyaltyWalletProps> = ({
 }) => {
   // Store balances state: independent balance per store
   const [stores, setStores] = useState<StoreItem[]>(INITIAL_STORES);
-  const [selectedStoreId, setSelectedStoreId] = useState<string>('coffee');
+  const [selectedStoreId, setSelectedStoreId] = useState<string>('wine');
 
   const selectedStore =
-    stores.find((s) => s.id === selectedStoreId) || stores[2];
+    stores.find((s) => s.id === selectedStoreId) || stores[0];
 
   // Helper to trigger confetti celebration
   const triggerCelebration = () => {
@@ -102,6 +103,8 @@ export const MasterLoyaltyWallet: React.FC<MasterLoyaltyWalletProps> = ({
         return <Scissors className={className} />;
       case 'Coffee':
         return <Coffee className={className} />;
+      case 'Wine':
+        return <Wine className={className} />;
       case 'Utensils':
         return <UtensilsCrossed className={className} />;
       case 'Car':

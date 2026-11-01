@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { Gift, Loader2, Moon, Sun, Info } from 'lucide-react';
+import { Gift, Loader2, Moon, Sun, Info, Stamp, CheckCircle2, XCircle } from 'lucide-react';
 import { useRouter } from '../router';
 import { db } from '../lib/firebase';
 import { businessService } from '../services/businessService';
-import { loyaltyService } from '../services/loyaltyService';
+import { loyaltyService, enrollmentRules } from '../services/loyaltyService';
+import { stampRequestService } from '../services/stampRequestService';
 import type { ThemeMode } from '../types';
 import type { Business } from '../types/business';
+import type { EnrollmentConfig, StampRequest } from '../types/loyalty';
 import { LoyaltyCard } from '../components/ui';
 
 interface PublicLoyaltyCardPageProps {
@@ -33,6 +35,8 @@ interface MemberCard {
 }
 
 const MEMBER_KEY = (businessId: string) => `loyalty_member_${businessId}`;
+/** Remembers the customer's own open request id so a re-mount never double-sends. */
+const REQUEST_KEY = (businessId: string, memberId: string) => `loyalty_request_${businessId}_${memberId}`;
 
 const inputClass =
   'w-full px-4 py-3 rounded-xl border border-border bg-white dark:bg-[#2D2D2D] text-foreground text-base focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]';
@@ -51,12 +55,14 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
   const business = businessService.findBusinessBySlug(slug);
   const program = business ? loyaltyService.getProgram(business.id) : null;
 
-  // Returning customer on this device: go straight to their card.
+  // Returning customer on this device: go straight to their card. The bare
+  // /card/:slug link is only reached by scanning the counter QR, so mark the
+  // redirect as a scan — that is what auto-sends a stamp request.
   useEffect(() => {
     if (!business || memberId) return;
     try {
       const saved = localStorage.getItem(MEMBER_KEY(business.id));
-      if (saved) navigate(`/card/${business.slug}/${saved}`, { replace: true });
+      if (saved) navigate(`/card/${business.slug}/${saved}?scan=1`, { replace: true });
     } catch {
       // storage unavailable
     }
@@ -118,6 +124,7 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
             stampsRequired={program.stampsRequired}
             rewardDescription={program.rewardDescription}
             terms={program.terms}
+            enrollment={enrollmentRules(program)}
           />
         )}
       </div>
@@ -132,7 +139,8 @@ const JoinForm: React.FC<{
   stampsRequired: number;
   rewardDescription: string;
   terms?: string;
-}> = ({ businessId, slug, accent, stampsRequired, rewardDescription, terms }) => {
+  enrollment: EnrollmentConfig;
+}> = ({ businessId, slug, accent, stampsRequired, rewardDescription, terms, enrollment }) => {
   const { navigate } = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -141,6 +149,18 @@ const JoinForm: React.FC<{
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const showMobile = enrollment.mobile !== 'off';
+  const showEmail = enrollment.email !== 'off';
+  // Marketing consent is only meaningful if we hold a channel to reach them on.
+  const canContact = showMobile || showEmail;
+
+  const findByLabel =
+    enrollment.mobile !== 'off' && enrollment.email !== 'off'
+      ? 'mobile number or email'
+      : enrollment.email !== 'off' && enrollment.mobile === 'off'
+        ? 'email'
+        : 'mobile number';
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
@@ -148,8 +168,8 @@ const JoinForm: React.FC<{
     setError(null);
     const res = await loyaltyService.selfEnroll(businessId, {
       name,
-      phoneNumber: phone,
-      email,
+      phoneNumber: showMobile ? phone : undefined,
+      email: showEmail ? email : undefined,
       marketingConsent: consent,
     });
     setSubmitting(false);
@@ -176,33 +196,50 @@ const JoinForm: React.FC<{
       </div>
 
       <h1 className="text-xl font-heading font-black">Join in seconds</h1>
-      <p className="text-sm text-muted-foreground mt-1 mb-5">No app needed. Staff find your card by phone number.</p>
+      <p className="text-sm text-muted-foreground mt-1 mb-5">No app needed. Staff find your card by {findByLabel}.</p>
 
       <form onSubmit={submit} className="space-y-4">
         <div>
           <label className="block text-xs font-bold uppercase mb-1">Your name</label>
           <input className={inputClass} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" required />
         </div>
-        <div>
-          <label className="block text-xs font-bold uppercase mb-1">Mobile number</label>
-          <input
-            className={inputClass}
-            type="tel"
-            inputMode="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            autoComplete="tel"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-bold uppercase mb-1">Email (optional)</label>
-          <input className={inputClass} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
-        </div>
-        <label className="flex items-start gap-2.5 text-xs text-muted-foreground cursor-pointer">
-          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5" />
-          <span>I'd like to receive offers from this business by SMS/email. (Optional — you can still join without this.)</span>
-        </label>
+        {showMobile && (
+          <div>
+            <label className="block text-xs font-bold uppercase mb-1">
+              Mobile number {enrollment.mobile === 'optional' && <span className="text-subtle-foreground font-medium normal-case">(optional)</span>}
+            </label>
+            <input
+              className={inputClass}
+              type="tel"
+              inputMode="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              autoComplete="tel"
+              required={enrollment.mobile === 'required'}
+            />
+          </div>
+        )}
+        {showEmail && (
+          <div>
+            <label className="block text-xs font-bold uppercase mb-1">
+              Email {enrollment.email === 'optional' && <span className="text-subtle-foreground font-medium normal-case">(optional)</span>}
+            </label>
+            <input
+              className={inputClass}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              required={enrollment.email === 'required'}
+            />
+          </div>
+        )}
+        {canContact && (
+          <label className="flex items-start gap-2.5 text-xs text-muted-foreground cursor-pointer">
+            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5" />
+            <span>I'd like to receive offers from this business by SMS/email. (Optional — you can still join without this.)</span>
+          </label>
+        )}
 
         {error && (
           <div role="alert" className="p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-sm text-red-700 dark:text-red-300">
@@ -234,10 +271,19 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
   accent,
 }) => {
   const businessId = business.id;
-  const { navigate } = useRouter();
+  const { searchParams, navigate } = useRouter();
   const program = loyaltyService.getProgram(businessId);
   const [card, setCard] = useState<MemberCard | null>(null);
   const [state, setState] = useState<'loading' | 'ready' | 'missing'>('loading');
+
+  // Stamp-approval request state.
+  const [openRequestId, setOpenRequestId] = useState<string | null>(null);
+  const [request, setRequest] = useState<StampRequest | null>(null);
+  const [sending, setSending] = useState(false);
+  const autoHandled = useRef(false);
+  const scan = searchParams.get('scan') === '1';
+  const programActive = program.status === 'active';
+  const hasPending = request?.status === 'pending';
 
   useEffect(() => {
     setState('loading');
@@ -256,9 +302,66 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
     return unsub;
   }, [businessId, memberId]);
 
+  const sendRequest = React.useCallback(
+    async (source: StampRequest['source']) => {
+      setSending(true);
+      const res = await stampRequestService.createRequest(businessId, {
+        memberId,
+        customerName: card?.firstName || 'Member',
+        source,
+      });
+      setSending(false);
+      if (res.success) {
+        try {
+          localStorage.setItem(REQUEST_KEY(businessId, memberId), res.request.id);
+        } catch {
+          // ignore
+        }
+        setOpenRequestId(res.request.id);
+        setRequest(res.request);
+      }
+    },
+    [businessId, memberId, card]
+  );
+
+  // Once the card is loaded: resume watching an open request from this device,
+  // or — if the customer just scanned the counter QR — auto-send one.
+  useEffect(() => {
+    if (state !== 'ready' || autoHandled.current) return;
+    autoHandled.current = true;
+    let savedId: string | null = null;
+    try {
+      savedId = localStorage.getItem(REQUEST_KEY(businessId, memberId));
+    } catch {
+      savedId = null;
+    }
+    if (savedId) {
+      setOpenRequestId(savedId);
+    } else if (scan && programActive) {
+      void sendRequest('qr_scan');
+    }
+  }, [state, scan, programActive, businessId, memberId, sendRequest]);
+
+  // Watch the open request so pending → approved/declined updates live.
+  useEffect(() => {
+    if (!openRequestId) return;
+    const unsub = stampRequestService.watchRequest(businessId, openRequestId, (r) => {
+      setRequest(r);
+      if (r && r.status !== 'pending') {
+        try {
+          localStorage.removeItem(REQUEST_KEY(businessId, memberId));
+        } catch {
+          // ignore
+        }
+      }
+    });
+    return unsub;
+  }, [openRequestId, businessId, memberId]);
+
   const forget = () => {
     try {
       localStorage.removeItem(MEMBER_KEY(businessId));
+      localStorage.removeItem(REQUEST_KEY(businessId, memberId));
     } catch {
       // ignore
     }
@@ -333,16 +436,69 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
         </div>
       )}
 
+      {/* Live stamp-request status */}
+      {request?.status === 'pending' && (
+        <div
+          className="p-4 rounded-2xl flex items-center gap-3 text-sm border"
+          style={{ backgroundColor: `${accent}14`, borderColor: `${accent}40` }}
+          role="status"
+        >
+          <Loader2 className="w-5 h-5 animate-spin flex-shrink-0" style={{ color: accent }} />
+          <div>
+            <div className="font-bold text-foreground">Request sent — waiting for staff…</div>
+            <div className="text-xs text-muted-foreground">Keep this screen open. Your stamp lands the moment staff approve it.</div>
+          </div>
+        </div>
+      )}
+      {request?.status === 'approved' && (
+        <div className="p-4 rounded-2xl flex items-center gap-3 text-sm bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800" role="status">
+          <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
+          <div>
+            <div className="font-bold text-emerald-800 dark:text-emerald-300">
+              {request.rewardUnlocked ? 'Stamp added — reward unlocked! 🎉' : 'Stamp added! 🎉'}
+            </div>
+            <div className="text-xs text-emerald-700/80 dark:text-emerald-300/80">Your card above is up to date.</div>
+          </div>
+        </div>
+      )}
+      {request?.status === 'declined' && (
+        <div className="p-4 rounded-2xl flex items-center gap-3 text-sm bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800" role="status">
+          <XCircle className="w-5 h-5 flex-shrink-0 text-amber-600 dark:text-amber-400" />
+          <div>
+            <div className="font-bold text-amber-800 dark:text-amber-300">Request not approved</div>
+            <div className="text-xs text-amber-700/80 dark:text-amber-300/80">Please check with staff at the counter.</div>
+          </div>
+        </div>
+      )}
+
+      {/* Ask for a stamp */}
+      {programActive ? (
+        <button
+          type="button"
+          onClick={() => sendRequest('button')}
+          disabled={sending || hasPending}
+          className="w-full py-3.5 rounded-xl font-bold text-white shadow-md cursor-pointer disabled:opacity-60 inline-flex items-center justify-center gap-2"
+          style={{ backgroundColor: accent }}
+        >
+          <Stamp className="w-5 h-5" />
+          <span>{hasPending ? 'Waiting for approval…' : sending ? 'Sending…' : "I'm at the counter — request a stamp"}</span>
+        </button>
+      ) : (
+        <div className="p-4 rounded-2xl bg-muted text-xs text-muted-foreground text-center">
+          Stamping is paused right now. Please ask at the counter.
+        </div>
+      )}
+
       <div className="p-4 rounded-2xl bg-muted text-xs text-muted-foreground flex items-start gap-2">
         <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
         <span>
-          To collect a stamp, tell staff your mobile number at the counter. Bookmark this page or add it to your home screen to
-          check your progress. Lifetime visits: {card.totalVisits}.
+          Scan the counter QR or tap the button above to ask staff for a stamp — they approve it and it appears here instantly.
+          Bookmark this page or add it to your home screen. Lifetime visits: {card.totalVisits}.
         </span>
       </div>
 
       <button type="button" onClick={forget} className="w-full text-xs text-subtle-foreground underline cursor-pointer">
-        Not you? Use a different number
+        Not you? Use a different account
       </button>
     </div>
   );
