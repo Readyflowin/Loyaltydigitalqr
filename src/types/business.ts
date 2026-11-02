@@ -51,6 +51,12 @@ export interface Business {
   createdAt: string;
   /** End of the free trial (createdAt + 30 days). Billing is not automated yet. */
   trialEndsAt: string;
+  /**
+   * Set by the master-admin console. 'revoked' locks the owner out of the
+   * workspace. Absent on older documents — treated as active (see the gate in
+   * DashboardPage). Only ever written server-side via the Admin SDK.
+   */
+  subscriptionStatus?: 'trial' | 'active' | 'revoked';
   /** Present only on member-visible documents (never on public profiles). */
   ownerUid?: string;
   memberUids?: string[];

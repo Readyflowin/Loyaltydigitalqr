@@ -70,13 +70,13 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
               href="/industries/cafes"
               className="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-muted-foreground"
             >
-              Cafés & Coffee
+              Cafés & Coffee Shops
             </Link>
             <Link
               href="/industries/salons"
               className="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-muted-foreground"
             >
-              Salons & Barbers
+              Salons & Barbershops
             </Link>
             <Link
               href="/industries/retail"
@@ -88,13 +88,13 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
               href="/industries/gyms"
               className="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-muted-foreground"
             >
-              Gyms & Fitness
+              Gyms & Fitness Studios
             </Link>
             <Link
               href="/industries/carwash"
               className="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-muted-foreground"
             >
-              Car Wash
+              Car Wash & Auto Detailing
             </Link>
             <Link
               href="/industries/restaurants"

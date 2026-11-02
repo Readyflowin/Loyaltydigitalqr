@@ -106,6 +106,14 @@ service cloud.firestore {
       allow delete: if signedIn() && isOwner(resource.data.businessId);
     }
 
+    // Editable marketing content (homepage hero text). Read by everyone; only
+    // ever written by the master-admin API through the Admin SDK, which bypasses
+    // these rules — so no client write is permitted here.
+    match /siteConfig/{docId} {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
     match /publicProfiles/{bizId} {
       allow get: if true;
       allow list: if false;

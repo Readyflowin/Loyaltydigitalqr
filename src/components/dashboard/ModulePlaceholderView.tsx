@@ -19,7 +19,7 @@ const MODULE_DETAILS: {
   orders: {
     title: 'Customer Ordering & Management',
     description: 'Line-busting counter and mobile ordering for grab-and-go guests.',
-    targetTask: 'Task 7 & Task 8 (Café Ordering & Kitchen Workflows)',
+    targetTask: 'Café Ordering & Kitchen Workflows',
     plannedFeatures: [
       'Customer order placement via counter QR',
       'Live order queue with barista ticket printing',
@@ -29,7 +29,7 @@ const MODULE_DETAILS: {
   menu: {
     title: 'Digital Menu & Item Pricing',
     description: 'Real-time category management, seasonal specials, and item modifiers.',
-    targetTask: 'Task 7 (Menu Architecture & Customization)',
+    targetTask: 'Menu Architecture & Customization',
     plannedFeatures: [
       'Beverage and food categories with dietary flags',
       'Milk, roast, and size modifier bundles',
@@ -39,7 +39,7 @@ const MODULE_DETAILS: {
   tables: {
     title: 'Table Tents & Dine-in QR Stands',
     description: 'Numbered table markers with table-side ordering and bill splitting.',
-    targetTask: 'Task 7 (Table-Side QR Integration)',
+    targetTask: 'Table-Side QR Integration',
     plannedFeatures: [
       'Print-ready table number standee generator',
       'Automatic table location metadata capture on scan',
@@ -49,7 +49,7 @@ const MODULE_DETAILS: {
   kitchen: {
     title: 'Kitchen Display System (KDS)',
     description: 'Real-time order tickets for kitchen and barista prep stations.',
-    targetTask: 'Task 8 (Kitchen Prep Routing & Workflow)',
+    targetTask: 'Kitchen Prep Routing & Workflow',
     plannedFeatures: [
       'Touchscreen ticket bumping and timer tracking',
       'Prep station routing (barista vs sandwich line)',
@@ -59,7 +59,7 @@ const MODULE_DETAILS: {
   appointments: {
     title: 'Appointments & Booking Management',
     description: 'Online booking for salon, haircut, and personal care appointments.',
-    targetTask: 'Task 9 (Salon Bookings & Client Scheduling)',
+    targetTask: 'Salon Bookings & Client Scheduling',
     plannedFeatures: [
       'Client self-scheduling via counter QR or link',
       'Automated SMS & calendar appointment reminders',
@@ -69,7 +69,7 @@ const MODULE_DETAILS: {
   calendar: {
     title: 'Staff Chair Calendar',
     description: 'Daily and weekly schedule view across stylists, barbers, and service chairs.',
-    targetTask: 'Task 9 (Staff Availability & Rosters)',
+    targetTask: 'Staff Availability & Rosters',
     plannedFeatures: [
       'Multi-stylist schedule grid with shift toggles',
       'Double-booking prevention and buffer intervals',
@@ -79,7 +79,7 @@ const MODULE_DETAILS: {
   services: {
     title: 'Salon Service Catalogue',
     description: 'Treatment durations, pricing tiers, and bundled styling packages.',
-    targetTask: 'Task 9 (Service Menu & Duration Engine)',
+    targetTask: 'Service Menu & Duration Engine',
     plannedFeatures: [
       'Custom cut, coloring, and treatment durations',
       'Stylist-level price adjustments',
@@ -89,7 +89,7 @@ const MODULE_DETAILS: {
   staff: {
     title: 'Stylists & Chair Stations',
     description: 'Staff member profiles, individual PIN stamps, and commission tracking.',
-    targetTask: 'Task 9 (Staff Management)',
+    targetTask: 'Staff & Team Station Management',
     plannedFeatures: [
       'Individual staff PIN verification for stamps and tips',
       'Chair station assignment and schedule limits',
@@ -146,7 +146,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
   const info = MODULE_DETAILS[moduleId] || {
     title: 'Staged Module',
     description: 'This business module is scheduled for an upcoming product release.',
-    targetTask: 'Future Implementation Milestone',
+    targetTask: 'Future Product Release',
     plannedFeatures: [
       'Tailored industry workflows',
       'Dedicated counter and tablet interfaces',
@@ -175,7 +175,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
         </div>
 
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-bold uppercase mb-3">
-          <span>PLANNED MODULE · STAGED PRODUCT ROADMAP</span>
+          <span>UPCOMING MODULE · PRODUCT ROADMAP</span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
@@ -189,7 +189,7 @@ export const ModulePlaceholderView: React.FC<ModulePlaceholderViewProps> = ({
         {/* Milestone Indicator */}
         <div className="mt-6 p-4 rounded-2xl bg-muted border border-border max-w-md mx-auto text-xs">
           <span className="text-xs uppercase text-subtle-foreground dark:text-[#AAA499] block font-semibold">
-            IMPLEMENTATION MILESTONE:
+            PRODUCT ROADMAP MILESTONE:
           </span>
           <strong className="text-[#3027F5] dark:text-[#E4C174] font-heading font-bold text-sm mt-0.5 block">
             {info.targetTask}

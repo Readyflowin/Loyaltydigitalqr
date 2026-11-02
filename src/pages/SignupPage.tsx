@@ -84,7 +84,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
               Start your free trial
             </h1>
 
-            {/* Value checklist matching screenshot */}
+            {/* Value checklist */}
             <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400">
               <span className="inline-flex items-center gap-1">
                 <Check className="w-4 h-4 stroke-[2.5]" />
@@ -107,7 +107,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ theme }) => {
             </div>
           )}
 
-          {/* Email Signup Form (Matching screenshot layout) */}
+          {/* Email Signup Form */}
           <form onSubmit={handleEmailSubmit} className="mt-6 space-y-4">
             <div>
               <label className="block text-xs font-bold text-foreground mb-1.5">

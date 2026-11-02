@@ -10,6 +10,7 @@ import {
 import type { ThemeMode, StoreItem } from '../../types';
 import { HeroLightComposition } from './HeroLightComposition';
 import { MasterLoyaltyWallet } from './MasterLoyaltyWallet';
+import { useHeroConfig } from '../../services/siteConfigService';
 
 interface HeroSectionProps {
   theme: ThemeMode;
@@ -24,6 +25,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenVideoDemo,
   onViewReward,
 }) => {
+  const hero = useHeroConfig();
+  const headlineLines = hero.headline.split('\n');
   return (
     <section className="relative pt-2 sm:pt-4 xl:pt-6 dark:xl:pt-11 pb-6 overflow-hidden bg-[#F8F7F2] dark:bg-[#1C1C1C] w-full">
       {/* Responsive page container spanning 90-92% width on desktop (~5% side gutters) */}
@@ -39,18 +42,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ECEAE3] dark:bg-[#2D2D2D] dark:border dark:border-[rgba(228,193,116,0.3)] shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#3027F5] dark:bg-[#E4C174]" />
               <span className="text-xs xl:text-xs font-bold tracking-wider text-[#111318] dark:text-[#E4C174] uppercase">
-                LOYALTY, WITHOUT THE FRICTION
+                {hero.eyebrow}
               </span>
             </div>
 
             {/* Confident, Ultra-Bold Headline */}
             <h1 className="mt-4 xl:mt-5 text-[52px] sm:text-[62px] xl:text-[72px] 2xl:text-[76px] font-heading font-black tracking-[-0.028em] leading-[0.98] text-foreground">
-              Give them
-              <br />
-              a reason to
-              <br />
+              {headlineLines.map((line, i) => (
+                <React.Fragment key={i}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
               <span className="relative inline-block text-[#3027F5] dark:text-[#E4C174] mt-0.5">
-                come back.
+                {hero.highlight}
                 {/* Precision Anchored Highlighter Underline */}
                 <svg
                   className="absolute -bottom-1 -left-1 w-[106%] h-[14px] xl:h-[18px] -z-1 pointer-events-none"
@@ -71,9 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Supporting Paragraph with Exact Reference Line Breaks */}
             <p className="mt-4 xl:mt-5 text-[15px] xl:text-[17px] text-[#4A4D55] dark:text-[#D0CBC1] leading-[1.55] max-w-[360px] xl:max-w-[440px]">
-              A digital loyalty card your customers can join in seconds. No app. No POS integration.
-              <br className="hidden sm:inline" />
-              Just a simple reason to return.
+              {hero.paragraph}
             </p>
 
             {/* CTAs Row */}

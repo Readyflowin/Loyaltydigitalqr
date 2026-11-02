@@ -465,7 +465,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
         )}
 
         {/* ========================================================= */}
-        {/* STEP 2: BUSINESS DETAILS (Matching Image 4)               */}
+        {/* STEP 2: BUSINESS DETAILS                                  */}
         {/* ========================================================= */}
         {formData.currentStep === 2 && (
           <div className="space-y-6 animate-in fade-in duration-150">
@@ -517,7 +517,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
               )}
             </div>
 
-            {/* Logo upload (matching screenshot in Image 4) */}
+            {/* Business logo upload */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-bold text-foreground">
@@ -632,7 +632,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ theme }) => {
         )}
 
         {/* ========================================================= */}
-        {/* STEP 3: CHOOSE CUSTOMER REWARD (Matching Image 5)         */}
+        {/* STEP 3: CHOOSE CUSTOMER REWARD                            */}
         {/* ========================================================= */}
         {formData.currentStep === 3 && (
           <div className="space-y-6 animate-in fade-in duration-150">

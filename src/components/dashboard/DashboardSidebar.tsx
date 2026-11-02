@@ -81,7 +81,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     { id: 'customers', label: 'Customers', icon: Users },
     { id: 'offers', label: 'Offers & Promos', icon: Tag },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'reviews-social', label: 'Reviews & social', icon: Megaphone },
+    { id: 'reviews-social', label: 'Reviews & Social', icon: Megaphone },
   ];
 
   // Industry-specific module items based on active business type
@@ -122,7 +122,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       default:
         return [
           { id: 'service-catalogue', label: 'Services Catalogue', icon: Briefcase },
-          { id: 'service-visits', label: 'Record Service Event', icon: CheckSquare },
+          { id: 'service-visits', label: 'Service Visits', icon: CheckSquare },
         ];
     }
   };

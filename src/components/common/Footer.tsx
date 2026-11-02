@@ -114,7 +114,7 @@ export const Footer: React.FC<FooterProps> = ({
                   href="/industries/salons"
                   className="text-muted-foreground hover:text-[#111318] dark:hover:text-[#E4C174] transition-colors inline-block"
                 >
-                  Salons & Barbers
+                  Salons & Barbershops
                 </Link>
               </li>
               <li>

@@ -1,6 +1,6 @@
 /**
- * Types for Task 4: Loyalty Engine, QR Studio & Customer CRM
- * Scoped to active business workspaces and prepared for Firebase migration in Task 10.
+ * Types for Loyalty Engine, QR Studio & Customer CRM.
+ * Scoped to active business workspaces.
  */
 
 export type LoyaltyProgramType = 'stamp_card' | 'visit_reward' | 'points_program';

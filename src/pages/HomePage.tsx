@@ -53,7 +53,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* Section E: Product Benefits */}
       <BenefitsSection theme={theme} />
 
-      {/* Section F: Pricing Section REMOVED from homepage per Task 1 specifications */}
+      {/* Section F: Pricing plans available on dedicated /pricing routes */}
 
       {/* Section G: FAQ Accordion */}
       <FaqSection theme={theme} />

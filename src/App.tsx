@@ -31,6 +31,15 @@ const PublicCatalogPage = lazy(() => import('./pages/PublicCatalogPage').then((m
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 const PublicLoyaltyCardPage = lazy(() => import('./pages/PublicLoyaltyCardPage').then((m) => ({ default: m.PublicLoyaltyCardPage })));
 const PublicServicesPage = lazy(() => import('./pages/PublicServicesPage').then((m) => ({ default: m.PublicServicesPage })));
+const AdminConsolePage = lazy(() => import('./pages/AdminConsolePage').then((m) => ({ default: m.AdminConsolePage })));
+
+/**
+ * Secret slug that opens the master-admin console, from VITE_ADMIN_SLUG (no
+ * leading slash). Baked into the bundle, so it is only obscurity — the real
+ * gate is the server credential check in /api/admin. Works on localhost and the
+ * live domain alike.
+ */
+const ADMIN_PATH = '/' + (import.meta.env.VITE_ADMIN_SLUG || 'master-console').replace(/^\/+/, '');
 
 // Marketing-only modals: loaded on demand, never on a public QR page.
 const CardBuilderModal = lazy(() => import('./components/modals/CardBuilderModal').then((m) => ({ default: m.CardBuilderModal })));
@@ -257,6 +266,11 @@ function AppContent() {
         return <NotFoundPage theme={theme} />;
     }
   };
+
+  // Master-admin console (secret slug). No marketing chrome, no business gate.
+  if (currentPath === ADMIN_PATH) {
+    return <AdminConsolePage theme={theme} />;
+  }
 
   // Customer loyalty card: join via QR, then view stamps (/card/:slug or /card/:slug/:memberId)
   if (currentPath.startsWith('/card/')) {

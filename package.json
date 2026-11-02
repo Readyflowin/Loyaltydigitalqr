@@ -14,6 +14,7 @@
     "aws4fetch": "^1.0.20",
     "canvas-confetti": "^1.9.4",
     "firebase": "^12.19.0",
+    "firebase-admin": "^13.6.0",
     "jose": "^5.9.6",
     "jsqr": "^1.4.0",
     "lucide-react": "^1.61.0",

@@ -42,11 +42,56 @@ function r2UploadDevPlugin(env: Record<string, string>): Plugin {
   }
 }
 
+// Serves POST /api/admin during `vite dev` so the master-admin console works
+// locally exactly like the Vercel function does in production. The admin
+// secrets and Firebase service account are read from .env on the server side
+// only (all vars, not just VITE_ ones) and never reach the browser bundle.
+function adminApiDevPlugin(env: Record<string, string>): Plugin {
+  return {
+    name: 'admin-api-dev',
+    configureServer(server) {
+      server.middlewares.use('/api/admin', async (req, res) => {
+        const send = (status: number, body: Record<string, unknown>) => {
+          res.statusCode = status
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify(body))
+        }
+        if (req.method !== 'POST') {
+          send(405, { error: 'Method not allowed' })
+          return
+        }
+        try {
+          const { handleAdminRequest, readAdminEnv } = await import('./api/_admin-core.ts')
+          const adminEnv = readAdminEnv(env)
+          if (!adminEnv) {
+            send(500, { error: 'Admin API is not configured (ADMIN_USERNAME / ADMIN_PASSWORD / ADMIN_JWT_SECRET).' })
+            return
+          }
+          const chunks: Buffer[] = []
+          for await (const chunk of req) chunks.push(chunk as Buffer)
+          let payload: Record<string, unknown> = {}
+          const raw = Buffer.concat(chunks).toString('utf8')
+          if (raw) payload = JSON.parse(raw) as Record<string, unknown>
+          const result = await handleAdminRequest({
+            env: adminEnv,
+            action: typeof payload.action === 'string' ? payload.action : '',
+            body: payload,
+            authHeader: (req.headers['authorization'] as string) || '',
+          })
+          send(result.status, result.body)
+        } catch (err) {
+          send(500, { error: 'Admin request failed', detail: String(err) })
+        }
+      })
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    plugins: [react(), tailwindcss(), r2UploadDevPlugin(env)],
+    plugins: [react(), tailwindcss(), r2UploadDevPlugin(env), adminApiDevPlugin(env)],
     server: {
       port: 3000,
     },

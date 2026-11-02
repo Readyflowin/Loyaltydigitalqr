@@ -770,6 +770,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = (props) => {
     if (invites.length > 0) return <PendingInvitesPanel invites={invites} user={user} />;
     return <GateScreen title="Let's set up your business…" />;
   }
+  // Subscription revoked by the master-admin console: lock the workspace.
+  if (active.subscriptionStatus === 'revoked') {
+    return (
+      <GateScreen
+        title="Workspace suspended"
+        message="This account's subscription has been revoked. Please contact support to reactivate your workspace."
+        spinner={false}
+      />
+    );
+  }
   if (!ready) return <GateScreen title={`Loading ${active.name}…`} />;
 
   return <DashboardWorkspace key={active.id} {...props} currentUser={user} />;

@@ -20,7 +20,10 @@ const render = () =>
 // wait for auth so their guards never flash.
 const PUBLIC_PREFIXES = ['/card/', '/menu/', '/order/', '/book/', '/appointment/', '/services/', '/catalog/']
 const path = typeof window !== 'undefined' ? window.location.pathname : ''
-const isPublicRoute = PUBLIC_PREFIXES.some((p) => path.startsWith(p))
+// The master-admin console authenticates against its own server API, not the
+// merchant Firebase session, so it paints immediately like the public pages.
+const adminPath = '/' + (import.meta.env.VITE_ADMIN_SLUG || 'master-console').replace(/^\/+/, '')
+const isPublicRoute = path === adminPath || PUBLIC_PREFIXES.some((p) => path.startsWith(p))
 
 if (isPublicRoute) {
   render()
