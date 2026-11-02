@@ -17,8 +17,7 @@
 
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { SignJWT, jwtVerify } from 'jose';
-import { cert, getApps, initializeApp, type App } from 'firebase-admin/app';
-import { getFirestore, AggregateField, type Firestore } from 'firebase-admin/firestore';
+import type { Firestore } from 'firebase-admin/firestore';
 
 // ---------------------------------------------------------------------------
 // Firebase Admin SDK bootstrap
@@ -47,17 +46,31 @@ function readServiceAccount(src: Record<string, string | undefined>): ServiceAcc
   return { projectId, clientEmail, privateKey };
 }
 
-let cachedDb: Firestore | null = null;
+type AdminFirestore = typeof import('firebase-admin/firestore');
 
-function getAdminDb(sa: ServiceAccountEnv): Firestore {
-  if (cachedDb) return cachedDb;
-  const app: App = getApps().length
+let cached: { db: Firestore; AggregateField: AdminFirestore['AggregateField'] } | null = null;
+
+/**
+ * Loads firebase-admin lazily, only when a data action actually needs it.
+ * firebase-admin is a heavy CommonJS package; importing it at module load
+ * crashes this ESM serverless function on Vercel's Node runtime, which would
+ * break even the (Firebase-free) login. Deferring the import here keeps login
+ * and module evaluation clean, and any load/credential failure is caught and
+ * reported as JSON rather than an opaque 500.
+ */
+async function getAdmin(sa: ServiceAccountEnv) {
+  if (cached) return cached;
+  const [{ cert, getApps, initializeApp }, { getFirestore, AggregateField }] = await Promise.all([
+    import('firebase-admin/app'),
+    import('firebase-admin/firestore'),
+  ]);
+  const app = getApps().length
     ? getApps()[0]
     : initializeApp({
         credential: cert({ projectId: sa.projectId, clientEmail: sa.clientEmail, privateKey: sa.privateKey }),
       });
-  cachedDb = getFirestore(app);
-  return cachedDb;
+  cached = { db: getFirestore(app), AggregateField };
+  return cached;
 }
 
 export interface AdminEnv {
@@ -132,6 +145,7 @@ const REVENUE_SOURCES: Array<{ collection: string; field: string; status?: strin
 
 async function sumCollection(
   db: Firestore,
+  AggregateField: AdminFirestore['AggregateField'],
   businessId: string,
   source: { collection: string; field: string; status?: string }
 ): Promise<number> {
@@ -207,7 +221,10 @@ function resolveSubscriptionStatus(data: Record<string, unknown>): 'trial' | 'ac
   return 'active';
 }
 
-async function listBusinesses(db: Firestore): Promise<BusinessRow[]> {
+async function listBusinesses(
+  db: Firestore,
+  AggregateField: AdminFirestore['AggregateField']
+): Promise<BusinessRow[]> {
   const snap = await db.collection('businesses').get();
 
   const rows = await Promise.all(
@@ -221,7 +238,7 @@ async function listBusinesses(db: Firestore): Promise<BusinessRow[]> {
         '';
 
       const [sums, customerCount] = await Promise.all([
-        Promise.all(REVENUE_SOURCES.map((s) => sumCollection(db, doc.id, s))),
+        Promise.all(REVENUE_SOURCES.map((s) => sumCollection(db, AggregateField, doc.id, s))),
         countCustomers(db, doc.id),
       ]);
       const revenueMinor = sums.reduce((a, b) => a + b, 0);
@@ -339,41 +356,47 @@ export async function handleAdminRequest(opts: {
       },
     };
   }
-  const db = getAdminDb(env.serviceAccount);
+  try {
+    const { db, AggregateField } = await getAdmin(env.serviceAccount);
 
-  switch (action) {
-    case 'businesses': {
-      const businesses = await listBusinesses(db);
-      return { status: 200, body: { businesses } };
-    }
-
-    case 'setSubscription': {
-      const businessId = typeof body.businessId === 'string' ? body.businessId : '';
-      const status = body.status;
-      if (!businessId || (status !== 'active' && status !== 'revoked')) {
-        return { status: 400, body: { error: 'businessId and status (active|revoked) are required' } };
+    switch (action) {
+      case 'businesses': {
+        const businesses = await listBusinesses(db, AggregateField);
+        return { status: 200, body: { businesses } };
       }
-      const ref = db.collection('businesses').doc(businessId);
-      const exists = (await ref.get()).exists;
-      if (!exists) return { status: 404, body: { error: 'Business not found' } };
-      await ref.update({ subscriptionStatus: status });
-      return { status: 200, body: { businessId, subscriptionStatus: status } };
-    }
 
-    case 'getSiteConfig': {
-      return { status: 200, body: { config: await getSiteConfig(db) } };
-    }
+      case 'setSubscription': {
+        const businessId = typeof body.businessId === 'string' ? body.businessId : '';
+        const status = body.status;
+        if (!businessId || (status !== 'active' && status !== 'revoked')) {
+          return { status: 400, body: { error: 'businessId and status (active|revoked) are required' } };
+        }
+        const ref = db.collection('businesses').doc(businessId);
+        const exists = (await ref.get()).exists;
+        if (!exists) return { status: 404, body: { error: 'Business not found' } };
+        await ref.update({ subscriptionStatus: status });
+        return { status: 200, body: { businessId, subscriptionStatus: status } };
+      }
 
-    case 'setSiteConfig': {
-      const hero = sanitizeHero(body.hero);
-      await db
-        .collection(SITE_CONFIG_DOC[0])
-        .doc(SITE_CONFIG_DOC[1])
-        .set({ hero, updatedAt: new Date().toISOString() }, { merge: true });
-      return { status: 200, body: { config: { hero } } };
-    }
+      case 'getSiteConfig': {
+        return { status: 200, body: { config: await getSiteConfig(db) } };
+      }
 
-    default:
-      return { status: 400, body: { error: `Unknown action: ${action}` } };
+      case 'setSiteConfig': {
+        const hero = sanitizeHero(body.hero);
+        await db
+          .collection(SITE_CONFIG_DOC[0])
+          .doc(SITE_CONFIG_DOC[1])
+          .set({ hero, updatedAt: new Date().toISOString() }, { merge: true });
+        return { status: 200, body: { config: { hero } } };
+      }
+
+      default:
+        return { status: 400, body: { error: `Unknown action: ${action}` } };
+    }
+  } catch (err) {
+    // Surface the real cause (bad service-account key, firebase-admin load
+    // failure, Firestore error) instead of an opaque platform 500.
+    return { status: 500, body: { error: `Admin SDK error: ${err instanceof Error ? err.message : String(err)}` } };
   }
 }

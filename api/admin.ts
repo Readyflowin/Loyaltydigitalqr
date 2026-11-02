@@ -46,12 +46,15 @@ export default async function handler(
     return;
   }
 
-  const result = await handleAdminRequest({
-    env,
-    action: typeof payload.action === 'string' ? payload.action : '',
-    body: payload,
-    authHeader: (req.headers['authorization'] as string) || '',
-  });
-
-  send(result.status, result.body);
+  try {
+    const result = await handleAdminRequest({
+      env,
+      action: typeof payload.action === 'string' ? payload.action : '',
+      body: payload,
+      authHeader: (req.headers['authorization'] as string) || '',
+    });
+    send(result.status, result.body);
+  } catch (err) {
+    send(500, { error: err instanceof Error ? err.message : 'Admin request failed' });
+  }
 }
