@@ -11,7 +11,10 @@
  */
 
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { processUpload, readR2Env } from './_r2-upload';
+// The .js extension is required under Node's native ESM loader on Vercel
+// (package.json "type": "module"); without it the function crashes at load
+// with ERR_MODULE_NOT_FOUND → FUNCTION_INVOCATION_FAILED.
+import { processUpload, readR2Env } from './_r2-upload.js';
 
 export const config = { api: { bodyParser: false } };
 

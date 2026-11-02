@@ -10,7 +10,10 @@
  */
 
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { handleAdminRequest, readAdminEnv } from './_admin-core';
+// NOTE: the .js extension is required. With package.json "type": "module",
+// Vercel runs these functions under Node's native ESM loader, which rejects
+// extensionless relative imports (ERR_MODULE_NOT_FOUND → FUNCTION_INVOCATION_FAILED).
+import { handleAdminRequest, readAdminEnv } from './_admin-core.js';
 
 export const config = { api: { bodyParser: false } };
 
