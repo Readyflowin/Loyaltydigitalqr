@@ -237,7 +237,7 @@ export const GenericVisitView: React.FC<GenericVisitViewProps> = ({ businessId }
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           data-testid="record-job-modal"
         >
-          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-border/40 pb-3">
               <h3 className="text-base font-bold text-foreground">Record Service Job</h3>
               <button

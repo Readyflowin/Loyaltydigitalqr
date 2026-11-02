@@ -285,7 +285,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/70 backdrop-blur-xs"
             onClick={() => setRenamingQr(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <h4 className="font-heading font-black text-base text-foreground mb-3">
               Rename QR Code
             </h4>

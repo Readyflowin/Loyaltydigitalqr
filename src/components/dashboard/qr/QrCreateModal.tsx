@@ -168,7 +168,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-6">
+      <div className="relative w-full max-w-2xl rounded-3xl bg-card border border-border shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-150 my-6 max-h-[90vh] overflow-y-auto">
         
         {/* Header with Steps */}
         <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">

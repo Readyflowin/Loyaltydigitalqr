@@ -1,36 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Loader2 } from 'lucide-react';
 import type { ThemeMode, StoreItem } from './types';
 import { RouterProvider, useRouter } from './router';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
-import { CardBuilderModal } from './components/modals/CardBuilderModal';
-import { VideoDemoModal } from './components/modals/VideoDemoModal';
-import { RewardDetailModal } from './components/modals/RewardDetailModal';
 import { INITIAL_STORES } from './data/storesData';
 import { INDUSTRIES_DATA } from './data/industriesData';
-
-// Pages
-import { HomePage } from './pages/HomePage';
-import { PricingSelectorPage } from './pages/PricingSelectorPage';
-import { UsaPricingPage } from './pages/UsaPricingPage';
-import { IndiaPricingPage } from './pages/IndiaPricingPage';
-import { IndustryLandingPage } from './pages/IndustryLandingPage';
-import { SignupPage } from './pages/SignupPage';
-import { LoginPage } from './pages/LoginPage';
-import { OnboardingPage } from './pages/OnboardingPage';
-import { DashboardPage } from './pages/DashboardPage';
-import { PublicMenuPage } from './pages/PublicMenuPage';
-import { PublicOrderTrackingPage } from './pages/PublicOrderTrackingPage';
-import { KitchenDisplayPage } from './pages/KitchenDisplayPage';
-import { PublicBookingPage } from './pages/PublicBookingPage';
-import { PublicAppointmentTrackingPage } from './pages/PublicAppointmentTrackingPage';
-import { PublicCatalogPage } from './pages/PublicCatalogPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { PublicLoyaltyCardPage } from './pages/PublicLoyaltyCardPage';
-import { PublicServicesPage } from './pages/PublicServicesPage';
 import { PublicBusinessGate } from './components/public/PublicBusinessGate';
 import { parseOrderTrackingToken } from './services/orderService';
 import { parseAppointmentToken } from './services/salonService';
+
+// Pages are lazy-loaded so each ships as its own chunk. A customer scanning a
+// loyalty / menu QR only downloads that one public page, never the merchant
+// dashboard or marketing site.
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
+const PricingSelectorPage = lazy(() => import('./pages/PricingSelectorPage').then((m) => ({ default: m.PricingSelectorPage })));
+const UsaPricingPage = lazy(() => import('./pages/UsaPricingPage').then((m) => ({ default: m.UsaPricingPage })));
+const IndiaPricingPage = lazy(() => import('./pages/IndiaPricingPage').then((m) => ({ default: m.IndiaPricingPage })));
+const IndustryLandingPage = lazy(() => import('./pages/IndustryLandingPage').then((m) => ({ default: m.IndustryLandingPage })));
+const SignupPage = lazy(() => import('./pages/SignupPage').then((m) => ({ default: m.SignupPage })));
+const LoginPage = lazy(() => import('./pages/LoginPage').then((m) => ({ default: m.LoginPage })));
+const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then((m) => ({ default: m.OnboardingPage })));
+const DashboardPage = lazy(() => import('./pages/DashboardPage').then((m) => ({ default: m.DashboardPage })));
+const PublicMenuPage = lazy(() => import('./pages/PublicMenuPage').then((m) => ({ default: m.PublicMenuPage })));
+const PublicOrderTrackingPage = lazy(() => import('./pages/PublicOrderTrackingPage').then((m) => ({ default: m.PublicOrderTrackingPage })));
+const KitchenDisplayPage = lazy(() => import('./pages/KitchenDisplayPage').then((m) => ({ default: m.KitchenDisplayPage })));
+const PublicBookingPage = lazy(() => import('./pages/PublicBookingPage').then((m) => ({ default: m.PublicBookingPage })));
+const PublicAppointmentTrackingPage = lazy(() => import('./pages/PublicAppointmentTrackingPage').then((m) => ({ default: m.PublicAppointmentTrackingPage })));
+const PublicCatalogPage = lazy(() => import('./pages/PublicCatalogPage').then((m) => ({ default: m.PublicCatalogPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
+const PublicLoyaltyCardPage = lazy(() => import('./pages/PublicLoyaltyCardPage').then((m) => ({ default: m.PublicLoyaltyCardPage })));
+const PublicServicesPage = lazy(() => import('./pages/PublicServicesPage').then((m) => ({ default: m.PublicServicesPage })));
+
+// Marketing-only modals: loaded on demand, never on a public QR page.
+const CardBuilderModal = lazy(() => import('./components/modals/CardBuilderModal').then((m) => ({ default: m.CardBuilderModal })));
+const VideoDemoModal = lazy(() => import('./components/modals/VideoDemoModal').then((m) => ({ default: m.VideoDemoModal })));
+const RewardDetailModal = lazy(() => import('./components/modals/RewardDetailModal').then((m) => ({ default: m.RewardDetailModal })));
+
+/** Full-screen spinner shown while a route chunk loads. */
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center p-6">
+    <Loader2 className="w-8 h-8 animate-spin text-[#3027F5] dark:text-[#E4C174]" aria-label="Loading" />
+  </div>
+);
 
 function orderWatch(token: string) {
   const parsed = parseOrderTrackingToken(token);
@@ -109,11 +121,11 @@ function AppContent() {
 
     if (currentPath.startsWith('/catalog/')) {
       document.title = 'Digital Lookbook & Product Catalogue — Loyaltydigitalqr';
-    if (currentPath.startsWith('/card/')) {
-      document.title = 'Loyalty Card — Loyaltydigitalqr';
       return;
     }
 
+    if (currentPath.startsWith('/card/')) {
+      document.title = 'Loyalty Card — Loyaltydigitalqr';
       return;
     }
 
@@ -373,26 +385,35 @@ function AppContent() {
         onOpenLogin={() => navigate('/login')}
       />
 
-      {/* Interactive Modals */}
-      <CardBuilderModal
-        isOpen={cardBuilderOpen}
-        onClose={() => setCardBuilderOpen(false)}
-        theme={theme}
-        initialIndustry={initialBuilderIndustry}
-      />
+      {/* Interactive Modals — lazy chunks, mounted only while open so they
+          never load (or flash the page loader) until the user opens them. */}
+      <Suspense fallback={null}>
+        {cardBuilderOpen && (
+          <CardBuilderModal
+            isOpen={cardBuilderOpen}
+            onClose={() => setCardBuilderOpen(false)}
+            theme={theme}
+            initialIndustry={initialBuilderIndustry}
+          />
+        )}
 
-      <VideoDemoModal
-        isOpen={videoDemoOpen}
-        onClose={() => setVideoDemoOpen(false)}
-        theme={theme}
-      />
+        {videoDemoOpen && (
+          <VideoDemoModal
+            isOpen={videoDemoOpen}
+            onClose={() => setVideoDemoOpen(false)}
+            theme={theme}
+          />
+        )}
 
-      <RewardDetailModal
-        isOpen={rewardModalOpen}
-        onClose={() => setRewardModalOpen(false)}
-        theme={theme}
-        store={selectedRewardStore}
-      />
+        {rewardModalOpen && (
+          <RewardDetailModal
+            isOpen={rewardModalOpen}
+            onClose={() => setRewardModalOpen(false)}
+            theme={theme}
+            store={selectedRewardStore}
+          />
+        )}
+      </Suspense>
 
 
     </div>
@@ -402,7 +423,9 @@ function AppContent() {
 export function App() {
   return (
     <RouterProvider>
-      <AppContent />
+      <Suspense fallback={<PageLoader />}>
+        <AppContent />
+      </Suspense>
     </RouterProvider>
   );
 }

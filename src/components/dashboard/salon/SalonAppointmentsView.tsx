@@ -695,7 +695,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setReschedulingAppointment(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <h4 className="font-heading font-black text-lg text-foreground">
               Reschedule {reschedulingAppointment.appointmentNumber}
             </h4>
@@ -758,7 +758,7 @@ export const SalonAppointmentsView: React.FC<SalonAppointmentsViewProps> = ({ bu
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setCancellingAppointment(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-card border-2 border-red-200 dark:border-red-900/40 shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border-2 border-red-200 dark:border-red-900/40 shadow-2xl p-6 z-10 space-y-4 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center">
               <AlertTriangle className="w-6 h-6 stroke-[2.5]" />
             </div>

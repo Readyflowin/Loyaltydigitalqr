@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { useRouter } from '../router';
 import { orderService } from '../services/orderService';
+import { businessService } from '../services/businessService';
+import { SocialLinksBar } from '../components/public/SocialLinksBar';
 import { formatMinorUnits } from '../types/cafe';
 import type { ThemeMode } from '../types';
 import type { OrderStatus } from '../types/order';
@@ -47,6 +49,7 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
   }, []);
 
   const order = orderService.getOrderByTrackingToken(token);
+  const business = order ? businessService.getBusinessById(order.businessId) : undefined;
 
   if (!order) {
     return (
@@ -257,6 +260,9 @@ export const PublicOrderTrackingPage: React.FC<PublicOrderTrackingPageProps> = (
             This tracking page updates automatically in real time as the kitchen prepares your order.
           </span>
         </div>
+
+        {/* 5. Review & follow buttons (only when the business has set them up) */}
+        {business && <SocialLinksBar business={business} title="Enjoyed your order? Rate us & follow" />}
       </main>
     </div>
   );

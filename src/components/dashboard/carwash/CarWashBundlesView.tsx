@@ -333,7 +333,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           data-testid="create-bundle-modal"
         >
-          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-border/40 pb-3">
               <h3 className="text-base font-bold text-foreground">Create Wash Package</h3>
               <button
@@ -473,7 +473,7 @@ export const CarWashBundlesView: React.FC<CarWashBundlesViewProps> = ({ business
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           data-testid="assign-pass-modal"
         >
-          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-border/40 pb-3">
               <h3 className="text-base font-bold text-foreground">Assign Wash Pass</h3>
               <button

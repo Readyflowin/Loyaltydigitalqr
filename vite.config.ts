@@ -50,5 +50,21 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
     },
+    build: {
+      rollupOptions: {
+        output: {
+          // Split only the large libraries shared by public and dashboard code
+          // into their own long-lived cache chunks. Everything else is left to
+          // Rollup so dashboard-only deps (qrcode, confetti, jsqr…) stay inside
+          // the lazy dashboard chunks and never load on a public QR page.
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('/firebase/') || id.includes('/@firebase/')) return 'firebase'
+              if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) return 'react-vendor'
+            }
+          },
+        },
+      },
+    },
   }
 })

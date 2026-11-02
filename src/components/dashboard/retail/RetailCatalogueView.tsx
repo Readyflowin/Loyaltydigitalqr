@@ -538,7 +538,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           data-testid="product-editor-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
         >
-          <div className="max-w-lg w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-5 my-8">
+          <div className="max-w-lg w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h3 className="font-heading font-black text-lg text-foreground">
                 {editingProduct ? 'Edit Retail Product' : 'Add New Product'}
@@ -693,7 +693,7 @@ export const RetailCatalogueView: React.FC<RetailCatalogueViewProps> = ({ busine
           data-testid="record-sale-modal"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto"
         >
-          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-4 my-8">
+          <div className="max-w-md w-full p-6 sm:p-7 rounded-3xl bg-card border border-border shadow-2xl space-y-4 my-8 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs font-bold tracking-widest text-[#059669] uppercase block">

@@ -298,7 +298,7 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           data-testid="create-class-modal"
         >
-          <div className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-border/40 pb-3">
               <h3 className="text-lg font-bold text-foreground">Schedule Group Class</h3>
               <button
@@ -461,7 +461,7 @@ export const GymClassesView: React.FC<GymClassesViewProps> = ({ businessId }) =>
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           data-testid="enroll-modal"
         >
-          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-border/40 pb-3">
               <div>
                 <h3 className="text-base font-bold text-foreground">Enroll Member</h3>

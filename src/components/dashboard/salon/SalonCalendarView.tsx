@@ -204,7 +204,7 @@ export const SalonCalendarView: React.FC<SalonCalendarViewProps> = ({ business }
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setSelectedAppointment(null)}
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-3 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-3 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-subtle-foreground">
                 {selectedAppointment.appointmentNumber}

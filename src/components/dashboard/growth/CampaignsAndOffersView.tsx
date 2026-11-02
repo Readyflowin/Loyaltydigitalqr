@@ -800,7 +800,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Redeem Test Terminal */}
       {redeemModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
@@ -914,7 +914,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Win-Back Campaign Wizard */}
       {winbackWizardOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-card border border-border rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
@@ -1060,7 +1060,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Submit Test Feedback */}
       {feedbackModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">
@@ -1154,7 +1154,7 @@ export const CampaignsAndOffersView: React.FC<CampaignsAndOffersViewProps> = ({
       {/* MODAL: Configure Public Review Link */}
       {publicReviewLinkModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-card border border-border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <div>
                 <span className="text-xs uppercase text-[#3027F5] dark:text-[#E4C174] font-bold">

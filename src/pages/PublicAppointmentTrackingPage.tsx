@@ -359,7 +359,7 @@ export const PublicAppointmentTrackingPage: React.FC<PublicAppointmentTrackingPa
       {/* Customer Cancellation Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="max-w-md w-full p-6 rounded-3xl bg-card border border-border shadow-2xl space-y-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-card border border-border shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h3 className="font-heading font-black text-base text-foreground">
                 Cancel Appointment

@@ -586,7 +586,7 @@ const DashboardWorkspace: React.FC<DashboardPageProps & { currentUser: AppUser }
             onClick={() => setPassPreviewModalOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative w-full max-w-sm rounded-3xl bg-card p-6 shadow-2xl z-10 border border-border animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card p-6 shadow-2xl z-10 border border-border animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-black/10 dark:border-white/10">
               <span className="text-xs uppercase font-bold text-[#3027F5] dark:text-[#E4C174]">
                 LIVE PASS PREVIEW

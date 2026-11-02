@@ -417,7 +417,7 @@ export const SalonStaffView: React.FC<SalonStaffViewProps> = ({ business }) => {
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setEditorModalOpen(false)}
           />
-          <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-md rounded-3xl bg-card border border-border shadow-2xl p-6 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E3DB] dark:border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#3027F5]/10 dark:bg-[#E4C174]/15 text-[#3027F5] dark:text-[#E4C174] flex items-center justify-center font-bold">
