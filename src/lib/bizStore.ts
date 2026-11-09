@@ -80,6 +80,9 @@ interface AttachedBusiness {
   unsubs: Unsubscribe[];
   pinned: Set<string>;
   errors: string[];
+  /** Collections/singles already subscribed, so a late-registered spec never double-listens. */
+  subscribedCollections: Set<string>;
+  subscribedSingles: Set<string>;
 }
 
 export interface StoreError {
@@ -135,6 +138,54 @@ class BizStore {
 
   register<B>(spec: ModuleSpec<B>): void {
     this.specs.push(spec as ModuleSpec<unknown>);
+    // Back-subscribe any already-attached business to this newly registered
+    // spec. Module services register their spec on first import, which for a
+    // code-split public page happens AFTER the business was attached by the
+    // gate — so without this, a visitor would never receive that module's
+    // public collections (e.g. a service business's /services page showing no
+    // services). These late loads do not block isReady, so the page renders
+    // immediately and the data streams in.
+    for (const [businessId, state] of this.attached) {
+      this.subscribeSpec(businessId, state, spec as ModuleSpec<unknown>, false);
+    }
+  }
+
+  /** Collections + config singles a spec wants for the given access mode. */
+  private specWanted(
+    spec: ModuleSpec<unknown>,
+    mode: AccessMode
+  ): { collections: Map<string, ArraySpec['recent']>; singles: Set<string> } {
+    const collections = new Map<string, ArraySpec['recent']>();
+    const singles = new Set<string>();
+    for (const arr of spec.arrays) {
+      if (mode === 'member') collections.set(arr.collection, arr.recent);
+      else if (arr.public) collections.set(arr.collection, arr.recent);
+      else if (arr.publicSource) collections.set(arr.publicSource, undefined);
+    }
+    for (const single of spec.singles || []) {
+      if (mode === 'member' || single.public) singles.add(single.docId);
+    }
+    return { collections, singles };
+  }
+
+  /** Start listeners for one spec's collections/singles, skipping any already live. */
+  private subscribeSpec(
+    businessId: string,
+    state: AttachedBusiness,
+    spec: ModuleSpec<unknown>,
+    blockReady: boolean
+  ): void {
+    const { collections, singles } = this.specWanted(spec, state.mode);
+    for (const [name, recent] of collections) {
+      if (state.subscribedCollections.has(name)) continue;
+      state.subscribedCollections.add(name);
+      this.listenCollection(businessId, state, name, recent, 0, blockReady);
+    }
+    for (const docId of singles) {
+      if (state.subscribedSingles.has(docId)) continue;
+      state.subscribedSingles.add(docId);
+      this.listenSingle(businessId, state, docId, 0, blockReady);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -155,32 +206,14 @@ class BizStore {
       unsubs: [],
       pinned: new Set(),
       errors: [],
+      subscribedCollections: new Set(),
+      subscribedSingles: new Set(),
     };
     this.attached.set(businessId, state);
 
-    const wantedCollections = new Map<string, ArraySpec['recent']>();
-    const wantedSingles = new Set<string>();
-
+    // Specs registered by now block the first "ready"; later ones stream in.
     for (const spec of this.specs) {
-      for (const arr of spec.arrays) {
-        if (mode === 'member') {
-          wantedCollections.set(arr.collection, arr.recent);
-        } else if (arr.public) {
-          wantedCollections.set(arr.collection, arr.recent);
-        } else if (arr.publicSource) {
-          wantedCollections.set(arr.publicSource, undefined);
-        }
-      }
-      for (const single of spec.singles || []) {
-        if (mode === 'member' || single.public) wantedSingles.add(single.docId);
-      }
-    }
-
-    for (const [collectionName, recent] of wantedCollections) {
-      this.listenCollection(businessId, state, collectionName, recent);
-    }
-    for (const docId of wantedSingles) {
-      this.listenSingle(businessId, state, docId);
+      this.subscribeSpec(businessId, state, spec, true);
     }
 
     this.scheduleNotify();
@@ -287,11 +320,12 @@ class BizStore {
     state: AttachedBusiness,
     collectionName: string,
     recent: ArraySpec['recent'],
-    attempt = 0
+    attempt = 0,
+    blockReady = true
   ): void {
     const ref = collection(db, 'businesses', businessId, collectionName);
     const q = recent ? query(ref, orderBy(recent.orderBy, 'desc'), limit(recent.max)) : ref;
-    state.pendingLoads.add(collectionName);
+    if (blockReady) state.pendingLoads.add(collectionName);
     this.ensureCollection(state, collectionName);
 
     const unsub = onSnapshot(
@@ -311,15 +345,21 @@ class BizStore {
       },
       (err) =>
         this.retryOrReport(businessId, state, collectionName, err, attempt, (next) =>
-          this.listenCollection(businessId, state, collectionName, recent, next)
+          this.listenCollection(businessId, state, collectionName, recent, next, blockReady)
         )
     );
     state.unsubs.push(unsub);
   }
 
-  private listenSingle(businessId: string, state: AttachedBusiness, docId: string, attempt = 0): void {
+  private listenSingle(
+    businessId: string,
+    state: AttachedBusiness,
+    docId: string,
+    attempt = 0,
+    blockReady = true
+  ): void {
     const key = SINGLE_KEY(docId);
-    state.pendingLoads.add(key);
+    if (blockReady) state.pendingLoads.add(key);
     const unsub = onSnapshot(
       doc(db, 'businesses', businessId, 'config', docId),
       (snap) => {
@@ -330,7 +370,7 @@ class BizStore {
       },
       (err) =>
         this.retryOrReport(businessId, state, key, err, attempt, (next) =>
-          this.listenSingle(businessId, state, docId, next)
+          this.listenSingle(businessId, state, docId, next, blockReady)
         )
     );
     state.unsubs.push(unsub);

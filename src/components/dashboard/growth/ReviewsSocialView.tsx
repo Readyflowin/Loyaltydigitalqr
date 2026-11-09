@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   Share2,
   Eye,
+  AlertTriangle,
 } from 'lucide-react';
 import type { Business, SocialLinksConfig } from '../../../types/business';
 import { businessService } from '../../../services/businessService';
@@ -11,6 +12,15 @@ import { businessService } from '../../../services/businessService';
 interface ReviewsSocialViewProps {
   business: Business;
 }
+
+/** Warns when a channel is switched on but has no link — it stays hidden on the pass until then. */
+const MissingLinkNote: React.FC<{ show: boolean }> = ({ show }) =>
+  show ? (
+    <p className="mt-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+      <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+      <span>Add a link above — this won't show on your loyalty pass until you do.</span>
+    </p>
+  ) : null;
 
 export const ReviewsSocialView: React.FC<ReviewsSocialViewProps> = ({ business }) => {
   const [socialConfig, setSocialConfig] = useState<SocialLinksConfig>(() =>
@@ -142,6 +152,7 @@ export const ReviewsSocialView: React.FC<ReviewsSocialViewProps> = ({ business }
                 <p className="mt-1.5 text-xs text-muted-foreground flex items-center gap-1">
                   <span>From your Google Business Profile → "Ask for reviews" → copy link.</span>
                 </p>
+                <MissingLinkNote show={socialConfig.googleReviewEnabled && !socialConfig.googleReviewUrl.trim()} />
               </div>
             </div>
 
@@ -186,6 +197,7 @@ export const ReviewsSocialView: React.FC<ReviewsSocialViewProps> = ({ business }
                   placeholder="@yourshop"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
+                <MissingLinkNote show={socialConfig.instagramEnabled && !socialConfig.instagramHandleOrUrl.trim()} />
               </div>
             </div>
 
@@ -230,6 +242,7 @@ export const ReviewsSocialView: React.FC<ReviewsSocialViewProps> = ({ business }
                   placeholder="@yourshop"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#3027F5] dark:focus:ring-[#E4C174]"
                 />
+                <MissingLinkNote show={socialConfig.tiktokEnabled && !socialConfig.tiktokHandleOrUrl.trim()} />
               </div>
             </div>
 

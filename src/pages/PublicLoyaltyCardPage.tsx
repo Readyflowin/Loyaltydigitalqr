@@ -98,9 +98,9 @@ export const PublicLoyaltyCardPage: React.FC<PublicLoyaltyCardPageProps> = ({ th
   const logoUrl = (business as typeof business & { logoUrl?: string | null }).logoUrl;
 
   return (
-    <div className="min-h-screen px-4 py-6 sm:py-10">
+    <div className="min-h-screen px-4 py-4 sm:py-8">
       <div className="max-w-md mx-auto">
-        <header className="flex items-center justify-between mb-6">
+        <header className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3 min-w-0">
             <div
               className="w-11 h-11 rounded-2xl flex items-center justify-center text-white font-heading font-black text-lg overflow-hidden flex-shrink-0"
@@ -430,7 +430,7 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
   const memberNo = `No. ${memberId.slice(-6).toUpperCase()}`;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="text-caption font-semibold text-muted-foreground px-1">Hi {card.firstName} 👋</div>
 
       <LoyaltyCard
@@ -529,12 +529,9 @@ const MemberCardView: React.FC<{ business: Business; slug: string; memberId: str
       {/* Stay connected and leave review links (Google, Instagram, TikTok) */}
       <SocialLinksBar business={business} />
 
-      <div className="p-4 rounded-2xl bg-muted text-xs text-muted-foreground flex items-start gap-2">
-        <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
-        <span>
-          Scan the counter QR or tap the button above to ask staff for a stamp — they approve it and it appears here instantly.
-          Bookmark this page or add it to your home screen. Lifetime visits: {card.totalVisits}.
-        </span>
+      <div className="px-3 py-2.5 rounded-2xl bg-muted text-xs text-muted-foreground flex items-center gap-2">
+        <Info className="w-4 h-4 flex-shrink-0" />
+        <span>Tap above or scan the counter QR to get a stamp — it appears here instantly. Lifetime visits: {card.totalVisits}.</span>
       </div>
 
       <button type="button" onClick={forget} className="w-full text-xs text-subtle-foreground underline cursor-pointer">

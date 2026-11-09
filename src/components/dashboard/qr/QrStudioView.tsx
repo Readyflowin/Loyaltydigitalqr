@@ -15,7 +15,12 @@ import type { Business } from '../../../types/business';
 import type { ThemeMode } from '../../../types';
 import type { QrCodeDefinition, QrDestinationType } from '../../../types/loyalty';
 import { loyaltyService } from '../../../services/loyaltyService';
+import { downloadCounterPoster } from '../../../utils/counterPoster';
 import { QrCreateModal } from './QrCreateModal';
+
+/** Loyalty/counter codes get the branded "Scan to Join Our Rewards" poster. */
+const usesPoster = (type: QrDestinationType) =>
+  type === 'counter_display' || type === 'loyalty_enrollment';
 
 interface QrStudioViewProps {
   business: Business;
@@ -71,7 +76,14 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
 
   const handleDownloadPng = async (qr: QrCodeDefinition) => {
     const fullUrl = qr.targetUrl.startsWith('/') ? `${origin}${qr.targetUrl}` : qr.targetUrl;
+    const fileBase = qr.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
     try {
+      // Counter / loyalty codes download as the branded print-ready poster;
+      // storefront/menu codes stay a plain high-resolution QR.
+      if (usesPoster(qr.destinationType)) {
+        await downloadCounterPoster(fullUrl, fileBase);
+        return;
+      }
       const dataUrl = await QRCode.toDataURL(fullUrl, {
         width: 1024,
         margin: 2,
@@ -79,7 +91,7 @@ export const QrStudioView: React.FC<QrStudioViewProps> = ({ business }) => {
       });
       const a = document.createElement('a');
       a.href = dataUrl;
-      a.download = `${qr.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}_1024.png`;
+      a.download = `${fileBase}_1024.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -459,10 +471,10 @@ const QrCardItem: React.FC<QrCardItemProps> = ({
             data-testid={`download-png-${qr.id}`}
             onClick={onDownloadPng}
             className="p-1.5 rounded-lg border border-[#E5E3DB] dark:border-white/10 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer inline-flex items-center gap-1 text-foreground"
-            title="Download PNG (1024px)"
+            title={usesPoster(qr.destinationType) ? 'Download print-ready counter poster (PNG)' : 'Download PNG (1024px)'}
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="text-xs">PNG</span>
+            <span className="text-xs">{usesPoster(qr.destinationType) ? 'Poster' : 'PNG'}</span>
           </button>
 
           <button

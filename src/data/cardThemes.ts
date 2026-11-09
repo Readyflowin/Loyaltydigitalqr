@@ -157,9 +157,15 @@ export function toBusinessType(category: string | undefined): BusinessType {
   }
 }
 
-/** Columns for the stamp grid: 4 for ≤8, 5 for 10, 6 otherwise. */
+/**
+ * Columns for the stamp grid, tuned so the common reward sizes lay out balanced:
+ *   5 → one row of 5,  6 → 3×2,  8 → 4×2,  10 → 5×2,  12 → 6×2.
+ * Keeps every card to at most two rows so the whole page fits a phone screen.
+ */
 export function stampColumns(count: number): number {
+  if (count <= 5) return count;
+  if (count === 6) return 3;
   if (count <= 8) return 4;
-  if (count === 10) return 5;
+  if (count <= 10) return 5;
   return 6;
 }

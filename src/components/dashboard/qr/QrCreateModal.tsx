@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 import type { Business } from '../../../types/business';
 import type { QrCodeDefinition, QrDestinationType } from '../../../types/loyalty';
 import { loyaltyService } from '../../../services/loyaltyService';
+import { downloadCounterPoster } from '../../../utils/counterPoster';
 
 interface QrCreateModalProps {
   isOpen: boolean;
@@ -120,11 +121,23 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
   const origin = getPublicAppOrigin();
   const fullDestinationUrl = targetUrl.startsWith('/') ? `${origin}${targetUrl}` : targetUrl;
 
-  const handleDownloadPng = () => {
+  const posterType = destinationType === 'counter_display' || destinationType === 'loyalty_enrollment';
+
+  const handleDownloadPng = async () => {
+    const fileBase = name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+    // Counter / loyalty codes download as the branded print-ready poster.
+    if (posterType) {
+      try {
+        await downloadCounterPoster(fullDestinationUrl, fileBase);
+        return;
+      } catch (err) {
+        console.error('Failed to build counter poster, falling back to plain QR', err);
+      }
+    }
     if (!pngDataUrl) return;
     const a = document.createElement('a');
     a.href = pngDataUrl;
-    a.download = `${name.toLowerCase().replace(/[^a-z0-9]/g, '_')}_qr.png`;
+    a.download = `${fileBase}_qr.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -427,7 +440,7 @@ const QrCreateModalContent: React.FC<Omit<QrCreateModalProps, 'isOpen'>> = ({
                 className="p-3.5 rounded-2xl border-2 border-[#3027F5] dark:border-[#E4C174] bg-[#3027F5]/5 dark:bg-[#E4C174]/10 hover:bg-[#3027F5]/10 flex items-center justify-center gap-2 text-xs font-bold text-[#3027F5] dark:text-[#E4C174] cursor-pointer shadow-xs transition-all"
               >
                 <Download className="w-4 h-4" />
-                <span>Download PNG (512px)</span>
+                <span>{posterType ? 'Download Counter Poster' : 'Download PNG (512px)'}</span>
               </button>
 
               <button

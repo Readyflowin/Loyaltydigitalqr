@@ -81,8 +81,8 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
               onClick={() => onSelectIndustry(ind.id)}
               className="group cursor-pointer rounded-3xl bg-card border border-[#E5E3DB] dark:border-[rgba(228,193,116,0.22)] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Image Banner */}
-              <div className="relative h-48 overflow-hidden bg-black/10">
+              {/* Image Banner (1:1 square) */}
+              <div className="relative aspect-square overflow-hidden bg-black/10">
                 <img
                   src={ind.image}
                   alt={ind.title}
