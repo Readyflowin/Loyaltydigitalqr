@@ -160,7 +160,7 @@ function AppContent() {
         document.title = 'United States Pricing ($10/month) — Loyaltydigitalqr';
         break;
       case '/india':
-        document.title = 'India Pricing (₹299/month) — Loyaltydigitalqr';
+        document.title = 'India Pricing (₹99/month) — Loyaltydigitalqr';
         break;
       case '/login':
         document.title = 'Log in to Merchant Portal — Loyaltydigitalqr';

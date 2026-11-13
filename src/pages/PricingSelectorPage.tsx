@@ -155,7 +155,7 @@ export const PricingSelectorPage: React.FC<PricingSelectorPageProps> = ({
               <div className="mt-8">
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-5xl sm:text-6xl font-heading font-black text-foreground tracking-tight">
-                    ₹299
+                    ₹99
                   </span>
                   <span className="text-lg font-semibold text-muted-foreground">
                     /month

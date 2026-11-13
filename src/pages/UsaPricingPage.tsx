@@ -286,7 +286,7 @@ export const UsaPricingPage: React.FC<UsaPricingPageProps> = ({
               href="/india"
               className="font-bold text-[#3027F5] dark:text-[#E4C174] hover:underline"
             >
-              View India pricing (₹299/month) →
+              View India pricing (₹99/month) →
             </Link>
           </p>
         </div>

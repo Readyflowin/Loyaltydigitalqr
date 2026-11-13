@@ -344,7 +344,7 @@ class BusinessService {
       currency,
       currencySymbol,
       planName: 'Starter',
-      planPrice: isIndia ? '₹299/mo' : '$10/mo',
+      planPrice: isIndia ? '₹99/mo' : '$10/mo',
       accentColor: data.accentColor || '#3027F5',
       logoInitial: name.charAt(0).toUpperCase() || 'B',
       logoUrl: data.logoUrl || null,

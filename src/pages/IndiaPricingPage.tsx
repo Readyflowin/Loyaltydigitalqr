@@ -41,7 +41,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
     },
     {
       q: 'How does billing work after 30 days?',
-      a: 'If you choose to continue after your 30-day free trial, the subscription is ₹299/month. There are no setup fees, hidden charges, or long-term lock-in.',
+      a: 'If you choose to continue after your 30-day free trial, the subscription is ₹99/month. There are no setup fees, hidden charges, or long-term lock-in.',
     },
     {
       q: 'Do customers need to download an app?',
@@ -126,7 +126,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
               <div className="text-right">
                 <div className="flex items-baseline justify-end gap-1">
                   <span className="font-heading font-black text-5xl sm:text-6xl text-foreground">
-                    ₹299
+                    ₹99
                   </span>
                   <span className="text-base font-semibold text-muted-foreground">
                     /month
@@ -229,7 +229,7 @@ export const IndiaPricingPage: React.FC<IndiaPricingPageProps> = ({
                 Decide after 30 days
               </h4>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                Enjoy 30 days of real customer visits. If you like the results, continue for ₹299/month.
+                Enjoy 30 days of real customer visits. If you like the results, continue for ₹99/month.
               </p>
             </div>
           </div>

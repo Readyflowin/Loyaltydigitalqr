@@ -197,7 +197,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ business }) => {
 
   const trialEnds = business.trialEndsAt ? new Date(business.trialEndsAt) : null;
   const trialDaysLeft = trialEnds ? Math.ceil((trialEnds.getTime() - Date.now()) / 86400000) : null;
-  const regionalPrice = business.region === 'india' ? '₹299/month' : '$10/month';
+  const regionalPrice = business.region === 'india' ? '₹99/month' : '$10/month';
   const publicOrigin = getPublicAppOrigin();
 
   return (
